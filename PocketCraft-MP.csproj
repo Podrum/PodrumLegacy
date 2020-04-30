@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>PocketCraft_MP</RootNamespace>
+    <RootNamespace>Podrum</RootNamespace>
   </PropertyGroup>
 
 </Project>
