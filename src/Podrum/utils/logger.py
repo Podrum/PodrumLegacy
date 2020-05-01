@@ -40,3 +40,5 @@ def log(type_, content):
         print(f'{colors.RED}[ERROR: {time.strftime("%H:%M")}]{colors.WHITE} {content}')
     elif type_ == 'success':
         print(f'{colors.GREEN}[: {time.strftime("%H:%M")}]{colors.WHITE} {content}')
+    else:
+        print(f'[{type_}: {time.strftime("%H:%M")}]{content}')
