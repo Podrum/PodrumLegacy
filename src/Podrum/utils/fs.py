@@ -1,33 +1,29 @@
 import os
 
 
+def read():
+    pass
 
 
+def write():
+    pass
 
-class fs:
-    def read(self):
-        pass
 
-    def write(self):
-        pass
+# Name include extension
+def createFiles(path, name):
+    open(f'{path}/{name}', 'w+')
 
-    # Name include extension
-    def createFiles(path, name):
-        open(f'{path}/{name}', 'w+')
 
-    def createDir(self, path, name):
-        os.mkdir(f'{path}/{name}')
+def createDir(path, name):
+    os.mkdir(f'{path}/{name}')
 
-    def checkForFile(self, type_, path: str, name: str):
-        if type_.lower() == 'file' or 'f':
-            return os.path.isfile(f'{path}/{name}')
-        elif type_.lower() == 'directory' or 'dir':
-            return os.path.isdir(f'{path}/{name}')
 
-    def checkAllFiles(self, path: str):
-        if not self.checkForFile('f', path, 'server.json'):
-            self.createFiles(path, 'server.json')
-        elif not self.checkForFile('dir', path, 'plugins'):
-            self.createDir(path, 'plugins')
-        elif not self.checkForFile('dir', path, 'worlds'):
-            self.createDir(path, 'worlds')
+def checkForFile(type_, path: str, name: str):
+    if type_.lower() == 'file' or 'f': return os.path.isfile(f'{path}/{name}')
+    elif type_.lower() == 'directory' or 'dir': return os.path.isdir(f'{path}/{name}')
+
+
+def checkAllFiles(path):
+    if not checkForFile('f', path, 'server.json'): createFiles(path, 'server.json')
+    elif not checkForFile('dir', path, 'plugins'): createDir(path, 'plugins')
+    elif not checkForFile('dir', path, 'worlds'): createDir(path, 'worlds')

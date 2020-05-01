@@ -1,7 +1,6 @@
-from .utils import logger, config, fs
 from threading import Thread
 
-fs = fs.fs
+from .utils import logger, fs
 
 
 class Server(Thread):
