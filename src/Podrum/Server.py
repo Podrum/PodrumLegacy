@@ -13,17 +13,17 @@
 
 from threading import Thread
 import time
-#from ..pyraklib.server import PyRakLibServer
-#from ..pyraklib.server import ServerHandler
+from ..pyraklib.server import PyRakLibServer
+from ..pyraklib.server import ServerHandler
 
 from .utils import logger, fs
 
-logo = """
-  ____           _                      
+logo = """  ____           _                      
  |  _ \ ___   __| |_ __ _   _ _ __ ___  
  | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
  |  __/ (_) | (_| | |  | |_| | | | | | |
  |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
+
 
 class Server(Thread):
     def __init__(self, path):
@@ -34,7 +34,7 @@ class Server(Thread):
         print(logo)
         logger.log('info', 'Starting server...')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
-        #server = PyRakLibServer(port)
+        server = PyRakLibServer(port)
         logger.log('info', 'Starting server on *:' + str(port))
 
         ticking = True

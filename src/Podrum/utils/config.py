@@ -12,4 +12,7 @@
 """
 import os
 
-from ..wizard.wizard import wizard
+from .fs import checkForFile
+
+class Config:
+    if checkForFile('')

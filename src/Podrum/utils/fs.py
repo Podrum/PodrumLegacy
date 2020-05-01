@@ -29,14 +29,17 @@ def createFiles(path, name):
 
 
 def createDir(path, name):
-    os.mkdir(f'{path}/{name}')
+    try :
+        os.mkdir(f'{path}/{name}')
+    except:
+        pass
 
 
-def checkForFile(type_, path: str, name: str):
+def checkForFile(type_, path, name):
     if type_.lower() == 'file' or 'f':
-        return os.path.isfile(f'{path}/{name}')
+        if os.path.isfile(f'{path}/{name}'): return True
     elif type_.lower() == 'directory' or 'dir':
-        return os.path.isdir(f'{path}/{name}')
+        if os.path.isdir(f'{path}/{name}'): return True
 
 
 def checkAllFiles(path):
@@ -44,8 +47,6 @@ def checkAllFiles(path):
     if not checkForFile('f', path, 'server.json'):
         createFiles(path, 'server.json')
         firstLaunch = True
-    elif not checkForFile('dir', path, 'plugins'):
-        createDir(path, 'plugins')
-    elif not checkForFile('dir', path, 'worlds'):
-        createDir(path, 'worlds')
+    elif not checkForFile('dir', path, 'plugins'): createDir(path, 'plugins')
+    elif not checkForFile('dir', path, 'worlds'): createDir(path, 'worlds')
     # if firstLaunch: wizard() TODO: Implement wizard
