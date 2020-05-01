@@ -11,8 +11,12 @@ class Config:
     def write(self):
         pass
 
-    def createFiles(self):
-        pass
+    # Name include extension
+    def createFiles(self, path, name):
+        open(f'{path}/{name}', 'w+')
+
+    def createDir(self, path, name):
+        os.mkdir(f'{path}/{name}')
 
     def checkForFile(self, type_, path, name):
         if type_.lower() == 'file' or 'f':
@@ -21,9 +25,9 @@ class Config:
             return os.path.isdir(f'{path}/{name}')
 
     def checkAllFiles(self, path):
-        if not self.createFiles('f', path, f'server.json'):
-            open(f'{path}/server.json', 'w+')
-        elif not self.createFiles('dir', path, f'plugins'):
-            os.mkdir(f'{path}/plugins')
-        elif not self.createFiles('dir', path, f'worlds'):
-            os.mkdir(f'{path}/worlds')
+        if not self.checkForFile('f', path, 'server.json'):
+            self.createFiles(path, 'server.json')
+        elif not self.checkForFile('dir', path, 'plugins'):
+            self.createDir(path, 'plugins')
+        elif not self.checkForFile('dir', path, 'worlds'):
+            self.createDir(path, 'worlds')
