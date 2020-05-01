@@ -11,6 +11,5 @@ class Server(Thread):
         logger.log('info', 'Starting server...')
 
         ticking = True
-        self.tickCount
         while ticking:
             time.sleep(0.002)
