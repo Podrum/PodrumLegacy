@@ -1,7 +1,7 @@
 # IDE/Text editor things
-/.idea
-/.vscode
-
-# Python
+#/.idea
+#/.vscode
+#
+## Python
 /venv
-/__pychache__
+#/__pychache__
