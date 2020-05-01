@@ -1,8 +1,9 @@
-from .utils import logger, config
+from .utils import logger, config, fs
+
+fs = fs.fs
 
 
 def start(path):
     logger.log('info', 'Starting the server...')
     logger.log('info', path)
-    config.Config.checkAllFiles(path)
-
+    fs.checkAllFiles(path)
