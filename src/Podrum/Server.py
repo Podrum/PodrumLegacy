@@ -13,8 +13,8 @@
 
 from threading import Thread
 import time
-#from ..pyraklib.server import PyRakLibServer
-#from ..pyraklib.server import ServerHandler
+# from ..pyraklib.server import PyRakLibServer
+# from ..pyraklib.server import ServerHandler
 
 from .utils import logger, fs
 from .network import ipAddr
@@ -35,8 +35,7 @@ class Server(Thread):
         print(logo)
         logger.log('info', f'Starting server on {ipAddr.getIpPublicAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
-        #server = PyRakLibServer(port)
-
+        # server = PyRakLibServer(port)
 
         ticking = True
         while ticking:

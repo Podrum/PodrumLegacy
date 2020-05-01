@@ -12,11 +12,11 @@
 """
 import os
 
-from ..wizard import wizard
 
-
-def read():
-    pass
+def read(file):
+    with open(file) as f:
+        return f.read()
+        f.close()
 
 
 def write():
@@ -25,7 +25,8 @@ def write():
 
 # Name include extension
 def createFiles(path, name):
-    open(f'{path}/{name}', 'w+')
+    f = open(f'{path}/{name}', 'w+')
+    f.close()
 
 
 def createDir(path, name):

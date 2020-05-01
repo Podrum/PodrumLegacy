@@ -15,6 +15,11 @@ import json
 from .fs import read
 from ..Server import server
 
+# TODO: Make it work
+
+configFile = json.loads(read(f'{server.path}/server.json'))
+
 
 class Config:
-    pass
+    def __init__(self):
+        self.port = configFile["port"]
