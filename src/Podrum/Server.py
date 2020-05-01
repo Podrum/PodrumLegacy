@@ -28,11 +28,11 @@ logo = """
 class Server(Thread):
     def __init__(self, path):
         super().__init__()
-        self.path == path
+        self.path = path
         fs.checkAllFiles(path)
         port = 19132
+        print(logo)
         logger.log('info', 'Starting server...')
-        logger.log('info', logo)
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         #server = PyRakLibServer(port)
         logger.log('info', 'Starting server on *:' + str(port))
