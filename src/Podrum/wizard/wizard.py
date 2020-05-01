@@ -14,6 +14,7 @@ import parser
 
 text = None
 
+
 def steps(step):
     if step == 0:
         return 'Do you want to follow the setup? [y/n]'
@@ -25,4 +26,3 @@ def wizard():
         if step == 0:
             text = 'Do you want to follow the setup'
         userInput = input(text)
-

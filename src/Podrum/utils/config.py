@@ -12,7 +12,7 @@
 """
 import json
 
-from .fs import checkForFile
+from .fs import read
 from ..Server import server
 
 

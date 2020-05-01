@@ -11,3 +11,6 @@
 server.json
 /plugins
 /worlds
+
+# Just in case
+*.exe
