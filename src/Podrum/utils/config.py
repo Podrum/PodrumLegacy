@@ -1,4 +1,3 @@
-from ..Server import *
 import os
 
 from ..wizard.wizard import wizard
