@@ -33,10 +33,10 @@ class Server(Thread):
         fs.checkAllFiles(path)
         port = 19132
         print(logo)
-        logger.log('info', 'Starting server...')
+        logger.log('info', f'Starting server on {ipAddr.getIpPublicAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         #server = PyRakLibServer(port)
-        logger.log('info', f'Starting server on {ipAddr.getIpPublicAddr()}:{str(port)}')
+
 
         ticking = True
         while ticking:
