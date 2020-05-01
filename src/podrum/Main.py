@@ -1,2 +1,4 @@
+from utils import logger
+
 def start(path):
-    pass
+    print(f'${logger.color.YELLOW}Hello world')
