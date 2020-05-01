@@ -1,5 +1,5 @@
-from src.Podrum import Main
+from src.Podrum import Server
 import os
 
 path = os.getcwd()
-Main.start(path)
+Server.start(path)

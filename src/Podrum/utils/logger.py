@@ -1,6 +1,7 @@
-from checkOS import getOS
+from .checkOS import getOS
 
-class color:
+
+class colors:
     def __init__(self):
         if getOS() == 'windows':
             self.WHITE  = '\33[37m'
@@ -21,4 +22,3 @@ class color:
             self.VIOLET = ''
             self.BEIGE  = ''
             self.BLACK  = ''
-        
