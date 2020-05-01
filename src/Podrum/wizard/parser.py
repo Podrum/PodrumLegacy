@@ -10,3 +10,13 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
+
+
+def checkYesNo(string):
+    string = string.lower()
+    if string == 'y' or string == 'yes':
+        return True
+    elif string == 'n' or string == 'no':
+        return False
+    else:
+        return

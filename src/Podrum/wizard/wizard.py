@@ -10,12 +10,19 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
+import parser
+
+text = None
+
+def steps(step):
+    if step == 0:
+        return 'Do you want to follow the setup? [y/n]'
+
+
 def wizard():
-    userInput = input()
+    step = 0
+    while step >= 1:
+        if step == 0:
+            text = 'Do you want to follow the setup'
+        userInput = input(text)
 
-
-def checkYesNo(string):
-    string = string.lower()
-    if string == 'y' or string == 'yes': return True
-    elif string == 'n' or string == 'no': return False
-    else: return

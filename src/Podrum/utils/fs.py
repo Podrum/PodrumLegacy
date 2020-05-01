@@ -14,6 +14,7 @@ import os
 
 from ..wizard import wizard
 
+
 def read():
     pass
 
@@ -32,8 +33,10 @@ def createDir(path, name):
 
 
 def checkForFile(type_, path: str, name: str):
-    if type_.lower() == 'file' or 'f': return os.path.isfile(f'{path}/{name}')
-    elif type_.lower() == 'directory' or 'dir': return os.path.isdir(f'{path}/{name}')
+    if type_.lower() == 'file' or 'f':
+        return os.path.isfile(f'{path}/{name}')
+    elif type_.lower() == 'directory' or 'dir':
+        return os.path.isdir(f'{path}/{name}')
 
 
 def checkAllFiles(path):
@@ -41,6 +44,8 @@ def checkAllFiles(path):
     if not checkForFile('f', path, 'server.json'):
         createFiles(path, 'server.json')
         firstLaunch = True
-    elif not checkForFile('dir', path, 'plugins'): createDir(path, 'plugins')
-    elif not checkForFile('dir', path, 'worlds'): createDir(path, 'worlds')
-    if firstLaunch: wizard()
+    elif not checkForFile('dir', path, 'plugins'):
+        createDir(path, 'plugins')
+    elif not checkForFile('dir', path, 'worlds'):
+        createDir(path, 'worlds')
+    # if firstLaunch: wizard() TODO: Implement wizard
