@@ -10,9 +10,11 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-import os
+import json
 
 from .fs import checkForFile
+from ..Server import server
+
 
 class Config:
-    if checkForFile('')
+    pass

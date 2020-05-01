@@ -29,7 +29,7 @@ def createFiles(path, name):
 
 
 def createDir(path, name):
-    try :
+    try:
         os.mkdir(f'{path}/{name}')
     except:
         pass
