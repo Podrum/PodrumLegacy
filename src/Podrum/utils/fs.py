@@ -18,13 +18,13 @@ class fs:
     def createDir(self, path, name):
         os.mkdir(f'{path}/{name}')
 
-    def checkForFile(self, type_, path, name):
+    def checkForFile(self, type_, path: str, name: str):
         if type_.lower() == 'file' or 'f':
             return os.path.isfile(f'{path}/{name}')
         elif type_.lower() == 'directory' or 'dir':
             return os.path.isdir(f'{path}/{name}')
 
-    def checkAllFiles(self, path):
+    def checkAllFiles(self, path: str):
         if not self.checkForFile('f', path, 'server.json'):
             self.createFiles(path, 'server.json')
         elif not self.checkForFile('dir', path, 'plugins'):
