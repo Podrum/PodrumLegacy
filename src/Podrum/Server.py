@@ -1,9 +1,10 @@
 from .utils import logger, config, fs
+from threading import Thread
 
 fs = fs.fs
 
 
-def start(path):
-    logger.log('info', 'Starting the server...')
-    logger.log('info', path)
-    fs.checkAllFiles(path)
+class Server(Thread):
+    def __init__(self):
+        super().__init__()
+        logger.log('info', 'Starting server...')

@@ -1,4 +1,4 @@
-from src.Podrum import Server
+from src.Podrum.Server import Server
 import os
 
-Server.start(os.getcwd())
+server = Server()
