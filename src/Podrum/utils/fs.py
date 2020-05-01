@@ -26,7 +26,7 @@ class fs:
 
     def checkAllFiles(self, path):
         if not self.checkForFile('f', path, 'server.json'):
-            createFiles(path, 'server.json')
+            self.createFiles(path, 'server.json')
         elif not self.checkForFile('dir', path, 'plugins'):
             self.createDir(path, 'plugins')
         elif not self.checkForFile('dir', path, 'worlds'):
