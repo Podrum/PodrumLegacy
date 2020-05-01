@@ -6,4 +6,8 @@
     <RootNamespace>podrum</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="utils\" />
+  </ItemGroup>
+
 </Project>
