@@ -6,3 +6,8 @@
 *.pyc
 /venv
 /__pychache__
+
+# Server/Podrum files
+server.json
+/plugins
+/worlds
