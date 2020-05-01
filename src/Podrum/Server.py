@@ -24,9 +24,15 @@ class Server(Thread):
         super().__init__()
         fs.checkAllFiles(path)
         port = 19132
+        logo = """
+   ____           _                      
+* |  _ \ ___   __| |_ __ _   _ _ __ ___  
+* | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
+* |  __/ (_) | (_| | |  | |_| | | | | | |
+* |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+"""
         logger.log('info', 'Starting server...')
-        logger.log('info', '____           _\n|  _ \ ___   __| |_ __ _   _ _ __ ___ \n | |_) / _ \ / _` | \'__| | | | '
-                           '\'_ ` _ \ \n |  __/ (_) | (_| | |  | |_| | | | | | | \n |_|   \___/ \__,_|_|   \__,_|_| |_| |_|')
+        logger.log('info', logo)
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port)
         logger.log('info', 'Starting server on *:' + str(port))
