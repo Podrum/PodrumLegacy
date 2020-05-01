@@ -13,8 +13,8 @@
 
 from threading import Thread
 import time
-from ..pyraklib.server import PyRakLibServer
-from ..pyraklib.server import ServerHandler
+#from ..pyraklib.server import PyRakLibServer
+#from ..pyraklib.server import ServerHandler
 
 from .utils import logger, fs
 
@@ -22,6 +22,7 @@ from .utils import logger, fs
 class Server(Thread):
     def __init__(self, path):
         super().__init__()
+        self.path == path
         fs.checkAllFiles(path)
         port = 19132
         logo = """
@@ -34,9 +35,13 @@ class Server(Thread):
         logger.log('info', 'Starting server...')
         logger.log('info', logo)
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
-        server = PyRakLibServer(port)
+        #server = PyRakLibServer(port)
         logger.log('info', 'Starting server on *:' + str(port))
 
         ticking = True
         while ticking:
             time.sleep(0.002)
+
+
+if __name__ == '__main__':
+    server = Server()
