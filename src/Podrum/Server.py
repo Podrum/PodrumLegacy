@@ -20,10 +20,10 @@ from .utils import logger, fs
 from .network import ipAddr
 
 logo = """  ____           _                      
- |  _ \ ___   __| |_ __ _   _ _ __ ___  
- | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
- |  __/ (_) | (_| | |  | |_| | | | | | |
- |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
+  |  _ \ ___   __| |_ __ _   _ _ __ ___  
+  | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
+  |  __/ (_) | (_| | |  | |_| | | | | | |
+  |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
 
 
 class Server(Thread):
@@ -33,14 +33,10 @@ class Server(Thread):
         fs.checkAllFiles(path)
         port = 19132
         print(logo)
-        logger.log('info', f'Starting server on {ipAddr.getIpPublicAddr()}:{str(port)}')
+        logger.log('info', f'Starting server on {ipAddr.getPublicIpAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         # server = PyRakLibServer(port)
 
         ticking = True
         while ticking:
             time.sleep(0.002)
-
-
-if __name__ == '__main__':
-    server = Server()

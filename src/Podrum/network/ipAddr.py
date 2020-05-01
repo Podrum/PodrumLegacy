@@ -1,5 +1,5 @@
 import socket
 
 
-def getIpPublicAddr():
+def getPublicIpAddr():
     return socket.gethostbyname(socket.gethostname())
