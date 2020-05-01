@@ -21,7 +21,7 @@ PyRakLib networking library.
 """
 from abc import ABCMeta
 
-class PyRakLib:
+class RakNet:
     __metaclass__ = ABCMeta
 
     LIBRARY_VERSION = "1.0.14b1"
