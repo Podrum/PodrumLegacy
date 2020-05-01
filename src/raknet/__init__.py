@@ -20,25 +20,9 @@ PyRakLib networking library.
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import warnings
-from pyraklib.PyRakLib import PyRakLib
+from raknet.RakNet import RakNet
 
-try:
-    import requests
-    ableToCheck = True
-except ImportError:
-    warnings.warn("Could not check for latest version: library 'requests' not installed.")
-    ableToCheck = False
+__all__ = ['RakNet', 'Binary']
 
-if ableToCheck:
-    def checkForLatestVersion():
-        r = requests.get("https://pypi.python.org/pypi/PyRakLib/json")
-        v = r.json()['info']['version']
-        if v != PyRakLib.LIBRARY_VERSION:
-            warnings.warn("You are not using the latest version of PyRakLib: The latest version is: "+v+", while you have: "+PyRakLib.LIBRARY_VERSION)
-
-    checkForLatestVersion()
-
-__all__ = ['PyRakLib', 'Binary']
-
-from pyraklib.Binary import Binary
-from pyraklib.PyRakLib import PyRakLib
+from raknet.Binary import Binary
+from raknet.RakNet import RakNet
