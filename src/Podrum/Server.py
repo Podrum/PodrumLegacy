@@ -35,7 +35,7 @@ class Server(Thread):
         print(logo)
         logger.log('info', f'Starting server on {ipAddr.getPublicIpAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
-        server = PyRakLibServer(port)
+        server = PyRakLibServer.port = port
 
         ticking = True
         while ticking:
