@@ -12,6 +12,7 @@
 """
 import os
 
+from ..wizard import wizard
 
 def read():
     pass
@@ -36,6 +37,10 @@ def checkForFile(type_, path: str, name: str):
 
 
 def checkAllFiles(path):
-    if not checkForFile('f', path, 'server.json'): createFiles(path, 'server.json')
+    firstLaunch = False
+    if not checkForFile('f', path, 'server.json'):
+        createFiles(path, 'server.json')
+        firstLaunch = True
     elif not checkForFile('dir', path, 'plugins'): createDir(path, 'plugins')
     elif not checkForFile('dir', path, 'worlds'): createDir(path, 'worlds')
+    if firstLaunch: wizard()
