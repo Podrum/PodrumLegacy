@@ -1,6 +1,9 @@
 import os
 
 
+
+
+
 class fs:
     def read(self):
         pass
@@ -9,7 +12,7 @@ class fs:
         pass
 
     # Name include extension
-    def createFiles(self, path, name):
+    def createFiles(path, name):
         open(f'{path}/{name}', 'w+')
 
     def createDir(self, path, name):
@@ -23,7 +26,7 @@ class fs:
 
     def checkAllFiles(self, path):
         if not self.checkForFile('f', path, 'server.json'):
-            self.createFiles(path, 'server.json')
+            createFiles(path, 'server.json')
         elif not self.checkForFile('dir', path, 'plugins'):
             self.createDir(path, 'plugins')
         elif not self.checkForFile('dir', path, 'worlds'):
