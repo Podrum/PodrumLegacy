@@ -1,7 +1,5 @@
 from .utils import logger
 
-COLORS = logger.colors()
-
 
 def start(path):
-    print(f'{COLORS.BLUE}Hello world')
+    logger.log('info', 'Starting the server...')
