@@ -1,0 +1,2 @@
+def start(path):
+    pass
