@@ -19,10 +19,10 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from pyraklib.protocol.AcknowledgePacket import AcknowledgePacket
+from ..protocol.AcknowledgePacket import AcknowledgePacket
+
 
 class ACK(AcknowledgePacket):
-
     @staticmethod
     def getPID():
         return 0xc0

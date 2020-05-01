@@ -22,11 +22,11 @@ PyRakLib networking library.
 import math
 import queue
 import collections
-from pyraklib import PyRakLib
-from pyraklib.protocol import *
-from pyraklib.protocol.ACK import ACK
-from pyraklib.protocol.NACK import NACK
-from pyraklib.protocol.DataPackets import DATA_PACKET_4, DATA_PACKET_0
+from ..PyRakLib import PyRakLib
+from ..protocol import *
+from ..protocol.ACK import ACK
+from ..protocol.NACK import NACK
+from ..protocol.DataPackets import DATA_PACKET_4, DATA_PACKET_0
 import time as time_
 import copy
 

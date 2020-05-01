@@ -27,11 +27,11 @@ import time
 import math
 import pickle
 import sys
-from pyraklib.PyRakLib import PyRakLib
-from pyraklib.Binary import Binary
-from pyraklib.protocol import *
-from pyraklib.protocol.DataPackets import *
-from pyraklib.server.Session import Session
+from ..PyRakLib import PyRakLib
+from ..Binary import Binary
+from ..protocol import *
+from ..protocol.DataPackets import *
+from .Session import Session
 
 
 def microtime(get_as_float = False) :
