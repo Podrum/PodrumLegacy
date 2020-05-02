@@ -28,9 +28,9 @@ __all__ = [
     'UDPServerSocket'
            ]
 
-from pyraklib.server.PyRakLibServer import PyRakLibServer
-from pyraklib.server.Session import Session
-from pyraklib.server.SessionManager import SessionManager
-from pyraklib.server.ServerHandler import ServerHandler
-from pyraklib.server.ServerInstance import ServerInstance
-from pyraklib.server.UDPServerSocket import UDPServerSocket
+from ..server.PyRakLibServer import PyRakLibServer
+from ..server.Session import Session
+from ..server.SessionManager import SessionManager
+from ..server.ServerHandler import ServerHandler
+from ..server.ServerInstance import ServerInstance
+from ..server.UDPServerSocket import UDPServerSocket
