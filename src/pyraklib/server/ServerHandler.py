@@ -19,11 +19,11 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with self program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from ..Binary import Binary
-from ..PyRakLib import PyRakLib
-from ..protocol import EncapsulatedPacket
+from pyraklib.Binary import Binary
+from pyraklib.PyRakLib import PyRakLib
+from pyraklib.protocol import EncapsulatedPacket
 import time
-from ..server import PyRakLibServer, ServerInstance
+from pyraklib.server import PyRakLibServer, ServerInstance
 
 
 class ServerHandler:

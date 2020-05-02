@@ -19,14 +19,13 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os, logging
 import atexit
-import logging
-import os
 import queue
 from threading import Thread
-
-from .SessionManager import SessionManager
-from .UDPServerSocket import UDPServerSocket
+from pyraklib.Queue import Queue
+from pyraklib.server.SessionManager import SessionManager
+from pyraklib.server.UDPServerSocket import UDPServerSocket
 
 
 class PyRakLibServer(Thread):

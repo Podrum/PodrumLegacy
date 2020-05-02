@@ -19,7 +19,7 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from ..protocol.PING_DataPacket import PING_DataPacket
+from pyraklib.protocol.PING_DataPacket import PING_DataPacket
 
 
 class PONG_DataPacket(PING_DataPacket):

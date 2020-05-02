@@ -24,10 +24,10 @@ from abc import ABCMeta
 class PyRakLib:
     __metaclass__ = ABCMeta
 
-    LIBRARY_VERSION = "1.0.14b1"
-    VERSION = "0.8.0"
-    PROTOCOL = 6
-    MAGIC = bytearray.fromhex(" 00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78")
+    LIBRARY_VERSION = "1.0.15b1"
+    VERSION = "0.7.0"
+    PROTOCOL = 5
+    MAGIC = bytearray.fromhex("00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78")
 
     PRIORITY_NORMAL = 0
     PRIORITY_IMMEDIATE = 1

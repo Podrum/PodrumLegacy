@@ -19,7 +19,7 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from ..protocol.DataPacket import DataPacket
+from pyraklib.protocol.DataPacket import DataPacket
 
 
 class DATA_PACKET_0(DataPacket):

@@ -19,7 +19,7 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from ..protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
+from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
 
 
 class ADVERTISE_SYSTEM(UNCONNECTED_PONG):

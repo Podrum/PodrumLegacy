@@ -19,8 +19,8 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from ..PyRakLib import PyRakLib
-from ..protocol.Packet import Packet
+from pyraklib.PyRakLib import PyRakLib
+from pyraklib.protocol.Packet import Packet
 
 
 class OPEN_CONNECTION_REPLY_1(Packet):

@@ -20,8 +20,8 @@ PyRakLib networking library.
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from abc import abstractmethod
-from ..Binary import Binary
-from ..protocol.Packet import Packet
+from pyraklib.Binary import Binary
+from pyraklib.protocol.Packet import Packet
 
 
 class AcknowledgePacket(Packet):

@@ -20,8 +20,8 @@ PyRakLib networking library.
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from abc import ABCMeta, abstractmethod
-from ..protocol.EncapsulatedPacket import EncapsulatedPacket
-from ..protocol.Packet import Packet
+from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
+from pyraklib.protocol.Packet import Packet
 
 
 class DataPacket(Packet):
