@@ -23,9 +23,9 @@ import os, logging
 import atexit
 import queue
 from threading import Thread
-from pyraklib.Queue import Queue
-from pyraklib.server.SessionManager import SessionManager
-from pyraklib.server.UDPServerSocket import UDPServerSocket
+from ..Queue import Queue
+from ..server.SessionManager import SessionManager
+from ..server.UDPServerSocket import UDPServerSocket
 
 
 class PyRakLibServer(Thread):
