@@ -10,8 +10,6 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-
-from threading import Thread
 import time
 from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
@@ -26,7 +24,7 @@ logo = """  ____           _
   |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
 
 
-class Server(Thread):
+class Server():
     def __init__(self, path):
         super().__init__()
         self.path = path
