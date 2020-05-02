@@ -20,7 +20,7 @@ PyRakLib networking library.
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from abc import ABCMeta, abstractmethod
-from pyraklib.Binary import Binary
+from ..Binary import Binary
 
 
 class Packet:
