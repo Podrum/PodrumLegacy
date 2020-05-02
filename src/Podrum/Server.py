@@ -33,7 +33,7 @@ class Server(Thread):
         fs.checkAllFiles(path)
         port = 19132
         print(logo)
-        logger.log('info', f'Starting server on {ipAddr.getPublicIpAddr()}:{str(port)}')
+        logger.log('info', f'Starting server on {ipAddr.getPrivateIpAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port=port)
         handler = ServerHandler(server, None)
