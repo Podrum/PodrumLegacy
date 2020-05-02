@@ -17,7 +17,8 @@ from ..pyraklib.server import ServerHandler
 from .utils import logger, fs
 from .network import ipAddr
 
-logo = """  ____           _                      
+logo = """  
+   ____           _                      
   |  _ \ ___   __| |_ __ _   _ _ __ ___  
   | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
   |  __/ (_) | (_| | |  | |_| | | | | | |
@@ -31,7 +32,7 @@ class Server():
         fs.checkAllFiles(path)
         port = 19132
         print(logo)
-        logger.log('info', f'Starting server on {ipAddr.getPublicIpAddr()}:{str(port)}')
+        logger.log('info', f'Starting server on {ipAddr.getPrivateIpAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
