@@ -463,4 +463,3 @@ class Session:
     def close(self):
         data = "\x00\x00\x08\x15"
         self.addEncapsulatedToQueue(EncapsulatedPacket.fromBinary(data)[0], PyRakLib.PRIORITY_IMMEDIATE)
-        self.sessionManager = None

@@ -31,7 +31,7 @@ from ..PyRakLib import PyRakLib
 from ..Binary import Binary
 from ..protocol import *
 from ..protocol.DataPackets import *
-from .Session import Session
+from ..server.Session import Session
 
 
 def microtime(get_as_float = False) :
@@ -153,7 +153,7 @@ class SessionManager:
                 packet.buffer = buffer
                 self.getSession(source[0], source[1]).handlePacket(packet)
                 return True
-            elif buffer is not "":
+            elif buffer != "":
                 self.streamRaw(source[0], source[1], buffer)
                 return True
             else:

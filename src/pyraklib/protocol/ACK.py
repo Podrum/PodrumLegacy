@@ -21,8 +21,8 @@ PyRakLib networking library.
 """
 from ..protocol.AcknowledgePacket import AcknowledgePacket
 
-
 class ACK(AcknowledgePacket):
+
     @staticmethod
     def getPID():
         return 0xc0

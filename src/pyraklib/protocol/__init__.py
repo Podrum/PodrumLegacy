@@ -42,3 +42,42 @@ __all__ = [
     'UNCONNECTED_PING_OPEN_CONNECTIONS',
     'UNCONNECTED_PONG'
 ]
+
+# To avoid having to use ACK.ACK(), for example.
+from ..protocol.ACK import ACK
+from ..protocol.NACK import NACK
+from ..protocol.AcknowledgePacket import AcknowledgePacket
+from ..protocol.Packet import Packet
+from ..protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
+from ..protocol.ADVERTISE_SYSTEM import ADVERTISE_SYSTEM
+from ..protocol.CLIENT_CONNECT_DataPacket import CLIENT_CONNECT_DataPacket
+from ..protocol.CLIENT_DISCONNECT_DataPacket import CLIENT_DISCONNECT_DataPacket
+from ..protocol.CLIENT_HANDSHAKE_DataPacket import CLIENT_HANDSHAKE_DataPacket
+from ..protocol.DataPacket import DataPacket
+from ..protocol.DataPackets import DATA_PACKET_0
+from ..protocol.DataPackets import DATA_PACKET_1
+from ..protocol.DataPackets import DATA_PACKET_2
+from ..protocol.DataPackets import DATA_PACKET_3
+from ..protocol.DataPackets import DATA_PACKET_4
+from ..protocol.DataPackets import DATA_PACKET_5
+from ..protocol.DataPackets import DATA_PACKET_6
+from ..protocol.DataPackets import DATA_PACKET_7
+from ..protocol.DataPackets import DATA_PACKET_8
+from ..protocol.DataPackets import DATA_PACKET_9
+from ..protocol.DataPackets import DATA_PACKET_A
+from ..protocol.DataPackets import DATA_PACKET_B
+from ..protocol.DataPackets import DATA_PACKET_C
+from ..protocol.DataPackets import DATA_PACKET_D
+from ..protocol.DataPackets import DATA_PACKET_E
+from ..protocol.DataPackets import DATA_PACKET_F
+from ..protocol.EncapsulatedPacket import EncapsulatedPacket
+from ..protocol.OPEN_CONNECTION_REPLY_1 import OPEN_CONNECTION_REPLY_1
+from ..protocol.OPEN_CONNECTION_REPLY_2 import OPEN_CONNECTION_REPLY_2
+from ..protocol.OPEN_CONNECTION_REQUEST_1 import OPEN_CONNECTION_REQUEST_1
+from ..protocol.OPEN_CONNECTION_REQUEST_2 import OPEN_CONNECTION_REQUEST_2
+from ..protocol.UNCONNECTED_PING import UNCONNECTED_PING
+from ..protocol.UNCONNECTED_PING_OPEN_CONNECTIONS import UNCONNECTED_PING_OPEN_CONNECTIONS
+from ..protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
+from ..protocol.SERVER_HANDSHAKE_DataPacket import SERVER_HANDSHAKE_DataPacket
+from ..protocol.PING_DataPacket import PING_DataPacket
+from ..protocol.PONG_DataPacket import PONG_DataPacket
