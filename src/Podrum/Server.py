@@ -33,6 +33,7 @@ class Server():
         port = 19132
         print(logo)
         logger.log('info', f'Starting server on {ipAddr.getPrivateIpAddr()}:{str(port)}')
+        logger.log('info', 'This is your external ip: {ipAddr.getPublicIpAddr()}. If you want players that are not in your local network you must portforward')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
