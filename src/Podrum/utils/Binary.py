@@ -18,4 +18,4 @@ class Binary
     @staticmethod
     def readTriad(str):
         self.checkLength(str, 3)
-        return unpack('<i', b'\x00' + str)[0]
+        return unpack('>i', b'\x00' + str)[0]
