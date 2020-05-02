@@ -20,7 +20,7 @@ PyRakLib networking library.
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import warnings
-from pyraklib.PyRakLib import PyRakLib
+from .pyraklib import PyRakLib
 
 try:
     import requests
@@ -39,6 +39,3 @@ if ableToCheck:
     checkForLatestVersion()
 
 __all__ = ['PyRakLib', 'Binary']
-
-from pyraklib.Binary import Binary
-from pyraklib.PyRakLib import PyRakLib
