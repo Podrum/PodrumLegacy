@@ -13,7 +13,7 @@ class Binary
     @staticmethod
     def checkLength(str, expect):
         len = self.strlen(str)
-        assert (len == expect), f'Expected {str(expect)} bytes got {str(len)}'
+        assert (len == expect), f'Expected {str(expect)} bytes, got {str(len)}'
 
     @staticmethod
     def readTriad(str):
