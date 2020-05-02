@@ -153,7 +153,7 @@ class SessionManager:
                 packet.buffer = buffer
                 self.getSession(source[0], source[1]).handlePacket(packet)
                 return True
-            elif buffer is not "":
+            elif buffer != "":
                 self.streamRaw(source[0], source[1], buffer)
                 return True
             else:
