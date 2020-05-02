@@ -344,7 +344,7 @@ class Session:
                     dataPacket.buffer = packet.buffer
                     dataPacket.decode()
 
-                    if dataPacket.port == self.sessionManager.getPort() or not self.sessionManager.portChecking:
+                    if port == self.sessionManager.getPort() or not self.sessionManager.portChecking:
                         self.state = self.STATE_CONNECTED # FINALLY!
                         self.sessionManager.openSession(self)
                         for p in self.preJoinQueue:

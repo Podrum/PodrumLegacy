@@ -26,6 +26,7 @@ try:
     import requests
     ableToCheck = True
 except ImportError:
+    # TODO: Update requests
     warnings.warn("Could not check for latest version: library 'requests' not installed.")
     ableToCheck = False
 

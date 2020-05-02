@@ -1,7 +1,7 @@
 """
-*  ____           _                      
-* |  _ \ ___   __| |_ __ _   _ _ __ ___  
-* | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
+*  ____           _
+* |  _ \ ___   __| |_ __ _   _ _ __ ___
+* | |_) / _ \ / _` | '__| | | | '_ ` _ \
 * |  __/ (_) | (_| | |  | |_| | | | | | |
 * |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
 *
@@ -35,7 +35,9 @@ class Server(Thread):
         print(logo)
         logger.log('info', f'Starting server on {ipAddr.getPublicIpAddr()}:{str(port)}')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
-        server = PyRakLibServer.port = port
+        server = PyRakLibServer(port=port)
+        handler = ServerHandler(server, None)
+        handler.sendOption("name", "MCCPP;MINECON;TestServer")
 
         ticking = True
         while ticking:
