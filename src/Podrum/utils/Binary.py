@@ -3,9 +3,6 @@ import uuid
 
 class Binary:
 
-    BIG_ENDIAN = 0x00
-    LITTLE_ENDIAN = 0x01
-
     @staticmethod
     def strlen(x):
         return len(x)
