@@ -58,3 +58,12 @@ class Binary
     @staticmethod
     def writeShort(value):
         return pack('>H', value)
+    
+    @staticmethod
+    def readLShort(str):
+        self.checkLength(str, 2)
+        return unpack('<H', str)[0]
+
+    @staticmethod
+    def writeLShort(value):
+        return pack('<H', value)
