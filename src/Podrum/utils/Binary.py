@@ -34,3 +34,19 @@ class Binary
     def writeLTriad(str):
         self.checkLength(str, 3)
         return pack('<L', value)[0:-1]
+    
+    @staticmethod
+    def readBool(b):
+        return unpack('?', b)[0]
+
+    @staticmethod
+    def writeBool(b):
+        return b'\x01' if b else b'\x00'
+    
+    @staticmethod
+    def readByte(b):
+        return ord(b)
+
+    @staticmethod
+    def writeByte(b):
+        return chr(b).encode()
