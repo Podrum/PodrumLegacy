@@ -1,7 +1,7 @@
 from struct import unpack, pack
 import uuid
 
-class Binary
+class Binary:
 
     BIG_ENDIAN = 0x00
     LITTLE_ENDIAN = 0x01
