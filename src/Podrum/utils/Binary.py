@@ -18,4 +18,19 @@ class Binary
     @staticmethod
     def readTriad(str):
         self.checkLength(str, 3)
-        return unpack('>i', b'\x00' + str)[0]
+        return unpack('>L', b'\x00' + str)[0]
+
+    @staticmethod
+    def writeTriad(str)
+        self.checkLength(str, 3)
+        return pack('>L', str)[1:]
+
+    @staticmethod
+    def readLTriad(str):
+        self.checkLength(str, 3)
+        return unpack('<L', b'\x00' + str)[0]
+
+    @staticmethod
+    def writeLTriad(str)
+        self.checkLength(str, 3)
+        return pack('<L', value)[0:-1]
