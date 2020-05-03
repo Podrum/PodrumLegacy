@@ -67,3 +67,69 @@ class Binary
     @staticmethod
     def writeLShort(value):
         return pack('<H', value)
+    
+    @staticmethod
+    def readInt(str):
+        self.checkLength(str, 4)
+        return unpack('>L', str)[0]
+
+    @staticmethod
+    def writeInt(value):
+        return pack('>L', value)
+
+    @staticmethod
+    def readLInt(str):
+        self.checkLength(str, 4)
+        return unpack('<L', str)[0]
+
+    @staticmethod
+    def writeLInt(value):
+        return pack('<L', value)
+
+    @staticmethod
+    def readFloat(str):
+        return unpack('>f', str)[0]
+
+    @staticmethod
+    def writeFloat(value):
+        return pack('>f', value)
+
+    @staticmethod
+    def readLFloat(str):
+        return unpack('<f', str)[0]
+
+    @staticmethod
+    def writeLFloat(value):
+        return pack('<f', value)
+
+    @staticmethod
+    def readDouble(str):
+        return unpack('>d', str)[0]
+
+    @staticmethod
+    def writeDouble(value):
+        return pack('>d', value)
+
+    @staticmethod
+    def readLDouble(str):
+        return unpack('<d', str)[0]
+
+    @staticmethod
+    def writeLDouble(value):
+        return pack('<d', value)
+
+    @staticmethod
+    def readLong(str):
+        return unpack('>l', str)[0]
+
+    @staticmethod
+    def writeLong(value):
+        return pack('>l', value)
+
+    @staticmethod
+    def readLLong(str):
+        return unpack('<l', str)[0]
+
+    @staticmethod
+    def writeLLong(value):
+        return pack('<l', value)
