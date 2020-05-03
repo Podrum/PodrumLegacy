@@ -106,6 +106,7 @@ class Binary
 
     @staticmethod
     def readDouble(str):
+        self.checkLength(str, 8)
         return unpack('>d', str)[0]
 
     @staticmethod
@@ -114,6 +115,7 @@ class Binary
 
     @staticmethod
     def readLDouble(str):
+        self.checkLength(str, 8)
         return unpack('<d', str)[0]
 
     @staticmethod
@@ -122,6 +124,7 @@ class Binary
 
     @staticmethod
     def readLong(str):
+        self.checkLength(str, 8)
         return unpack('>l', str)[0]
 
     @staticmethod
@@ -130,6 +133,7 @@ class Binary
 
     @staticmethod
     def readLLong(str):
+        self.checkLength(str, 8)
         return unpack('<l', str)[0]
 
     @staticmethod
