@@ -88,6 +88,7 @@ class Binary
 
     @staticmethod
     def readFloat(str):
+        self.checkLength(str, 4)
         return unpack('>f', str)[0]
 
     @staticmethod
@@ -96,6 +97,7 @@ class Binary
 
     @staticmethod
     def readLFloat(str):
+        self.checkLength(str, 4)
         return unpack('<f', str)[0]
 
     @staticmethod
