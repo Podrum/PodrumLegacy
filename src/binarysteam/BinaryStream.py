@@ -1,3 +1,3 @@
 class BinaryStream:
     def __init__(self):
-        pass
+        buffer = bytearray(0)
