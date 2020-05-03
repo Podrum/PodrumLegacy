@@ -8,6 +8,7 @@
 /__pychache__
 
 # Server/Podrum files
+/src/VoxenaLib
 server.json
 /plugins
 /worlds
