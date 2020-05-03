@@ -9,6 +9,7 @@
 
 # Server/Podrum files
 /src/VoxenaLib
+/src/test
 server.json
 /plugins
 /worlds
