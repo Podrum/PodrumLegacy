@@ -22,7 +22,6 @@ class Binary
 
     @staticmethod
     def writeTriad(str):
-        self.checkLength(str, 3)
         return pack('>L', str)[1:]
 
     @staticmethod
@@ -32,7 +31,6 @@ class Binary
 
     @staticmethod
     def writeLTriad(str):
-        self.checkLength(str, 3)
         return pack('<L', value)[0:-1]
     
     @staticmethod
@@ -50,3 +48,12 @@ class Binary
     @staticmethod
     def writeByte(b):
         return chr(b).encode()
+    
+    @staticmethod
+    def readShort(str):
+        self.checkLength(str, 2)
+        return unpack('>H', str)[0]
+
+    @staticmethod
+    def writeShort(value):
+        return pack('>H', value)
