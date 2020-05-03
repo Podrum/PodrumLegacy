@@ -21,8 +21,8 @@ class Binary
         return unpack('>L', b'\x00' + str)[0]
 
     @staticmethod
-    def writeTriad(str):
-        return pack('>L', str)[1:]
+    def writeTriad(value):
+        return pack('>L', value)[1:]
 
     @staticmethod
     def readLTriad(str):
@@ -30,7 +30,7 @@ class Binary
         return unpack('<L', b'\x00' + str)[0]
 
     @staticmethod
-    def writeLTriad(str):
+    def writeLTriad(value):
         return pack('<L', value)[0:-1]
     
     @staticmethod
@@ -42,12 +42,13 @@ class Binary
         return b'\x01' if b else b'\x00'
     
     @staticmethod
-    def readByte(b):
-        return ord(b)
+    def readByte(c):
+        self.checkLength(c, 1)
+        return ord(c)
 
     @staticmethod
-    def writeByte(b):
-        return chr(b).encode()
+    def writeByte(c):
+        return chr(c)
     
     @staticmethod
     def readShort(str):
