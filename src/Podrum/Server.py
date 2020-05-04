@@ -37,7 +37,7 @@ class Server:
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
-        handler.sendOption("name", "MCPE;motd;390;1.14.60;0;100;0;PodrumPoweredServer;0")
+        handler.sendOption("name", "MCPE;motd;390;1.14.60;0;100;0;PodrumPoweredServer;1")
 
         ticking = True
         while ticking:

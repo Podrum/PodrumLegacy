@@ -11,8 +11,8 @@
 /src/VoxenaLib
 /src/test
 server.json
-/plugins
-/worlds
+/plugins/
+/worlds/
 
 # Just in case
 *.exe
