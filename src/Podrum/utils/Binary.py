@@ -140,11 +140,13 @@ class Binary:
     def readUnsignedVarint(stream):
         value = 0;
         i = 0
-        do:
+        while(true):
             if(i > 63):
                 raise ValueError('Varint did not terminate after 10 bytes!')
-            value |= (((b = stream.encode()) & 0x7f) << i)
+            b = stream.encode()
+            value |= (b << i)
             i += 7
-        while(b & 0x80)
+            if(b & 0x80):
+                break
     
         return value
