@@ -1,5 +1,4 @@
 from struct import unpack, pack
-import uuid
 
 class Binary:
 
