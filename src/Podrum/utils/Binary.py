@@ -135,3 +135,16 @@ class Binary:
     @staticmethod
     def writeLLong(value):
         return pack('<l', value)
+    
+    @staticmethod
+    def readUnsignedVarint(stream):
+        value = 0;
+        i = 0
+        do:
+            if(i > 63):
+                raise ValueError('Varint did not terminate after 10 bytes!')
+            value |= (((b = stream.encode()) & 0x7f) << i)
+            i += 7
+        while(b & 0x80)
+    
+        return value
