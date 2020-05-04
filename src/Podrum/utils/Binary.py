@@ -158,7 +158,7 @@ class Binary:
     @staticmethod
     def writeUnsignedVarint(value):
         buf = ""
-        for(i = 0, i < 10, ++i):
+        for i in range(0, 10):
             if((value >> 7) !== 0):
                 buf .= chr(value | 0x80)
                 raise ValueError('Varint did not terminate after 10 bytes!')
