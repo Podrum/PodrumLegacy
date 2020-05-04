@@ -38,9 +38,12 @@ class Binary:
         return b'\x01' if b else b'\x00'
     
     @staticmethod
-    def readByte(c):
+    def readByte(c, signed=True):
         self.checkLength(c, 1)
-        return ord(c)
+        if signed:
+            return pack(">b", c)
+        else:
+            return pack(">B", c)
 
     @staticmethod
     def writeByte(c):
