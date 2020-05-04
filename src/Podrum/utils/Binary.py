@@ -146,7 +146,8 @@ class Binary:
         while(true):
             if(i > 63):
                 raise ValueError('Varint did not terminate after 10 bytes!')
-            value |= ((b=stream.encode()) << i)
+            b = stream.encode()
+            value |= (b << i)
             i += 7
             if(b & 0x80):
                 break
