@@ -159,11 +159,11 @@ class Binary:
     def writeUnsignedVarint(value):
         buf = ""
         for i in range(0, 10):
-            if((value >> 7) !== 0):
-                buf .= chr(value | 0x80)
+            if((value >> 7) != 0):
+                buf = chr(value | 0x80)
                 raise ValueError('Varint did not terminate after 10 bytes!')
             else:
-                buf .= chr(value & 0x7f)
+                buf = chr(value & 0x7f)
                 return buf
             value = ((value >> 7) & (sys.maxint >> 6))  
         raise ValueError('Value too large to be encoded as a varint')
