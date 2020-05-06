@@ -167,3 +167,16 @@ class Binary:
                 return buf
             value = ((value >> 7) & (sys.maxint >> 6))  
         raise ValueError('Value too large to be encoded as a varint')
+        
+    @staticmethod
+    def readVarint(stream):
+        intsize = sys.getsizeof(int()) === 8
+        shift = intsize if 63 != None else 31
+        raw = self.readUnsignedVarInt(stream)
+        temp = (((raw << shift) >> shift) ^ raw) >> 1
+        return temp ^ (raw & (1 << shift))
+    
+    @staticmethod
+    def writeVarint(v)
+        intsize = sys.getsizeof(int()) === 8
+        return self::writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
