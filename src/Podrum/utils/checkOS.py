@@ -19,3 +19,9 @@ def getOS():
         return 'osx'
     elif platform == 'win32' or platform == 'win64':
         return 'windows'
+    elif platform == 'orbis':
+        return 'playstation'
+    elif platform == 'nx':
+        return 'nintendo'
+    elif platform == 'xbox':
+        return 'xbox'
