@@ -179,4 +179,4 @@ class Binary:
     @staticmethod
     def writeVarint(v):
         intsize = sys.getsizeof(int()) == 8
-        return self::writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
+        return self.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
