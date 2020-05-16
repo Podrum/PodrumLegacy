@@ -42,3 +42,7 @@ class Server:
         ticking = True
         while ticking:
             time.sleep(0.002)
+
+
+def command(string):
+    pass
