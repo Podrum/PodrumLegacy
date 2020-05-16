@@ -44,5 +44,5 @@ class Server:
             time.sleep(0.002)
 
 
-def command(string):
+def command(string, fromConsole):
     pass
