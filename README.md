@@ -5,4 +5,4 @@ A server software for Minecraft bedrock edition written in Python (3.X)
 
 # TODO List:
 - [x] MOTD
-- [ ] Commands
+- [ ] Commands (currently doing)
