@@ -24,6 +24,7 @@ from .PyRakLib import PyRakLib
 
 try:
     import urllib.request
+    import json
     ableToCheck = True
 except ImportError:
     # TODO: Update requests
