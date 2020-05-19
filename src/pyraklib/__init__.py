@@ -23,16 +23,16 @@ import warnings
 from .PyRakLib import PyRakLib
 
 try:
-    import requests
+    import urllib.request
     ableToCheck = True
 except ImportError:
     # TODO: Update requests
-    warnings.warn("Could not check for latest version: library 'requests' not installed.")
+    warnings.warn("Could not check for latest version: library 'urllib' not installed.")
     ableToCheck = False
 
 if ableToCheck:
     def checkForLatestVersion():
-        r = requests.get("https://pypi.python.org/pypi/PyRakLib/json")
+        r = urllib.request.urlopen('https://pypi.python.org/pypi/PyRakLib/json')
         v = r.json()['info']['version']
         if v != PyRakLib.LIBRARY_VERSION:
             warnings.warn("You are not using the latest version of PyRakLib: The latest version is: "+v+", while you have: "+PyRakLib.LIBRARY_VERSION)
