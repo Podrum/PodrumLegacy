@@ -1,6 +1,5 @@
 import socket
-from requests import get
-
+import urllib.request
 
 def getPrivateIpAddr():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -9,5 +8,5 @@ def getPrivateIpAddr():
 
 
 def getPublicIpAddr():
-    ip = get('https://api.ipify.org').text
+    ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
     return ip
