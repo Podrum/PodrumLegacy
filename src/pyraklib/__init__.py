@@ -33,7 +33,7 @@ except ImportError:
 if ableToCheck:
     def checkForLatestVersion():
         r = urllib.request.urlopen('https://pypi.python.org/pypi/PyRakLib/json')
-        v = r.json()['info']['version']
+        v = json.load(r)['info']['version']
         if v != PyRakLib.LIBRARY_VERSION:
             warnings.warn("You are not using the latest version of PyRakLib: The latest version is: "+v+", while you have: "+PyRakLib.LIBRARY_VERSION)
 
