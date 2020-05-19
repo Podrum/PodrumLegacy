@@ -11,7 +11,7 @@ python3 -m venv /venv
 pip3 install -r requirements.txt
 python3 start.py
 ```
-windows:
+Windows:
 ```bat
 python -m venv /venv
 ./venv/Scripts/activate.bat
