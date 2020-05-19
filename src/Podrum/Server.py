@@ -45,4 +45,7 @@ class Server:
 
 
 def command(string, fromConsole):
-    pass
+    if string.lower() == 'stop':
+        quit()
+    else:
+        logger.log('error', 'Invalid command')
