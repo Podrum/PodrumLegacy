@@ -63,4 +63,4 @@ class Config:
         self.load(self.file, self.type)
         
     def fixYAMLIndexes(str):
-        return re.sub(r'#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m', r'\1_\2', str)
+        return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", str)
