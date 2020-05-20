@@ -1,5 +1,3 @@
-```
-
 """
 *  ____           _                      
 * |  _ \ ___   __| |_ __ _   _ _ __ ___  
@@ -56,4 +54,3 @@ class Config:
     def __init__(self, file, type = self.DETECT, default = [], correct = null):
         self.load(file, type, default)
         correct = self.correct
-```
