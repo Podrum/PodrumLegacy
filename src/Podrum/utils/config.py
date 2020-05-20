@@ -107,6 +107,7 @@ class Config:
                 return false
             if not is_array(self.config):
                 self.config = default
+            if self.fillDefaults(default, self.config) > 0:
             
                 
                 
