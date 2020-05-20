@@ -17,12 +17,11 @@ from ..pyraklib.server import ServerHandler
 from .utils import logger, fs
 from .network import ipAddr
 
-logo = """____           _                      
-             |  _ \ ___   __| |_ __ _   _ _ __ ___  
-             | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
-             |  __/ (_) | (_| | |  | |_| | | | | | |
-             |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
-
+logo = """\n   ____           _                      
+   |  _ \ ___   __| |_ __ _   _ _ __ ___  
+   | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
+   |  __/ (_) | (_| | |  | |_| | | | | | |
+   |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
 
 class Server:
     def __init__(self, path):
