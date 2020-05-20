@@ -1,3 +1,5 @@
+```
+
 """
 *  ____           _                      
 * |  _ \ ___   __| |_ __ _   _ _ __ ___  
@@ -11,15 +13,47 @@
 * (at your option) any later version.
 """
 import json
+import yaml
 
 from .fs import read
 from ..Server import server
 
-# TODO: Make it work
-
-configFile = json.loads(read(f'{server.path}/server.json'))
-
-
 class Config:
-    def __init__(self):
-        self.port = configFile["port"]
+    DETECT = -1
+    PROPERTIES = 0
+    CNF = self.PROPERTIES
+    JSON = 1
+    YAML = 2
+    EXPORT = 3
+    SERIALIZED = 4
+    ENUM = 5
+    ENUMERATION = self.ENUM
+    
+    config = []
+    nestedCache = []
+    file = ''
+    correct = false
+    type = self.DETECT
+
+    formats = [{
+        "properties" : self.PROPERTIES,
+        "cnf" : self.CNF,
+        "conf" : self.CNF,
+        "config" : self.CNF,
+        "json" : self.JSON,
+        "js" : self.JSON,
+        "yml" : self.YAML,
+        "yaml" : self.YAML,
+        "export" : self.EXPORT,
+        "xport" : self.EXPORT,
+        "sl" : self.SERIALIZED,
+        "serialize" : self.SERIALIZED,
+        "txt" : self.ENUM,
+        "list" : self.ENUM,
+        "enum" : self.ENUM,
+    }]
+
+    def __init__(self, file, type = self.DETECT, default = [], correct = null):
+        self.load(file, type, default)
+        correct = self.correct
+```
