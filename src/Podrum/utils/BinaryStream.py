@@ -1,3 +1,1 @@
-"""
-BinaryStream
-"""
+import .Binary
