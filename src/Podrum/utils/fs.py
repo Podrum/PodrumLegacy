@@ -22,6 +22,7 @@ def read(file):
 def write(file, content):
     with open(file) as f:
         f.write(content)
+        f.close()
 
 
 # Name include extension
