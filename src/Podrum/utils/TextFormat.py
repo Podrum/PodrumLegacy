@@ -10,17 +10,19 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
+
 import os
 from re import M
-from .checkOS import getOS
+from checkOS import getOS
 
 
 class TextFormat:
+
     def __init__(self):
         if getOS() == 'windows':
             from ctypes import windll
             kernel = windll.kernel32
-            kernel.SetConsoleMode(k.GetStdHandle(-11),7)
+            kernel.SetConsoleMode(k.GetStdHandle(-11), 7)
         self.BOLD = '\x1b[1m'
         self.OBFUSCATED = ''
         self.ITALIC = '\x1b[3m'
