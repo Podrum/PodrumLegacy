@@ -106,6 +106,7 @@ class Config:
                 self.correct = false
                 return false
             if not is_array(self.config):
+                self.config = default
             
                 
                 
