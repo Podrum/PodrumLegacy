@@ -1,0 +1,7 @@
+  
+{
+    "startingServer": "Iniciando el servidor en {ip}:{port}",
+    "extIpMsg": "Esta és tu ip externa: {ipPublic}. Si quieres que jugadores que no estén en tu red local se puedan unir debes hacer portforwarding.",
+    "license": "Podrum está licenciado bajo la licencia GPLv3",
+    "invalidCommand": "Comando Inválido"
+}
