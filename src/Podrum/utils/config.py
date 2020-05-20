@@ -70,7 +70,7 @@ class Config:
     def fixYAMLIndexes(str):
         return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", str)
     
-    def load(file, type = self.DETECT, default = []):
+    def load(self, file, type = self.DETECT, default = []):
         self.correct = true
         self.type = type
         self.file = file
@@ -88,8 +88,8 @@ class Config:
                 if self.isset(self.formats[extension]):
                     self.type = self.formats[extension]
                 else:
-                    self.correct = false
-            if self.correct == true:
+                    self.correct = False
+            if self.correct:
                 content = open(self.file).read()
             if (self.type == self.PROPERTIES) and (self.type == self.CNF):
                 self.parseProperties(content)
@@ -103,11 +103,12 @@ class Config:
             elif self.type == self.ENUM:
                 self.parseList(content)
             else:
-                self.correct = false
-                return false
-            if not is_array(self.config):
+                self.correct = False
+                return False
+            if not is_array(self.config): # Is array doesn't exist
                 self.config = default
             if self.fillDefaults(default, self.config) > 0:
+                pass
             
                 
                 
