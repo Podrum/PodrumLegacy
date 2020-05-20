@@ -74,9 +74,9 @@ class Config:
         self.correct = true
         self.type = type
         self.file = file
-        if !is_array(default):
+        if not is_array(default):
             default = []
-        if !os.path.exists(file):
+        if not os.path.exists(file):
             self.config = default
             self.save()
         else:
@@ -106,7 +106,7 @@ class Config:
             else:
                 self.correct = false
                 return false
-            if !is_array(self.config):
+            if not is_array(self.config):
             
                 
                 
