@@ -108,8 +108,10 @@ class Config:
             if not is_array(self.config): # Is array doesn't exist
                 self.config = default
             if self.fillDefaults(default, self.config) > 0:
-                pass
-            
+                self.save()
+        else:
+            return false
+    return true
                 
                 
                 
