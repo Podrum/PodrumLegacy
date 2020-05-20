@@ -70,7 +70,7 @@ class Config:
         self.correct = True
         self.type = type
         self.file = file
-        if not in_array(default):
+        if not in default:
             default = []
         if checkForFile(Server.path, file):
             self.config = default
