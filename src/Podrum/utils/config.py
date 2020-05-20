@@ -16,7 +16,7 @@ import json
 import yaml
 
 from .fs import *
-from ..Server import server
+from ..Server import Server
 
 class Config:
     DETECT = -1
@@ -70,9 +70,9 @@ class Config:
         self.correct = True
         self.type = type
         self.file = file
-        if ! in_array(default):
+        if not in_array(default):
             default = []
-        if checkForFile(server.path, file):
+        if checkForFile(Server.path, file):
             self.config = default
             self.save()
         else:
