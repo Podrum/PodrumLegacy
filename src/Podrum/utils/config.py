@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 import re
+import os
 import json
 import yaml
 
@@ -52,11 +53,11 @@ class Config:
         "enum" : self.ENUM,
     }]
 
-    def __init__(self, file, type = self.DETECT, default = [], correct = null):
+    def __init__(file, type = self.DETECT, default = [], correct = null):
         self.load(file, type, default)
         correct = self.correct
         
-    def reload(self):
+    def reload():
         self.config = []
         self.nestedCache = []
         self.correct = false
@@ -64,3 +65,18 @@ class Config:
         
     def fixYAMLIndexes(str):
         return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", str)
+    
+    def load(file, type = self.DETECT, default = []):
+        self.correct = true
+        self.type = type
+        self.file = file
+        if !in_array(default):
+            default = []
+        if !os.path.exists(file):
+            self.config = default
+            self.save()
+        else:
+            if self.type == self.DETECT:
+                bname = basename(self.file)
+                extension = bname.split(".")
+        
