@@ -22,7 +22,7 @@ class TextFormat:
         if getOS() == 'windows':
             from ctypes import windll
             kernel = windll.kernel32
-            kernel.SetConsoleMode(k.GetStdHandle(-11), 7)
+            kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)
         self.BOLD = '\x1b[1m'
         self.OBFUSCATED = ''
         self.ITALIC = '\x1b[3m'
