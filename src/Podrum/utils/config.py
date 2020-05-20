@@ -79,4 +79,7 @@ class Config:
             if self.type == self.DETECT:
                 bname = os.path.basename(self.file)
                 extension = bname.split(".")
+                arrlist = extension.pop()
+                extension = arrlist.strip().lower()
+                if d
         
