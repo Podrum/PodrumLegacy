@@ -18,7 +18,6 @@ from .checkOS import getOS
 class TextFormat:
     def __init__(self):
         if getOS() == 'windows':
-            from platform import system
             from ctypes import windll
             kernel = windll.kernel32
             kernel.SetConsoleMode(k.GetStdHandle(-11),7)
