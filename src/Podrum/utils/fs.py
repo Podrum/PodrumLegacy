@@ -19,8 +19,9 @@ def read(file):
         f.close()
 
 
-def write():
-    pass
+def write(file, content):
+    with open(file) as f:
+        f.write(content)
 
 
 # Name include extension
