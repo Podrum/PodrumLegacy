@@ -77,6 +77,6 @@ class Config:
             self.save()
         else:
             if self.type == self.DETECT:
-                bname = basename(self.file)
+                bname = os.path.basename(self.file)
                 extension = bname.split(".")
         
