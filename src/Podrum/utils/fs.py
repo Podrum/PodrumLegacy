@@ -24,7 +24,7 @@ def write():
 
 
 # Name include extension
-def createFiles(path, name):
+def createFile(path, name):
     f = open(f'{path}/{name}', 'w+')
     f.close()
 
@@ -46,7 +46,7 @@ def checkForFile(type_, path, name):
 def checkAllFiles(path):
     firstLaunch = False
     if not checkForFile('f', path, 'server.json'):
-        createFiles(path, 'server.json')
+        createFile(path, 'server.json')
         firstLaunch = True
     elif not checkForFile('dir', path, 'plugins'): createDir(path, 'plugins')
     elif not checkForFile('dir', path, 'worlds'): createDir(path, 'worlds')
