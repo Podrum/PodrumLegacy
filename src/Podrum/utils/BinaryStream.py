@@ -1,1 +1,1 @@
-import .Binary
+from .Binary import Binary
