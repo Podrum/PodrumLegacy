@@ -91,8 +91,7 @@ class Config:
                     self.correct = false
             if self.correct == true:
                 content = open(self.file).read()
-            if self.type == self.PROPERTIES:
-            elseif self.type == self.CNF:
+            if (self.type == self.PROPERTIES) and (self.type == self.CNF):
                 self.parseProperties(content)
             elseif self.type == self.JSON:
                 self.config = json.loads(content)
