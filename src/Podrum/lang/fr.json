@@ -1,0 +1,6 @@
+{
+    "startingServer": "Démarage du serveur sur {ip}:{port}",
+    "extIpMsg": "Ceci est votre ip public: {ipPublic}. Si vous voulez que des personnes rejoignent en dehors de votre réseau vous devez ouvrir vos ports",
+    "license": "Podrum est sous la licence GPLv3",
+    "invalidCommand": "Commande invalide"
+}
