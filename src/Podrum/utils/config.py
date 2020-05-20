@@ -93,14 +93,14 @@ class Config:
                 content = open(self.file).read()
             if (self.type == self.PROPERTIES) and (self.type == self.CNF):
                 self.parseProperties(content)
-            elseif self.type == self.JSON:
+            elif self.type == self.JSON:
                 self.config = json.loads(content)
-            elseif self.type == self.YAML:
+            elif self.type == self.YAML:
                 content = self.fixYAMLIndexes(content)
                 self.config = yaml.load(content)
-            elseif self.type == self.SERIALIZED:
+            elif self.type == self.SERIALIZED:
                 self.config = pickle.loads(content)
-            elseif self.type == self.ENUM:
+            elif self.type == self.ENUM:
                 self.parseList(content)
             else:
                 self.correct = false
