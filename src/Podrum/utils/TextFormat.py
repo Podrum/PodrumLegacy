@@ -13,7 +13,7 @@
 
 import os
 from re import M
-from checkOS import getOS
+from .checkOS import getOS
 
 
 class TextFormat:
