@@ -17,7 +17,7 @@ from ..pyraklib.server import ServerHandler
 from .utils import logger, fs
 from .network import ipAddr
 
-logo = """\n   ____           _                      
+logo = """   ____           _                      
    |  _ \ ___   __| |_ __ _   _ _ __ ___  
    | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
    |  __/ (_) | (_| | |  | |_| | | | | | |
@@ -29,7 +29,7 @@ class Server:
         self.path = path
         fs.checkAllFiles(path)
         port = 19132
-        logger.log('info', str(logo))
+        print(str(logo))
         logger.log('info', f'Starting server on {ipAddr.getPrivateIpAddr()}:{str(port)}')
         logger.log('info', f'This is your external ip: {ipAddr.getPublicIpAddr()}. If you want players that are not '
                            f'in your local network you must portforward')
