@@ -19,7 +19,7 @@ pip install -r requirements.txt
 python start.py
 ```
 
-We recommand to use [SSB](https://github.com/Podrum/SSB)
+We recommend to use [SSB](https://github.com/Podrum/SSB)
 # TODO List:
 - [x] MOTD
 - [ ] Commands (currently doing)
