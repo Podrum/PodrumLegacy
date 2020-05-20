@@ -54,3 +54,9 @@ class Config:
     def __init__(self, file, type = self.DETECT, default = [], correct = null):
         self.load(file, type, default)
         correct = self.correct
+        
+    def reload(self):
+        self.config = []
+        self.nestedCache = []
+        self.correct = false
+        self.load(self.file, self.type)
