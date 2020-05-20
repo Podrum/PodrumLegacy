@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from src.Podrum.Server import Server, command
 from os import getcwd
 from threading import Thread

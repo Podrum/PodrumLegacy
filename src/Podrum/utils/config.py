@@ -15,64 +15,64 @@ import os
 import json
 import yaml
 
-from .fs import read
+from .fs import *
 from ..Server import server
 
 class Config:
     DETECT = -1
     PROPERTIES = 0
-    CNF = self.PROPERTIES
+    CNF = PROPERTIES
     JSON = 1
     YAML = 2
     EXPORT = 3
     SERIALIZED = 4
     ENUM = 5
-    ENUMERATION = self.ENUM
+    ENUMERATION = ENUM
     
     config = []
     nestedCache = []
     file = ''
-    correct = false
-    type = self.DETECT
+    correct = False
+    type = DETECT
 
     formats = [{
-        "properties" : self.PROPERTIES,
-        "cnf" : self.CNF,
-        "conf" : self.CNF,
-        "config" : self.CNF,
-        "json" : self.JSON,
-        "js" : self.JSON,
-        "yml" : self.YAML,
-        "yaml" : self.YAML,
-        "export" : self.EXPORT,
-        "xport" : self.EXPORT,
-        "sl" : self.SERIALIZED,
-        "serialize" : self.SERIALIZED,
-        "txt" : self.ENUM,
-        "list" : self.ENUM,
-        "enum" : self.ENUM,
+        "properties" : PROPERTIES,
+        "cnf" : CNF,
+        "conf" : CNF,
+        "config" : CNF,
+        "json" : JSON,
+        "js" : JSON,
+        "yml" : YAML,
+        "yaml" : YAML,
+        "export" : EXPORT,
+        "xport" : EXPORT,
+        "sl" : SERIALIZED,
+        "serialize" : SERIALIZED,
+        "txt" : ENUM,
+        "list" : ENUM,
+        "enum" : ENUM,
     }]
 
-    def __init__(file, type = self.DETECT, default = [], correct = null):
-        self.load(file, type, default)
+    def __init__(,self, file, type_ = DETECT, default = [], correct = None):
+        self.load(file, type_, default)
         correct = self.correct
         
-    def reload():
-        self.config = []
-        self.nestedCache = []
-        self.correct = false
-        self.load(self.file, self.type)
+    def reload(self):
+        config = []
+        nestedCache = []
+        correct = False
+        self.load(self.file, self.type_)
         
-    def fixYAMLIndexes(str):
-        return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", str)
+    def fixYAMLIndexes(self, string):
+        return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", string)
     
-    def load(file, type = self.DETECT, default = []):
-        self.correct = true
+    def load(self, file, type = DETECT, default = []):
+        self.correct = True
         self.type = type
         self.file = file
-        if !in_array(default):
+        if ! in_array(default):
             default = []
-        if !os.path.exists(file):
+        if checkForFile(server.path, file):
             self.config = default
             self.save()
         else:
@@ -81,5 +81,4 @@ class Config:
                 extension = bname.split(".")
                 arrlist = extension.pop()
                 extension = arrlist.strip().lower()
-                if d
         
