@@ -10,6 +10,7 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
+import re
 import json
 import yaml
 
@@ -60,3 +61,6 @@ class Config:
         self.nestedCache = []
         self.correct = false
         self.load(self.file, self.type)
+        
+    def fixYAMLIndexes(str):
+        return re.sub(r'#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m', r'\1_\2', str)
