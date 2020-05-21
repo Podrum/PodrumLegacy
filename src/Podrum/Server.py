@@ -11,7 +11,8 @@
 * (at your option) any later version.
 """
 import time
-import sys
+import os
+import signal
 from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
 
@@ -48,6 +49,6 @@ class Server:
 def command(string, fromConsole):
     if string.lower() == 'stop':
         quit()
-        sys.exit()
+        os.kill(os.getpid(),signal.SIGKILL)
     else:
         logger.log('error', 'Invalid command')
