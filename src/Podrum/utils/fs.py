@@ -48,7 +48,7 @@ def checkForDir(path):
 
 def checkAllFiles(path):
     firstLaunch = False
-    if not checkForFile('f', path, 'server.json'):
+    if not checkForFile(path, 'server.json'):
         createFile(path, 'server.json')
         firstLaunch = True
     elif not checkForFile('dir', path, 'plugins'):
