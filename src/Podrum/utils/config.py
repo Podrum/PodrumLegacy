@@ -135,7 +135,7 @@ class Config:
                     self.correct = False
                     return False
             except ValueError:
-                logger.log('error', 
+                logger.log('error', f'Could not save Config {self.file}')
                 
                 
         
