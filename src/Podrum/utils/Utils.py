@@ -22,3 +22,6 @@ class Utils:
             return 'osx'
         elif sys.platform == 'win32' or sys.platform == 'win64':
             return 'windows'
+        
+    def serverKill():
+        os.kill(os.getpid(), signal.SIGTERM)
