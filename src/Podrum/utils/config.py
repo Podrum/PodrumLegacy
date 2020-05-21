@@ -36,6 +36,7 @@ class Config:
     file = ''
     correct = false
     type = self.DETECT
+    is_array = lambda var: isinstance(var, (list, tuple))
 
     formats = [{
         "properties" : self.PROPERTIES,
@@ -75,7 +76,7 @@ class Config:
         self.correct = true
         self.type = type
         self.file = file
-        if not is_array(default):
+        if not self.is_array(default):
             default = []
         if not os.path.exists(file):
             self.config = default
@@ -106,7 +107,7 @@ class Config:
             else:
                 self.correct = False
                 return False
-            if not is_array(self.config): # Is array doesn't exist
+            if not self.is_array(self.config): # Is array doesn't exist
                 self.config = default
             if self.fillDefaults(default, self.config) > 0:
                 self.save()
