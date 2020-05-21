@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 import sys
+import signal
 
 class Utils:
 
