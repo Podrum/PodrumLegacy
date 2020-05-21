@@ -1,0 +1,6 @@
+{
+    "startingServer": "Avvio del server su {ip}:{port}",
+    "extIpMsg": "Questo è il vostro ip esterno: {ipPublic}. Se si desidera che i giocatori che non sono nella vostra rete locale è necessario portforward",
+    "license": "Podrum ha la licenza GPLv3",
+    "invalidCommand": "Comando non valido"
+}
