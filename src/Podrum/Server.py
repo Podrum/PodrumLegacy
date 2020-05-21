@@ -17,7 +17,8 @@ from ..pyraklib.server import ServerHandler
 from .utils import logger, fs
 from .network import ipAddr
 
-logo = """    ____           _                      
+logo = """
+    ____           _                      
    |  _ \ ___   __| |_ __ _   _ _ __ ___  
    | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
    |  __/ (_) | (_| | |  | |_| | | | | | |
