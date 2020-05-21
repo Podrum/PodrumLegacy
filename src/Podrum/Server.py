@@ -48,7 +48,6 @@ class Server:
 
 def command(string, fromConsole):
     if string.lower() == 'stop':
-        quit()
-        os.kill(os.getpid(), signal.SIGKILL)
+        os.kill(os.getpid(), signal.SIGTERM)
     else:
         logger.log('error', 'Invalid command')
