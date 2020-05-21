@@ -115,7 +115,26 @@ class Config:
 
     def check():
         return self.correct = true
-                
+    
+    def save():
+        if self.correct == true:
+            try:
+                content = null
+                if (self.type == self.PROPERTIES) and (self.type == self.CNF):
+                    content = self.writeProperties()
+                elif self.type == self.JSON:
+                    content = json.dumps(self.config)
+                elif self.type == self.YAML:
+                    content = yaml.emit(self.config)
+                elif self.type == self.SERIALIZED:
+                    content = pickle.dumps(self.config)
+                elif self.type == self.ENUM:
+                    "\r\n".join(self.config.keys())
+                else:
+                    self.correct = False
+                    return False
+            except ValueError:
+                logger.
                 
                 
         
