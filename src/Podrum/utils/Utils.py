@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 import sys
+import os
 import signal
 import socket
 import urllib
