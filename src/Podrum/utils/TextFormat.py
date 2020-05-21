@@ -13,13 +13,13 @@
 
 import os
 from re import M
-from .checkOS import getOS
+from ..utils import Utils
 
 
 class TextFormat:
 
     def __init__(self):
-        if getOS() == 'windows':
+        if Utils.getOS() == 'windows':
             from ctypes import windll
             kernel = windll.kernel32
             kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)
