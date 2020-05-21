@@ -47,6 +47,7 @@ class Server:
 
 def command(string, fromConsole):
     if string.lower() == 'stop':
+        logger.log('info', 'Stopping server...')
         Utils.serverKill()
     else:
         logger.log('error', 'Invalid command')
