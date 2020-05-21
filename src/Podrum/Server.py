@@ -11,12 +11,10 @@
 * (at your option) any later version.
 """
 import time
-import os
-import signal
 from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
 
-from .utils import logger, fs
+from .utils import logger, fs, Utils
 from .network import ipAddr
 
 logo = """
@@ -49,6 +47,6 @@ class Server:
 
 def command(string, fromConsole):
     if string.lower() == 'stop':
-        os.kill(os.getpid(), signal.SIGTERM)
+        Utils.serverKill()
     else:
         logger.log('error', 'Invalid command')
