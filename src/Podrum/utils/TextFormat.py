@@ -13,7 +13,7 @@
 
 import os
 from re import M
-from ..utils import Utils
+import .Utils
 
 
 class TextFormat:
