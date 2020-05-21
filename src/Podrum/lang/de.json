@@ -1,1 +1,7 @@
-h
+
+{
+    "startingServer": "Server starten auf {ip}:{port}",
+    "extIpMsg": "Dies ist Ihre externe ip: {ipPublic}. Wenn Sie Player haben möchten, die sich nicht in Ihrem lokalen Netzwerk befinden, müssen Sie Folgendes portieren",
+    "license": "Podrum steht unter der GPLv3-Lizenz",
+    "invalidCommand": "Ungültiger Befehl"
+}
