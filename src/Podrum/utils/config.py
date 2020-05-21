@@ -15,6 +15,7 @@ import os
 import json
 import yaml
 import pickle
+from ..utils import logger
 
 from .fs import read
 from ..Server import server
@@ -134,7 +135,7 @@ class Config:
                     self.correct = False
                     return False
             except ValueError:
-                logger.
+                logger.log('error', 
                 
                 
         
