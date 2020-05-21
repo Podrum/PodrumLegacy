@@ -15,7 +15,6 @@ from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
 
 from .utils import logger, fs, Utils
-from .network import ipAddr
 
 logo = """
     ____           _                      
@@ -32,8 +31,8 @@ class Server:
         fs.checkAllFiles(path)
         port = 19132
         print(str(logo))
-        logger.log('info', f'Starting server on {ipAddr.getPrivateIpAddr()}:{str(port)}')
-        logger.log('info', f'This is your external ip: {ipAddr.getPublicIpAddr()}. If you want players that are not '
+        logger.log('info', f'Starting server on {Utils.getPrivateIpAddr()}:{str(port)}')
+        logger.log('info', f'This is your external ip: {Utils.getPublicIpAddr()}. If you want players that are not '
                            f'in your local network you must portforward')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port=19132)
