@@ -112,6 +112,9 @@ class Config:
         else:
             return false
     return true
+
+    def check():
+        return self.correct == true
                 
                 
                 
