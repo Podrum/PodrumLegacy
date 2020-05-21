@@ -1,6 +1,6 @@
 {
-    "startingServer": "サーバの起動 {ip}:{port}",
-    "extIpMsg": "これはあなたの外部IPです: {ipPublic}。 ローカルネットワークにいないプレイヤーが必要な場合は",
-    "license": "Podrum は GPLv3 ライセンスのもとでライセンスされています。",
-    "invalidCommand": "無効なコマンド"
+    "startingServer": "{ip}:{port}でサーバを起動しています",
+    "extIpMsg": "あなたの外部IP: {ipPublic}です。ローカルネットワークにいないプレイヤーが参加する場合はポート開放が必要です",
+    "license": "Podrum はGPLv3ライセンスの元でライセンスされています",
+    "invalidCommand": "無効なコマンドです"
 }
