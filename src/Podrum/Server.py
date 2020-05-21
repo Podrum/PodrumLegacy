@@ -14,7 +14,8 @@ import time
 from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
 
-from .utils import logger, fs, Utils
+from .utils import logger, fs
+from .utils.Utils import Utils
 
 logo = """
     ____           _                      
