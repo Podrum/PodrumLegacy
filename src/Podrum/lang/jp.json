@@ -1,0 +1,6 @@
+{
+    "startingServer": "サーバの起動 {ip}:{port}",
+    "extIpMsg": "これはあなたの外部IPです: {ipPublic}. ローカルネットワークにいないプレイヤーが必要な場合は",
+    "license": "Podrum は GPLv3 ライセンスのもとでライセンスされています。",
+    "invalidCommand": "無効なコマンド"
+}
