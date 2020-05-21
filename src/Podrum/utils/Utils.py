@@ -13,7 +13,7 @@
 import sys
 import signal
 import socket
-import urllib.request
+import urllib
 
 class Utils:
 
