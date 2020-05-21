@@ -114,7 +114,7 @@ class Config:
     return true
 
     def check():
-        return self.correct == true
+        return self.correct = true
                 
                 
                 
