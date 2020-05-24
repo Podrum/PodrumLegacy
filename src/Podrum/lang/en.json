@@ -1,4 +1,5 @@
 {
+    "langName": "English",
     "startingServer": "Starting server on {ip}:{port}",
     "extIpMsg": "This is your external ip: {ipPublic}. If you want players that are not in your local network you must portforward",
     "license": "Podrum is licensed under the GPLv3 license",
