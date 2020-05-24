@@ -1,0 +1,2 @@
+def onCommand(string):
+    pass
