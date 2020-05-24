@@ -25,6 +25,7 @@ logo = """
    |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
    """
 
+
 class Server:
     def __init__(self, path):
         super().__init__()

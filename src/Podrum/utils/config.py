@@ -18,62 +18,64 @@ import pickle
 from ..utils import logger
 
 from .fs import read
-from ..Server import server
+from ..Server import Server
 
 class Config:
     DETECT = -1
     PROPERTIES = 0
-    CNF = self.PROPERTIES
+    CNF = PROPERTIES
     JSON = 1
     YAML = 2
     EXPORT = 3
     SERIALIZED = 4
     ENUM = 5
-    ENUMERATION = self.ENUM
+    ENUMERATION = ENUM
     
     config = []
     nestedCache = []
     file = ''
-    correct = false
-    type = self.DETECT
+    correct = False
+    type = DETECT
     is_array = lambda var: isinstance(var, (list, tuple))
 
     formats = [{
-        "properties" : self.PROPERTIES,
-        "cnf" : self.CNF,
-        "conf" : self.CNF,
-        "config" : self.CNF,
-        "json" : self.JSON,
-        "js" : self.JSON,
-        "yml" : self.YAML,
-        "yaml" : self.YAML,
-        "export" : self.EXPORT,
-        "xport" : self.EXPORT,
-        "sl" : self.SERIALIZED,
-        "serialize" : self.SERIALIZED,
-        "txt" : self.ENUM,
-        "list" : self.ENUM,
-        "enum" : self.ENUM,
+        "properties" : PROPERTIES,
+        "cnf" : CNF,
+        "conf" : CNF,
+        "config" : CNF,
+        "json" : JSON,
+        "js" : JSON,
+        "yml" : YAML,
+        "yaml" : YAML,
+        "export" : EXPORT,
+        "xport" : EXPORT,
+        "sl" : SERIALIZED,
+        "serialize" : SERIALIZED,
+        "txt" : ENUM,
+        "list" : ENUM,
+        "enum" : ENUM,
     }]
 
-    def __init__(file, type = self.DETECT, default = [], correct = null):
+    def __init__(self, file, type = DETECT, default = [], correct=None):
         self.load(file, type, default)
-        correct = self.correct
-        
-    def isset(variable):
+        correct = correct
+
+    @staticmethod
+    def isset(self, variable):
         return variable in locals() or variable in globals()
     
-    def reload():
+    def reload(self):
         self.config = []
         self.nestedCache = []
-        self.correct = false
+        self.correct = False
         self.load(self.file, self.type)
         
+    @staticmethod
     def fixYAMLIndexes(str):
         return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", str)
     
-    def load(self, file, type = self.DETECT, default = []):
-        self.correct = true
+    def load(self, file, type=DETECT, default = []):
+        self.correct = True
         self.type = type
         self.file = file
         if not self.is_array(default):
@@ -112,34 +114,32 @@ class Config:
             if self.fillDefaults(default, self.config) > 0:
                 self.save()
         else:
-            return false
-    return true
+            return False
+
+        return True
 
     def check():
-        return self.correct = true
+        return correct = True
     
     def save():
-        if self.correct == true:
+        if self.correct == True:
             try:
-                content = null
-                if (self.type == self.PROPERTIES) and (self.type == self.CNF):
-                    content = self.writeProperties()
-                elif self.type == self.JSON:
-                    content = json.dumps(self.config)
-                elif self.type == self.YAML:
-                    content = yaml.emit(self.config)
-                elif self.type == self.SERIALIZED:
+                content = None
+                if (type == PROPERTIES) and (type == CNF):
+                    content = writeProperties()
+                elif type == JSON:
+                    content = json.dumps(config)
+                elif type == YAML:
+                    content = yaml.emit(config)
+                elif type == SERIALIZED:
                     content = pickle.dumps(self.config)
-                elif self.type == self.ENUM:
-                    "\r\n".join(self.config.keys())
+                elif type == ENUM:
+                    "\r\n".join(config.keys())
                 else:
-                    self.correct = False
+                    correct = False
                     return False
             except ValueError:
                 logger.log('error', f'Could not save Config {self.file}')
-            return true
+            return True
         else:
             return false
-                
-                
-        
