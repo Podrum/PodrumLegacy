@@ -42,6 +42,7 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
+        wizard.isInWizard = False
         while wizard.isInWizard == False:
             cmd = input('> ')
             command(cmd, True)
