@@ -17,6 +17,8 @@ from ..pyraklib.server import ServerHandler
 from .utils import logger, fs
 from .utils.Utils import Utils
 
+from .wizard import wizard
+
 logo = """
     ____           _                      
    |  _ \ ___   __| |_ __ _   _ _ __ ___  
@@ -40,7 +42,11 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
-
+        wizard.isInWizard = False
+        while wizard.isInWizard == False:
+            cmd = input('> ')
+            command(cmd, True)
+            cmd = None
         ticking = True
         while ticking:
             time.sleep(0.002)

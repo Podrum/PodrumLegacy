@@ -11,6 +11,8 @@
 * (at your option) any later version.
 """
 import os
+import json
+from ..wizard import wizard
 
 
 def read(file):
@@ -48,11 +50,34 @@ def checkForDir(path):
 
 def checkAllFiles(path):
     firstLaunch = False
-    if not checkForFile(path, 'server.json'):
+    if not checkForFile(path, 'server.json') or (os.path.getsize(f'{path}/server.json') == 0):
         createFile(path, 'server.json')
         firstLaunch = True
     elif not checkForFile(path, 'plugins'):
         createDir(path, 'plugins')
     elif not checkForFile(path, 'worlds'):
         createDir(path, 'worlds')
-    # if firstLaunch: wizard() TODO: Implement wizard
+    if firstLaunch:
+        wizard.wizard(path)
+
+def createServerConfigFromWizard(path, isWizardSkipped, options):
+    if(isWizardSkipped == False):
+        with open(f'{path}/server.json', 'w', encoding="utf8") as file:
+            content = {
+            "MOTD": options[1],
+            "Language": options[0],
+            "MaxPlayers": options[2],
+            "Gamemode": options[3]
+
+            }
+            json.dump(content, file, indent=4, skipkeys=True, ensure_ascii=False)
+    else:
+        content = {
+            "MOTD": "Podrum powered server.",
+            "Language": "eng",
+            "MaxPlayers": "20",
+            "Gamemode": "0"
+
+        }
+        with open(f'{path}/server.json', 'w', encoding="utf8") as fl:
+            json.dump(content, fl, indent=4, skipkeys=True)

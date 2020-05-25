@@ -1,5 +1,13 @@
 {
     "langName": "Français",
+    "langSelectedAsBase": "Français sélectionné comme langue de base.",
+    "writeYesOrNo": "Veuillez écrire oui (y) ou non (n).",
+    "writeMOTD": "Écrivez le MOTD du serveur:",
+    "writeMaxPlayers": "Écrivez le nombre maximum de joueurs qui peuvent rejoindre votre serveur:",
+    "writeGamemode": "Sélectionnez un mode de jeu (en nombre) [SURVIE = 0, CRÉATIF = 1, AVENTURE = 2, SPECTATEUR = 3]:",
+    "wizardFinished": "Vous avez terminé l'assistant de configuration du serveur!",
+    "acceptLicense": "Acceptez-vous la licence? [y/n]",
+    "mustAcceptLicence": "Vous devez accepter la licence si vous souhaitez utiliser ce logiciel.",
     "startingServer": "Démarage du serveur sur {ip}:{port}",
     "extIpMsg": "Ceci est votre ip public: {ipPublic}. Si vous voulez que des personnes rejoignent en dehors de votre réseau vous devez ouvrir vos ports",
     "license": "Podrum est sous la licence GPLv3",
