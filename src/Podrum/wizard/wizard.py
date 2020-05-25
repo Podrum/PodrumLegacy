@@ -42,64 +42,64 @@ isInWizard = True
 text = "- "
 
 def wizard(path):
-	step = 0
-	while step >= 0 and step < 6:
-		if(step == 0):
-			print(logo)
-			print(">- Podrum - Wizard -<\n\n")
-			print("Do you want to follow the setup? [y/n]:")
-			userInput = input(text)
-			if parser.checkYesNo(userInput) == True:
-				step += 1
-			elif parser.checkYesNo(userInput) == False:
-				print("Skipping the setup wizard...")
-				skipWizard(path)
-				break
-			elif parser.checkYesNo(userInput) == None:
-				print("Please, write yes (y) or no (n).")
-		if(step == 1):
-			print("Please, select a language:")
-			base.getLangFiles(path)
-			userInput = input(text)
-			if parser.checkIfLangExists(userInput) == True:
-				options.append(userInput)
-				print(base.get("langSelectedAsBase"))
-				step += 1
-			else:
-				print("That language does not exists. Please, choose one from the list.")
-		if(step == 2):
-			print(license)
-			print(base.get("acceptLicense"))
-			userInput = input(text)
-			if parser.checkYesNo(userInput) == True:
-				step += 1
-			elif parser.checkYesNo(userInput) == False:
-				print(base.get("mustAcceptLicense"))
-			elif parser.checkYesNo(userInput) == None:
-				print(base.get("writeYesOrNo"))
-		if(step == 3):
-			print(base.get("writeMOTD"))
-			userInput = input(text)
-			if userInput != "":
-				options.append(userInput)
-				step += 1
-		if(step == 4):
-			print(base.get("writeMaxPlayers"))
-			userInput = input(text)
-			if userInput.isdigit():
-				options.append(userInput)
-				step += 1
-		if(step == 5):
-			print(base.get("writeGamemode"))
-			userInput = input(text)
-			if userInput.isdigit():
-				options.append(userInput)
-				print(base.get("wizardFinished"))
-				endWizard(path)
-				break
+    step = 0
+    while step >= 0 and step < 6:
+        if(step == 0):
+            print(logo)
+            print(">- Podrum - Wizard -<\n\n")
+            print("Do you want to follow the setup? [y/n]:")
+            userInput = input(text)
+            if parser.checkYesNo(userInput) == True:
+                step += 1
+            elif parser.checkYesNo(userInput) == False:
+                print("Skipping the setup wizard...")
+                skipWizard(path)
+                break
+            elif parser.checkYesNo(userInput) == None:
+                print("Please, write yes (y) or no (n).")
+        if(step == 1):
+            print("Please, select a language:")
+            base.getLangFiles(path)
+            userInput = input(text)
+            if parser.checkIfLangExists(userInput) == True:
+                options.append(userInput)
+                print(base.get("langSelectedAsBase"))
+                step += 1
+            else:
+                print("That language does not exists. Please, choose one from the list.")
+        if(step == 2):
+            print(license)
+            print(base.get("acceptLicense"))
+            userInput = input(text)
+            if parser.checkYesNo(userInput) == True:
+                step += 1
+            elif parser.checkYesNo(userInput) == False:
+                print(base.get("mustAcceptLicense"))
+            elif parser.checkYesNo(userInput) == None:
+                print(base.get("writeYesOrNo"))
+        if(step == 3):
+            print(base.get("writeMOTD"))
+            userInput = input(text)
+            if userInput != "":
+                options.append(userInput)
+                step += 1
+        if(step == 4):
+            print(base.get("writeMaxPlayers"))
+            userInput = input(text)
+            if userInput.isdigit():
+                options.append(userInput)
+                step += 1
+        if(step == 5):
+            print(base.get("writeGamemode"))
+            userInput = input(text)
+            if userInput.isdigit():
+                options.append(userInput)
+                print(base.get("wizardFinished"))
+                endWizard(path)
+                break
 
 def skipWizard(path):
-	fs.createServerConfigFromWizard(path, True, [])
+    fs.createServerConfigFromWizard(path, True, [])
 
 def endWizard(path):
-	fs.createServerConfigFromWizard(path, False, options)
+    fs.createServerConfigFromWizard(path, False, options)
