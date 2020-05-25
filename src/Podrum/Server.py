@@ -15,13 +15,16 @@ from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
 
 from .utils import logger, fs
-from .network import ipAddr
+from .utils.Utils import Utils
 
-logo = """    ____           _                      
+logo = """
+    ____           _                      
    |  _ \ ___   __| |_ __ _   _ _ __ ___  
    | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
    |  __/ (_) | (_| | |  | |_| | | | | | |
-   |_|   \___/ \__,_|_|   \__,_|_| |_| |_|"""
+   |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+   """
+
 
 class Server:
     def __init__(self, path):
@@ -30,8 +33,8 @@ class Server:
         fs.checkAllFiles(path)
         port = 19132
         print(str(logo))
-        logger.log('info', f'Starting server on {ipAddr.getPrivateIpAddr()}:{str(port)}')
-        logger.log('info', f'This is your external ip: {ipAddr.getPublicIpAddr()}. If you want players that are not '
+        logger.log('info', f'Starting server on {Utils.getPrivateIpAddr()}:{str(port)}')
+        logger.log('info', f'This is your external ip: {Utils.getPublicIpAddr()}. If you want players that are not '
                            f'in your local network you must portforward')
         logger.log('info', 'Podrum is licensed under the GPLv3 license')
         server = PyRakLibServer(port=19132)
@@ -45,6 +48,7 @@ class Server:
 
 def command(string, fromConsole):
     if string.lower() == 'stop':
-        quit()
+        logger.log('info', 'Stopping server...')
+        Utils.serverKill()
     else:
         logger.log('error', 'Invalid command')

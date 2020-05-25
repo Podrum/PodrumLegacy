@@ -48,11 +48,11 @@ def checkForDir(path):
 
 def checkAllFiles(path):
     firstLaunch = False
-    if not checkForFile('f', path, 'server.json'):
+    if not checkForFile(path, 'server.json'):
         createFile(path, 'server.json')
         firstLaunch = True
-    elif not checkForFile('dir', path, 'plugins'):
+    elif not checkForFile(path, 'plugins'):
         createDir(path, 'plugins')
-    elif not checkForFile('dir', path, 'worlds'):
+    elif not checkForFile(path, 'worlds'):
         createDir(path, 'worlds')
     # if firstLaunch: wizard() TODO: Implement wizard

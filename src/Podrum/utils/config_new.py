@@ -10,8 +10,14 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-from ..utils import Binary
 
 
-class BinaryStream:
-    pass
+class config:
+    def readServerConf(self, value):
+        ...
+
+    def readConfigFile(self, value):
+        ...
+
+    def writeConfigFile(self, value):
+        ...

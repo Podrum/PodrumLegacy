@@ -27,5 +27,11 @@ def log(type_, content):
         print(f'{TextFormat.RED}[ERROR: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
     elif type_ == 'success':
         print(f'{TextFormat.GREEN}[SUCCESS: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
+    elif type_ == "emergency":
+    	print(f'{TextFormat.GOLD}[EMERGENCY: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
+    elif type_ == "alert":
+    	print(f'{TextFormat.PURPLE}[ALERT: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
+    elif type_ == "notice":
+    	print(f'{TextFormat.AQUA}[NOTICE: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
     else:
         print(f'[{type_.upper()}: {time.strftime("%H:%M")}]{content}')
