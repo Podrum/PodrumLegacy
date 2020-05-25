@@ -1,5 +1,13 @@
 {
     "langName": "English",
+    "langSelectedAsBase": "English selected as base language.",
+    "writeYesOrNo": "Please, write yes (y) or no (n).",
+    "writeMOTD": "Write the MOTD of the server:",
+    "writeMaxPlayers": "Write the number of max players that can join your server:",
+    "writeGamemode": "Select a gamemode (in number) [SURVIVAL = 0, CREATIVE = 1, ADVENTURE = 2, SPECTATOR = 3]:",
+    "wizardFinished": "You have finished the server setup wizard!",
+    "acceptLicense": "Do you accept the license? [y/n]",
+    "mustAcceptLicence": "You must to accept the license if do you want to use this software.",
     "startingServer": "Starting server on {ip}:{port}",
     "extIpMsg": "This is your external ip: {ipPublic}. If you want players that are not in your local network you must portforward",
     "license": "Podrum is licensed under the GPLv3 license",
