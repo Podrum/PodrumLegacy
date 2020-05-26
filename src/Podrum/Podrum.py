@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-os.chdir("...")
+os.chdir("..")
 
 from os import getcwd
 from threading import Thread
