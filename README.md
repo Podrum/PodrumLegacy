@@ -9,14 +9,14 @@ Linux and MacOS (Unix systems):
 python3 -m venv /venv
 ./venv/Scripts/activate.sh
 pip3 install -r requirements.txt
-python3 src/Podrum/Podrum.py
+python3 Podrum.py
 ```
 Windows:
 ```bat
 python -m venv /venv
 call ./venv/Scripts/activate.bat
 pip install -r requirements.txt
-python src\Podrum\Podrum.py
+python Podrum.py
 ```
 
 We recommend to use [SSB](https://github.com/Podrum/SSB)
