@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from src.Podrum.Server import Server
+from .Server import Server
 from os import getcwd
 from threading import Thread
 
