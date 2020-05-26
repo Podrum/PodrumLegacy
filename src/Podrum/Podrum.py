@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from os import getcwd
+import os
 os.chdir("...")
 
+from os import getcwd
 from threading import Thread
 from .Server import Server
 
