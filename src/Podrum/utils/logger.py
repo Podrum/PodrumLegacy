@@ -33,5 +33,9 @@ def log(type_, content):
     	print(f'{TextFormat.PURPLE}[ALERT: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
     elif type_ == "notice":
     	print(f'{TextFormat.AQUA}[NOTICE: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
+    elif type_ == "critical":
+        print(f'{TextFormat.RED}[CRITICAL: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
+    elif type_ == "debug":
+        print(f'{TextFormat.GRAY}[DEBUG: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
     else:
         print(f'[{type_.upper()}: {time.strftime("%H:%M")}]{content}')
