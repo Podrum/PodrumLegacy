@@ -155,7 +155,7 @@ class Binary:
             else:
                 buf += chr(value & 0x7f)
                 return buf
-            value = ((value >> 7) & (sys.maxint >> 6))  
+            value = ((value >> 7) & (sys.maxsize >> 6))  
         raise TypeError('Value too large to be encoded as a varint')
     
     def writeVarInt(v):
