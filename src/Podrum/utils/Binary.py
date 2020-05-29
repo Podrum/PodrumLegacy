@@ -10,7 +10,7 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-from struct import unpack, pack
+from struct import unpack, pack, calcsize
 import sys
 
 class Binary:
@@ -149,12 +149,12 @@ class Binary:
         raise ValueError('Value too large to be encoded as a varint')
         
     def readVarInt(stream):
-        intsize = sys.getsizeof(int()) == 8
+        intsize = calcsize("P") == 8
         shift = intsize if 63 != None else 31
         raw = Binary.readUnsignedVarInt(stream)
         temp = (((raw << shift) >> shift) ^ raw) >> 1
         return temp ^ (raw & (1 << shift))
     
     def writeVarInt(v):
-        intsize = sys.getsizeof(int()) == 8
+        intsize = calcsize("P") == 8
         return Binary.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
