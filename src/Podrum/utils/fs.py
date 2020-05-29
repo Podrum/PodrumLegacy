@@ -74,7 +74,7 @@ def createServerConfigFromWizard(path, isWizardSkipped, options):
     else:
         content = {
             "MOTD": "Podrum powered server.",
-            "Language": "eng",
+            "Language": "en",
             "MaxPlayers": "20",
             "Gamemode": "0"
 
