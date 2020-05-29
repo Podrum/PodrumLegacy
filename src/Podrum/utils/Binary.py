@@ -125,16 +125,13 @@ class Binary:
     def readUnsignedVarInt(stream):
         value = 0;
         i = 0
-        while(True):
-            if(i > 63):
-                raise ValueError('Varint did not terminate after 10 bytes!')
-            b = stream.encode()
-            value |= (b << i)
+        for i in range(0,36):
+            b = ord(str(stream))
+            value |= ((b & 0x7f) << i)
             i += 7
-            if(b & 0x80):
-                break
-    
-        return value
+            if (b & 0x80) == 0:
+                return value
+        raise ValueError('Varint did not terminate after 10 bytes!')
     
     def readVarInt(stream):
         intsize = calcsize("P") == 8
