@@ -131,7 +131,7 @@ class Binary:
             i += 7
             if (b & 0x80) == 0:
                 return value
-            elif (len(stream) - 1) < int(offset)
+            elif (len(stream) - 1) < int(offset):
                 raise TypeError('Expected more bytes, none left to read)
         raise TypeError('Varint did not terminate after 5 bytes!')
 
