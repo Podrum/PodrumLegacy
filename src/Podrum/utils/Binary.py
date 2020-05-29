@@ -122,7 +122,7 @@ class Binary:
     def writeLLong(value):
         return pack('<l', value)
     
-    def readUnsignedVarint(stream):
+    def readUnsignedVarInt(stream):
         value = 0;
         i = 0
         while(True):
@@ -136,7 +136,7 @@ class Binary:
     
         return value
     
-    def writeUnsignedVarint(value):
+    def writeUnsignedVarInt(value):
         buf = ""
         for i in range(0, 10):
             if((value >> 7) != 0):
@@ -148,13 +148,13 @@ class Binary:
             value = ((value >> 7) & (sys.maxint >> 6))  
         raise ValueError('Value too large to be encoded as a varint')
         
-    def readVarint(stream):
+    def readVarInt(stream):
         intsize = sys.getsizeof(int()) == 8
         shift = intsize if 63 != None else 31
         raw = Binary.readUnsignedVarInt(stream)
         temp = (((raw << shift) >> shift) ^ raw) >> 1
         return temp ^ (raw & (1 << shift))
     
-    def writeVarint(v):
+    def writeVarInt(v):
         intsize = sys.getsizeof(int()) == 8
         return Binary.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
