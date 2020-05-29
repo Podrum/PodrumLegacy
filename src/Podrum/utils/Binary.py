@@ -122,35 +122,39 @@ class Binary:
     def writeLLong(value):
         return pack('<l', value)
     
-    def readUnsignedVarInt(stream):
+    def readUnsignedVarInt(stream, offset):
         value = 0;
         i = 0
-        for i in range(0,36):
-            b = ord(str(stream))
+        for i in range(0, 35):
+            b = ord(stream[offset.backIncrement()])
             value |= ((b & 0x7f) << i)
             i += 7
             if (b & 0x80) == 0:
                 return value
-        raise ValueError('Varint did not terminate after 10 bytes!')
-    
-    def readVarInt(stream):
+            elif (len(stream) - 1) < int(offset)
+                raise TypeError('Expected more bytes, none left to read)
+        raise TypeError('Varint did not terminate after 5 bytes!')
+
+    def readVarInt(stream, offset):
         intsize = calcsize("P") == 8
         shift = intsize if 63 != None else 31
-        raw = Binary.readUnsignedVarInt(stream)
+        raw = Binary.readUnsignedVarInt(stream, offset)
         temp = (((raw << shift) >> shift) ^ raw) >> 1
         return temp ^ (raw & (1 << shift))
     
     def writeUnsignedVarInt(value):
         buf = ""
-        for i in range(0, 10):
-            if((value >> 7) != 0):
-                buf = chr(value | 0x80)
-                raise ValueError('Varint did not terminate after 10 bytes!')
+        value = value & 0xffffffff
+        i = i + 1
+        for i in range(0, 5):
+            if (value >> 7) != 0:
+                buf += chr(value | 0x80)
+                raise TypeError('Varint did not terminate after 5 bytes!')
             else:
-                buf = chr(value & 0x7f)
+                buf += chr(value & 0x7f)
                 return buf
             value = ((value >> 7) & (sys.maxint >> 6))  
-        raise ValueError('Value too large to be encoded as a varint')
+        raise TypeError('Value too large to be encoded as a varint')
     
     def writeVarInt(v):
         intsize = calcsize("P") == 8
