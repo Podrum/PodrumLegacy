@@ -19,6 +19,8 @@ from .utils.Utils import Utils
 
 from .wizard import wizard
 
+from .lang import base
+
 logo = """
     ____           _                      
    |  _ \ ___   __| |_ __ _   _ _ __ ___  
@@ -35,14 +37,13 @@ class Server:
         fs.checkAllFiles(path)
         port = 19132
         print(str(logo))
-        logger.log('info', f'Starting server on {Utils.getPrivateIpAddr()}:{str(port)}')
-        logger.log('info', f'This is your external ip: {Utils.getPublicIpAddr()}. If you want players that are not '
-                           f'in your local network you must portforward')
-        logger.log('info', 'Podrum is licensed under the GPLv3 license')
+        wizard.isInWizard = False
+        logger.log('info',  str(base.get("startingServer")).replace("{ip}", Utils.getPrivateIpAddr()).replace("{port}", str(port)))
+        logger.log('info', str(base.get("extIpMsg")).replace("{ipPublic}", Utils.getPublicIpAddr()))
+        logger.log('info', str(base.get("license")))
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
-        wizard.isInWizard = False
         while wizard.isInWizard == False:
             cmd = input('> ')
             command(cmd, True)
@@ -59,4 +60,4 @@ def command(string, fromConsole):
     elif string.lower() == '':
         pass
     else:
-        logger.log('error', 'Invalid command')
+        logger.log('error', str(base.get("invalidCommand")))
