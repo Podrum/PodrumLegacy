@@ -145,8 +145,6 @@ class Binary:
     
     def writeUnsignedVarInt(value):
         buf = ""
-        value = value & 0xffffffff
-        i = 1
         for i in range(0, 5):
             i = i + 1
             if (value >> 7) != 0:
