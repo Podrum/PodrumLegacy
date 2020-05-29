@@ -38,8 +38,8 @@ class Server:
         port = 19132
         print(str(logo))
         wizard.isInWizard = False
-        logger.log('info',  str(base.get("startingServer")).replace("{ip}", Utils.getPrivateIpAddr()).replace("{port}", str(port)))
-        logger.log('info', str(base.get("extIpMsg")).replace("{ipPublic}", Utils.getPublicIpAddr()))
+        logger.log('info',  str(base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddr())).replace("{port}", str(port)))
+        logger.log('info', str(base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddr())))
         logger.log('info', str(base.get("license")))
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
