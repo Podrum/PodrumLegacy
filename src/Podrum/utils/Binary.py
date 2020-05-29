@@ -126,7 +126,8 @@ class Binary:
         value = 0;
         i = 0
         for i in range(0, 35):
-            b = ord(stream[offset.backIncrement()])
+            postincedoffset = (offset:=offset+1)
+            b = ord(stream[postincedoffset])
             value |= ((b & 0x7f) << i)
             i += 7
             if (b & 0x80) == 0:
