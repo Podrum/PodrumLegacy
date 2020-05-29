@@ -148,7 +148,7 @@ class Binary:
         value = value & 0xffffffff
         i = 1
         for i in range(0, 5):
-            i = i + 1
+            i += 1
             if (value >> 7) != 0:
                 buf += chr(value | 0x80)
                 raise TypeError('Varint did not terminate after 5 bytes!')
