@@ -19,18 +19,18 @@ class Binary:
         return len(x)
     
     def checkLength(string, expect):
-        len = self.strlen(string)
+        len = Binary.strlen(string)
         assert (len == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(len)
 
     def readTriad(string):
-        self.checkLength(string, 3)
+        Binary.checkLength(string, 3)
         return unpack('>L', b'\x00' + string)[0]
 
     def writeTriad(value):
         return pack('>L', value)[1:]
 
     def readLTriad(string):
-        self.checkLength(string, 3)
+        Binary.checkLength(string, 3)
         return unpack('<L', b'\x00' + string)[0]
 
     def writeLTriad(value):
@@ -43,7 +43,7 @@ class Binary:
         return b'\x01' if b else b'\x00'
     
     def readByte(c, signed=True):
-        self.checkLength(c, 1)
+        Binary.checkLength(c, 1)
         if signed:
             return pack(">b", c)
         else:
@@ -53,70 +53,70 @@ class Binary:
         return chr(c)
     
     def readShort(string):
-        self.checkLength(string, 2)
+        Binary.checkLength(string, 2)
         return unpack('>H', string)[0]
 
     def writeShort(value):
         return pack('>H', value)
     
     def readLShort(string):
-        self.checkLength(string, 2)
+        Binary.checkLength(string, 2)
         return unpack('<H', string)[0]
 
     def writeLShort(value):
         return pack('<H', value)
     
     def readInt(string):
-        self.checkLength(string, 4)
+        Binary.checkLength(string, 4)
         return unpack('>L', string)[0]
 
     def writeInt(value):
         return pack('>L', value)
 
     def readLInt(string):
-        self.checkLength(string, 4)
+        Binary.checkLength(string, 4)
         return unpack('<L', string)[0]
 
     def writeLInt(value):
         return pack('<L', value)
 
     def readFloat(string):
-        self.checkLength(string, 4)
+        Binary.checkLength(string, 4)
         return unpack('>f', string)[0]
 
     def writeFloat(value):
         return pack('>f', value)
 
     def readLFloat(string):
-        self.checkLength(string, 4)
+        Binary.checkLength(string, 4)
         return unpack('<f', string)[0]
 
     def writeLFloat(value):
         return pack('<f', value)
 
     def readDouble(string):
-        self.checkLength(string, 8)
+        Binary.checkLength(string, 8)
         return unpack('>d', string)[0]
 
     def writeDouble(value):
         return pack('>d', value)
 
     def readLDouble(string):
-        self.checkLength(string, 8)
+        Binary.checkLength(string, 8)
         return unpack('<d', string)[0]
 
     def writeLDouble(value):
         return pack('<d', value)
 
     def readLong(string):
-        self.checkLength(string, 8)
+        Binary.checkLength(string, 8)
         return unpack('>l', string)[0]
 
     def writeLong(value):
         return pack('>l', value)
 
     def readLLong(string):
-        self.checkLength(string, 8)
+        Binary.checkLength(string, 8)
         return unpack('<l', string)[0]
 
     def writeLLong(value):
@@ -151,10 +151,10 @@ class Binary:
     def readVarint(stream):
         intsize = sys.getsizeof(int()) == 8
         shift = intsize if 63 != None else 31
-        raw = self.readUnsignedVarInt(stream)
+        raw = Binary.readUnsignedVarInt(stream)
         temp = (((raw << shift) >> shift) ^ raw) >> 1
         return temp ^ (raw & (1 << shift))
     
     def writeVarint(v):
         intsize = sys.getsizeof(int()) == 8
-        return self.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
+        return Binary.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
