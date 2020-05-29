@@ -63,7 +63,7 @@ def get(string):
             else:
                 print(f"{TextFormat.RED}Language not found in server.json")
         path = os.getcwd() + "/src/Podrum/lang/"
-        with open(f'{lang}.json', 'r', encoding="utf8") as lF:
+        with open(f'{path}{lang}.json', 'r', encoding="utf8") as lF:
             data = json.load(lF)
             if string in data:
                 return data[string]
