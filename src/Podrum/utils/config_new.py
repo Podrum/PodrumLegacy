@@ -10,14 +10,15 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
+from .fs import *
 
 
 class config:
     def readServerConf(self, value):
         ...
 
-    def readConfigFile(self, value):
-        ...
+    def readConfigFile(self, file, value):
+        file = read(file)
 
     def writeConfigFile(self, value):
         ...
