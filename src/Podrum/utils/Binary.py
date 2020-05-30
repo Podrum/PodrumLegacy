@@ -148,20 +148,20 @@ class Binary:
     @staticmethod
     def readLong(str):
         Binary.checkLength(str, 8)
-        return unpack('>l', str)[0]
+        return unpack('>L', str)[0]
 
     @staticmethod
     def writeLong(value):
-        return pack('>l', value)
+        return pack('>L', value)
 
     @staticmethod
     def readLLong(str):
         Binary.checkLength(str, 8)
-        return unpack('<l', str)[0]
+        return unpack('<L', str)[0]
 
     @staticmethod
     def writeLLong(value):
-        return pack('<l', value)
+        return pack('<L', value)
    
     @staticmethod
     def readUnsignedVarInt(stream, offset):
