@@ -20,18 +20,18 @@ class Binary:
         assert (len == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(len)
 
     @staticmethod
-    def readTriad(string):
-        Binary.checkLength(string, 3)
-        return unpack('>L', b'\x00' + string)[0]
+    def readTriad(str):
+        Binary.checkLength(str, 3)
+        return unpack('>L', b'\x00' + str)[0]
 
     @staticmethod
     def writeTriad(value):
         return pack('>L', value)[1:]
 
     @staticmethod
-    def readLTriad(string):
-        Binary.checkLength(string, 3)
-        return unpack('<L', b'\x00' + string)[0]
+    def readLTriad(str):
+        Binary.checkLength(str, 3)
+        return unpack('<L', b'\x00' + str)[0]
 
     @staticmethod
     def writeLTriad(value):
@@ -58,90 +58,90 @@ class Binary:
         return chr(c)
     
     @staticmethod
-    def readShort(string):
-        Binary.checkLength(string, 2)
-        return unpack('>H', string)[0]
+    def readShort(str):
+        Binary.checkLength(str, 2)
+        return unpack('>H', str)[0]
 
     @staticmethod
     def writeShort(value):
         return pack('>H', value)
     
     @staticmethod
-    def readLShort(string):
-        Binary.checkLength(string, 2)
-        return unpack('<H', string)[0]
+    def readLShort(str):
+        Binary.checkLength(str, 2)
+        return unpack('<H', str)[0]
 
     @staticmethod
     def writeLShort(value):
         return pack('<H', value)
     
     @staticmethod
-    def readInt(string):
-        Binary.checkLength(string, 4)
-        return unpack('>L', string)[0]
+    def readInt(str):
+        Binary.checkLength(str, 4)
+        return unpack('>L', str)[0]
 
     @staticmethod
     def writeInt(value):
         return pack('>L', value)
 
     @staticmethod
-    def readLInt(string):
-        Binary.checkLength(string, 4)
-        return unpack('<L', string)[0]
+    def readLInt(str):
+        Binary.checkLength(str, 4)
+        return unpack('<L', str)[0]
 
     @staticmethod
     def writeLInt(value):
         return pack('<L', value)
 
     @staticmethod
-    def readFloat(string):
-        Binary.checkLength(string, 4)
-        return unpack('>f', string)[0]
+    def readFloat(str):
+        Binary.checkLength(str, 4)
+        return unpack('>f', str)[0]
 
     @staticmethod
     def writeFloat(value):
         return pack('>f', value)
 
     @staticmethod
-    def readLFloat(string):
-        Binary.checkLength(string, 4)
-        return unpack('<f', string)[0]
+    def readLFloat(str):
+        Binary.checkLength(str, 4)
+        return unpack('<f', str)[0]
 
     @staticmethod
     def writeLFloat(value):
         return pack('<f', value)
 
     @staticmethod
-    def readDouble(string):
-        Binary.checkLength(string, 8)
-        return unpack('>d', string)[0]
+    def readDouble(str):
+        Binary.checkLength(str, 8)
+        return unpack('>d', str)[0]
 
     @staticmethod
     def writeDouble(value):
         return pack('>d', value)
 
     @staticmethod
-    def readLDouble(string):
-        Binary.checkLength(string, 8)
-        return unpack('<d', string)[0]
+    def readLDouble(str):
+        Binary.checkLength(str, 8)
+        return unpack('<d', str)[0]
 
     @staticmethod
     def writeLDouble(value):
         return pack('<d', value)
 
     @staticmethod
-    def readLong(string):
-        Binary.checkLength(string, 8)
-        return unpack('>l', string)[0]
+    def readLong(str):
+        Binary.checkLength(str, 8)
+        return unpack('>l', str)[0]
 
     @staticmethod
     def writeLong(value):
         return pack('>l', value)
 
     @staticmethod
-    def readLLong(string):
-        Binary.checkLength(string, 8)
-        return unpack('<l', string)[0]
+    def readLLong(str):
+        Binary.checkLength(str, 8)
+        return unpack('<l', str)[0]
 
     @staticmethod
     def writeLLong(value):
