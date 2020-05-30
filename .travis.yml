@@ -6,4 +6,4 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - python start.py
+  - python start_travis.py
