@@ -15,11 +15,8 @@ import sys
 
 class Binary:
 
-    def strlen(x):
-        return len(x)
-    
     def checkLength(string, expect):
-        len = Binary.strlen(string)
+        len = len(string)
         assert (len == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(len)
 
     @staticmethod
