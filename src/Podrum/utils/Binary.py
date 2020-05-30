@@ -61,6 +61,14 @@ class Binary:
     def readShort(str):
         Binary.checkLength(str, 2)
         return unpack('>H', str)[0]
+    
+    @staticmethod
+    def readSignedShort(str):
+        Binary.checkLength(str, 2)
+        if calcsize("P") == 8:
+            return unpack('>H', str)[0] << 48 >> 48
+        else:
+            return unpack('>H', str)[0] << 16 >> 16
 
     @staticmethod
     def writeShort(value):
@@ -70,6 +78,14 @@ class Binary:
     def readLShort(str):
         Binary.checkLength(str, 2)
         return unpack('<H', str)[0]
+    
+    @staticmethod
+    def readSignedLShort(str):
+        Binary.checkLength(str, 2)
+        if calcsize("P") == 8:
+            return unpack('<H', str)[0] << 48 >> 48
+        else:
+            return unpack('<H', str)[0] << 16 >> 16
 
     @staticmethod
     def writeLShort(value):
