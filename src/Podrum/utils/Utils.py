@@ -26,7 +26,7 @@ class Utils:
         elif sys.platform == 'win32' or sys.platform == 'win64':
             return 'windows'
         
-    def serverKill():
+    def killServer():
         os.kill(os.getpid(), signal.SIGTERM)
     
     def getPrivateIpAddr():
