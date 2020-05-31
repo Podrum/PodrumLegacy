@@ -15,28 +15,28 @@ import decimal
 class bcmath:
     @staticmethod
     def bcmul(num1, num2, scale=None):
-        if num3 != None:
+        if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) * decimal.Decimal(num2)
         return result
       
     @staticmethod
     def bcdiv(num1, num2, scale=None):
-        if num3 != None:
+        if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) / decimal.Decimal(num2)
         return result
        
     @staticmethod
     def bcadd(num1, num2, scale=None):
-        if num3 != None:
+        if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) + decimal.Decimal(num2)
         return result
     
     @staticmethod
     def bcsub(num1, num2, scale=None):
-        if num3 != None:
+        if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) - decimal.Decimal(num2)
         return result
