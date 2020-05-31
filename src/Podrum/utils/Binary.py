@@ -58,10 +58,9 @@ class Binary:
         Binary.checkLength(c, 1)
         b = ord(c)
         if calcsize("P") == 8:
-            shift = << 56 >> 56
+            return b << 56 >> 56
         else:
-            shift = << 24 >> 24
-        return b shift
+            return b << 24 >> 24
 
     @staticmethod
     def writeByte(c):
