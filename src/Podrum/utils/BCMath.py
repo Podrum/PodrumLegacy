@@ -36,4 +36,9 @@ class BCMath:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) - decimal.Decimal(num2)
         return result
+    
+    @staticmethod
+    def bccomp(num1, num2):
+        result = cmp(num1, num2)
+        return result
 
