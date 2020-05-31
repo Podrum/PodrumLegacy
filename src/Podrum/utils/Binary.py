@@ -290,7 +290,7 @@ class Binary:
         
     @staticmethod
     def writeVarLong(value):
-        if calcsize == 8:
+        if calcsize("P") == 8:
             return Binary.writeUnsignedVarLong((value << 1) ^ (value >> 63))
         else:
             value = bcmath.bcmod(bcmath.bcmul(value, "2"), "18446744073709551616")
