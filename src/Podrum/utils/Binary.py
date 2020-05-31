@@ -220,3 +220,15 @@ class Binary:
     def writeVarInt(v):
         intsize = calcsize("P") == 8
         return Binary.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
+    
+    @staticmethod
+    def flipShortEndianness(value):
+        return Binary.readLShort(Binary.writeShort(value))
+
+    @staticmethod
+    def flipIntEndianness(value):
+        return Binary.readLInt(Binary.writeInt(value))
+
+    @staticmethod
+    def flipLongEndianness(value):
+        return Binary.readLLong(Binary.writeLong(value))
