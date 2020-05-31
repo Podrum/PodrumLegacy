@@ -53,7 +53,7 @@ class bcmath:
     
     @staticmethod
     def bcpow(num1, num2):
-        result = num1 ** num2
+        result = int(num1) ** int(num2)
         return result
     
     @staticmethod
