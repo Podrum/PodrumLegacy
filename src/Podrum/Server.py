@@ -59,5 +59,7 @@ def command(string, fromConsole):
         Utils.serverKill()
     elif string.lower() == '':
         pass
+    elif string.lower() == 'help':
+        logger.log('info', '/stop: Stops the server')
     else:
         logger.log('error', str(base.get("invalidCommand")))
