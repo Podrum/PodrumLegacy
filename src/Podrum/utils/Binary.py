@@ -229,6 +229,23 @@ class Binary:
         return Binary.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
     
     @staticmethod
+    def readUnsignedVarLong(buffer, offset):
+        value = 0
+        i = 0
+        for i in range(0, 63):
+            i += 7
+            offset += 1
+            b = ord(buffer[offset])
+            value |= ((b & 0x7f) << i)
+
+            if (b & 0x80) == 0:
+                return value
+            elif (len(buffer) - 1) < int(offset):
+                raise TypeError("Expected more bytes, none left to read")
+
+        raise TypeError("VarLong did not terminate after 10 bytes!")
+    
+    @staticmethod
     def flipShortEndianness(value):
         return Binary.readLShort(Binary.writeShort(value))
 
