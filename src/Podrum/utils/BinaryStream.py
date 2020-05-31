@@ -14,7 +14,7 @@
 from .Binary import Binary
 
 class BinaryStream:
-    buffer = bytearray()
+    buffer = ""
     offset = None
     
     def __int__(self, buffer = "", offset = 0):
