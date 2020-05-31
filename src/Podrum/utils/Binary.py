@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 from struct import unpack, pack, calcsize
+from re import match
 import sys
 
 class Binary:
@@ -117,6 +118,10 @@ class Binary:
     @staticmethod
     def writeFloat(value):
         return pack('>f', value)
+    
+    @staticmethod
+    def printFloat(value):
+        return match(r"/(\\.\\d+?)0+$/", "" + value).group(1)
 
     @staticmethod
     def readLFloat(str):
