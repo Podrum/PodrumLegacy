@@ -114,6 +114,10 @@ class Binary:
     def readFloat(str):
         Binary.checkLength(str, 4)
         return unpack('>f', str)[0]
+    
+    @staticmethod
+    def readRoundedFloat(str, accuracy):
+        return round(Binary.readFloat(str), accuracy)
 
     @staticmethod
     def writeFloat(value):
