@@ -240,7 +240,7 @@ class Binary:
             if calcsize("P") == 8:
                 value |= ((b & 0x7f) << i)
             else:
-                value |= bcmath.bcadd(value, bcmath.bcmul(str(b & 0x7f), bcmath.bcpow("2", str(i))))
+                value = bcmath.bcadd(value, bcmath.bcmul(str(b & 0x7f), bcmath.bcpow("2", str(i))))
 
             if (b & 0x80) == 0:
                 return value
