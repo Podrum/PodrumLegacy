@@ -238,7 +238,10 @@ class Binary:
             i += 7
             offset += 1
             b = ord(buffer[offset])
-            value |= ((b & 0x7f) << i)
+            if calcsize("P") == 8:
+                value |= ((b & 0x7f) << i)
+            else:
+                value |= bcmath.bcadd(value, bcmath.bcmul(str(b & 0x7f), bcmath.bcpow("2", str(i))))
 
             if (b & 0x80) == 0:
                 return value
@@ -250,8 +253,14 @@ class Binary:
     @staticmethod
     def readVarLong(buffer, offset):
         raw = Binary.readUnsignedVarLong(buffer, offset)
-        temp = (((raw << 63) >> 63) ^ raw) >> 1
-        return temp ^ (raw & (1 << 63))
+        if calcsize("P") == 8:
+            temp = (((raw << 63) >> 63) ^ raw) >> 1
+            return temp ^ (raw & (1 << 63))
+        else:
+            temp = bcmath.bcdiv(raw, "2")
+            if bcmath.bcmod(raw, "2") == "1":
+                temp = bcmath.bcsub(bcmath.bcmul(temp, "-1"), "1")
+            return temp
     
     @staticmethod
     def writeUnsignedVarLong(value):
