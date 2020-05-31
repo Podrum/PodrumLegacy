@@ -14,7 +14,7 @@ from struct import unpack, pack, calcsize
 from re import match
 import decimal
 import sys
-from .BCMath import BCMath
+from .bcmath import bcmath
 
 class Binary:
 
