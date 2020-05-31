@@ -47,12 +47,19 @@ class Binary:
         return b'\x01' if b else b'\x00'
   
     @staticmethod
-    def readByte(c, signed=True):
+    def readByte(c):
         Binary.checkLength(c, 1)
-        if signed:
-            return pack(">b", c)
+        return ord(c)
+    
+    @staticmethod
+    def readSignedByte(c):
+        Binary.checkLength(c, 1)
+        b = ord(c)
+        if calcsize("P") == 8:
+            shift = << 56 >> 56
         else:
-            return pack(">B", c)
+            shift = << 24 >> 24
+        return b shift
 
     @staticmethod
     def writeByte(c):
