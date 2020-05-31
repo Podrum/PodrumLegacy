@@ -264,13 +264,13 @@ class Binary:
     @staticmethod
     def writeUnsignedVarLong(value):
         buffer = ""
-        if calcsize == 4:
+        if calcsize("P") == 4:
             if bcmath.bccomp(value, "0") == -1:
                 value = bcmath.bcadd(value, "18446744073709551616")
         i = 1
         for i in range(0, 10):
             i = i + 1
-            if calcsize == 8:
+            if calcsize("P") == 8:
                 if (value >> 7) != 0:
                     buffer += chr(value | 0x80)
                 else:
