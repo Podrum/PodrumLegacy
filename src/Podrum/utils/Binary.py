@@ -281,7 +281,7 @@ class Binary:
             else:
                 byte = int(bcmath.bcmod(value, "128"))
                 value = bcmath.bcdiv(value, "128")
-                if value != "0":
+                if value != 0:
                     buffer += chr(byte | 0x80)
                 else:
                     buffer += chr(byte)
