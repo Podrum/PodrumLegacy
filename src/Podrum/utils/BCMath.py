@@ -14,7 +14,9 @@ import decimal
 
 class BCMath:
     @staticmethod
-    def bcmul(num1, num2):
+    def bcmul(num1, num2, scale=None):
+        if num3 != None:
+            decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) * decimal.Decimal(num2)
         return result
       
@@ -26,7 +28,9 @@ class BCMath:
         return result
        
     @staticmethod
-    def bcadd(num1, num2):
+    def bcadd(num1, num2, scale=None):
+        if num3 != None:
+            decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) + decimal.Decimal(num2)
         return result
     
