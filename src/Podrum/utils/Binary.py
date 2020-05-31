@@ -244,6 +244,12 @@ class Binary:
                 raise TypeError("Expected more bytes, none left to read")
 
         raise TypeError("VarLong did not terminate after 10 bytes!")
+        
+    @staticmethod
+    def readVarLong(buffer, offset):
+        raw = Binary.readUnsignedVarLong(buffer, offset)
+        temp = (((raw << 63) >> 63) ^ raw) >> 1
+        return temp ^ (raw & (1 << 63))
     
     @staticmethod
     def flipShortEndianness(value):
