@@ -265,15 +265,29 @@ class Binary:
     @staticmethod
     def writeUnsignedVarLong(value):
         buffer = ""
+        if calcsize == 4:
+            if bcmath.bccomp(value, "0") == -1):
+                value = bcmath.bcadd(value, "18446744073709551616")
         i = 1
         for i in range(0, 10):
             i = i + 1
-            if (value >> 7) != 0:
-                buffer += chr(value | 0x80)
+            if calcsize == 8:
+                if (value >> 7) != 0:
+                    buffer += chr(value | 0x80)
+                else:
+                    buffer += chr(value & 0x7f)
+                    return buffer
+                
+                value = ((value >> 7) & (sys.maxsize >> 6))
             else:
-                buffer += chr(value & 0x7f)
-                return buffer
-            value = ((value >> 7) & (sys.maxsize >> 6))
+                byte = int(bcmath.bcmod(value, "128"))
+                value = bcmath.bcdiv(value, "128")
+                if value != "0":
+                    buf += chr(byte | 0x80)
+                else:
+                    buf += chr(byte)
+                    return buf
+                
 
         raise TypeError("Value too large to be encoded as a VarLong")
         
