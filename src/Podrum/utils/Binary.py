@@ -265,7 +265,7 @@ class Binary:
     def writeUnsignedVarLong(value):
         buffer = ""
         if calcsize == 4:
-            if bcmath.bccomp(value, "0") == -1):
+            if bcmath.bccomp(value, "0") == -1:
                 value = bcmath.bcadd(value, "18446744073709551616")
         i = 1
         for i in range(0, 10):
