@@ -43,7 +43,7 @@ class bcmath:
     
     @staticmethod
     def bccomp(num1, num2):
-        result = cmp(num1, num2)
+        result = (int(num1) > int(num2)) - (int(num1) < int(num2))
         return int(result)
     
     @staticmethod
