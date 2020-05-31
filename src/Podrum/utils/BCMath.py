@@ -41,4 +41,29 @@ class BCMath:
     def bccomp(num1, num2):
         result = cmp(num1, num2)
         return result
+    
+    @staticmethod
+    def bcmod(num1, num2):
+        result = num1 % num2
+        return result
+    
+    @staticmethod
+    def bcpow(num1, num2):
+        result = num1 ** num2
+        return result
+    
+    @staticmethod
+    def bcpowmod(num1, num2, mod):
+        result = pow(num1, num2, mod)
+        return result
+    
+    @staticmethod
+    def bcscale(scale):
+        result = decimal.getcontext().prec = scale
+        return result
+    
+    @staticmethod
+    def bcsqrt(num):
+        result = math.sqrt(num)
+        return result
 
