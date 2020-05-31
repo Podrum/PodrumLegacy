@@ -282,12 +282,10 @@ class Binary:
                 byte = int(bcmath.bcmod(value, "128"))
                 value = bcmath.bcdiv(value, "128")
                 if value != "0":
-                    buf += chr(byte | 0x80)
+                    buffer += chr(byte | 0x80)
                 else:
-                    buf += chr(byte)
-                    return buf
-                
-
+                    buffer += chr(byte)
+                    return buffer
         raise TypeError("Value too large to be encoded as a VarLong")
         
     @staticmethod
