@@ -252,6 +252,21 @@ class Binary:
         return temp ^ (raw & (1 << 63))
     
     @staticmethod
+    def write_unsigned_var_long(value):
+        buffer = ""
+        i = 1
+        for i in range(0, 10):
+            i = i + 1
+            if (value >> 7) != 0:
+                buffer += chr(value | 0x80)
+            else:
+                buffer += chr(value & 0x7f)
+                return buffer
+            value = ((value >> 7) & (sys.maxsize >> 6))
+
+        raise TypeError("Value too large to be encoded as a VarLong")
+    
+    @staticmethod
     def flipShortEndianness(value):
         return Binary.readLShort(Binary.writeShort(value))
 
