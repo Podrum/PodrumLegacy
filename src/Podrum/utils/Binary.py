@@ -118,10 +118,6 @@ class Binary:
     @staticmethod
     def writeFloat(value):
         return pack('>f', value)
-    
-    @staticmethod
-    def printFloat(value):
-        return match(r"/(\\.\\d+?)0+$/", "" + value).group(1)
 
     @staticmethod
     def readLFloat(str):
@@ -131,6 +127,11 @@ class Binary:
     @staticmethod
     def writeLFloat(value):
         return pack('<f', value)
+    
+    
+    @staticmethod
+    def printFloat(value):
+        return match(r"/(\\.\\d+?)0+$/", "" + value).group(1)
 
     @staticmethod
     def readDouble(str):
