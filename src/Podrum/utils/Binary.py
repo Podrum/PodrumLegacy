@@ -279,7 +279,13 @@ class Binary:
         
     @staticmethod
     def writeVarLong(value):
-        return Binary.writeUnsignedVarLong((value << 1) ^ (value >> 63))
+        if calcsize == 8:
+            return Binary.writeUnsignedVarLong((value << 1) ^ (value >> 63))
+        else:
+            value = bcmath.bcmod(bcmath.bcmul(value, "2"), "18446744073709551616")
+            if bcmath.bccomp(value, "0") == -1:
+                value = bcmath.bcsub(bcmath.bcmul(value, "-1"), "1")
+            return Binary.writeUnsignedVarLong(value)
     
     @staticmethod
     def flipShortEndianness(value):
