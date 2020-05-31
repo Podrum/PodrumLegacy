@@ -18,56 +18,56 @@ class bcmath:
         if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) * decimal.Decimal(num2)
-        return result
+        return int(result)
       
     @staticmethod
     def bcdiv(num1, num2, scale=None):
         if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) / decimal.Decimal(num2)
-        return result
+        return int(result)
        
     @staticmethod
     def bcadd(num1, num2, scale=None):
         if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) + decimal.Decimal(num2)
-        return result
+        return int(result)
     
     @staticmethod
     def bcsub(num1, num2, scale=None):
         if scale != None:
             decimal.getcontext().prec = scale
         result = decimal.Decimal(num1) - decimal.Decimal(num2)
-        return result
+        return int(result)
     
     @staticmethod
     def bccomp(num1, num2):
         result = cmp(num1, num2)
-        return result
+        return int(result)
     
     @staticmethod
     def bcmod(num1, num2):
         result = int(num1) % int(num2)
-        return result
+        return int(result)
     
     @staticmethod
     def bcpow(num1, num2):
         result = int(num1) ** int(num2)
-        return result
+        return int(result)
     
     @staticmethod
     def bcpowmod(num1, num2, mod):
         result = pow(num1, num2, mod)
-        return result
+        return int(result)
     
     @staticmethod
     def bcscale(scale):
         result = decimal.getcontext().prec = scale
-        return result
+        return int(result)
     
     @staticmethod
     def bcsqrt(num):
         result = math.sqrt(num)
-        return result
+        return int(result)
 
