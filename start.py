@@ -7,7 +7,7 @@ from src.Podrum.Server import Server
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
-        if sys.argv[1] == "--no_wizard" and sys.argv[2] == "--travis":
+        if sys.argv[1] == "--no_wizard" and sys.argv[2] == "-travis":
                 serverThread = Thread(target=Server, args=(getcwd(), False, True))
         else:
             print("[!] None valid args selected.")
