@@ -6,6 +6,6 @@ python:
 install:
   - pip install -r requirements.txt
 before_script:
-  - tree -d
+  - ls -a
 script:
   - python start_travis.py
