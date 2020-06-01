@@ -19,8 +19,8 @@ from .bcmath import bcmath
 class Binary:
 
     def checkLength(string, expect):
-        len = len(string)
-        assert (len == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(len)
+        length = len(str(string))
+        assert (length == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(length)
 
     @staticmethod
     def readTriad(str):
