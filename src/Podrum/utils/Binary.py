@@ -19,7 +19,7 @@ from .bcmath import bcmath
 class Binary:
 
     def checkLength(string, expect):
-        length = len(str(string))
+        length = len(string)
         assert (length == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(length)
 
     @staticmethod
