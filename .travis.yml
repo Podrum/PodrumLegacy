@@ -6,6 +6,6 @@ python:
 install:
   - pip install -r requirements.txt
 before_script:
-  - cd Podrum/Podrum
+  - cd Podrum
 script:
   - python start_travis.py
