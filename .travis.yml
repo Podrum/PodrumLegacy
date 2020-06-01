@@ -6,6 +6,6 @@ python:
 install:
   - pip install -r requirements.txt
 before_script:
-  - cd AmmyR/Podrum
+  - tree -d
 script:
   - python start_travis.py
