@@ -33,7 +33,7 @@ def getLangFiles(dir):
             if "langName" in data:
                 name = data['langName']
             else:
-                name = 'Unknow name'
+                name = 'Unknown name'
         langs = str(file.replace(path, '').replace("\\", "").replace('.json', ''))
         langsList.append(langs)
         print(f'[{langs}] -> {name}')
