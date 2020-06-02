@@ -5,6 +5,5 @@ python:
   - "3.8"
 install:
   - pip install -r requirements.txt
-  - pip install grpcio
 script:
   - python start.py --no_wizard -travis
