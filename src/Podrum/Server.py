@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 import time
+import os
 from ..pyraklib.server import PyRakLibServer
 from ..pyraklib.server import ServerHandler
 
@@ -31,10 +32,14 @@ logo = """
 
 
 class Server:
-    def __init__(self, path):
+    def __init__(self, path, withWizard, isTravisBuild = False):
         super().__init__()
         self.path = path
-        fs.checkAllFiles(path)
+        self.withWizard = withWizard
+        if(withWizard):
+            fs.checkAllFiles(path)
+        else:
+            wizard.skipWizard(path)
         port = 19132
         print(str(logo))
         wizard.isInWizard = False
@@ -44,20 +49,26 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
-        while wizard.isInWizard == False:
-            cmd = input('> ')
-            command(cmd, True)
-            cmd = None
-        ticking = True
-        while ticking:
-            time.sleep(0.002)
+        if (isTravisBuild):
+            print("Build success.")
+            os._exit(0)
+        else:
+            while wizard.isInWizard == False:
+                cmd = input('> ')
+                command(cmd, True)
+                cmd = None
+            ticking = True
+            while ticking:
+                time.sleep(0.002)
 
 
 def command(string, fromConsole):
     if string.lower() == 'stop':
         logger.log('info', 'Stopping server...')
-        Utils.serverKill()
+        Utils.killServer()
     elif string.lower() == '':
         pass
+    elif string.lower() == 'help':
+        logger.log('info', '/stop: Stops the server')
     else:
         logger.log('error', str(base.get("invalidCommand")))
