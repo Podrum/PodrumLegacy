@@ -19,107 +19,130 @@ from .bcmath import bcmath
 class Binary:
 
     def checkLength(string, expect):
-        len = len(string)
-        assert (len == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(len)
+        length = len(string)
+        assert (length == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(length)
+        
+    @staticmethod
+    def signByte(value: int):
+        if calcsize == 8:
+            return (int(value) & 0xffffffff) >> 56
+        else:
+            return (int(value) & 0xffffffff) >> 24
 
     @staticmethod
-    def readTriad(str):
+    def unsignByte(value: int):
+        return int(value) & 0xff
+
+    @staticmethod
+    def signShort(value: int):
+        if calcsize == 8:
+            return (int(value) & 0xffffffff) >> 48
+        else:
+            return (int(value) & 0xffffffff) >> 16
+
+    @staticmethod
+    def unsignShort(value: int):
+        return int(value) & 0xffff
+
+    @staticmethod
+    def signInt(value: int):
+        if calcsize == 8:
+            return (int(value) & 0xffffffff) >> 32
+        else:
+            return (int(value) & 0xffffffff) >> 31
+
+    @staticmethod
+    def unsignInt(value: int):
+        return int(value) & 0xffffffff
+
+    @staticmethod
+    def readTriad(str: bytes) -> int:
         Binary.checkLength(str, 3)
         return unpack('>L', b'\x00' + str)[0]
 
     @staticmethod
-    def writeTriad(value):
+    def writeTriad(value: int) -> bytes:
         return pack('>L', value)[1:]
 
     @staticmethod
-    def readLTriad(str):
+    def readLTriad(str: bytes) -> int:
         Binary.checkLength(str, 3)
         return unpack('<L', b'\x00' + str)[0]
 
     @staticmethod
-    def writeLTriad(value):
+    def writeLTriad(value: int) -> bytes:
         return pack('<L', value)[0:-1]
     
     @staticmethod
-    def readBool(b):
+    def readBool(b: bytes) -> int:
         return unpack('?', b)[0]
 
     @staticmethod
-    def writeBool(b):
+    def writeBool(b: int) -> bytes:
         return b'\x01' if b else b'\x00'
   
     @staticmethod
-    def readByte(c):
+    def readByte(c: bytes) -> int:
         Binary.checkLength(c, 1)
-        return ord(c)
+        return unpack('>B', c)[0]
     
     @staticmethod
-    def readSignedByte(c):
+    def readSignedByte(c: bytes) -> int:
         Binary.checkLength(c, 1)
-        b = ord(c)
-        if calcsize("P") == 8:
-            return b << 56 >> 56
-        else:
-            return b << 24 >> 24
+        return unpack('>b', c)[0]
 
     @staticmethod
-    def writeByte(c):
-        return chr(c)
+    def writeByte(c: int) -> bytes:
+        return pack(">B", c)
     
     @staticmethod
-    def readShort(str):
+    def readShort(str: bytes) -> int:
         Binary.checkLength(str, 2)
         return unpack('>H', str)[0]
     
     @staticmethod
-    def readSignedShort(str):
+    def readSignedShort(str: bytes) -> int:
         Binary.checkLength(str, 2)
-        if calcsize("P") == 8:
-            return unpack('>H', str)[0] << 48 >> 48
-        else:
-            return unpack('>H', str)[0] << 16 >> 16
+        return Binary.signShort(Binary.readShort(str))
 
     @staticmethod
-    def writeShort(value):
+    def writeShort(value: int) -> bytes:
         return pack('>H', value)
     
     @staticmethod
-    def readLShort(str):
+    def readLShort(str: bytes) -> int:
         Binary.checkLength(str, 2)
         return unpack('<H', str)[0]
     
     @staticmethod
-    def readSignedLShort(str):
+    def readSignedLShort(str: bytes) -> int:
         Binary.checkLength(str, 2)
-        if calcsize("P") == 8:
-            return unpack('<H', str)[0] << 48 >> 48
-        else:
-            return unpack('<H', str)[0] << 16 >> 16
+        return Binary.signShort(Binary.readLShort(str))
 
     @staticmethod
-    def writeLShort(value):
+    def writeLShort(value: int) -> bytes:
         return pack('<H', value)
     
     @staticmethod
-    def readInt(str):
+    def readInt(str: bytes) -> int:
         Binary.checkLength(str, 4)
         return unpack('>L', str)[0]
 
     @staticmethod
-    def writeInt(value):
+    def writeInt(value: int) -> bytes:
         return pack('>L', value)
 
     @staticmethod
-    def readLInt(str):
+    def readLInt(str: bytes) -> int:
         Binary.checkLength(str, 4)
         return unpack('<L', str)[0]
 
     @staticmethod
-    def writeLInt(value):
+    def writeLInt(value: int) -> bytes:
         return pack('<L', value)
 
     @staticmethod
-    def readFloat(str):
+    def readFloat(str: bytes) -> int:
         Binary.checkLength(str, 4)
         return unpack('>f', str)[0]
     
@@ -128,11 +151,11 @@ class Binary:
         return round(Binary.readFloat(str), accuracy)
 
     @staticmethod
-    def writeFloat(value):
+    def writeFloat(value: int) -> bytes:
         return pack('>f', value)
 
     @staticmethod
-    def readLFloat(str):
+    def readLFloat(str: bytes) -> int:
         Binary.checkLength(str, 4)
         return unpack('<f', str)[0]
     
@@ -141,7 +164,7 @@ class Binary:
         return round(Binary.readLFloat(str), accuracy)
 
     @staticmethod
-    def writeLFloat(value):
+    def writeLFloat(value: int) -> bytes:
         return pack('<f', value)
     
     
@@ -150,97 +173,100 @@ class Binary:
         return match(r"/(\\.\\d+?)0+$/", "" + value).group(1)
 
     @staticmethod
-    def readDouble(str):
+    def readDouble(str: bytes) -> int:
         Binary.checkLength(str, 8)
         return unpack('>d', str)[0]
 
     @staticmethod
-    def writeDouble(value):
+    def writeDouble(value: int) -> bytes:
         return pack('>d', value)
 
     @staticmethod
-    def readLDouble(str):
+    def readLDouble(str: bytes) -> int:
         Binary.checkLength(str, 8)
         return unpack('<d', str)[0]
 
     @staticmethod
-    def writeLDouble(value):
+    def writeLDouble(value: int) -> bytes:
         return pack('<d', value)
 
     @staticmethod
-    def readLong(str):
+    def readLong(str: bytes) -> int:
         Binary.checkLength(str, 8)
         return unpack('>L', str)[0]
 
     @staticmethod
-    def writeLong(value):
+    def writeLong(value: int) -> bytes:
         return pack('>L', value)
 
     @staticmethod
-    def readLLong(str):
+    def readLLong(str: bytes) -> int:
         Binary.checkLength(str, 8)
         return unpack('<L', str)[0]
 
     @staticmethod
-    def writeLLong(value):
+    def writeLLong(value: int) -> bytes:
         return pack('<L', value)
    
     @staticmethod
-    def readUnsignedVarInt(stream, offset):
-        value = 0;
+    def readUnsignedVarInt(buffer, offset):
+        value = "0";
+        buffer = str(buffer)
         i = 0
-        for i in range(0, 35):
-            offset += 1
-            b = ord(stream[offset])
-            value |= ((b & 0x7f) << i)
+        while i <= 35:
             i += 7
+            offset += 1
+            b = ord(buffer[offset])
+            value = bcmath.bcadd(value, bcmath.bcmul(str(b & 0x7f), bcmath.bcpow("2", str(i))))
             if (b & 0x80) == 0:
                 return value
-            elif (len(stream) - 1) < int(offset):
+            elif (len(buffer) - 1) < int(offset):
                 raise TypeError('Expected more bytes, none left to read')
         raise TypeError('Varint did not terminate after 5 bytes!')
 
     @staticmethod
-    def readVarInt(stream, offset):
-        intsize = calcsize("P") == 8
-        shift = intsize if 63 != None else 31
-        raw = Binary.readUnsignedVarInt(stream, offset)
-        temp = (((raw << shift) >> shift) ^ raw) >> 1
-        return temp ^ (raw & (1 << shift))
+    def readVarInt(buffer, offset):
+        raw = Binary.readUnsignedVarInt(buffer, offset)
+        temp = bcmath.bcdiv(raw, "2")
+        if bcmath.bcmod(raw, "2") == "1":
+            temp = bcmath.bcsub(bcmath.bcmul(temp, "-1"), "1")
+        return temp
     
     @staticmethod
     def writeUnsignedVarInt(value):
-        buf = ""
+        buffer = ""
         value = value & 0xffffffff
-        i = 1
-        for i in range(0, 5):
+        if bcmath.bccomp(value, "0") == -1:
+            value = bcmath.bcadd(value, "18446744073709551616")
+        i = 0
+        while i <= 5:
             i = i + 1
-            if (value >> 7) != 0:
-                buf += chr(value | 0x80)
-                raise TypeError('Varint did not terminate after 5 bytes!')
+            byte = int(bcmath.bcmod(value, "128"))
+            value = bcmath.bcdiv(value, "128")
+            if value != 0:
+                buffer += chr(byte | 0x80)
             else:
-                buf += chr(value & 0x7f)
-                return buf
-            value = ((value >> 7) & (sys.maxsize >> 6))  
+                buffer += chr(byte)
+                return buffer
         raise TypeError('Value too large to be encoded as a varint')
-    
+     
     @staticmethod
-    def writeVarInt(v):
-        intsize = calcsize("P") == 8
-        return Binary.writeUnsignedVarInt((v << 1) ^ (v >> (intsize if 63 != None else 31)))
+    def writeVarInt(value):
+        value = bcmath.bcmod(bcmath.bcmul(value, "2"), "18446744073709551616")
+        if bcmath.bccomp(value, "0") == -1:
+            value = bcmath.bcsub(bcmath.bcmul(value, "-1"), "1")
+        return Binary.writeUnsignedVarInt(value)
     
     @staticmethod
     def readUnsignedVarLong(buffer, offset):
-        value = 0
+        value = "0"
+        buffer = str(buffer)
         i = 0
-        for i in range(0, 63):
+        while i <= 63:
             i += 7
             offset += 1
             b = ord(buffer[offset])
-            if calcsize("P") == 8:
-                value |= ((b & 0x7f) << i)
-            else:
-                value = bcmath.bcadd(value, bcmath.bcmul(str(b & 0x7f), bcmath.bcpow("2", str(i))))
+            value = bcmath.bcadd(value, bcmath.bcmul(str(b & 0x7f), bcmath.bcpow("2", str(i))))
 
             if (b & 0x80) == 0:
                 return value
@@ -252,51 +278,34 @@ class Binary:
     @staticmethod
     def readVarLong(buffer, offset):
         raw = Binary.readUnsignedVarLong(buffer, offset)
-        if calcsize("P") == 8:
-            temp = (((raw << 63) >> 63) ^ raw) >> 1
-            return temp ^ (raw & (1 << 63))
-        else:
-            temp = bcmath.bcdiv(raw, "2")
-            if bcmath.bcmod(raw, "2") == "1":
-                temp = bcmath.bcsub(bcmath.bcmul(temp, "-1"), "1")
-            return temp
+        temp = bcmath.bcdiv(raw, "2")
+        if bcmath.bcmod(raw, "2") == "1":
+            temp = bcmath.bcsub(bcmath.bcmul(temp, "-1"), "1")
+        return temp
     
     @staticmethod
     def writeUnsignedVarLong(value):
         buffer = ""
-        if calcsize("P") == 4:
-            if bcmath.bccomp(value, "0") == -1:
-                value = bcmath.bcadd(value, "18446744073709551616")
-        i = 1
-        for i in range(0, 10):
+        if bcmath.bccomp(value, "0") == -1:
+            value = bcmath.bcadd(value, "18446744073709551616")
+        i = 0
+        while i <= 10:
             i = i + 1
-            if calcsize("P") == 8:
-                if (value >> 7) != 0:
-                    buffer += chr(value | 0x80)
-                else:
-                    buffer += chr(value & 0x7f)
-                    return buffer
-                
-                value = ((value >> 7) & (sys.maxsize >> 6))
+            byte = int(bcmath.bcmod(value, "128"))
+            value = bcmath.bcdiv(value, "128")
+            if value != 0:
+                buffer += chr(byte | 0x80)
             else:
-                byte = int(bcmath.bcmod(value, "128"))
-                value = bcmath.bcdiv(value, "128")
-                if value != 0:
-                    buffer += chr(byte | 0x80)
-                else:
-                    buffer += chr(byte)
-                    return buffer
+                buffer += chr(byte)
+                return buffer
         raise TypeError("Value too large to be encoded as a VarLong")
         
     @staticmethod
     def writeVarLong(value):
-        if calcsize("P") == 8:
-            return Binary.writeUnsignedVarLong((value << 1) ^ (value >> 63))
-        else:
-            value = bcmath.bcmod(bcmath.bcmul(value, "2"), "18446744073709551616")
-            if bcmath.bccomp(value, "0") == -1:
-                value = bcmath.bcsub(bcmath.bcmul(value, "-1"), "1")
-            return Binary.writeUnsignedVarLong(value)
+        value = bcmath.bcmod(bcmath.bcmul(value, "2"), "18446744073709551616")
+        if bcmath.bccomp(value, "0") == -1:
+            value = bcmath.bcsub(bcmath.bcmul(value, "-1"), "1")
+        return Binary.writeUnsignedVarLong(value)
     
     @staticmethod
     def flipShortEndianness(value):
