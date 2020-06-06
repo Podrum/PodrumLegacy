@@ -1,3 +1,3 @@
 # How contribute for languages
 
-- **Don't** use any tranlatorer (like google translate)
+- **Don't** use any tranlator (like google translate)
