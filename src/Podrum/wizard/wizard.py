@@ -93,10 +93,11 @@ def wizard(path):
             print(base.get("writeGamemode"))
             userInput = input(text)
             if userInput.isdigit():
-                options.append(userInput)
-                print(base.get("wizardFinished"))
-                endWizard(path)
-                break
+                if int(userInput) >= 0 and int(userInput) <= 3:
+                    options.append(userInput)
+                    print(base.get("wizardFinished"))
+                    endWizard(path)
+                    break
 
 def skipWizard(path):
     fs.createServerConfigFromWizard(path, True, [])
