@@ -25,7 +25,7 @@ from ..utils import TextFormat
 langsList = [0]
 
 def getLangFiles(dir):
-    path = dir + '/src/Podrum/lang'
+    path = dir + '/src/podrum/lang'
     allFiles = glob.glob(path + '/*.json')
     for file in allFiles:
         with open(f'{file}', 'r', encoding="utf8") as langFiles:
@@ -47,7 +47,7 @@ language is returned
 """
 def get(string):
     if wizard.isInWizard == True:
-        path = os.getcwd() + "/src/Podrum/lang/"
+        path = os.getcwd() + "/src/podrum/lang/"
         with open(f'{path}/{wizard.options[0]}.json', 'r', encoding="utf8") as lF:
             data = json.load(lF)
             if string in data:
@@ -62,7 +62,7 @@ def get(string):
                 lang = pref["Language"]
             else:
                 print(f"{TextFormat.RED}Language not found in server.json")
-        path = os.getcwd() + "/src/Podrum/lang/"
+        path = os.getcwd() + "/src/podrum/lang/"
         with open(f'{path}{lang}.json', 'r', encoding="utf8") as lF:
             data = json.load(lF)
             if string in data:
