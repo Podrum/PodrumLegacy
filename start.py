@@ -3,7 +3,7 @@
 import sys
 from os import getcwd
 from threading import Thread
-from src.Podrum.Server import Server
+from src.podrum.Server import Server
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
