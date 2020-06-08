@@ -23,7 +23,7 @@ def checkYesNo(string):
         return
 
 def checkIfLangExists(string):
-    path = os.getcwd() + '/src/Podrum/lang/'
+    path = os.getcwd() + '/src/podrum/lang/'
     allLangs = base.getLangNames(path)
     if(string in allLangs):
         return True
