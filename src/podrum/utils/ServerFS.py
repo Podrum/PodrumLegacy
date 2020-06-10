@@ -17,8 +17,9 @@ from podrum.wizard import Wizard
 class ServerFS:
     def read(file):
         with open(file) as f:
-            return f.read()
+            content = f.read()
             f.close()
+            return content
 
 
     def write(file, content):
