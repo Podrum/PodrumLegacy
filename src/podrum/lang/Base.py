@@ -37,7 +37,7 @@ class Base:
                     name = data['langName']
                 else:
                     name = 'Unknown name'
-            langs = str(file.replace(path, '').replace("\\", "").replace('.json', ''))
+            langs = str(file.replace(path, '').replace("\\", "").replace('.json', '').replace("/", ""))
             Base.langsList.append(langs)
             print(f'[{langs}] -> {name}')
 
