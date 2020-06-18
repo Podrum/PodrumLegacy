@@ -15,10 +15,10 @@ import os
 import json
 import yaml
 import pickle
-from ..utils import logger
+from podrum.utils import Logger
 
-from .fs import read
-from ..Server import Server
+from podrum.ServerFS.ServerFS import read
+from podrum.Server import Server
 
 class Config:
     DETECT = -1

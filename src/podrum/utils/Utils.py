@@ -29,11 +29,12 @@ class Utils:
     def killServer():
         os.kill(os.getpid(), signal.SIGTERM)
     
-    def getPrivateIpAddr():
+    def getPrivateIpAddress():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
-        return s.getsockname()[0]
+        ip = s.getsockname()[0]
+        return ip
     
-    def getPublicIpAddr():
+    def getPublicIpAddress():
         ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
         return ip

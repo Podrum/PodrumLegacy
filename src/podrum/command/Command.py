@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 
+class Command:
 
-def onCommand(string, fromConsole):
-    pass
+    def onCommand(string, fromConsole):
+        pass

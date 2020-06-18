@@ -13,8 +13,7 @@
 
 import os
 from re import M
-from .Utils import Utils
-
+from podrum.utils.Utils import Utils
 
 class TextFormat:
 
