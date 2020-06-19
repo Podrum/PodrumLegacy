@@ -55,8 +55,7 @@ class Server:
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
         if (isTravisBuild):
-            print("Build success.")
-            os._exit(0)
+            Server.checkTravisBuild(path)
         else:
             while Wizard.isInWizard == False:
                 cmd = input('> ')
@@ -76,3 +75,13 @@ class Server:
             Logger.log('info', '/stop: Stops the server')
         else:
             Logger.log('error', str(Base.get("invalidCommand")))
+    
+    def checkTravisBuild(path):
+        if not ServerFS.checkForFile(path, "server.json"):
+            Logger.log("error", "Couldn't find server.json file.")
+            os._exit(1)
+        if os.path.getsize(f'{path}/server.json') == 0:
+            Logger.log("error", "The server.json file is empty.")
+            os._exit(1)
+        print("Build success.")
+        os._exit(0)

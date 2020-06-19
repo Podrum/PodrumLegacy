@@ -58,6 +58,13 @@ class Base:
                 else:
                     print(f"The value '{string}' does not exists in this language.")
         else:
+            if not Wizard.ServerFS.checkForFile(os.getcwd(), "server.json") or os.path.getsize(os.getcwd() + "/server.json") == 0:
+                with open(os.getcwd() + "/src/podrum/lang/en.json", 'r', encoding='utf-8') as lF:
+                    data = json.load(lF)
+                    if string in data:
+                        return data[string]
+                    else:
+                        return print(f"{TextFormat.RED}The value '{string}' does not exists in this language")
             serverConfig = os.getcwd() + "/server.json"
             with open(f'{serverConfig}', 'r', encoding="utf8") as serverCfg:
                 pref = json.load(serverCfg)
