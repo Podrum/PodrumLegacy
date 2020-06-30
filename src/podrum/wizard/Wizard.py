@@ -67,6 +67,7 @@ class Wizard:
                 elif Parser.checkYesNo(userInput) == False:
                     print("> " + Base.Base.get("wizardSkipped"))
                     Wizard.skipWizard(path)
+                    break
             if(step == 3):
                 print(Wizard.podrumLogo)
                 print(">- Podrum - Wizard -<\n\n")
@@ -101,7 +102,7 @@ class Wizard:
                 break
                         
     def skipWizard(path):
-        ServerFS.createServerConfigFromWizard(path, True, [])
+        ServerFS.createServerConfigFromWizard(path, True, Wizard.options)
         
     def endWizard(path):
         ServerFS.createServerConfigFromWizard(path, False, Wizard.options)
