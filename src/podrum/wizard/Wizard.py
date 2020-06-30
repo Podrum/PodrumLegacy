@@ -18,7 +18,6 @@ class Wizard:
     
     options = []
     isInWizard = True
-    text = '- '
     podrumLogo = """
             ____           _                      
            |  _ \ ___   __| |_ __ _   _ _ __ ___  
@@ -42,61 +41,64 @@ class Wizard:
 
     def startWizard(path):
         step = 0
-        while step >= 0 and step < 6:
+        while step >= 0:
             if(step == 0):
-                print(Wizard.podrumLogo)
-                print(">- Podrum - Wizard -<\n\n")
-                print("Do you want to follow the setup? [y/n]:")
-                userInput = input(Wizard.text)
-                if Parser.checkYesNo(userInput) == True:
-                    step += 1
-                elif Parser.checkYesNo(userInput) == False:
-                    print("Skipping the setup wizard...")
-                    Wizard.skipWizard(path)
-                    break
-                elif Parser.checkYesNo(userInput) == None:
-                    print("Please, write yes (y) or no (n).")
-            if(step == 1):
-                print("Please, select a language:")
                 Base.Base.getLangFiles()
-                userInput = input(Wizard.text)
+                userInput = input("> Please, select a language: ")
                 if Parser.checkIfLangExists(userInput) == True:
                     Wizard.options.append(userInput)
-                    print(Base.Base.get("langSelectedAsBase"))
+                    print("- " + Base.Base.get("langSelectedAsBase"))
                     step += 1
                 else:
-                    print("That language does not exists. Please, choose one from the list.")
-            if(step == 2):
+                    print("[!] That language does not exists. Please, choose one from the list.")
+            if(step == 1):
                 print(Wizard.podrumLicense)
-                print(Base.Base.get("acceptLicense"))
-                userInput = input(Wizard.text)
+                userInput = input("> " + Base.Base.get("acceptLicense") + ": ")
                 if Parser.checkYesNo(userInput) == True:
                     step += 1
                 elif Parser.checkYesNo(userInput) == False:
                     print(Base.Base.get("mustAcceptLicense"))
                 elif Parser.checkYesNo(userInput) == None:
                     print(Base.Base.get("writeYesOrNo"))
-            if(step == 3):
-                print(Base.Base.get("writeMOTD"))
-                userInput = input(Wizard.text)
-                if userInput != "":
-                    Wizard.options.append(userInput)
+            if(step == 2):
+                userInput = input("> " + Base.Base.get("wizardSetup") + ": ")
+                if Parser.checkYesNo(userInput) == True:
                     step += 1
+                elif Parser.checkYesNo(userInput) == False:
+                    print("> " + Base.Base.get("wizardSkipped"))
+                    Wizard.skipWizard(path)
+            if(step == 3):
+                print(Wizard.podrumLogo)
+                print(">- Podrum - Wizard -<\n\n")
+                step += 1
             if(step == 4):
-                print(Base.Base.get("writeMaxPlayers"))
-                userInput = input(Wizard.text)
-                if userInput.isdigit():
+                userInput = input("[>] " + Base.Base.get("writeServerPort") + " ")
+                if userInput == "":
+                    Wizard.options.append("19132")
+                    step += 1
+                elif userInput.isdigit():
                     Wizard.options.append(userInput)
                     step += 1
             if(step == 5):
-                print(Base.Base.get("writeGamemode"))
-                userInput = input(Wizard.text)
+                userInput = input("[>] " + Base.Base.get("writeMOTD") + " ")
+                if(userInput != ""):
+                    Wizard.options.append(userInput)
+                    step += 1
+            if(step == 6):
+                userInput = input("[>] " + Base.Base.get("writeGamemode") + " ")
                 if userInput.isdigit():
                     if int(userInput) >= 0 and int(userInput) <= 3:
                         Wizard.options.append(userInput)
-                        print(Base.Base.get("wizardFinished"))
-                        Wizard.endWizard(path)
-                        break
+                        step += 1
+            if(step == 7):
+                userInput = input("[>] " + Base.Base.get("writeMaxPlayers") + " ")
+                if userInput.isdigit():
+                    Wizard.options.append(userInput)
+                    step += 1
+            if(step == 8):
+                print(Base.Base.get("wizardFinished"))
+                Wizard.endWizard(path)
+                break
                         
     def skipWizard(path):
         ServerFS.createServerConfigFromWizard(path, True, [])
