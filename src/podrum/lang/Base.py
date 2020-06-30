@@ -27,7 +27,7 @@ class Base:
 
     langsList = [0]
 
-    def getLangFiles(dir):
+    def getLangFiles():
         path = Wizard.ServerFS.getLangDir()
         allFiles = glob.glob(path + '/*.json')
         for file in allFiles:
