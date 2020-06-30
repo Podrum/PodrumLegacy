@@ -58,7 +58,7 @@ class Wizard:
                     print("Please, write yes (y) or no (n).")
             if(step == 1):
                 print("Please, select a language:")
-                Base.Base.getLangFiles(path)
+                Base.Base.getLangFiles()
                 userInput = input(Wizard.text)
                 if Parser.checkIfLangExists(userInput) == True:
                     Wizard.options.append(userInput)
