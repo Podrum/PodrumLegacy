@@ -10,10 +10,11 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-import sys
 import os
 import signal
+import sys
 import socket
+import time
 import urllib
 
 class Utils:
@@ -38,3 +39,9 @@ class Utils:
     def getPublicIpAddress():
         ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
         return ip
+    
+    def microtime(get_as_float = False) :
+        if get_as_float:
+            return time.time()
+        else:
+            return '%f %d' % math.modf(time.time())
