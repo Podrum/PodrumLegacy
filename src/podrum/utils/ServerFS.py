@@ -47,6 +47,14 @@ class ServerFS:
     def checkForDir(path):
         return os.path.isdir(f'{path}')
 
+    def getLangDir():
+        if ServerFS.checkForDir(os.path.dirname(os.path.abspath(__file__)) + '/..'):
+            langDir = os.path.dirname(os.path.abspath(__file__)) + '/../lang'
+        else:
+            pyzDir = zipfile.ZipFile(os.path.dirname(os.path.abspath(__file__)) + '/..')
+            langDir = pyzFile.open('lang')
+        return langDir
+
 
     def checkAllFiles(path):
         firstLaunch = False
