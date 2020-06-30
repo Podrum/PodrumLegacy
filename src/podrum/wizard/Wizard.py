@@ -101,7 +101,8 @@ class Wizard:
                 Wizard.endWizard(path)
                 break
                         
-    def skipWizard(path):
+    def skipWizard(path, isTravisBuild = False):
+        if isTravisBuild == True: Wizard.options.append("en")
         ServerFS.createServerConfigFromWizard(path, True, Wizard.options)
         
     def endWizard(path):
