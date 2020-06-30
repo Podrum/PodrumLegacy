@@ -1,8 +1,10 @@
-  
 {
     "langName": "Español",
     "langSelectedAsBase": "Español seleccionado como idioma base.",
+    "wizardSetup": "¿Quieres seguir el asistente de configuración? [y/N]",
+    "wizardSkipped": "Saltando el asistente de configuración...",
     "writeYesOrNo": "Por favor, escribe sí (y) o no (n).",
+    "writeServerPort": "Escribe el puerto del servidor (predeterminado: 19132):",
     "writeMOTD": "Escribe el MOTD del servidor:",
     "writeMaxPlayers": "Escribe el número de cuántos jugadores se pueden unir a tu servidor como máximo:",
     "writeGamemode": "Selecciona un modo de juego (en número) [SUPERVIVENCIA = 0, CREATIVO = 1, AVENTURA = 2, ESPECTADOR = 3]:",
