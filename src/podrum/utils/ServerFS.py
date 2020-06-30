@@ -12,6 +12,7 @@
 """
 import os
 import json
+import zipfile
 from podrum.wizard import Wizard
 
 class ServerFS:
