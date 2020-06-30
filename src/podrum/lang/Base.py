@@ -28,7 +28,7 @@ class Base:
     langsList = [0]
 
     def getLangFiles(dir):
-        path = dir + '/src/podrum/lang'
+        path = Wizard.ServerFS.getLangDir()
         allFiles = glob.glob(path + '/*.json')
         for file in allFiles:
             with open(f'{file}', 'r', encoding="utf8") as langFiles:
@@ -50,7 +50,7 @@ class Base:
     """
     def get(string):
         if Wizard.Wizard.isInWizard == True:
-            path = os.getcwd() + "/src/podrum/lang/"
+            path = Wizard.ServerFS.getLangDir()
             with open(f'{path}/{Wizard.Wizard.options[0]}.json', 'r', encoding="utf8") as lF:
                 data = json.load(lF)
                 if string in data:
@@ -59,7 +59,7 @@ class Base:
                     print(f"The value '{string}' does not exists in this language.")
         else:
             if not Wizard.ServerFS.checkForFile(os.getcwd(), "server.json") or os.path.getsize(os.getcwd() + "/server.json") == 0:
-                with open(os.getcwd() + "/src/podrum/lang/en.json", 'r', encoding='utf-8') as lF:
+                with open(Wizard.ServerFS.getLangDir() + "/en.json", 'r', encoding='utf-8') as lF:
                     data = json.load(lF)
                     if string in data:
                         return data[string]
@@ -72,8 +72,8 @@ class Base:
                     lang = pref["Language"]
                 else:
                     print(f"{TextFormat.RED}Language not found in server.json")
-            path = os.getcwd() + "/src/podrum/lang/"
-            with open(f'{path}{lang}.json', 'r', encoding="utf8") as lF:
+            path = Wizard.ServerFS.getLangDir()
+            with open(f'{path}/{lang}.json', 'r', encoding="utf8") as lF:
                 data = json.load(lF)
                 if string in data:
                     return data[string]
