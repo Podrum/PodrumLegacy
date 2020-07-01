@@ -39,6 +39,7 @@ class Server:
 
     def __init__(self, path, withWizard, isTravisBuild = False):
         super().__init__()
+        startTime = Utils.microtime(True)
         self.path = path
         self.withWizard = withWizard
         if(withWizard):
@@ -54,7 +55,9 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
-        Logger.log('info', f'Done in {str(Utils.microtime(True))}s. Type "help" to view all available commands.')
+        doneTime = Utils.microtime(True)
+        finishStartupSeconds = "%.3f" % (doneTime - startTime)
+        Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
         if (isTravisBuild):
             Server.checkTravisBuild(path)
         else:
