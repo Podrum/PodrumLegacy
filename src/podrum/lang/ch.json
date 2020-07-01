@@ -1,7 +1,10 @@
 {
     "langName": "中文",
     "langSelectedAsBase": "选择中文作为基本语言。",
+    "wizardSetup": "您要遵循设置吗? [y/N]",
+    "wizardSkipped": "跳过设置向导...",
     "writeYesOrNo": "请输入是（y）或否（n）。",
+    "writeServerPort": "写入服务器端口（默认：19132)：",
     "writeMOTD": "编写服务器的MOTD:",
     "writeMaxPlayers": "写下可以加入您的服务器的最大玩家数:",
     "writeGamemode": "选择一种游戏模式（数量）[生存= 0，创意= 1，冒险= 2，观众= 3]:",

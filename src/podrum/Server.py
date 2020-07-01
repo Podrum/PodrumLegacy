@@ -44,7 +44,7 @@ class Server:
         if(withWizard):
             ServerFS.checkAllFiles(path)
         else:
-            Wizard.skipWizard(path)
+            Wizard.skipWizard(path, True)
         port = self.port
         print(str(self.podrumLogo))
         Wizard.isInWizard = False
