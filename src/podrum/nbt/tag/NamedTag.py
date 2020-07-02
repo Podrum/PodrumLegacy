@@ -44,3 +44,11 @@ class NamedTag:
     def toString(indentation = 0):
         return ("  " * indentation) + type(object) + ": " + (("name='NamedTag.name', ") if (NamedTag.name != "") else "") + "value='" + str(NamedTag.getValue()) + "'"
     
+    def safeClone() -> NamedTag:
+        if NamedTag.cloning:
+            raise ValueError("Recursive NBT tag dependency detected")
+        NamedTag.cloning = True
+        retval = NamedTag.copy()
+        NamedTag.cloning = False
+        retval.cloning = False
+        return retval
