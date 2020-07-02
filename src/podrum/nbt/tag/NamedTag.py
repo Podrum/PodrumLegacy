@@ -16,7 +16,7 @@ from abc import ABCMeta, abstractmethod
 from podrum.nbt.NBTStream import NBTStream
 from podrum.nbt.ReaderTracker import ReaderTracker
 
-class NamedTag():
+class NamedTag:
     __metaclass__ = ABCMeta
     
     name = None
@@ -27,8 +27,19 @@ class NamedTag():
             raise ValueError("Tag name cannot be more than 32767 bytes, got length " + str(len(name)))
         self.name = name
         
-    def getName(self):
-        return self.name
+    def getName():
+        return NamedTag.name
     
-    def setName(self, name):
-        self.name = name
+    def setName(name):
+        NamedTag.name = name
+        
+    def getValue(): pass
+    
+    def getType(): pass
+    
+    def write(nbt: NBTStream): pass
+    
+    def read(nbt: NBTStream, tracker: ReaderTracker): pass
+    
+    
+    
