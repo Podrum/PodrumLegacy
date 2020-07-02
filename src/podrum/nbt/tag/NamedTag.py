@@ -55,3 +55,6 @@ class NamedTag:
     
     def equals(that: NamedTag):
         return NamedTag.name == that.name and NamedTag.equalsValue(that)
+    
+    def equalsValue(that: NamedTag):
+        return isinstance(that, NamedTag()) and NamedTag.getValue() == that.getValue()
