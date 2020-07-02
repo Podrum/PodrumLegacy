@@ -54,7 +54,7 @@ class Server:
         Logger.log('info', str(Base.get("license")))
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
-        handler.sendOption("name", "MCPE;Podrum powered server;390;1.14.60;0;0;0;PodrumPoweredServer;0")
+        handler.sendOption("name", "MCPE;Podrum powered server;407;1.16.0;0;0;0;PodrumPoweredServer;0")
         doneTime = Utils.microtime(True)
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
