@@ -11,7 +11,24 @@
 * (at your option) any later version.
 """
 
+from abc import ABCMeta, abstractmethod
+
 from podrum.nbt.NBTStream import NBTStream
 from podrum.nbt.ReaderTracker import ReaderTracker
 
-
+class NamedTag():
+    __metaclass__ = ABCMeta
+    
+    name = None
+    cloning = False
+    
+    def __init__(self, name = ''):
+        if len(name > 32767):
+            raise ValueError("Tag name cannot be more than 32767 bytes, got length " + str(len(name)))
+        self.name = name
+        
+    def getName(self):
+        return self.name
+    
+    def setName(self, name):
+        self.name = name
