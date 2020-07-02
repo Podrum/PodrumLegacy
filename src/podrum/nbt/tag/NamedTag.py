@@ -41,5 +41,6 @@ class NamedTag:
     
     def read(nbt: NBTStream, tracker: ReaderTracker): pass
     
-    
+    def toString(indentation = 0):
+        return ("  " * indentation) + type(object) + ": " + (("name='NamedTag.name', ") if (NamedTag.name != "") else "") + "value='" + str(NamedTag.getValue()) + "'"
     
