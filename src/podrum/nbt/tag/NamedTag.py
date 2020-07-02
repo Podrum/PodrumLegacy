@@ -52,3 +52,6 @@ class NamedTag:
         NamedTag.cloning = False
         retval.cloning = False
         return retval
+    
+    def equals(that: NamedTag):
+        return NamedTag.name == that.name and NamedTag.equalsValue(that)
