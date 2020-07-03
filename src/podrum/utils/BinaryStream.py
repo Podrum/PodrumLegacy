@@ -11,7 +11,8 @@
 * (at your option) any later version.
 """
 
-from .Binary import Binary
+from podrum.utlis.Binary import Binary
+from podrum.utlis.UUID import UUID
 
 class BinaryStream:
     buffer = ""
@@ -165,6 +166,19 @@ class BinaryStream:
     def putString(self, v):
         self.putUnsignedVarInt(len(v))
         self.put(v)
+        
+    def getUUID(self):
+        part1 = self.getLInt()
+        part0 = self.getLInt()
+        part3 = self.getLInt()
+        part2 = self.getLInt()
+        return UUID(part0, part1, part2, part3)
+    
+    def putUUID(self, uuid: UUID):
+        self.putLInt(uuid.getPart(1))
+        self.putLInt(uuid.getPart(0))
+        self.putLInt(uuid.getPart(3))
+        self.putLInt(uuid.getPart(2))
         
     def feof(self):
         try:
