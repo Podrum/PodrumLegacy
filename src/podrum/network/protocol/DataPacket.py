@@ -71,5 +71,11 @@ class DataPacket(BinaryStream):
             (self.senderSubId << self.SENDER_SUBCLIENT_ID_SHIFT) |
             (self.recipientSubId << self.RECIPIENT_SUBCLIENT_ID_SHIFT)
         )
+        
+    def writePayload(): pass
     
-    
+    def clean():
+        self.buffer = ""
+        self.isEncoded = False
+        self.offset = 0
+        return self
