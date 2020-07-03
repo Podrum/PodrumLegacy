@@ -31,7 +31,7 @@ class DataPacket(BinaryStream):
         return self.NID
         
     def getName(self):
-        return self.__init__().__name__
+        return type(object).__name__
         
     def canBeBatched():
         return True
