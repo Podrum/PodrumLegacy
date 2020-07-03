@@ -11,6 +11,9 @@
 * (at your option) any later version.
 """
 
+from podrum.utils.Binary import Binary
+from podrum.utils.Utils import Utils
+
 class UUID:
     parts = [0, 0, 0, 0]
     version = None
@@ -27,4 +30,8 @@ class UUID:
     
     def equals(self, uuid: UUID):
         return uuid.parts[0] == self.parts[0] and uuid.parts[1] == self.parts[1] and uuid.parts[2] == self.parts[2] and uuid.parts[3] == self.parts[3]
-        
+    
+    def fromBinary(self, uuid, version = None):
+        if len(uuid) != 16:
+            raise Exeption("Must have exactly 16 bytes")
+        return UUID(Binary.readInt(Utils.substr(uuid, 0, 4)), Binary.readInt(Utils.substr(uuid, 4, 4)), Binary.readInt(Utils.substr(uuid, 8, 4)), Binary.readInt(Utils.substr(uuid, 12, 4)), version);
