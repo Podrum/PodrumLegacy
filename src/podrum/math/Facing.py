@@ -33,3 +33,59 @@ class Facing:
         WEST,
         EAST
     ]
+
+    HORIZONTAL = [
+        NORTH,
+        SOUTH,
+        WEST,
+        EAST
+    ]
+
+    CLOCKWISE = {
+        AXIS_Y: {
+            NORTH: EAST,
+            EAST: SOUTH,
+            SOUTH: WEST,
+            WEST: NORTH
+        },
+        AXIS_Z: {
+            UP: EAST,
+            EAST: DOWN,
+            DOWN: WEST,
+            WEST: UP
+        },
+        AXIS_X: {
+            UP: NORTH,
+            NORTH: DOWN,
+            DOWN: SOUTH,
+            SOUTH: UP
+        }
+    }
+
+    @staticmethod
+    def axis(direction):
+        return direction >> 1
+
+    @staticmethod
+    def is_positive(direction):
+        return (direction & Facing.FLAG_AXIS_POSITIVE) == Facing.FLAG_AXIS_POSITIVE
+
+    @staticmethod
+    def opposite(direction):
+        return direction ^ Facing.FLAG_AXIS_POSITIVE
+
+    @staticmethod
+    def rotate(direction, axis, clockwise):
+        if not Facing.CLOCKWISE[axis]:
+            raise ValueError("Invalid axis {}".format(axis))
+
+        if not Facing.CLOCKWISE[axis][direction]:
+            raise ValueError("Cannot rotate direction {} around axis {}".format(direction, axis))
+
+        rotated = Facing.CLOCKWISE[axis][direction]
+        return rotated if clockwise else Facing.opposite(rotated)
+
+    @staticmethod
+    def validate(facing):
+        if facing in Facing.ALL:
+            raise ValueError("Invalid direction {}".format(facing))
