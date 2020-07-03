@@ -42,6 +42,8 @@ class DataPacket(BinaryStream):
     def mayHaveUnreadBytes():
         return False
         
+    def decodePayload(): pass
+        
     def decode(self):
         self.offset = 0
         self.decodeHeader()
@@ -54,11 +56,20 @@ class DataPacket(BinaryStream):
             raise Exeption("Expected " + self.NID + " for packet ID, got " + pid)
         self.senderSubId = (header >> self.SENDER_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK
         self.recipientSubId = (header >> self.RECIPIENT_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK;
-        
-    def decodePayload(): pass
+    
+    def encodePayload(): pass
     
     def encode(self):
         self.reset()
         self.encodeHeader()
         self.encodePayload()
         self.isEncoded = True
+        
+    def encodeHeader(self):
+        self.putUnsignedVarInt(
+            self.NID |
+            (self.senderSubId << self.SENDER_SUBCLIENT_ID_SHIFT) |
+            (self.recipientSubId << self.RECIPIENT_SUBCLIENT_ID_SHIFT)
+        )
+    
+    
