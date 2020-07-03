@@ -1,7 +1,10 @@
 {
     "langName": "日本語",
     "langSelectedAsBase": "日本語をベース言語として選択.",
+    "wizardSetup": "セットアップをフォローしますか？ [y/N]",
+    "wizardSkipped": "セットアップウィザードをスキップしています...",
     "writeYesOrNo": "はい（y）またはいいえ（n）を書いてください.",
+    "writeServerPort": "サーバーポートを書き込みます（デフォルト：19132）：",
     "writeMOTD": "サーバーのMOTDを記述します:",
     "writeMaxPlayers": "サーバーに参加できる最大プレーヤー数を書きます：",
     "writeGamemode": "ゲームモードを選択します（番号順）[サバイバル= 0、クリエイティブ= 1、アドベンチャー= 2、観客= 3:]",

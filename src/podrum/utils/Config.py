@@ -15,10 +15,10 @@ import os
 import json
 import yaml
 import pickle
-from ..utils import logger
+from podrum.utils import Logger
 
-from .fs import read
-from ..Server import Server
+from podrum.ServerFS.ServerFS import read
+from podrum.Server import Server
 
 class Config:
     DETECT = -1
@@ -58,7 +58,7 @@ class Config:
 
     def __init__(self, file, type = DETECT, default = [], correct=None):
         self.load(file, type, default)
-        correct = correct
+        correct = self.correct
 
     @staticmethod
     def isset(self, variable):
@@ -76,7 +76,7 @@ class Config:
     
     def load(self, file, type=DETECT, default = []):
         self.correct = True
-        self.type = type
+        self.type = int(type)
         self.file = file
         if not self.is_array(default):
             default = []
@@ -125,7 +125,7 @@ class Config:
         if self.correct == True:
             try:
                 content = None
-                if (type == PROPERTIES) and (type == CNF):
+                if (type == PROPERTIES) or (type == CNF):
                     content = writeProperties()
                 elif type == JSON:
                     content = json.dumps(config)

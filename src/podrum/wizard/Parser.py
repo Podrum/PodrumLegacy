@@ -10,22 +10,25 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-from ..lang import base
 import os
 
-def checkYesNo(string):
-    string = string.lower()
-    if string == 'y' or string == 'yes':
-        return True
-    elif string == 'n' or string == 'no':
-        return False
-    else:
-        return
+from podrum.lang import Base
 
-def checkIfLangExists(string):
-    path = os.getcwd() + '/src/Podrum/lang/'
-    allLangs = base.getLangNames(path)
-    if(string in allLangs):
-        return True
-    else:
-        return False
+class Parser:
+
+    def checkYesNo(str):
+        str = str.lower()
+        if str == 'y' or str == 'yes':
+            return True
+        elif str == 'n' or str == 'no':
+            return False
+        else:
+            return
+
+    def checkIfLangExists(str):
+        path = os.getcwd() + '/src/podrum/lang/'
+        allLangs = Base.Base.getLangNames(path)
+        if(str in allLangs):
+            return True
+        else:
+            return False

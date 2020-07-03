@@ -2,7 +2,10 @@
 {
     "langName": "Deustche",
     "langSelectedAsBase": "Deutsch als Basissprache gewählt.",
+    "wizardSetup": "Möchten Sie dem Setup folgen? [y/N]",
+    "wizardSkipped": "Setup-Assistent überspringen...",
     "writeYesOrNo": "Bitte schreiben Sie ja (y) oder nein (n).",
+    "writeServerPort": "Schreiben Sie den Server-Port (Standard: 19132):",
     "writeMOTD": "Schreiben Sie die MOTD des Servers:",
     "writeMaxPlayers": "Schreiben Sie die maximale Anzahl von Spielern, die dem Server beitreten können:",
     "writeGamemode": "Wählen Sie einen Spielmodus (in Anzahl) [ÜBERLEBEN = 0, KREATIV = 1, ABENTEUER = 2, SPEKTATOR = 3]:",

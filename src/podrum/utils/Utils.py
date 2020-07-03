@@ -10,10 +10,11 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
-import sys
 import os
 import signal
+import sys
 import socket
+import time
 import urllib
 
 class Utils:
@@ -29,11 +30,18 @@ class Utils:
     def killServer():
         os.kill(os.getpid(), signal.SIGTERM)
     
-    def getPrivateIpAddr():
+    def getPrivateIpAddress():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
-        return s.getsockname()[0]
+        ip = s.getsockname()[0]
+        return ip
     
-    def getPublicIpAddr():
+    def getPublicIpAddress():
         ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
         return ip
+    
+    def microtime(get_as_float = False) :
+        if get_as_float:
+            return time.time()
+        else:
+            return '%f %d' % math.modf(time.time())
