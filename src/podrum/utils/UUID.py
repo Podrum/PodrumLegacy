@@ -34,4 +34,4 @@ class UUID:
     def fromBinary(self, uuid, version = None):
         if len(uuid) != 16:
             raise Exeption("Must have exactly 16 bytes")
-        return UUID(Binary.readInt(Utils.substr(uuid, 0, 4)), Binary.readInt(Utils.substr(uuid, 4, 4)), Binary.readInt(Utils.substr(uuid, 8, 4)), Binary.readInt(Utils.substr(uuid, 12, 4)), version);
+        return UUID(Binary.readInt(Utils.substr(uuid, 0, 4)), Binary.readInt(Utils.substr(uuid, 4, 4)), Binary.readInt(Utils.substr(uuid, 8, 4)), Binary.readInt(Utils.substr(uuid, 12, 4)), version)
