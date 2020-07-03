@@ -21,3 +21,10 @@ class UUID:
         self.parts[2] = int(part3)
         self.parts[3] = int(part4)
         self.version = (self.parts[1] & 0xf000) >> 12 if version == None else int(version)
+        
+    def getVersion(self):
+        return self.version
+    
+    def equals(self, uuid: UUID):
+        return uuid.parts[0] == self.parts[0] and uuid.parts[1] == self.parts[1] and uuid.parts[2] == self.parts[2] and uuid.parts[3] == self.parts[3]
+        
