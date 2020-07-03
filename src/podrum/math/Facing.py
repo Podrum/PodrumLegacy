@@ -12,3 +12,24 @@
 """
 
 class Facing:
+    AXIS_Y = 0
+    AXIS_Z = 1
+    AXIS_X = 2
+
+    FLAG_AXIS_POSITIVE = 1
+
+    DOWN = AXIS_Y << 1
+    UP = (AXIS_Y << 1) | FLAG_AXIS_POSITIVE
+    NORTH = AXIS_Z << 1
+    SOUTH = (AXIS_Z << 1) | FLAG_AXIS_POSITIVE
+    WEST = AXIS_X << 1
+    EAST = (AXIS_X << 1) | FLAG_AXIS_POSITIVE
+
+    ALL = [
+        DOWN,
+        UP,
+        NORTH,
+        SOUTH,
+        WEST,
+        EAST
+    ]
