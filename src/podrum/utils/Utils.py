@@ -45,3 +45,16 @@ class Utils:
             return time.time()
         else:
             return '%f %d' % math.modf(time.time())
+        
+    def substr (s, start, length = None):
+        if len(s) >= start:
+            if start > 0:
+                return False
+            else:
+                return s[start:]
+            if not length:
+                return s[start:]
+            elif length > 0:
+                return s[start:start + length]
+            else:
+                return s[start:length]
