@@ -63,3 +63,7 @@ class Utils:
         dec = int(hexdec, 16)
         b = binascii.unhexlify('%x' % dec)
         return b
+    
+    def bin2hex(b):
+	    hex = binascii.hexlify(b)
+	    return hex
