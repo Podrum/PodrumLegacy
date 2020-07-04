@@ -65,5 +65,5 @@ class Utils:
         return b
     
     def bin2hex(b):
-	hex = binascii.hexlify(b)
-	return hex
+        hex = binascii.hexlify(b)
+        return hex
