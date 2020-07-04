@@ -19,10 +19,10 @@ class UUID:
     version = None
     
     def __init__(self, part1 = 0, part2 = 0, part3 = 0, part4 = 0, version = None):
-        self.parts[0] = int(part1)
-        self.parts[1] = int(part2)
-        self.parts[2] = int(part3)
-        self.parts[3] = int(part4)
+        self.parts[1] = int(part1)
+        self.parts[0] = int(part2)
+        self.parts[3] = int(part3)
+        self.parts[2] = int(part4)
         self.version = (self.parts[1] & 0xf000) >> 12 if version == None else int(version)
         
     def getVersion(self):
