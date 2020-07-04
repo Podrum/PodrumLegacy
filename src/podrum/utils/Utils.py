@@ -64,6 +64,5 @@ class Utils:
         b = binascii.unhexlify('%x' % dec)
         return b
     
-    def bin2hex(b):
-        hex = binascii.hexlify(b)
-        return hex
+    def binToHex(b):
+        return binascii.hexlify(b)
