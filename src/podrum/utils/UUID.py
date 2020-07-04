@@ -11,6 +11,8 @@
 * (at your option) any later version.
 """
 
+import hashlib
+
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
 
@@ -38,3 +40,7 @@ class UUID:
 
     def fromString(self, uuid, version = None):
         return self.fromBinary(Utils.hex2bin(uuid.strip().replace("-", "")), version)
+    
+    def fromData(self, data):
+        hash = hashlib.new("md5").update("".join(data))
+        return self.fromBinary(hash, 3)
