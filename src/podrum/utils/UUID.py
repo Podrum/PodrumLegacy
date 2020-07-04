@@ -37,4 +37,4 @@ class UUID:
         return UUID(Binary.readInt(Utils.substr(uuid, 0, 4)), Binary.readInt(Utils.substr(uuid, 4, 4)), Binary.readInt(Utils.substr(uuid, 8, 4)), Binary.readInt(Utils.substr(uuid, 12, 4)), version)
 
     def fromString(self, uuid, version = None):
-        return self.fromBinary(Utils.hex2bin(uuid.strip().replace("-", "")), version);
+        return self.fromBinary(Utils.hex2bin(uuid.strip().replace("-", "")), version)
