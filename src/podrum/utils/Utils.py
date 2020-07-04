@@ -55,3 +55,10 @@ class Utils:
             return string[start:start + length]
         else:
             return string[start:length]
+        
+    def hex2bin(hexdec):
+        if hexdec == 'x':
+            return False
+        dec = int(hexdec, 16)
+        b = binascii.unhexlify('%x' % dec)
+        return b
