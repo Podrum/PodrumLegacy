@@ -54,4 +54,10 @@ class UUID:
     def toBinary(self):
         return Binary.writeInt(self.parts[0]) + Binary.writeInt(self.parts[1]) + Binary.writeInt(self.parts[2]) + Binary.writeInt(self.parts[3])
     
+    def toString(self):
+        hex = Utils.bin2hex(self.toBinary())
+        if self.version != None:
+            return Utils.substr(hex, 0, 8) + "-" + Utils.substr(hex, 8, 4) + "-" + int(self.version, 16) + Utils.substr(hex, 13, 3) + "-8" + Utils.substr(hex, 17, 3) + "-" + Utils.substr(hex, 20, 12)
+        return Utils.substr(hex, 0, 8) + "-" + Utils.substr(hex, 8, 4) + "-" + Utils.substr(hex, 12, 4) + "-" + Utils.substr(hex, 16, 4) + "-" + Utils.substr(hex, 20, 12)
+    
     
