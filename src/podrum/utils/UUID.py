@@ -12,6 +12,9 @@
 """
 
 import hashlib
+import os
+import random
+import time
 
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
@@ -44,3 +47,6 @@ class UUID:
     def fromData(self, data):
         hash = hashlib.new("md5").update("".join(data))
         return self.fromBinary(hash, 3)
+
+    def fromRandom(self):
+        return self.fromData(Binary.writeInt(int(time.time())), Binary.writeShort(os.getpid()), Binary.writeShort(os.geteuid()), Binary.writeInt(random.randint(-0x7fffffff, 0x7fffffff)), Binary.writeInt(random.randint(-0x7fffffff, 0x7fffffff)))
