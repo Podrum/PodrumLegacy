@@ -50,3 +50,8 @@ class UUID:
 
     def fromRandom(self):
         return self.fromData(Binary.writeInt(int(time.time())), Binary.writeShort(os.getpid()), Binary.writeShort(os.geteuid()), Binary.writeInt(random.randint(-0x7fffffff, 0x7fffffff)), Binary.writeInt(random.randint(-0x7fffffff, 0x7fffffff)))
+    
+    def toBinary(self):
+        return Binary.writeInt(self.parts[0]) + Binary.writeInt(self.parts[1]) + Binary.writeInt(self.parts[2]) + Binary.writeInt(self.parts[3])
+    
+    
