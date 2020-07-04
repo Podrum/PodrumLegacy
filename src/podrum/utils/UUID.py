@@ -60,4 +60,7 @@ class UUID:
             return Utils.substr(hex, 0, 8) + "-" + Utils.substr(hex, 8, 4) + "-" + int(self.version, 16) + Utils.substr(hex, 13, 3) + "-8" + Utils.substr(hex, 17, 3) + "-" + Utils.substr(hex, 20, 12)
         return Utils.substr(hex, 0, 8) + "-" + Utils.substr(hex, 8, 4) + "-" + Utils.substr(hex, 12, 4) + "-" + Utils.substr(hex, 16, 4) + "-" + Utils.substr(hex, 20, 12)
     
-    
+    def getPart(self, partNumber: int):
+        if partNumber < 0 or partNumber > 3:
+            raise Exeption("Invalid UUID part index" + str(partNumber))
+        return self.parts[partNumber]
