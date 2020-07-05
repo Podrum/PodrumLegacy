@@ -74,7 +74,7 @@ class Server:
             Logger.log('info', 'Stopping server...')
             Utils.killServer()
         elif string.lower() == '':
-            pass
+            return
         elif string.lower() == 'help':
             Logger.log('info', '/stop: Stops the server')
         else:
