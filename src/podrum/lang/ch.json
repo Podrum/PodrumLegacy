@@ -1,0 +1,18 @@
+{
+    "langName": "中文",
+    "langSelectedAsBase": "选择中文作为基本语言。",
+    "wizardSetup": "您要遵循设置吗? [y/N]",
+    "wizardSkipped": "跳过设置向导...",
+    "writeYesOrNo": "请输入是（y）或否（n）。",
+    "writeServerPort": "写入服务器端口（默认：19132)：",
+    "writeMOTD": "编写服务器的MOTD:",
+    "writeMaxPlayers": "写下可以加入您的服务器的最大玩家数:",
+    "writeGamemode": "选择一种游戏模式（数量）[生存= 0，创意= 1，冒险= 2，观众= 3]:",
+    "wizardFinished": "您已完成服务器设置向导！",
+    "acceptLicense": "您接受许可证吗? [y/n]",
+    "mustAcceptLicence": "如果要使用此软件，必须接受许可。",
+    "startingServer": "在启动服务器 {ip}:{port}",
+    "extIpMsg": "这是您的外部IP: {ipPublic}. 如果您想要不在本地网络中的播放器，则必须移植",
+    "license": "Podrum是根据GPLv3许可获得许可的",
+    "invalidCommand": "无效的命令"
+}

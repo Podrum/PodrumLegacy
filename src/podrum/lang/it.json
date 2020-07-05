@@ -1,0 +1,18 @@
+{
+    "langName": "Italanio",
+    "langSelectedAsBase": "Italiano selezionato come lingua di base.",
+    "wizardSetup": "Vuoi seguire la configurazione? [y/N]",
+    "wizardSkipped": "Saltare la procedura guidata di configurazione...",
+    "writeYesOrNo": "Per favore, scrivi sì (y) o no (n).",
+    "writeServerPort": "Scrivi la porta del server (impostazione predefinita: 19132):",
+    "writeMOTD": "Scrivi il MOTD del server:",
+    "writeMaxPlayers": "Scrivi il numero massimo di giocatori che possono unirsi al tuo server:",
+    "writeGamemode": "Seleziona una modalità di gioco (in numero) [SOPRAVVIVENZA = 0, CREATIVA = 1, AVVENTURA = 2, SPETTATORE = 3]:",
+    "wizardFinished": "Hai completato l'installazione guidata del server!",
+    "acceptLicense": "Accettate la licenza? [y/n]",
+    "mustAcceptLicence": "È necessario accettare la licenza se si desidera utilizzare questo software.",
+    "startingServer": "Avvio del server su {ip}:{port}",
+    "extIpMsg": "Questo è il vostro ip esterno: {ipPublic}. Se si desidera che i giocatori che non sono nella vostra rete locale è necessario portforward",
+    "license": "Podrum ha la licenza GPLv3",
+    "invalidCommand": "Comando non valido"
+}
