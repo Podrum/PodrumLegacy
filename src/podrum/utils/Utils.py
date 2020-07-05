@@ -60,6 +60,8 @@ class Utils:
     def hex2bin(hexdec):
         if hexdec == 'x':
             return False
+        if hexdec == '':
+            return False
         dec = int(hexdec, 16)
         b = binascii.unhexlify('%x' % dec)
         return b
