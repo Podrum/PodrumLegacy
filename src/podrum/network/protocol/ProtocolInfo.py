@@ -13,9 +13,9 @@
 
 class ProtocolInfo:
     # Version info
-    CURRENT_PROTOCOL = 407
-    MINECRAFTBE_VERSION = 'v1.16.0'
-    MINECRAFTBE_VERSION_NETWORK = '1.16.0'
+    MCBE_PROTOCOL_VERSION = 407
+    MCBE_VERSION = 'v1.16.0'
+    MCBE_VERSION_NETWORK = '1.16.0'
     
     # MCBE protocol info
     LOGIN_PACKET = 0x01
