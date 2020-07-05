@@ -17,6 +17,7 @@ import jwt
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.utils.BinaryStream import BinaryStream
+from podrum.utils.Utils import Utils
 
 class DataPacket(DataPacket):
     NID = ProtocolInfo.LOGIN_PACKET
@@ -47,7 +48,7 @@ class DataPacket(DataPacket):
             self.chainData = json.loads(buffer.get(buffer.getLInt())
             hasExtraData = False
             for chain in self.chainData["chain"]
-                webtoken = jwt.decode(chain)
+                webtoken = Utils.decodeJWT(chain)
         
     
     def encodePayload(): pass
