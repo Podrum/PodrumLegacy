@@ -13,6 +13,6 @@
     "mustAcceptLicence": "如果要使用此软件，必须接受许可。",
     "startingServer": "在启动服务器 {ip}:{port}",
     "extIpMsg": "这是您的外部IP: {ipPublic}. 如果您想要不在本地网络中的播放器，则必须移植",
-    "license": "Podrum是根据GPLv3许可获得许可的",
+    "license": "Podrum是根据Apache-2.0许可获得许可的",
     "invalidCommand": "无效的命令"
 }
