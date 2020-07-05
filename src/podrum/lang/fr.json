@@ -13,6 +13,6 @@
     "mustAcceptLicence": "Vous devez accepter la licence si vous souhaitez utiliser ce logiciel.",
     "startingServer": "Démarage du serveur sur {ip}:{port}",
     "extIpMsg": "Ceci est votre ip public: {ipPublic}. Si vous voulez que des personnes rejoignent en dehors de votre réseau vous devez ouvrir vos ports",
-    "license": "Podrum est sous la licence GPLv3",
+    "license": "Podrum est sous la licence Apache-2.0",
     "invalidCommand": "Commande invalide"
 }
