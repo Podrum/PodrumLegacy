@@ -10,7 +10,9 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 """
+import base64
 import binascii
+import json
 import os
 import signal
 import sys
@@ -68,3 +70,13 @@ class Utils:
     
     def binToHex(b):
         return binascii.hexlify(b)
+    
+    def decodeJWT(token: str):
+        [headB64, payloadB64, sigB64] = token.split(".")
+        rawPayloadJSON = base64.b64decode(payloadB64.translate(str.maketrans('-_', '+/'))).decode("latin-1")
+        if rawPayloadJSON == False:
+            raise Exception("Payload base64 is invalid and cannot be decoded")
+        decodedPayload = json.loads(rawPayloadJSON)
+        if not isinstance(decodedPayload, (list, dict, tuple)):
+            raise Exception("Decoded payload should be array, " + str(type(decodedPayload).__name__)  + " received")
+        return decodedPayload
