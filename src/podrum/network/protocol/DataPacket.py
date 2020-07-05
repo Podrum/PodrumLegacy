@@ -53,7 +53,7 @@ class DataPacket(BinaryStream):
         header = self.getUnsignedVarInt()
         pid = header & self.PID_MASK
         if pid != self.NID:
-            raise Exeption("Expected " + self.NID + " for packet ID, got " + pid)
+            raise Exception("Expected " + self.NID + " for packet ID, got " + pid)
         self.senderSubId = (header >> self.SENDER_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK
         self.recipientSubId = (header >> self.RECIPIENT_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK;
     
