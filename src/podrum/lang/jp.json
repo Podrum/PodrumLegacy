@@ -13,6 +13,6 @@
     "mustAcceptLicence": "このソフトウェアを使用する場合は、ライセンスに同意する必要があります。",
     "startingServer": "{ip}:{port}でサーバを起動しています",
     "extIpMsg": "あなたの外部IP: {ipPublic}です。ローカルネットワークにいないプレイヤーが参加する場合はポート開放が必要です",
-    "license": "Podrum はGPLv3ライセンスの元でライセンスされています",
+    "license": "Podrum はApache-2.0ライセンスの元でライセンスされています",
     "invalidCommand": "無効なコマンドです"
 }

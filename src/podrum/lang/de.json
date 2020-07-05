@@ -14,6 +14,6 @@
     "mustAcceptLicence": "Sie müssen die Lizenz akzeptieren, wenn Sie diese Software verwenden möchten.",
     "startingServer": "Server starten auf {ip}:{port}",
     "extIpMsg": "Dies ist Ihre externe ip: {ipPublic}. Wenn Sie Player haben möchten, die sich nicht in Ihrem lokalen Netzwerk befinden, müssen Sie Folgendes portieren",
-    "license": "Podrum steht unter der GPLv3-Lizenz",
+    "license": "Podrum steht unter der Apache-2.0-Lizenz",
     "invalidCommand": "Ungültiger Befehl"
 }
