@@ -38,7 +38,7 @@ class UUID:
     
     def fromBinary(self, uuid, version = None):
         if len(uuid) != 16:
-            raise Exeption("Must have exactly 16 bytes")
+            raise Exception("Must have exactly 16 bytes")
         return UUID(Binary.readInt(Utils.substr(uuid, 0, 4)), Binary.readInt(Utils.substr(uuid, 4, 4)), Binary.readInt(Utils.substr(uuid, 8, 4)), Binary.readInt(Utils.substr(uuid, 12, 4)), version)
 
     def fromString(self, uuid, version = None):
@@ -62,5 +62,5 @@ class UUID:
     
     def getPart(self, partNumber: int):
         if partNumber < 0 or partNumber > 3:
-            raise Exeption("Invalid UUID part index" + str(partNumber))
+            raise Exception("Invalid UUID part index" + str(partNumber))
         return self.parts[partNumber]
