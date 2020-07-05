@@ -12,7 +12,6 @@
 """
 
 import json
-import jwt
 
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
