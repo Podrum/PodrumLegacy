@@ -95,6 +95,8 @@ class Utils:
         if rawPayloadJSON == False:
             raise Exception("Payload base64 is invalid and cannot be decoded")
         decodedPayload = json.loads(rawPayloadJSON)
+        if rawPayloadJSON[0] == "\"":
+            decodedPayload = json.loads(decodedPayload)
         if not isinstance(decodedPayload, (list, dict, tuple)):
             raise Exception("Decoded payload should be array, " + str(type(decodedPayload).__name__)  + " received")
         return decodedPayload
