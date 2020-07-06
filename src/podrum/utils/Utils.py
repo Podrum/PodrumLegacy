@@ -98,5 +98,5 @@ class Utils:
         if rawPayloadJSON[0] == "\"":
             decodedPayload = json.loads(decodedPayload)
         if not isinstance(decodedPayload, (list, dict, tuple)):
-            raise Exception("Decoded payload should be array, " + str(type(decodedPayload).__name__)  + " received")
+            raise Exception("Decoded payload should be dict or list or tuple, " + str(type(decodedPayload).__name__)  + " received")
         return decodedPayload
