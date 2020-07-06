@@ -11,6 +11,8 @@
 * (at your option) any later version.
 """
 
+import zlib
+
 from podrum.network.PacketPool import PacketPool
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
@@ -30,3 +32,11 @@ class BatchPacket(DataPacket):
     def decodeHeader(self):
         pid = self.getByte()
         assert pid == self.NID
+        
+    def decodePayload(self):
+        data = self.getRemaining()
+        try:
+            self.payload = zlib.decompress(data, 1024 * 1024 * 2)
+        except:
+            self.payload = ""
+            
