@@ -15,7 +15,18 @@ from podrum.network.PacketPool import PacketPool
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 
-class BatchPacket:
+class BatchPacket(DataPacket):
     NID = ProtocolInfo.BATCH_PACKET
     
+    payload = ""
+    compressionLevel = 7
     
+    def canBeBatched():
+        return False
+    
+    def canBeSentBeforeLogin():
+        return True
+    
+    def decodeHeader(self):
+        pid = self.getByte()
+        assert pid == self.NID
