@@ -18,6 +18,7 @@ class ProtocolInfo:
     MCBE_VERSION_NETWORK = '1.16.0'
     
     # MCBE protocol info
+    BATCH_PACKET = 0xfe
     LOGIN_PACKET = 0x01
     PLAY_STATUS_PACKET = 0x02
     SERVER_TO_CLIENT_HANDSHAKE_PACKET = 0x03
