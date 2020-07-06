@@ -87,7 +87,7 @@ class Utils:
     def encodeJWT(header, payload, secret):
         body = Utils.base64UrlEncode(json.dumps(header)) + "." + Utils.base64UrlEncode(json.dumps(payload))
         secret = Utils.HMACSHA256(body, secret)
-        return str(body) + "." + str(secret)
+        return str(body) + "." + str(Utils.base64UrlEncode(secret))
     
     def decodeJWT(token: str):
         [headB64, payloadB64, sigB64] = token.split(".")
