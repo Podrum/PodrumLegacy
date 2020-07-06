@@ -82,7 +82,7 @@ class Utils:
         return base64.urlsafe_b64encode(data.encode()).replace(b"=", b"").decode()
     
     def base64UrlDecode(data):
-        return base64.b64decode(data.translate(str.maketrans('-_', '+/'))).decode("utf-8")
+        return base64.urlsafe_b64decode(data).decode()
     
     def encodeJWT(header, payload, secret):
         body = Utils.base64UrlEncode(json.dumps(header)) + "." + Utils.base64UrlEncode(json.dumps(payload))
