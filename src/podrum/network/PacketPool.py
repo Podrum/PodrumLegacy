@@ -30,7 +30,6 @@ class PacketPool:
         
     def registerPackets(self):
         self.registerPacket(ClientToServerHandshakePacket)
-        self.registerPacket(DataPacket)
         self.registerPacket(DisconnectPacket)
         self.registerPacket(LoginPacket)
         self.registerPacket(PlayStatusPacket)
