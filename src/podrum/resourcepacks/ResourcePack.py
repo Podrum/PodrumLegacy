@@ -23,3 +23,5 @@ class ResourcePack:
     def getPackVersion(): pass
 
     def getSha256(): pass
+
+    def getPackChunk(start, length): pass
