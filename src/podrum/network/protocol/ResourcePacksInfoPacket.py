@@ -27,7 +27,6 @@ class ResourcePacksInfoPacket(DataPacket):
         self.hasScripts = self.getBool()
         behaviorPackCount = self.getLShort()
         while behaviorPackCount > 0:
-            behaviorPackCount -= 1
             self.getString()
             self.getString()
             self.getLLong()
@@ -35,10 +34,10 @@ class ResourcePacksInfoPacket(DataPacket):
             self.getString()
             self.getString()
             self.getBool()
+            behaviorPackCount -= 1
 
         resourcePackCount = self.getLShort()
         while resourcePackCount > 0:
-            resourcePackCount -= 1
             self.getString()
             self.getString()
             self.getLLong()
@@ -46,6 +45,7 @@ class ResourcePacksInfoPacket(DataPacket):
             self.getString()
             self.getString()
             self.getBool()
+            resourcePackCount -= 1
 
     def encodePayload(self):
         self.putBool(self.mustAccept)
