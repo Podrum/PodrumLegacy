@@ -60,7 +60,7 @@ class DataPacket(DataPacket):
                         self.xuid = webtoken["extraData"]["XUID"]
                 if webtoken["identityPublicKey"] in locals() or webtoken["identityPublicKey"] in globals():
                     self.identityPublicKey = webtoken["identityPublicKey"]
-            self.clientDataJwt = buffer.get(buffer->getLInt())
+            self.clientDataJwt = buffer.get(buffer.getLInt())
             self.clientData = Utils.decodeJWT(self.clientDataJwt)
             self.clientId = self.clientData["ClientRandomId"] if self.clientData["ClientRandomId"] != None else None
             self.serverAddress = self.clientData["ServerAddress"] if self.clientData["ServerAddress"] != None else None
