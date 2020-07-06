@@ -79,7 +79,7 @@ class Utils:
         return hmac.new(byteSecret, encodedData, hashlib.sha256).hexdigest().upper()
     
     def base64UrlEncode(data):
-        return base64.b64encode(data.encode("utf-8")).decode("utf-8").translate(str.maketrans('+/', '-_')).rstrip("=")
+        return base64.urlsafe_b64encode(data.encode()).replace(b"=", b"").decode()
     
     def base64UrlDecode(data):
         return base64.b64decode(data.translate(str.maketrans('-_', '+/'))).decode("utf-8")
