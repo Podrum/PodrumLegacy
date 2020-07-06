@@ -46,7 +46,7 @@ class DataPacket(DataPacket):
             buffer = BinaryStream(self.getString())
             self.chainData = json.loads(buffer.get(buffer.getLInt())
             hasExtraData = False
-            for chain in self.chainData["chain"]
+            for chain in self.chainData["chain"]:
                 webtoken = Utils.decodeJWT(chain)
         
     
