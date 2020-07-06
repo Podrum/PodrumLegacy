@@ -48,7 +48,22 @@ class DataPacket(DataPacket):
             hasExtraData = False
             for chain in self.chainData["chain"]:
                 webtoken = Utils.decodeJWT(chain)
-        
-    
+                if webtoken["extraData"] in locals() or webtoken["extraData"] in globals():
+                    if hasExtraData:
+                        raise Exception("Found 'extraData' multiple times in key chain")
+                    hasExtraData = True
+                    if webtoken["extraData"]["displayName"] in locals() or webtoken["extraData"]["displayName"] in globals():
+                        self.username = webtoken["extraData"]["displayName"]
+                    if webtoken["extraData"]["identity"] in locals() or webtoken["extraData"]["identity"] in globals():
+                        self.clientUUID = webtoken["extraData"]["identity"]
+                    if webtoken["extraData"]["XUID"] in locals() or webtoken["extraData"]["XUID"] in globals():
+                        self.xuid = webtoken["extraData"]["XUID"]
+                if webtoken["identityPublicKey"] in locals() or webtoken["identityPublicKey"] in globals():
+                    self.identityPublicKey = webtoken["identityPublicKey"]
+            self.clientDataJwt = buffer.get(buffer->getLInt())
+            self.clientData = Utils.decodeJWT(self.clientDataJwt)
+            self.clientId = self.clientData["ClientRandomId"] if self.clientData["ClientRandomId"] != None else None
+            self.serverAddress = self.clientData["ServerAddress"] if self.clientData["ServerAddress"] != None else None
+            self.locale = self.clientData["LanguageCode"] if self.clientData["LanguageCode"] != None else None
     def encodePayload(): pass
     
