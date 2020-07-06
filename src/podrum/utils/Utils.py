@@ -19,6 +19,8 @@ import sys
 import socket
 import time
 import urllib
+import hmac
+import hashlib
 
 class Utils:
 
@@ -71,9 +73,25 @@ class Utils:
     def binToHex(b):
         return binascii.hexlify(b)
     
+    def HMACSHA256(data, secret):
+        encodedData = data.encode()
+        byteSecret = secret.encode()
+        return hmac.new(byteSecret, encodedData, hashlib.sha256).hexdigest().upper()
+    
+    def base64UrlEncode(data):
+        return base64.b64encode(data.encode("utf-8")).decode("utf-8").translate(str.maketrans('+/', '-_')).rstrip("=")
+    
+    def base64UrlDecode(data):
+        return base64.b64decode(data.translate(str.maketrans('-_', '+/'))).decode("utf-8")
+    
+    def encodeJWT(header, payload, secret):
+        body = Utils.base64UrlEncode(json.dumps(header)) + "." + Utils.base64UrlEncode(json.dumps(payload))
+        secret = Utils.HMACSHA256(body, secret)
+        return str(body) + "." + str(secret)
+    
     def decodeJWT(token: str):
         [headB64, payloadB64, sigB64] = token.split(".")
-        rawPayloadJSON = base64.b64decode(payloadB64.translate(str.maketrans('-_', '+/'))).decode("latin-1")
+        rawPayloadJSON = Utils.base64UrlDecode(payloadB64)
         if rawPayloadJSON == False:
             raise Exception("Payload base64 is invalid and cannot be decoded")
         decodedPayload = json.loads(rawPayloadJSON)
