@@ -48,3 +48,10 @@ class BatchPacket(DataPacket):
         compressedData = compress.compress(self.payload)
         compressedData += compress.flush()
         self.put(compressedData)
+        
+    def addPacket(packet: DataPacket):
+        if not packet.canBeBatched():
+            raise Exception(str(type(packet).__name__) + " cannot be put inside a BatchPacket")
+        if not packet.isEncoded:
+            packet.encode()
+        self.payload += Binary.writeUnsignedVarInt(len(packet.buffer)) + packet.buffer
