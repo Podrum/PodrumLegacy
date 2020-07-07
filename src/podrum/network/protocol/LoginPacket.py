@@ -15,7 +15,6 @@ import json
 
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
-from podrum.utils.BinaryStream import BinaryStream
 from podrum.utils.Utils import Utils
 
 class DataPacket(DataPacket):
@@ -43,7 +42,7 @@ class DataPacket(DataPacket):
     def decodePayload(self):
         self.protocol = self.getInt()
         try:
-            buffer = BinaryStream(self.getString())
+            buffer = DataPacket.BinaryStream(self.getString())
             self.chainData = json.loads(buffer.get(buffer.getLInt()))
             hasExtraData = False
             for chain in self.chainData["chain"]:
@@ -68,5 +67,6 @@ class DataPacket(DataPacket):
         except:
             if self.protocol == ProtocolInfo.MCBE_PROTOCOL_VERSION:
                 raise Exception("Error")
+                
     def encodePayload(): pass
     
