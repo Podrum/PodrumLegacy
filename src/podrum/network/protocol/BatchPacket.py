@@ -44,4 +44,7 @@ class BatchPacket(DataPacket):
         self.putByte(self.NID)
     
     def encodePayload(self):
-        self.put(zlib.compressobj(self.compressionLevel, zlib.DEFLATED).compress(self.payload))
+        compress = zlib.compressobj(self.compressionLevel, zlib.DEFLATED, -zlib.MAX_WBITS)
+        compressedData = compress.compress(self.payload)
+        compressedData += compress.flush()
+        self.put(compressedData)
