@@ -55,3 +55,18 @@ class BatchPacket(DataPacket):
         if not packet.isEncoded:
             packet.encode()
         self.payload += Binary.writeUnsignedVarInt(len(packet.buffer)) + packet.buffer
+        
+    def getPackets(self):
+        stream = DataPacket.BinaryStream(self.payload)
+        count = 0
+        while not stream.feof():
+            count += 1
+            if count >= 500:
+                raise Exception("Too many packets in a single batch")
+            yield stream.getString()
+            
+    def getCompressionLevel(self):
+        return self.compressionLevel
+    
+    def setCompressionLevel(self, level: int):
+        self.compressionLevel = level
