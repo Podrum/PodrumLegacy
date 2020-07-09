@@ -67,6 +67,10 @@ class Player:
         EncapsulatedPacket.buffer = BatchPacket.buffer
         self.connection.addEncapsulatedToQueue(EncapsulatedPacket())
         
+    def sendPlayStatus(self, status):
+        PacketPool.PlayStatusPacket.status = status
+        self.sendDataPacket(PacketPool.PlayStatusPacket())
+        
     def handleDataPacket(packet):
         pk = None
         if packet.NID == ProtocolInfo.ADVENTURE_SETTINGS_PACKET:
