@@ -13,6 +13,7 @@
 
 from podrum.network.protocol.types.PlayerPermissions import PlayerPermissions
 from podrum.network.PacketPool import PacketPool
+from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.Server import Server
 
 class Player:
@@ -56,6 +57,23 @@ class Player:
         self.address = address
         self.logger = logger
         self.server = server
+        
+    def handleDataPacket(packet):
+        pk = None
+        if packet.NID == ProtocolInfo.ADVENTURE_SETTINGS_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.DISCONNECT_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.LOGIN_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.PLAY_STATUS_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.RESOURCE_PACKS_INFO_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.SERVER_TO_CLIENT_HANDSHAKE_PACKET:
+            pass
 
     def getClientId(self):
         return self.randomId
