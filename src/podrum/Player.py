@@ -12,7 +12,6 @@
 """
 
 from podrum.network.protocol.types.PlayerPermissions import PlayerPermissions
-from podrum.network.protocol.AdventureSettingsPacket import AdventureSettingsPacket
 from podrum.network.PacketPool import PacketPool
 from podrum.Server import Server
 
@@ -108,13 +107,13 @@ class Player:
         return self.gamemode == self.SPECTATOR
 
     def sendSettings(self):
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, self.isSpectator())
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.NO_PVP, self.isSpectator())
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.AUTO_JUMP, self.autoJump)
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.ALLOW_FLIGHT, self.allowFlight)
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.NO_CLIP, self.isSpectator())
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.FLYING, self.flying)
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.WORLD_IMMUTABLE, self.isSpectator())
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.NO_PVP, self.isSpectator())
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.AUTO_JUMP, self.autoJump)
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.ALLOW_FLIGHT, self.allowFlight)
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.NO_CLIP, self.isSpectator())
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.FLYING, self.flying)
 
-        AdventureSettingsPacket.commandPermission = AdventureSettingsPacket.PERMISSION_OPERATOR if self.isOp() else AdventureSettingsPacket.PERMISSION_NORMAL
-        AdventureSettingsPacket.playerPermission = PlayerPermissions.OPERATOR if self.isOp() else PlayerPermissions.MEMBER
-        AdventureSettingsPacket.entityUniqueId = self.getId()
+        PacketPool.AdventureSettingsPacket.commandPermission = PacketPool.AdventureSettingsPacket.PERMISSION_OPERATOR if self.isOp() else PacketPool.AdventureSettingsPacket.PERMISSION_NORMAL
+        PacketPool.AdventureSettingsPacket.playerPermission = PlayerPermissions.OPERATOR if self.isOp() else PlayerPermissions.MEMBER
+        PacketPool.AdventureSettingsPacket.entityUniqueId = self.getId()
