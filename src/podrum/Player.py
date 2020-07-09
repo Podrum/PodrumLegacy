@@ -13,8 +13,10 @@
 
 from podrum.network.protocol.types.PlayerPermissions import PlayerPermissions
 from podrum.network.PacketPool import PacketPool
+from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.Server import Server
+from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 
 class Player:
 
@@ -57,6 +59,13 @@ class Player:
         self.address = address
         self.logger = logger
         self.server = server
+        
+    def sendDataPacket(self, packet, needACK = False, immediate = False):
+        BatchPacket.addPacket(packet)
+        BatchPacket.encodePayload
+        EncapsulatedPacket.reliability = 0
+        EncapsulatedPacket.buffer = BatchPacket.buffer
+        self.connection.addEncapsulatedToQueue(EncapsulatedPacket())
         
     def handleDataPacket(packet):
         pk = None
