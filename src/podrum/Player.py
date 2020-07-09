@@ -64,11 +64,7 @@ class Player:
             pass
         elif packet.NID == ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET:
             pass
-        elif packet.NID == ProtocolInfo.DISCONNECT_PACKET:
-            pass
         elif packet.NID == ProtocolInfo.LOGIN_PACKET:
-            pass
-        elif packet.NID == ProtocolInfo.PLAY_STATUS_PACKET:
             pass
         elif packet.NID == ProtocolInfo.RESOURCE_PACKS_INFO_PACKET:
             pass
