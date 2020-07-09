@@ -15,6 +15,7 @@ import time
 import os
 
 from podrum.lang.Base import Base
+from podrum.network.PacketPool import PacketPool as Pool
 from podrum.utils.Logger import Logger
 from podrum.utils.ServerFS import ServerFS
 from podrum.utils.Utils import Utils
