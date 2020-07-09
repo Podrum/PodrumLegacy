@@ -11,6 +11,7 @@
 * (at your option) any later version.
 """
 
+from podrum.network.protocol.AdventureSettingsPacket import AdventureSettingsPacket
 from podrum.network.protocol.ClientToServerHandshakePacket import ClientToServerHandshakePacket
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.DisconnectPacket import DisconnectPacket
@@ -29,6 +30,7 @@ class PacketPool:
         self.pool[packet.NID] = packet.copy()
         
     def registerPackets(self):
+        self.registerPacket(AdventureSettingsPacket)
         self.registerPacket(ClientToServerHandshakePacket)
         self.registerPacket(DisconnectPacket)
         self.registerPacket(LoginPacket)

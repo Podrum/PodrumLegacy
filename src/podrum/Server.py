@@ -28,6 +28,7 @@ class Server:
 
     path = None
     withWizard = None
+    operators = None
     port = 19132
     podrumLogo = """
             ____           _                      
@@ -89,3 +90,9 @@ class Server:
             os._exit(1)
         print("Build success.")
         os._exit(0)
+
+    def isOp(self, name):
+        return self.operators.exists(name, True)
+
+    def getOps(self):
+        return self.operators
