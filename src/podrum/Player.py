@@ -71,14 +71,19 @@ class Player:
         PacketPool.PlayStatusPacket.status = status
         self.sendDataPacket(PacketPool.PlayStatusPacket())
         
-    def handleDataPacket(packet):
+    def handleDataPacket(self, packet):
         pk = None
         if packet.NID == ProtocolInfo.ADVENTURE_SETTINGS_PACKET:
             pass
         elif packet.NID == ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET:
             pass
         elif packet.NID == ProtocolInfo.LOGIN_PACKET:
-            pass
+            self.name = packet.username
+            self.locale = packet.locale
+            self.randomId = packet.clientId
+            self.uuid = packet.identityPublicKey
+            self.xuid = packet.xuid
+            self.sendPlayStatus(PacketPool.PlayStatusPacket.LOGIN_SUCCESS)
         elif packet.NID == ProtocolInfo.RESOURCE_PACKS_INFO_PACKET:
             pass
         elif packet.NID == ProtocolInfo.SERVER_TO_CLIENT_HANDSHAKE_PACKET:
