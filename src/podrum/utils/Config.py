@@ -55,7 +55,7 @@ class Config:
         "enum" : ENUM,
     }
 
-    def __init__(self, file: str, _type = DETECT: int, default = [], correct = None):
+    def __init__(self, file: str, _type: int = DETECT, default = [], correct = None):
         self.load(file, _type, default)
         correct = self.correct
     
@@ -108,8 +108,8 @@ class Config:
                 self.config = default
             if self.fillDefaults(default, self.config) > 0:
                 self.save()
-        else:
-            return False
+            else:
+                return False
 
         return True
 
@@ -134,7 +134,7 @@ class Config:
                     correct = False
                     return False
             except ValueError:
-                logger.log('error', f'Could not save Config {self.file}')
+                Logger.log('error', 'Could not save Config' + str(self.file))
             return True
         else:
             return false
