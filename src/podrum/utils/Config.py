@@ -183,6 +183,21 @@ class Config:
 
     def setAll(self, v):
         self.config = v
+        
+    def fillDefaults(self, default, data):
+        changed = 0
+        for k, v in default:
+            if isinstance(v, dict):
+                if(not data[k] in locals() or data[k] in globals() or not isinstance(data[k], dict)):
+                    data[k] = {}
+                changed += self.fillDefaults(v, data[k])
+                elif(not data[k] in locals() or data[k] in globals()):
+                    data[k] = v
+                    changed = changed + 1
+        return changed
+    
+    def setDefaults(self, defaults: dict):
+        self.fillDefaults(defaults, self.config)
 
     def writeProperties(self) -> str:
         content = "#Properties Config file\r\n#" + time.strftime("%c") + "\r\n"
