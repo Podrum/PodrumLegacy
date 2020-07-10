@@ -191,9 +191,9 @@ class Config:
                 if(not data[k] in locals() or data[k] in globals() or not isinstance(data[k], dict)):
                     data[k] = {}
                 changed += self.fillDefaults(v, data[k])
-                elif(not data[k] in locals() or data[k] in globals()):
-                    data[k] = v
-                    changed = changed + 1
+            elif(not data[k] in locals() or data[k] in globals()):
+                data[k] = v
+                changed = changed + 1
         return changed
     
     def setDefaults(self, defaults: dict):
