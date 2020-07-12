@@ -1,19 +1,19 @@
 
 {
-    "langName": "Deustche",
+    "langName": "Deustch",
     "langSelectedAsBase": "Deutsch als Basissprache gewählt.",
-    "wizardSetup": "Möchten Sie dem Setup folgen? [y/N]",
-    "wizardSkipped": "Setup-Assistent überspringen...",
-    "writeYesOrNo": "Bitte schreiben Sie ja (y) oder nein (n).",
-    "writeServerPort": "Schreiben Sie den Server-Port (Standard: 19132):",
-    "writeMOTD": "Schreiben Sie die MOTD des Servers:",
-    "writeMaxPlayers": "Schreiben Sie die maximale Anzahl von Spielern, die dem Server beitreten können:",
-    "writeGamemode": "Wählen Sie einen Spielmodus (in Anzahl) [ÜBERLEBEN = 0, KREATIV = 1, ABENTEUER = 2, SPEKTATOR = 3]:",
+    "wizardSetup": "Möchten sie den Setup Assistenten benutzen? [y/N]",
+    "wizardSkipped": "Setup-Assistent wird übersprugen...",
+    "writeYesOrNo": "Bitte wählen Sie ja (y) oder nein (n).",
+    "writeServerPort": "Wählen Sie den Server-Port (Standard: 19132):",
+    "writeMOTD": "Legen Sie die MOTD des Servers fest:",
+    "writeMaxPlayers": "Legen Sie die maximale Spielerzahl fest:",
+    "writeGamemode": "Wählen Sie einen Spielmodus (Nummer) [ÜBERLEBEN = 0, KREATIV = 1, ABENTEUER = 2, Zuschauer = 3]:",
     "wizardFinished": "Sie haben den Server-Setup-Assistenten abgeschlossen!",
     "acceptLicense": "Akzeptieren Sie die Lizenz? [y/n]",
     "mustAcceptLicence": "Sie müssen die Lizenz akzeptieren, wenn Sie diese Software verwenden möchten.",
-    "startingServer": "Server starten auf {ip}:{port}",
-    "extIpMsg": "Dies ist Ihre externe ip: {ipPublic}. Wenn Sie Player haben möchten, die sich nicht in Ihrem lokalen Netzwerk befinden, müssen Sie Folgendes portieren",
+    "startingServer": "Server wird auf {ip}:{port} gestartet...",
+    "extIpMsg": "Dies ist Ihre externe ip: {ipPublic}. Wenn Spieler außerhalb ihres Lokalen Netzwerkes beitreten möchten müssen sie evtl. Port-Forwarding für den ausgewählten Port aktivieren.",
     "license": "Podrum steht unter der Apache-2.0-Lizenz",
-    "invalidCommand": "Ungültiger Befehl"
+    "invalidCommand": "Befehl nicht gefunden!"
 }

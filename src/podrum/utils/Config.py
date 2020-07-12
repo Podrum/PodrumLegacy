@@ -1,15 +1,15 @@
 """
-*  ____           _                      
-* |  _ \ ___   __| |_ __ _   _ _ __ ___  
-* | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
+*  ____           _
+* |  _ \ ___   __| |_ __ _   _ _ __ ___
+* | |_) / _ \ / _` | '__| | | | '_ ` _ \
 * |  __/ (_) | (_| | |  | |_| | | | | | |
 * |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
 *
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+* Licensed under the Apache License, Version 2.0 (the "License")
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
+
 import re
 import os
 import json
@@ -31,14 +31,13 @@ class Config:
     ENUM = 5
     ENUMERATION = ENUM
     
-    config = []
+    config = {}
     nestedCache = []
-    file = ''
+    file = None
     correct = False
-    type = DETECT
-    is_array = lambda var: isinstance(var, (list, tuple))
+    _type = DETECT
 
-    formats = [{
+    formats = {
         "properties" : PROPERTIES,
         "cnf" : CNF,
         "conf" : CNF,
@@ -54,32 +53,28 @@ class Config:
         "txt" : ENUM,
         "list" : ENUM,
         "enum" : ENUM,
-    }]
+    }
 
-    def __init__(self, file, type = DETECT, default = [], correct=None):
-        self.load(file, type, default)
+    def __init__(self, file: str, _type: int = DETECT, default = [], correct = None):
+        self.load(file, _type, default)
         correct = self.correct
-
-    @staticmethod
-    def isset(self, variable):
-        return variable in locals() or variable in globals()
     
     def reload(self):
-        self.config = []
+        self.config = {}
         self.nestedCache = []
         self.correct = False
-        self.load(self.file, self.type)
+        self.load(self.file, self._type)
         
     @staticmethod
-    def fixYAMLIndexes(str):
-        return re.sub(r"#^([ ]*)([a-zA-Z_]{1}[ ]*)\\:$#m", r"$1\"$2\":", str)
+    def fixYAMLIndexes(_str: str) -> str:
+        return re.sub(r"#^( *)(y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF)( *)\:#m", "\1\"\2\"\3:", _str)
     
-    def load(self, file, type=DETECT, default = []):
+    def load(self, file, _type = DETECT, default = []):
         self.correct = True
-        self.type = int(type)
+        self._type = int(_type)
         self.file = file
-        if not self.is_array(default):
-            default = []
+        if not isinstance(default, dict):
+            default = {}
         if not os.path.exists(file):
             self.config = default
             self.save()
@@ -95,16 +90,16 @@ class Config:
                     self.correct = False
             if self.correct:
                 content = open(self.file).read()
-            if (self.type == self.PROPERTIES) and (self.type == self.CNF):
+            if (self._type == self.PROPERTIES) and (self._type == self.CNF):
                 self.parseProperties(content)
-            elif self.type == self.JSON:
+            elif self._type == self.JSON:
                 self.config = json.loads(content)
-            elif self.type == self.YAML:
+            elif self._type == self.YAML:
                 content = self.fixYAMLIndexes(content)
                 self.config = yaml.load(content)
-            elif self.type == self.SERIALIZED:
+            elif self._type == self.SERIALIZED:
                 self.config = pickle.loads(content)
-            elif self.type == self.ENUM:
+            elif self._type == self.ENUM:
                 self.parseList(content)
             else:
                 self.correct = False
@@ -113,33 +108,118 @@ class Config:
                 self.config = default
             if self.fillDefaults(default, self.config) > 0:
                 self.save()
-        else:
-            return False
+            else:
+                return False
 
         return True
 
     def check():
-        return correct = True
+        return correct == True
     
-    def save():
+    def save(self) -> None:
         if self.correct == True:
             try:
                 content = None
-                if (type == PROPERTIES) or (type == CNF):
+                if (self._type == self.PROPERTIES) or (self._type == self.CNF):
                     content = writeProperties()
-                elif type == JSON:
+                elif self._type == self.JSON:
                     content = json.dumps(config)
-                elif type == YAML:
+                elif self._type == self.YAML:
                     content = yaml.emit(config)
-                elif type == SERIALIZED:
+                elif self._type == self.SERIALIZED:
                     content = pickle.dumps(self.config)
-                elif type == ENUM:
+                elif self._type == self.ENUM:
                     "\r\n".join(config.keys())
                 else:
                     correct = False
                     return False
             except ValueError:
-                logger.log('error', f'Could not save Config {self.file}')
+                Logger.log('error', 'Could not save Config' + str(self.file))
             return True
         else:
             return false
+        
+    def setJsonOption(self, options: int):
+        if self.__type is not self.JSON:
+            raise RuntimeError("Attempt to set JSON options for non-JSON config")
+        self.json_options = options
+        self.changed = True
+
+        return self
+
+    def enableJsonOption(self, options: int):
+        if self.__type is not self.JSON:
+            raise RuntimeError("Attempt to enable  JSON options for non-JSON config")
+        self.json_options |= options
+        self.changed = True
+
+        return self
+
+    def disableJsonOption(self, options: int):
+        if self.__type is not self.JSON:
+            raise RuntimeError("Attempt to disable JSON options for non-JSON config")
+        self.json_options &= ~options
+        self.changed = True
+
+        return self
+
+    def getJsonOption(self) -> int:
+        if self.__type is not self.JSON:
+            raise RuntimeError("Attempt to get JSON options for non-JSON config")
+        return self.json_options
+
+    def get(self, k, default = False):
+        return self.config[k] if self.config[k] else default
+
+    def set(self, k, v = True):
+        self.config[k] = v
+        self.changed = True
+        for nkey, nvalue in self.nested_cache:
+            if nkey[0:len(k) + 1] is k + ".":
+                del self.nested_cache[nkey]
+                
+    def getAll(self, keys = False):
+        return self.config.keys() if keys == True else self.config   
+
+    def setAll(self, v):
+        self.config = v
+        
+    def fillDefaults(self, default, data):
+        changed = 0
+        for k, v in default:
+            if isinstance(v, dict):
+                if(not data[k] in locals() or data[k] in globals() or not isinstance(data[k], dict)):
+                    data[k] = {}
+                changed += self.fillDefaults(v, data[k])
+            elif(not data[k] in locals() or data[k] in globals()):
+                data[k] = v
+                changed = changed + 1
+        return changed
+    
+    def setDefaults(self, defaults: dict):
+        self.fillDefaults(defaults, self.config)
+
+    def writeProperties(self) -> str:
+        content = "#Properties Config file\r\n#" + time.strftime("%c") + "\r\n"
+        for k, v in self.config.items():
+            if isinstance(v, bool):
+                v = "on" if v else "off"
+            elif isinstance(v, list):
+                v = ';'.join(v)
+            content += str(k) + "=" + str(v) + "\r"
+        return content
+
+    def parseProperties(self, content: str):
+        matches = re.findall(r'/([a-zA-Z0-9\-_\.]+)[ \t]*=([^\r\n]*)/u', content)
+        if len(matches) > 0:
+            for i, k in enumerate(matches[1]):
+                v = str(matches[2][i]).strip()
+                if v.lower() == "on" or v.lower() == "true" or v.lower() == "yes":
+                    v = True
+                    break
+                if v.lower() == "off" or v.lower() == "false" or v.lower() == "no":
+                    v = False
+                    break
+                if self.config[k]:
+                    Logger.log('debug', "[Config] Repeated property {} on file {}".format(k, self.file))
+                self.config[k] = v

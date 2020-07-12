@@ -5,10 +5,10 @@
 # Python
 *.pyc
 /venv
-/__pychache__
+/__pycache__
+src/pyraklib/server/__pycache__
 
 # Server/Podrum files
-/src/VoxenaLib
 /src/test
 server.json
 /plugins/
