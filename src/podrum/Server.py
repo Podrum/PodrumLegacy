@@ -5,16 +5,16 @@
 * |  __/ (_) | (_| | |  | |_| | | | | | |
 * |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
 *
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+* Licensed under the Apache License, Version 2.0 (the "License")
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
 import time
 import os
 
 from podrum.lang.Base import Base
+from podrum.network.PacketPool import PacketPool as Pool
 from podrum.utils.Logger import Logger
 from podrum.utils.ServerFS import ServerFS
 from podrum.utils.Utils import Utils
@@ -56,6 +56,10 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;407;1.16.0;0;0;0;PodrumPoweredServer;0")
+        repeter = 0
+        while repeater >= 1:
+            pass # Here is going to be the place for the packet handling
+            
         doneTime = Utils.microtime(True)
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')

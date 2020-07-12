@@ -5,16 +5,17 @@
 * |  __/ (_) | (_| | |  | |_| | | | | | |
 * |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
 *
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+* Licensed under the Apache License, Version 2.0 (the "License")
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
 from podrum.network.protocol.types.PlayerPermissions import PlayerPermissions
-from podrum.network.protocol.AdventureSettingsPacket import AdventureSettingsPacket
 from podrum.network.PacketPool import PacketPool
+from podrum.network.protocol.BatchPacket import BatchPacket
+from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.Server import Server
+from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 
 class Player:
 
@@ -57,6 +58,35 @@ class Player:
         self.address = address
         self.logger = logger
         self.server = server
+        
+    def sendDataPacket(self, packet, needACK = False, immediate = False):
+        BatchPacket.addPacket(packet)
+        BatchPacket.encodePayload
+        EncapsulatedPacket.reliability = 0
+        EncapsulatedPacket.buffer = BatchPacket.buffer
+        self.connection.addEncapsulatedToQueue(EncapsulatedPacket())
+        
+    def sendPlayStatus(self, status):
+        PacketPool.PlayStatusPacket.status = status
+        self.sendDataPacket(PacketPool.PlayStatusPacket())
+        
+    def handleDataPacket(self, packet):
+        pk = None
+        if packet.NID == ProtocolInfo.ADVENTURE_SETTINGS_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.LOGIN_PACKET:
+            self.name = packet.username
+            self.locale = packet.locale
+            self.randomId = packet.clientId
+            self.uuid = packet.identityPublicKey
+            self.xuid = packet.xuid
+            self.sendPlayStatus(PacketPool.PlayStatusPacket.LOGIN_SUCCESS)
+        elif packet.NID == ProtocolInfo.RESOURCE_PACKS_INFO_PACKET:
+            pass
+        elif packet.NID == ProtocolInfo.SERVER_TO_CLIENT_HANDSHAKE_PACKET:
+            pass
 
     def getClientId(self):
         return self.randomId
@@ -108,13 +138,13 @@ class Player:
         return self.gamemode == self.SPECTATOR
 
     def sendSettings(self):
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, self.isSpectator())
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.NO_PVP, self.isSpectator())
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.AUTO_JUMP, self.autoJump)
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.ALLOW_FLIGHT, self.allowFlight)
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.NO_CLIP, self.isSpectator())
-        AdventureSettingsPacket.setFlag(AdventureSettingsPacket.FLYING, self.flying)
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.WORLD_IMMUTABLE, self.isSpectator())
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.NO_PVP, self.isSpectator())
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.AUTO_JUMP, self.autoJump)
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.ALLOW_FLIGHT, self.allowFlight)
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.NO_CLIP, self.isSpectator())
+        PacketPool.AdventureSettingsPacket.setFlag(PacketPool.AdventureSettingsPacket.FLYING, self.flying)
 
-        AdventureSettingsPacket.commandPermission = AdventureSettingsPacket.PERMISSION_OPERATOR if self.isOp() else AdventureSettingsPacket.PERMISSION_NORMAL
-        AdventureSettingsPacket.playerPermission = PlayerPermissions.OPERATOR if self.isOp() else PlayerPermissions.MEMBER
-        AdventureSettingsPacket.entityUniqueId = self.getId()
+        PacketPool.AdventureSettingsPacket.commandPermission = PacketPool.AdventureSettingsPacket.PERMISSION_OPERATOR if self.isOp() else PacketPool.AdventureSettingsPacket.PERMISSION_NORMAL
+        PacketPool.AdventureSettingsPacket.playerPermission = PlayerPermissions.OPERATOR if self.isOp() else PlayerPermissions.MEMBER
+        PacketPool.AdventureSettingsPacket.entityUniqueId = self.getId()
