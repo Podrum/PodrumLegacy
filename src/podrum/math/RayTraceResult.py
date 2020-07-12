@@ -10,6 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from podrum.math.AxisAlignedBB import AxisAlignedBB
 from podrum.math.Vector3 import Vector3
 
 class RayTraceResult:
@@ -18,6 +19,7 @@ class RayTraceResult:
     hitVector = None
 
     def __init__(self, bb, hitFace, hitVector):
+        bb = AxisAlignedBB()
         hitVector = Vector3()
         self.bb = bb
         self.hitFace = hitFace
