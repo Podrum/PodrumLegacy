@@ -6,6 +6,7 @@
 *.pyc
 /venv
 /__pychache__
+src/pyraklib/server/__pychache__
 
 # Server/Podrum files
 /src/test
