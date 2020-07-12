@@ -10,8 +10,8 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.utlis.Binary import Binary
-from podrum.utlis.UUID import UUID
+from podrum.utils.Binary import Binary
+from podrum.utils.UUID import UUID
 
 class BinaryStream:
     buffer = ""
