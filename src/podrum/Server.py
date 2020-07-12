@@ -57,7 +57,7 @@ class Server:
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;407;1.16.0;0;0;0;PodrumPoweredServer;0")
         repeter = 0
-        async while repeater >= 1:
+        while repeater >= 1:
             pass # Here is going to be the place for the packet handling
             
         doneTime = Utils.microtime(True)
