@@ -73,7 +73,7 @@ class AcknowledgePacket(Packet):
                 payload += (Binary.writeLTriad(last))
                 start = last = current
 
-        self.putByte(self.getPID(), False)
+        self.putByte(self.getPID()) #unsigned
         self.putShort(records)
         self.put(payload)
 
