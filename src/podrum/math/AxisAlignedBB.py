@@ -264,7 +264,7 @@ class AxisAlignedBB:
         v3 = pos1.getIntermediateWithYValue(pos2, self.minY)
         v4 = pos1.getIntermediateWithYValue(pos2, self.maxY)
         v5 = pos1.getIntermediateWithZValue(pos2, self.minZ)
-        v6 = pos1.getIntermediateWithZValue(pos2, self.maxY)
+        v6 = pos1.getIntermediateWithZValue(pos2, self.maxZ)
 
         if v1 != None and not self.isVectorYZ(v1):
             v1 = None
