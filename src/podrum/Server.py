@@ -43,6 +43,7 @@ class Server:
         startTime = Utils.microtime(True)
         self.path = path
         self.withWizard = withWizard
+        self.tickrate = 20/1000
         if(withWizard):
             ServerFS.checkAllFiles(path)
         else:
@@ -68,7 +69,7 @@ class Server:
                 cmd = None
             ticking = True
             while ticking:
-                time.sleep(0.002)
+                time.sleep(self.tickrate)
 
     def command(string, fromConsole):
         if string.lower() == 'stop':
