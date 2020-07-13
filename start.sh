@@ -9,4 +9,4 @@ else
 	exit 1
 fi
 
-python3 ${PODRUM_FILE}
+python3 -O ${PODRUM_FILE}
