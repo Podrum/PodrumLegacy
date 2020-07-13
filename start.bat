@@ -8,3 +8,4 @@ if exist src\podrum\Podrum.py (
 
 
 python -O %PODRUM_FILE% %*
+pause
