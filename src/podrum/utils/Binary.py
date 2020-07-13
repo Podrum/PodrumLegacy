@@ -97,10 +97,6 @@ class Binary:
         return chr(value).encode()
     
     @staticmethod
-    def writeSignedByte(value: int) -> bytes:
-        return chr(Binary.signByte(value)).encode()
-    
-    @staticmethod
     def readShort(data: bytes) -> int:
         Binary.checkLength(data, 2)
         return unpack('>H', data)[0]
