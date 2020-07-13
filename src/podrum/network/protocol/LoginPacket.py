@@ -16,7 +16,7 @@ from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.utils.Utils import Utils
 
-class DataPacket(DataPacket):
+class LoginPacket(DataPacket):
     NID = ProtocolInfo.LOGIN_PACKET
     
     username = None
