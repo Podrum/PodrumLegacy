@@ -41,7 +41,7 @@ class LoginPacket(DataPacket):
     def decodePayload(self):
         self.protocol = self.getInt()
         try:
-            buffer = DataPacket.BinaryStream(self.getString())
+            buffer = DataPacket.NetBinaryStream(self.getString())
             self.chainData = json.loads(buffer.get(buffer.getLInt()))
             hasExtraData = False
             for chain in self.chainData["chain"]:
