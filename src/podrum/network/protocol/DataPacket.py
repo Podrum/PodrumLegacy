@@ -10,9 +10,9 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.utils.BinaryStream import BinaryStream
+from podrum.network.NetBinaryStream import NetBinaryStream
 
-class DataPacket(BinaryStream):
+class DataPacket(NetBinaryStream):
     NID = 0
     PID_MASK = 0x3ff # 10 Bits
     
