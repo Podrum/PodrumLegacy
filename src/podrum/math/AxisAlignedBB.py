@@ -285,7 +285,7 @@ class AxisAlignedBB:
             v6 = None
 
         vector = None
-        distance = sys.maxint
+        distance = sys.maxsize
 
         for v in [v1, v2, v3, v4, v5, v6]:
             d = pos1.distanceSquared(v)
