@@ -34,7 +34,7 @@ class CLIENT_HANDSHAKE_DataPacket(Packet):
     sendPong = None
 
     def _encode(self):
-        self.putByte(self.PID)
+        self.putSignedByte(self.PID)
         self.putAddress(self.address, self.port, 4) #TODO: Correct version
         for i in range(0, 10):
             addr = self.systemAddresses[i]

@@ -16,7 +16,7 @@ from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.utils.Utils import Utils
 
-class DataPacket(DataPacket):
+class LoginPacket(DataPacket):
     NID = ProtocolInfo.LOGIN_PACKET
     
     username = None
@@ -41,7 +41,7 @@ class DataPacket(DataPacket):
     def decodePayload(self):
         self.protocol = self.getInt()
         try:
-            buffer = DataPacket.BinaryStream(self.getString())
+            buffer = DataPacket.NetBinaryStream(self.getString())
             self.chainData = json.loads(buffer.get(buffer.getLInt()))
             hasExtraData = False
             for chain in self.chainData["chain"]:

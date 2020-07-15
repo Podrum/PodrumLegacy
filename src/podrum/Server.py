@@ -43,6 +43,7 @@ class Server:
         startTime = Utils.microtime(True)
         self.path = path
         self.withWizard = withWizard
+        self.tickrate = 20/1000
         if(withWizard):
             ServerFS.checkAllFiles(path)
         else:
@@ -56,10 +57,6 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;407;1.16.0;0;0;0;PodrumPoweredServer;0")
-        repeter = 0
-        while repeater >= 1:
-            pass # Here is going to be the place for the packet handling
-            
         doneTime = Utils.microtime(True)
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
@@ -72,7 +69,7 @@ class Server:
                 cmd = None
             ticking = True
             while ticking:
-                time.sleep(0.002)
+                time.sleep(self.tickrate)
 
     def command(string, fromConsole):
         if string.lower() == 'stop':

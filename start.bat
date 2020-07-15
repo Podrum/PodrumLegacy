@@ -7,4 +7,5 @@ if exist src\podrum\Podrum.py (
 )
 
 
-python %PODRUM_FILE% %*
+python -O %PODRUM_FILE% %*
+pause

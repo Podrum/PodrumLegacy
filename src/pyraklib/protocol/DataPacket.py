@@ -35,7 +35,7 @@ class DataPacket(Packet):
     def getPID() -> int: pass
 
     def _encode(self):
-        self.putByte(self.getPID(), False)
+        self.putByte(self.getPID()) #unsigned
         self.putLTriad(self.seqNumber)
         for packet in self.packets:
             if isinstance(packet, EncapsulatedPacket):

@@ -32,7 +32,7 @@ class UUID:
     def getVersion(self):
         return self.version
     
-    def equals(self, uuid: UUID):
+    def equals(self, uuid):
         return uuid.parts[0] == self.parts[0] and uuid.parts[1] == self.parts[1] and uuid.parts[2] == self.parts[2] and uuid.parts[3] == self.parts[3]
     
     def fromBinary(self, uuid, version = None):
