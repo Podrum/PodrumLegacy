@@ -99,7 +99,7 @@ class PluginLoader:
     @staticmethod
     def reloadAll():
         pluginsDir = PluginLoader.pluginsDir
-        pluginsPaths = glob(pluginsDir + "/*.pyz")
+        pluginsPaths = PluginLoader.loadedPluginFiles
         for pluginPath in pluginsPaths:
             if os.path.isfile(pluginPath):
                 PluginLoader.reload(pluginPath)
