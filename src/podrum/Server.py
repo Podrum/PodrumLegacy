@@ -15,6 +15,7 @@ import os
 
 from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
+from podrum.plugin.PluginLoader import PluginLoader
 from podrum.utils.Logger import Logger
 from podrum.utils.ServerFS import ServerFS
 from podrum.utils.Utils import Utils
@@ -22,7 +23,6 @@ from podrum.wizard.Wizard import Wizard
 
 from pyraklib.server.PyRakLibServer import PyRakLibServer
 from pyraklib.server.ServerHandler import ServerHandler
-
 
 class Server:
 
@@ -57,6 +57,7 @@ class Server:
         server = PyRakLibServer(port=19132)
         handler = ServerHandler(server, None)
         handler.sendOption("name", "MCPE;Podrum powered server;407;1.16.0;0;0;0;PodrumPoweredServer;0")
+        PluginLoader.loadAll()
         doneTime = Utils.microtime(True)
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
@@ -74,11 +75,23 @@ class Server:
     def command(string, fromConsole):
         if string.lower() == 'stop':
             Logger.log('info', 'Stopping server...')
+            PluginLoader.unloadAll()
+            Logger.log('info', 'Server stopped.')
             Utils.killServer()
         elif string.lower() == '':
             return
         elif string.lower() == 'help':
             Logger.log('info', '/stop: Stops the server')
+        elif string.lower() == 'reload':
+            PluginLoader.reloadAll()
+            Logger.log('info', 'Reload successfull!')
+        elif string.lower() == 'plugins' or string.lower() == 'pl':
+            pluginsString = ""
+            for pluginName in PluginLoader.loadedPluginsList:
+                pluginsString = pluginsString + pluginName
+                if pluginName != PluginLoader.loadedPluginsList[PluginLoader.loadedPluginsCount - 1]:
+                    pluginsString += ", "
+            Logger.log('info', f'Plugins({PluginLoader.loadedPluginsCount}): {pluginsString}')
         else:
             Logger.log('error', str(Base.get("invalidCommand")))
     
