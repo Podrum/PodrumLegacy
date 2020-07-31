@@ -26,23 +26,31 @@ class NamedTag:
             raise ValueError("Tag name cannot be more than 32767 bytes, got length " + str(len(name)))
         self.name = name
         
+    @staticmethod
     def getName():
         return NamedTag.name
     
+    @staticmethod
     def setName(name):
         NamedTag.name = name
-        
+      
+    @staticmethod
     def getValue(): pass
     
+    @staticmethod
     def getType(): pass
     
+    @staticmethod
     def write(nbt: NBTStream): pass
     
+    @staticmethod
     def read(nbt: NBTStream, tracker: ReaderTracker): pass
     
+    @staticmethod
     def toString(indentation = 0):
         return ("  " * indentation) + type(object) + ": " + (("name='NamedTag.name', ") if (NamedTag.name != "") else "") + "value='" + str(NamedTag.getValue()) + "'"
     
+    @staticmethod
     def safeClone() -> NamedTag:
         if NamedTag.cloning:
             raise ValueError("Recursive NBT tag dependency detected")
@@ -52,8 +60,10 @@ class NamedTag:
         retval.cloning = False
         return retval
     
+    @staticmethod
     def equals(that: NamedTag):
         return NamedTag.name == that.name and NamedTag.equalsValue(that)
     
+    @staticmethod
     def equalsValue(that: NamedTag):
         return isinstance(that, NamedTag()) and NamedTag.getValue() == that.getValue()
