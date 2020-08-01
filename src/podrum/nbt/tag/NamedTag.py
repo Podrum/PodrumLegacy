@@ -16,7 +16,7 @@ from podrum.nbt.NBTStream import NBTStream
 from podrum.nbt.ReaderTracker import ReaderTracker
 
 class NamedTag:
-    name = none
+    name = None
     cloning = False
     
     def __init__(self, name = ""):
