@@ -84,7 +84,7 @@ class Server:
             Logger.log('info', '/stop: Stops the server')
         elif string.lower() == 'reload':
             PluginLoader.reloadAll()
-            Logger.log('info', 'Reload successfull!')
+            Logger.log('info', 'Reload successful!')
         elif string.lower() == 'plugins' or string.lower() == 'pl':
             pluginsString = ""
             for pluginName in PluginLoader.loadedPluginsList:
