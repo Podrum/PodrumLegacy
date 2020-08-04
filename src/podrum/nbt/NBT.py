@@ -10,8 +10,6 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from abc import ABCMeta, abstractmethod
-
 from podrum.nbt.tag.ByteArrayTag import ByteArrayTag
 from podrum.nbt.tag.ByteTag import ByteTag
 from podrum.nbt.tag.CompoundTag import CompoundTag
@@ -27,8 +25,6 @@ from podrum.nbt.tag.ShortTag import ShortTag
 from podrum.nbt.tag.StringTag import StringTag
 
 class NBT:
-    __metaclass__ = ABCMeta
-    
     TAG_End = 0
     TAG_Byte = 1
     TAG_Short = 2
@@ -39,38 +35,34 @@ class NBT:
     TAG_ByteArray = 7
     TAG_String = 8
     TAG_List = 9
-    TAG_COMPOUND = 10
+    TAG_Compound = 10
     TAG_IntArray = 11
     TAG_LongArray = 12
-    
-    @staticmethod
-    def createTag(type: int) -> NamedTag:
-        if type == NBT.TAG_Byte:
+
+    def createTag(self, type: int) -> NamedTag:
+        if type == self.TAG_Byte:
             return ByteTag()
-        elif type == NBT.TAG_Short:
+        elif type == self.TAG_Short:
             return ShortTag()
-        elif type == NBT.TAG_Int:
+        elif type == self.TAG_Int:
             return IntTag()
-        elif type == NBT.TAG_Long:
+        elif type == self.TAG_Long:
             return LongTag()
-        elif type == NBT.TAG_Float:
+        elif type == self.TAG_Float:
             return FloatTag()
-        elif type == NBT.TAG_Double:
+        elif type == self.TAG_Double:
             return DoubleTag()
-        elif type == NBT.TAG_ByteArray:
+        elif type == self.TAG_ByteArray:
             return ByteArrayTag()
-        elif type == NBT.TAG_String:
+        elif type == self.TAG_String:
             return StringTag()
-        elif type == NBT.TAG_List:
+        elif type == self.TAG_List:
             return ListTag()
-        elif type == NBT.TAG_Compound:
+        elif type == self.TAG_Compound:
             return CompoundTag()
-        elif type == NBT.TAG_IntArray:
+        elif type == self.TAG_IntArray:
             return IntArrayTag()
-        elif type == NBT.TAG_LongArray:
+        elif type == self.TAG_LongArray:
             return LongArrayTag()
         else:
             raise ValueError("Unknown NBT tag type " + str(type))
-    
-    
-    

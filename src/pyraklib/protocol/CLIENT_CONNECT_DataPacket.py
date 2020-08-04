@@ -30,13 +30,13 @@ class CLIENT_CONNECT_DataPacket(Packet):
     useSecurity = False
 
     def _encode(self):
-        self.putByte(self.PID)
+        self.putSignedByte(self.PID)
         self.putLong(self.clientID)
         self.putLong(self.sendPing)
         if self.useSecurity:
-            self.putByte(1)
+            self.putSignedByte(1)
         else:
-            self.putByte(0)
+            self.putSignedByte(0)
 
     def _decode(self):
         self.get()
