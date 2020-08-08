@@ -12,7 +12,7 @@
 
 import decimal
 
-class bcmath:
+class BCMath:
     @staticmethod
     def bcmul(num1, num2, scale=None):
         if scale != None:
