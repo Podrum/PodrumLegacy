@@ -1,9 +1,11 @@
 """
-*  ____           _
-* |  _ \ ___   __| |_ __ _   _ _ __ ___
-* | |_) / _ \ / _` | '__| | | | '_ ` _ \
-* |  __/ (_) | (_| | |  | |_| | | | | | |
-* |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+*
+*  __  __ _____ ____   ____                 _             
+* |  \/  |  ___|  _ \ / ___| __ _ _ __ ___ (_)_ __   __ _ 
+* | |\/| | |_  | | | | |  _ / _` | '_ ` _ \| | '_ \ / _` |
+* | |  | |  _| | |_| | |_| | (_| | | | | | | | | | | (_| |
+* |_|  |_|_|   |____/ \____|\__,_|_| |_| |_|_|_| |_|\__, |
+*                                                    |___/ 
 *
 * Licensed under the Apache License, Version 2.0 (the "License")
 * you may not use this file except in compliance with the License.
@@ -24,11 +26,19 @@ class Binary:
         assert (length == expect), 'Expected ' + str(expect) + 'bytes, got ' + str(length)
         
     @staticmethod
+    def sign(num, bitlen):
+        bits = bitlen - 1
+        x = num & (2 ** bitlen - 1)
+        a = x & (2 ** bits - 1)
+        b = x & (2 ** bits)
+        return (~(2 ** bits - 1) & (-1) | a) if b else a
+        
+    @staticmethod
     def signByte(value: int):
         if calcsize('P') == 8:
-            return value << 56 >> 56
+            return Binary.sign(value, 56)
         else:
-            return value << 24 >> 24
+            return Binary.sign(value, 24)
         
     @staticmethod
     def unsignByte(value: int):
@@ -37,9 +47,9 @@ class Binary:
     @staticmethod
     def signShort(value: int):
         if calcsize('P') == 8:
-            return value << 48 >> 48
+            return Binary.sign(value, 48)
         else:
-            return value << 16 >> 16
+            return Binary.sign(value, 16)
 
     @staticmethod
     def unsignShort(value: int):
@@ -47,10 +57,7 @@ class Binary:
     
     @staticmethod
     def signInt(value: int):
-        if calcsize('P') == 8:
-            return value << 32 >> 32
-        else:
-            return value
+        return Binary.sign(value, 32)
 
     @staticmethod
     def unsignInt(value: int):
@@ -127,7 +134,11 @@ class Binary:
     @staticmethod
     def readInt(data: bytes) -> int:
         Binary.checkLength(data, 4)
-        return unpack('>L', data)[0]
+        if calcsize('P') == 8:
+            value = Binary.signInt(unpack('>L', data)[0])
+        else:
+            value = unpack('>L', data)[0]
+        return value
 
     @staticmethod
     def writeInt(value: int) -> bytes:
@@ -136,7 +147,11 @@ class Binary:
     @staticmethod
     def readLInt(data: bytes) -> int:
         Binary.checkLength(data, 4)
-        return unpack('<L', data)[0]
+        if calcsize('P') == 8:
+            value = Binary.signInt(unpack('<L', data)[0])
+        else:
+            value = unpack('<L', data)[0]
+        return value
 
     @staticmethod
     def writeLInt(value: int) -> bytes:
@@ -239,9 +254,9 @@ class Binary:
     def writeUnsignedVarInt(value: int) -> bytes:
         buf = ""
         value = value & 0xffffffff
-        i = 0
+        i = 1
         while i < 5:
-            i = i + 1
+            i += 1
             if (value >> 7) != 0:
                 buf += chr(value | 0x80)
             else:
@@ -285,9 +300,9 @@ class Binary:
     @staticmethod
     def writeUnsignedVarLong(value: int) -> bytes:
         buf = ""
-        i = 0
+        i = 1
         while i < 10:
-            i = i + 1
+            i += 1
             if (value >> 7) != 0:
                 buf += chr(value | 0x80)
             else:
