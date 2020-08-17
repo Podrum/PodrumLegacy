@@ -394,7 +394,7 @@ class Session:
                     self.NACKQueue.remove(packet.seqNumber)
 
                 self.ACKQueue.append(packet.seqNumber)
-                self.receivedWindow[packet.seqNumber] = packet.seqNumber
+                self.receivedWindow.insert(packet.seqNumber, packet.seqNumber)
 
                 if diff != 1:
                     i = self.lastSeqNumber + 1
