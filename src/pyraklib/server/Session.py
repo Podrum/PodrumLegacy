@@ -178,7 +178,7 @@ class Session:
             else:
                 break
 
-        for (seq, boolean) in enumerate(self.receivedWindow):
+        for (seq, boolean) in list(enumerate(self.receivedWindow)):
             if seq < self.windowStart:
                 del self.receivedWindow[seq]
             else:
