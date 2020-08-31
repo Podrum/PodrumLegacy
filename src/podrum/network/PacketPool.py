@@ -20,6 +20,7 @@ from podrum.network.protocol.LoginPacket import LoginPacket
 from podrum.network.protocol.PlayStatusPacket import PlayStatusPacket
 from podrum.network.protocol.ResourcePacksInfoPacket import ResourcePacksInfoPacket
 from podrum.network.protocol.ServerToClientHandshakePacket import ServerToClientHandshakePacket
+from podrum.network.protocol.UnknownPacket import UnknownPacket
 from podrum.utils.Binary import Binary
 
 class PacketPool:
