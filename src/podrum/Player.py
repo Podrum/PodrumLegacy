@@ -23,7 +23,7 @@ class Player:
     CREATIVE = 1
     ADVENTURE = 2
     SPECTATOR = 3
-    VIEW = self.SPECTATOR
+    VIEW = SPECTATOR
 
     connection = None
     server = None
