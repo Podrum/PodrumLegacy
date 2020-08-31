@@ -18,7 +18,9 @@ class UnknownPacket(DataPacket):
     payload = None
     
     def pid(self):
-        pass
+        if len(self.payload if self.payload else b"") > 0:
+            return self.payload[0]
+        return self.NID
     
     def getName(self):
         return "unknown packet"
