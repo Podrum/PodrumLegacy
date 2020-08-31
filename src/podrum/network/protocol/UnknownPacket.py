@@ -16,6 +16,12 @@ class UnknownPacket(DataPacket):
     NID = -1
 
     payload = None
+    
+    def pid(self):
+        pass
+    
+    def getName(self):
+        return "unknown packet"
 
     def decode(self):
         self.payload = self.getRemaining()
