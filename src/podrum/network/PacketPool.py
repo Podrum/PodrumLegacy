@@ -10,6 +10,8 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from copy import deepcopy
+
 from podrum.network.protocol.AdventureSettingsPacket import AdventureSettingsPacket
 from podrum.network.protocol.ClientToServerHandshakePacket import ClientToServerHandshakePacket
 from podrum.network.protocol.DataPacket import DataPacket
@@ -26,7 +28,7 @@ class PacketPool:
         self.registerPackets()
         
     def registerPacket(packet):
-        self.pool[packet.NID] = packet.copy()
+        self.pool[packet.NID] = deepcopy(packet)
         
     def registerPackets(self):
         self.registerPacket(AdventureSettingsPacket())
