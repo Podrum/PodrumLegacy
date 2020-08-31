@@ -47,8 +47,8 @@ class PacketPool:
         else:
             return deepcopy(self.pool[pid])
         
-    def getPacket(buffer: bytes) -> DataPacket:
+    def getPacket(self, buffer: bytes) -> DataPacket:
         offset = 0
         pk = self.getPacketById(Binary.readUnsignedVarInt(buffer, offset) & DataPacket.PID_MASK)
         pk.setBuffer(buffer, offset)
-        return pk        
+        return pk
