@@ -24,3 +24,8 @@ class NetworkInterface:
     tickTask = None
     upload = 0
     download = 0
+    
+    def __init__(self, server):
+        self.server = server
+        self.identifers = []
+        
