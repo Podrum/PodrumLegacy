@@ -31,7 +31,7 @@ class OPEN_CONNECTION_REQUEST_2(Packet):
     mtuSize = None
 
     def _encode(self):
-        self.putSignedByte(self.PID)
+        self.putByte(self.PID)
         self.put(PyRakLib.MAGIC)
         self.putAddress(self.serverAddress[0], self.serverAddress[1], self.serverAddress[2])
         self.putShort(self.mtuSize)

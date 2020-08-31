@@ -31,12 +31,12 @@ class OPEN_CONNECTION_REPLY_2(Packet):
     mtuSize = None
 
     def _encode(self):
-        self.putSignedByte(self.PID)
+        self.putByte(self.PID)
         self.put(PyRakLib.MAGIC)
         self.putLong(self.serverID)
         self.putAddress(self.clientAddress[0], self.clientAddress[1], self.clientAddress[2])
         self.putShort(self.mtuSize)
-        self.putSignedByte(0) # Server security
+        self.putByte(0) # Server security
 
     def _decode(self):
         self.get()

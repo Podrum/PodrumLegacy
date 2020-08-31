@@ -30,11 +30,11 @@ class OPEN_CONNECTION_REQUEST_1(Packet):
     mtuSize = None
 
     def _encode(self):
-        self.putSignedByte(self.PID)
+        self.putByte(self.PID)
         self.put(PyRakLib.MAGIC)
-        self.putSignedByte(self.protocol)
+        self.putByte(self.protocol)
         for i in range(0, self.mtuSize - 18):
-            self.putSignedByte(0)
+            self.putByte(0)
 
     def _decode(self):
         self.get()

@@ -26,7 +26,7 @@ class CLIENT_DISCONNECT_DataPacket(Packet):
     PID = 0x15
 
     def _encode(self):
-        self.putSignedByte(self.PID)
+        self.putByte(self.PID)
 
     def _decode(self):
         self.get()

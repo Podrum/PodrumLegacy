@@ -33,9 +33,7 @@ import copy
 def microtime(get_as_float = False):
     if get_as_float:
         return time_.time()
-    else:
-        return '%f %d' % math.modf(time_.time())
-
+    return '%f %d' % math.modf(time_.time())
 def str_split(s, n) -> str:
     ret = []
     for i in range(0, len(s), n):
@@ -178,7 +176,7 @@ class Session:
             else:
                 break
 
-        for (seq, boolean) in enumerate(self.receivedWindow):
+        for (seq, boolean) in enumerate(list(self.receivedWindow)):
             if seq < self.windowStart:
                 del self.receivedWindow[seq]
             else:
@@ -203,7 +201,7 @@ class Session:
 
     def addToQueue(self, pk, flags = PyRakLib.PRIORITY_NORMAL):
         priority = flags & 0b0000111
-        if pk.needACK and pk.messageIndex != None:
+        if pk.needACK and pk.messageIndex is not None:
             self.needACK[pk.identifierACK][pk.messageIndex] = pk.messageIndex
         if priority == PyRakLib.PRIORITY_IMMEDIATE: # Skip queues
             packet = DATA_PACKET_0()
@@ -286,7 +284,7 @@ class Session:
             self.handleEncapsulatedPacketRoute(pk)
 
     def handleEncapsulatedPacket(self, packet):
-        if packet.messageIndex == None:
+        if packet.messageIndex is None:
             self.handleEncapsulatedPacketRoute(packet)
         else:
             if packet.messageIndex < self.reliableWindowStart or packet.messageIndex > self.reliableWindowEnd:
@@ -313,7 +311,7 @@ class Session:
                 self.reliableWindow[packet.messageIndex] = packet
 
     def handleEncapsulatedPacketRoute(self, packet):
-        if self.sessionManager == None:
+        if self.sessionManager is None:
             return
 
         if packet.hasSplit:
@@ -344,7 +342,7 @@ class Session:
                     dataPacket.buffer = packet.buffer
                     dataPacket.decode()
 
-                    if port == self.sessionManager.getPort() or not self.sessionManager.portChecking:
+                    if dataPacket.port == self.sessionManager.getPort() or not self.sessionManager.portChecking:
                         self.state = self.STATE_CONNECTED # FINALLY!
                         self.sessionManager.openSession(self)
                         for p in self.preJoinQueue:
@@ -418,7 +416,7 @@ class Session:
                 for seq in packet.seqNums:
                     try:
                         for pk in self.recoveryQueue[seq]:
-                            if isinstance(pk, EncapsulatedPacket) and pk.needACK and pk.messageIndex != None:
+                            if isinstance(pk, EncapsulatedPacket) and pk.needACK and pk.messageIndex is not None:
                                 del self.needACK[pk.identifierACK][pk.messageIndex]
                     except NameError:
                         pass
@@ -463,3 +461,4 @@ class Session:
     def close(self):
         data = "\x00\x00\x08\x15"
         self.addEncapsulatedToQueue(EncapsulatedPacket.fromBinary(data)[0], PyRakLib.PRIORITY_IMMEDIATE)
+        self.sessionManager = None

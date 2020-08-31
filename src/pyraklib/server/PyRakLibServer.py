@@ -19,19 +19,16 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os, logging
 import atexit
-import logging
-import os
 import queue
 from threading import Thread
-
-from .SessionManager import SessionManager
-from .UDPServerSocket import UDPServerSocket
+from ..server.SessionManager import SessionManager
+from ..server.UDPServerSocket import UDPServerSocket
 
 
 class PyRakLibServer(Thread):
     port = None
-
     interface = None
 
     logger = None
@@ -44,9 +41,8 @@ class PyRakLibServer(Thread):
 
     mainPath = None
 
-    def __init__(self, port: int, logger: logging.Logger = logging.getLogger("PyRakLib"), interface: str = "0.0.0.0"):
+    def __init__(self, port: int, logger: logging.Logger = logging.getLogger("PyRakLib"),interface: str = "0.0.0.0"):
         super().__init__()
-
         self.port = port
         if port < 1 or port > 65536:
             raise Exception("Invalid port range")
@@ -65,7 +61,7 @@ class PyRakLibServer(Thread):
 
     def shutdownHandler(self):
         if self._shutdown is not True:
-            self.logger.error("PyRakLib Thread [#" + str(self.ident) + "] crashed.")
+            self.logger.error("PyRakLib Thread [#"+str(self.ident)+"] crashed.")
 
     def pushMainToThreadPacket(self, pkt: bytearray):
         self.internalQueue.put(pkt)

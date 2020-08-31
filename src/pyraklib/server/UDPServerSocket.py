@@ -54,4 +54,3 @@ class UDPServerSocket:
     def writePacket(self, buffer, dest, port):
         print("Packet OUT: "+str(buffer))
         return self.socket.sendto(buffer, (dest, port))
-

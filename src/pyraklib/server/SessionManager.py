@@ -37,8 +37,7 @@ from ..server.Session import Session
 def microtime(get_as_float = False) :
     if get_as_float:
         return time.time()
-    else:
-        return '%f %d' % math.modf(time.time())
+    return '%f %d' % math.modf(time.time())
 
 
 class SessionManager:
@@ -83,10 +82,12 @@ class SessionManager:
 
         while not self.shutdown:
             start = microtime(True)
-            max = 5000
-
-            while --max and self.receivePacket(): pass
-            while self.receiveStream(): pass
+            max = 4999
+            
+            while max and self.receivePacket():
+               pass
+            while self.receiveStream():
+               pass
 
             time_ = microtime(True) - start
             if time_ < 0.05:
@@ -115,8 +116,6 @@ class SessionManager:
             self.receiveBytes = 0
 
             if len(self.block) > 0:
-                # TODO: Remove this?
-                #self.block = sorted(self.block.items(), key=lambda x: x[1])
                 now = microtime(True)
                 for address in self.block.keys():
                     timeout = self.block.get(address)
@@ -131,10 +130,10 @@ class SessionManager:
 
     def receivePacket(self):
         data = self.socket.readPacket()
-        if data == None:
+        if data is None:
             return
-        else:
-            buffer, source = data
+        buffer, source = data
+      
         if len(buffer) > 0:
             self.receiveBytes += len(buffer)
             try:
@@ -197,7 +196,7 @@ class SessionManager:
 
     def receiveStream(self):
         packet = self.server.readMainToThreadPacket()
-        if packet == None:
+        if packet is None:
             return False
         if len(packet) > 0:
             id = ord(packet[0])
@@ -296,7 +295,7 @@ class SessionManager:
         id = ip + ":" + str(port)
         try:
             return self.sessions[id]
-        except KeyError or NameError:
+        except (KeyError, NameError):
             self.sessions[id] = Session(self, ip, port)
             return self.sessions[id]
 
@@ -306,7 +305,7 @@ class SessionManager:
             self.sessions[id].close()
             del self.sessions[id]
             self.streamClose(id, reason)
-        except NameError or KeyError:
+        except (NameError, KeyError):
             pass
 
     def openSession(self, session):

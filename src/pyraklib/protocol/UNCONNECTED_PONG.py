@@ -33,7 +33,7 @@ class UNCONNECTED_PONG(Packet):
 
     def _encode(self):
         super().clean()
-        self.putSignedByte(self.PID)
+        self.putByte(self.PID)
         self.putLong(self.pingID)
         self.putLong(self.serverID)
         self.put(PyRakLib.MAGIC)

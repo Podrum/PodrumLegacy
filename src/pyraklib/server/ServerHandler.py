@@ -76,7 +76,7 @@ class ServerHandler:
 
     def handlePacket(self):
         packet = self.server.readThreadToMainPacket()
-        if packet == None:
+        if packet is None:
             return
         if len(packet) > 0:
             id = ord(packet[0])

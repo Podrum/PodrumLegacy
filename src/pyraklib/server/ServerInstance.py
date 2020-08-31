@@ -25,19 +25,25 @@ class ServerInstance:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def openSession(self, identifier, address, port, clientID): pass
+    def openSession(self, identifier, address, port, clientID):
+         pass
 
     @abstractmethod
-    def closeSession(self, identifier, reason): pass
+    def closeSession(self, identifier, reason):
+         pass
 
     @abstractmethod
-    def handleEncapsulated(self, identifier, packet, flags): pass
+    def handleEncapsulated(self, identifier, packet, flags):
+         pass
 
     @abstractmethod
-    def handleRaw(self, address, port, payload): pass
+    def handleRaw(self, address, port, payload):
+         pass
 
     @abstractmethod
-    def notifyACK(self, identifier, identifierACK): pass
+    def notifyACK(self, identifier, identifierACK):
+         pass
 
     @abstractmethod
-    def handleOption(self, option, value): pass
+    def handleOption(self, option, value):
+         pass

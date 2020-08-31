@@ -19,14 +19,6 @@ PyRakLib networking library.
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import warnings
-from .PyRakLib import PyRakLib
-
-try:
-    import urllib.request
-    import json
-except ImportError:
-    # TODO: Update requests
-    warnings.warn("Could not check for latest version: library 'urllib' not installed.")
-
 __all__ = ['PyRakLib', 'Binary']
+
+from .PyRakLib import PyRakLib

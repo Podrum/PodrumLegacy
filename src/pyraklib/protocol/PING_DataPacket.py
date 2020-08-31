@@ -28,7 +28,7 @@ class PING_DataPacket(Packet):
     pingID = None
 
     def _encode(self):
-        self.putSignedByte(self.PID)
+        self.putByte(self.PID)
         self.putLong(self.pingID)
 
     def _decode(self):

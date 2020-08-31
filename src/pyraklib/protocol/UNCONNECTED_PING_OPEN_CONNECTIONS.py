@@ -21,6 +21,5 @@ PyRakLib networking library.
 """
 from ..protocol.UNCONNECTED_PING import UNCONNECTED_PING
 
-
 class UNCONNECTED_PING_OPEN_CONNECTIONS(UNCONNECTED_PING):
     PID = 0x02

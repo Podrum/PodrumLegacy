@@ -75,11 +75,8 @@ class Packet:
     def put(self, data: bytearray):
         self.buffer += data
 
-    def putByte(self, b: int):
-        self.buffer += Binary.writeByte(b)
-
-    def putSignedByte(self, b: int):
-        self.buffer += Binary.writeSignedByte(b)
+    def putByte(self, b: int, signed: bool = True):
+        self.buffer += Binary.writeByte(b, signed)
 
     def putLong(self, l: int):
         self.buffer += Binary.writeLong(l)
@@ -94,10 +91,10 @@ class Packet:
         self.buffer += Binary.writeLTriad(t)
 
     def putAddress(self, addr: str, port: int, version: int = 4):
-        self.putSignedByte(version)
+        self.putByte(version)
         if version == 4:
             for s in str(addr).split("."):
-                self.putByte((int(s) & 0xff)) #unsigned
+                self.putByte(int(s) & 0xff, False)
             self.putShort(port)
 
     def putString(self, string: str):
@@ -123,7 +120,9 @@ class Packet:
         self._decode()
 
     @abstractmethod
-    def _encode(self): pass
+    def _encode(self):
+         pass
 
     @abstractmethod
-    def _decode(self): pass
+    def _decode(self):
+         pass

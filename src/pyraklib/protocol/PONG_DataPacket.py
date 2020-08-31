@@ -21,6 +21,5 @@ PyRakLib networking library.
 """
 from ..protocol.PING_DataPacket import PING_DataPacket
 
-
 class PONG_DataPacket(PING_DataPacket):
     PID = 0x03
