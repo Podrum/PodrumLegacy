@@ -15,6 +15,7 @@ import os
 
 from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
+from podrum.Player import Player
 from podrum.plugin.PluginLoader import PluginLoader
 from podrum.utils.Logger import Logger
 from podrum.utils.ServerFS import ServerFS
@@ -23,6 +24,7 @@ from podrum.wizard.Wizard import Wizard
 
 from pyraklib.server.PyRakLibServer import PyRakLibServer
 from pyraklib.server.ServerHandler import ServerHandler
+from pyraklib.server.UDPServerSocket import UDPServerSocket
 
 class Server:
 
@@ -70,6 +72,11 @@ class Server:
                 cmd = None
             ticking = True
             while ticking:
+                try:
+                    data, source = UDPServerSocket.readPacket(self)
+                    Player.handleDataPacket(data)
+                except:
+                    pass
                 time.sleep(self.tickrate)
 
     def command(string, fromConsole):
