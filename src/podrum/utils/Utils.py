@@ -18,7 +18,7 @@ import signal
 import sys
 import socket
 import time
-import urllib
+import urllib.request
 import hmac
 import hashlib
 
