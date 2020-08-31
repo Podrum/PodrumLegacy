@@ -29,11 +29,11 @@ class PacketPool:
         self.pool[packet.NID] = packet.copy()
         
     def registerPackets(self):
-        self.registerPacket(AdventureSettingsPacket)
-        self.registerPacket(ClientToServerHandshakePacket)
-        self.registerPacket(DisconnectPacket)
-        self.registerPacket(LoginPacket)
-        self.registerPacket(PlayStatusPacket)
-        self.registerPacket(ResourcePacksInfoPacket)
-        self.registerPacket(ServerToClientHandshakePacket)
+        self.registerPacket(AdventureSettingsPacket())
+        self.registerPacket(ClientToServerHandshakePacket())
+        self.registerPacket(DisconnectPacket())
+        self.registerPacket(LoginPacket())
+        self.registerPacket(PlayStatusPacket())
+        self.registerPacket(ResourcePacksInfoPacket())
+        self.registerPacket(ServerToClientHandshakePacket())
         
