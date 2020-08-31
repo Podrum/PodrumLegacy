@@ -17,8 +17,8 @@ class UnknownPacket(DataPacket):
 
     payload = None
 
-    def decodePayload(self):
-        pass
+    def decode(self):
+        self.payload = self.getRemaining()
 
-    def encodePayload(self):
-        pass
+    def encode(self):
+        self.put(self.payload)
