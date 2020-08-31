@@ -27,7 +27,7 @@ class PacketPool:
     def __init__(self):
         self.registerPackets()
         
-    def registerPacket(packet):
+    def registerPacket(packet: DataPacket):
         self.pool[packet.NID] = deepcopy(packet)
         
     def registerPackets(self):
@@ -38,4 +38,12 @@ class PacketPool:
         self.registerPacket(PlayStatusPacket())
         self.registerPacket(ResourcePacksInfoPacket())
         self.registerPacket(ServerToClientHandshakePacket())
+        
+    def getPacketById(self, pid: int) -> DataPacket:
+        try:
+            self.pool[pid]
+        except:
+            return UnknownPacket()
+        else:
+            return deepcopy(self.pool[pid])
         
