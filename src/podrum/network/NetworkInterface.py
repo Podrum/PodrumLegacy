@@ -31,4 +31,10 @@ class NetworkInterface:
     def __init__(self, server):
         self.server = server
         self.identifers = []
+        server = PyRakLibServer(19132, self.server.getLogger(), "0.0.0.0")
+        self.interface = ServerHandler(server, self)
+        self.setName("Podrum powered server");
+        
+    def setName(self, name: str):
+        self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
         
