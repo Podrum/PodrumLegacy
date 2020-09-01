@@ -65,11 +65,6 @@ class Server:
                 cmd = None
             ticking = True
             while ticking:
-                try:
-                    data, source = UDPServerSocket.readPacket(self)
-                    Player.handleDataPacket(data)
-                except:
-                    passy 
                 time.sleep(self.tickrate)
 
     def command(string, fromConsole):
