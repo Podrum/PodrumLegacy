@@ -22,10 +22,6 @@ from podrum.utils.ServerFS import ServerFS
 from podrum.utils.Utils import Utils
 from podrum.wizard.Wizard import Wizard
 
-from pyraklib.server.PyRakLibServer import PyRakLibServer
-from pyraklib.server.ServerHandler import ServerHandler
-from pyraklib.server.UDPServerSocket import UDPServerSocket
-
 class Server:
 
     path = None
