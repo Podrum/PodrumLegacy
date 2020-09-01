@@ -90,5 +90,16 @@ class NetworkInterface:
     def handleRaw(self, address: str, port: int, payload):
         self.server.handlePacket(address, port, payload)
         
+    def putRaw(self, address, port, payload):
+        self.interface.sendRaw(address, port, payload)
+        
+    def notifyACK(self, identifier, identifierACK):
+        try:
+            self.players[identifier]
+        except:
+            pass
+        else:
+            self.players[identifier].handleACK(identifierACK)
+        
     def setName(self, name: str):
         self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
