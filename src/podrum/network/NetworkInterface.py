@@ -11,6 +11,7 @@
 """
 
 from copy import deepcopy
+import pickle
 
 from podrum.network.PacketPool import PacketPool
 from podrum.utils.Binary import Binary
@@ -103,3 +104,15 @@ class NetworkInterface:
         
     def setName(self, name: str):
         self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
+
+    def handleOption(self, name: str, value: bytes):
+        if name == "bandwidth":
+            v = loads(value)
+            self.upload = v["up"]
+            self.download = v["down"]
+            
+    def getUploadUsage(self):
+        return self.upload
+    
+    def getDownloadUsage(self):
+        return self.download
