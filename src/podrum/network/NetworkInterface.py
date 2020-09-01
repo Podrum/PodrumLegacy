@@ -77,5 +77,18 @@ class NetworkInterface:
         self.identifers[identifier] = player
         self.server.addPlayer(identifier, player)
         
+    def handleEncapsulated(self, identifier, packet: EncapsulatedPacket, flags):
+        try:
+            self.players[identifier]
+        except:
+            pass
+        else:
+            pk = PacketPool.getPacket(packet.buffer)
+            pk.decode()
+            self.players[identifier].handleDataPacket(pk)
+            
+    def handleRaw(self, address: str, port: int, payload):
+        self.server.handlePacket(address, port, payload)
+        
     def setName(self, name: str):
         self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
