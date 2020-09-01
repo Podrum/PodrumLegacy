@@ -15,7 +15,9 @@ from podrum.network.PacketPool import PacketPool
 from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum import Server
+
 from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
+from pyraklib.server.Session import Session
 
 class Player:
 
@@ -25,15 +27,16 @@ class Player:
     SPECTATOR = 3
     VIEW = SPECTATOR
 
-    connection = None
+    identifier = None
     server = None
     logger = None
     address = None
+    port = None
     name = None
     username = ""
     displayName = ""
     locale = None
-    randomId = None
+    clientID = None
     uuid = None
     xuid = None
     skin = None
@@ -52,19 +55,20 @@ class Player:
     allowFlight = False
     flying = False
     inAirTicks = 0
+    
 
-    def __init__(self, connection, address, logger, server):
-        self.connection = connection
+    def __init__(self, identifier, address, port, clientID):
+        self.identifier = identifier
         self.address = address
-        self.logger = logger
-        self.server = server
+        self.port = port
+        self.clientID = clientID
         
     def sendDataPacket(self, packet, needACK = False, immediate = False):
         BatchPacket.addPacket(packet)
         BatchPacket.encodePayload
         EncapsulatedPacket.reliability = 0
         EncapsulatedPacket.buffer = BatchPacket.buffer
-        self.connection.addEncapsulatedToQueue(EncapsulatedPacket())
+        Session.addEncapsulatedToQueue(EncapsulatedPacket())
         
     def sendPlayStatus(self, status):
         PacketPool.PlayStatusPacket.status = status
@@ -79,7 +83,7 @@ class Player:
         elif packet.NID == ProtocolInfo.LOGIN_PACKET:
             self.name = packet.username
             self.locale = packet.locale
-            self.randomId = packet.clientId
+            self.clientID = packet.clientID
             self.uuid = packet.identityPublicKey
             self.xuid = packet.xuid
             self.sendPlayStatus(PacketPool.PlayStatusPacket.LOGIN_SUCCESS)
@@ -89,7 +93,7 @@ class Player:
             pass
 
     def getClientId(self):
-        return self.randomId
+        return self.clientID
 
     def isAuthenticated(self):
         return self.xuid != ""
