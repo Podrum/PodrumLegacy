@@ -34,7 +34,33 @@ class NetworkInterface:
         server = PyRakLibServer(19132, self.server.getLogger(), "0.0.0.0")
         self.interface = ServerHandler(server, self)
         self.setName("Podrum powered server");
+        loop = asyncio.get_event_loop()
+        loop.call_later(5, stop)
+        self.tickTask = loop.create_task(doTick())
+        try:
+            loop.run_until_complete(self.tickTask)
+        except asyncio.CancelledError:
+            pass 
+        
+    async def doTick(self):
+        while True:
+            self.interface.sendTick()
+            await asyncio.sleep(1)
+            
+    def process(self):
+        return self.interface.handlePacket()
+    
+    def closeSession(self, identifier, reason: str):
+        try:
+            self.players[identifier]
+        except:
+            pass
+        else:
+            self.player = self.players[identifier]
+            del self.identifers[player]
+            del self.players[identifier]
+            del self.identifiersACK[identifier]
+            #player.close(TextFormat.YELLOW + player.getName() + " has left the game", reason)
         
     def setName(self, name: str):
         self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
-        
