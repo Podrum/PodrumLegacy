@@ -61,9 +61,21 @@ class NetworkInterface:
             del self.players[identifier]
             del self.identifiersACK[identifier]
             #player.close(TextFormat.YELLOW + player.getName() + " has left the game", reason)
-            
+      
+    def shutdown(self):
+        self.tickTask.cancel()
+        self.interface.shutdown()
+        
+    def emergencyShutdown(self):
+        self.tickTask.cancel()
+        self.interface.emergencyShutdown()
+        
     def openSession(self, identifier, address, port, clientID):
-        pass
+        player = Player(self, clientID, address, port)
+        self.players[identifier] = player
+        self.identifiersACK[identifier] = 0
+        self.identifers[identifier] = player
+        self.server.addPlayer(identifier, player)
         
     def setName(self, name: str):
         self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
