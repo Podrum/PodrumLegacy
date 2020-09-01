@@ -72,9 +72,9 @@ class NetworkInterface:
         
     def openSession(self, identifier, address, port, clientID):
         player = Player(self, clientID, address, port)
-        self.players[identifier] = player
-        self.identifiersACK[identifier] = 0
-        self.identifers[identifier] = player
+        self.players.insert(identifier, player)
+        self.identifiersACK.insert(identifier, 0)
+        self.identifers.insert(identifier, player)
         self.server.addPlayer(identifier, player)
         
     def handleEncapsulated(self, identifier, packet: EncapsulatedPacket, flags):
