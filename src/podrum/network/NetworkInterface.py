@@ -16,6 +16,7 @@ import pickle
 from podrum.network.PacketPool import PacketPool
 from podrum.utils.Binary import Binary
 
+from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 from pyraklib.server.PyRakLibServer import PyRakLibServer
 from pyraklib.server.ServerHandler import ServerHandler
 
