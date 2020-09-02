@@ -100,3 +100,15 @@ class Utils:
         if not isinstance(decodedPayload, dict):
             raise Exception("Decoded payload should be dict, " + str(type(decodedPayload).__name__)  + " received")
         return decodedPayload
+    
+    def searchList(lst: list, item):
+        i = 0
+        length = len(lst)
+        while i < length:
+            key = lst[i]
+            if key == item:
+                return True
+            else:
+                pass
+        i += 1
+        return False
