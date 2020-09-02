@@ -110,5 +110,5 @@ class Utils:
                 return True
             else:
                 pass
-        i += 1
+            i += 1
         return False
