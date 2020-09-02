@@ -16,6 +16,7 @@ import pickle
 from podrum.network.PacketPool import PacketPool
 from podrum.utils.Binary import Binary
 
+from pyraklib.protocol.DataPacket import DataPacket
 from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 from pyraklib.server.PyRakLibServer import PyRakLibServer
 from pyraklib.server.ServerHandler import ServerHandler
@@ -119,4 +120,5 @@ class NetworkInterface:
         return self.download
     
     def putPacket(self, player: Player, packet: DataPacket, needACK: bool = False, immediate: bool = True):
-        pass
+        try:
+            pass
