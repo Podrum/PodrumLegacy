@@ -112,3 +112,15 @@ class Utils:
                 pass
             i += 1
         return False
+    
+    def getKeyInListFromItem(lst: list, item):
+        i = 0
+        length = len(lst)
+        while i < length:
+            key = lst[i]
+            if key == item:
+                return i
+            else:
+                pass
+            i += 1
+        return None
