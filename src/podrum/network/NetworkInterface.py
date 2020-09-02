@@ -15,6 +15,7 @@ import pickle
 
 from podrum.network.PacketPool import PacketPool
 from podrum.utils.Binary import Binary
+from podrum.utils.Utils import Utils
 
 from pyraklib.protocol.DataPacket import DataPacket
 from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
@@ -120,5 +121,5 @@ class NetworkInterface:
         return self.download
     
     def putPacket(self, player: Player, packet: DataPacket, needACK: bool = False, immediate: bool = True):
-        try:
-            pass
+        if Utils.searchList(self.identifers, player) == True:
+            identifier = self.identifiers[Utils.getKeyInListFromItem(self.identifers, player)]
