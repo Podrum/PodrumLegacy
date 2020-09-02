@@ -117,3 +117,6 @@ class NetworkInterface:
     
     def getDownloadUsage(self):
         return self.download
+    
+    def putPacket(self, player: Player, packet: DataPacket, needACK: bool = False, immediate: bool = True):
+        pass
