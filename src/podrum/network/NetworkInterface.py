@@ -18,6 +18,7 @@ from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
 
+from pyraklib.PyRakLib import PyRakLib
 from pyraklib.protocol.DataPacket import DataPacket
 from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 from pyraklib.server.PyRakLibServer import PyRakLibServer
@@ -135,4 +136,18 @@ class NetworkInterface:
                     pk.reliability = 3
                     pk.orderChannel = 0
                 else:
-                    pass
+                    try:
+                        packet._encapsulatedPacket
+                    except:
+                        packet._encapsulatedPacket = CachedEncapsulatedPacket()
+                        packet._encapsulatedPacket.identifierACK = None
+                        paclet._encapsulatedPacket.buffer = packet.buffer
+                        paclet._encapsulatedPacket.reliability = 3
+                        paclet._encapsulatedPacket.orderChannel = 0
+                    pk = packet._encapsulatedPacket
+                self.interface.sendEncapsulated(identifier, pk, (PyRakLib.FLAG_NEED_ACK if needACK else 0) | (PyRakLib.PRIORITY_IMMEDIATE if immediate else PyRakLib.PRIORITY_NORMAL))
+                return pk.identifierACK
+            else:
+                self.server.batchPackets([player], [packet], True, immediate)
+                return None
+        return None
