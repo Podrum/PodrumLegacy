@@ -24,8 +24,9 @@ from pyraklib.protocol.DataPacket import DataPacket
 from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 from pyraklib.server.PyRakLibServer import PyRakLibServer
 from pyraklib.server.ServerHandler import ServerHandler
+from pyraklib.server.ServerInstance import ServerInstance
 
-class NetworkInterface:
+class NetworkInterface(ServerInstance):
     server = None
     players = []
     identifers = None
