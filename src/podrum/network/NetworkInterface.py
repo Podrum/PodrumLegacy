@@ -13,6 +13,7 @@
 from copy import deepcopy
 import pickle
 
+from podrum.network.CachedEncapsulatedPacket import CachedEncapsulatedPacket
 from podrum.network.PacketPool import PacketPool
 from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.utils.Binary import Binary
