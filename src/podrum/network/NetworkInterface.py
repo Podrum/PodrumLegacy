@@ -14,6 +14,7 @@ from copy import deepcopy
 import pickle
 
 from podrum.network.PacketPool import PacketPool
+from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
 
@@ -123,3 +124,15 @@ class NetworkInterface:
     def putPacket(self, player: Player, packet: DataPacket, needACK: bool = False, immediate: bool = True):
         if Utils.searchList(self.identifers, player) == True:
             identifier = self.identifiers[Utils.getKeyInListFromItem(self.identifers, player)]
+            if not packet.isEncoded:
+                packet.encode()
+            if isinstance(packet, BatchPacket):
+                if needACK:
+                    pk = EncapsulatedPacket()
+                    pk.identifierACK = self.identifiersACK[identifier]
+                    self.identifiersACK[identifier] += 1
+                    pk.buffer = packet.buffer
+                    pk.reliability = 3
+                    pk.orderChannel = 0
+                else:
+                    pass
