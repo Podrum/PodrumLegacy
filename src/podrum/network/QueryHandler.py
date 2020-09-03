@@ -56,4 +56,5 @@ class QueryHandler:
             reply = bytes(chr(self.HANDSHAKE), "utf-8")
             reply += Binary.writeInt(sessionID)
             reply += self.getTokenBytes(self.token, bytes(address, "utf-8")) + b"\x00"
+            self.server.sendPacket(address, port, reply)
             
