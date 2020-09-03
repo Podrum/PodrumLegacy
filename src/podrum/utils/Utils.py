@@ -73,6 +73,19 @@ class Utils:
     def binToHex(b):
         return binascii.hexlify(b)
     
+    def bytesToInt(bytes):
+        result = 0
+        for b in bytes:
+            result = result * 256 + int(b)
+        return result
+    
+    def intToBytes(value, length):
+        result = []
+        for i in range(0, length):
+            result.append(value >> (i * 8) & 0xff)
+        result.reverse()
+        return result
+    
     def HMACSHA256(data, secret):
         encodedData = data.encode()
         byteSecret = secret.encode()
