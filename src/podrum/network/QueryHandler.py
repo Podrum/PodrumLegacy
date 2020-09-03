@@ -10,6 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+import hashlib
 import os
 
 from podrum import Server
@@ -39,3 +40,7 @@ class QueryHandler:
     def regenerateToken(self):
         self.lastToken = self.token
         self.token = os.urandom(16)
+        
+    def getTokenString(self, token: bytes, salt: bytes):
+        hash = hashlib.new("sha512").update(salt + bytes(":", "utf-8") + token).digest()
+        return Binary.readInt(Utils.substr(hash, 7, 4))
