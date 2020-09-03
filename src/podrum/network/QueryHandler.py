@@ -43,15 +43,15 @@ class QueryHandler:
         
     def getTokenBytes(self, token: bytes, salt: bytes):
         hash = hashlib.new("sha512").update(salt + bytes(":", "utf-8") + token).digest()
-        return Binary.readInt(Utils.substr(hash, 7, 4))
+        return Binary.readInt(hash[7:7 + 4])
     
     def handle(self, address: str, port: int, packet):
         offset = 2
         packetType = packet[offset]
         offset += 1
-        sessionID = Binary.readInt(Utils.substr(packet, offset, 4))
+        sessionID = Binary.readInt(packet[offset:offset + 4])
         offset += 4
-        payload = Utils.substr(packet, offset)
+        payload = packet[offset:]
         if packetType == HANDSHAKE:
             reply = bytes(chr(self.HANDSHAKE), "utf-8")
             reply += Binary.writeInt(sessionID)
