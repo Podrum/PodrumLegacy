@@ -27,6 +27,7 @@ class Server:
     path = None
     withWizard = None
     operators = None
+    addr = "0.0.0.0"
     port = 19132
     podrumLogo = """
             ____           _                      
@@ -46,10 +47,9 @@ class Server:
             ServerFS.checkAllFiles(path)
         else:
             Wizard.skipWizard(path, True)
-        port = self.port
         print(str(self.podrumLogo))
         Wizard.isInWizard = False
-        Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(port)))
+        Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
         Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
         Logger.log('info', str(Base.get("license")))
         PluginLoader.loadAll()
@@ -69,7 +69,14 @@ class Server:
                 
     def getLogger(self):
         return Logger()
+    
+    def getAddress(self):
+        return self.addr
+    
+    def getPort(self):
+        return self.port
 
+    @staticmethod
     def command(string, fromConsole):
         if string.lower() == 'stop':
             Logger.log('info', 'Stopping server...')
