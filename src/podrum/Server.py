@@ -66,6 +66,9 @@ class Server:
             ticking = True
             while ticking:
                 time.sleep(self.tickrate)
+                
+    def getLogger(self):
+        return Logger()
 
     def command(string, fromConsole):
         if string.lower() == 'stop':
