@@ -16,17 +16,18 @@ import pickle
 from podrum.network.CachedEncapsulatedPacket import CachedEncapsulatedPacket
 from podrum.network.PacketPool import PacketPool
 from podrum.network.protocol.BatchPacket import BatchPacket
+from podrum.network.protocol.DataPacket import DataPacket
+from podrum.network.SourceInterface import SourceInterface
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
 
 from pyraklib.PyRakLib import PyRakLib
-from pyraklib.protocol.DataPacket import DataPacket
 from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
 from pyraklib.server.PyRakLibServer import PyRakLibServer
 from pyraklib.server.ServerHandler import ServerHandler
 from pyraklib.server.ServerInstance import ServerInstance
 
-class NetworkInterface(ServerInstance):
+class NetworkInterface(SourceInterface, ServerInstance):
     server = None
     players = []
     identifers = None
