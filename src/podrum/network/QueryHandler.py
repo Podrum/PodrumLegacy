@@ -26,3 +26,12 @@ class QueryHandler:
     
     def __init__(self):
         self.server = Server.Server()
+        eelf.server.getLogger().log("info", "Starting GS4 status listener")
+        ip = self.server.getIp()
+        addr = ip if ip != "" else "0.0.0.0"
+        port = self.server.getPort()
+        self.server.getLogger().log("info", f"Setting query port to {port}")
+        self.regenerateToken()
+        self.lastToken = self.token
+        self.regenerateInfo()
+        self.server.getLogger().log("info", f"Query running on {addr}:{port}")
