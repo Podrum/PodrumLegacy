@@ -41,6 +41,19 @@ class QueryHandler:
         self.lastToken = self.token
         self.token = os.urandom(16)
         
-    def getTokenString(self, token: bytes, salt: bytes):
+    def getTokenBytes(self, token: bytes, salt: bytes):
         hash = hashlib.new("sha512").update(salt + bytes(":", "utf-8") + token).digest()
         return Binary.readInt(Utils.substr(hash, 7, 4))
+    
+    def handle(self, address: str, port: int, packet):
+        offset = 2
+        packetType = packet[offset]
+        offset += 1
+        sessionID = Binary.readInt(Utils.substr(packet, offset, 4))
+        offset += 4
+        payload = Utils.substr(packet, offset)
+        if packetType == HANDSHAKE:
+            reply = bytes(chr(self.HANDSHAKE), "utf-8")
+            reply += Binary.writeInt(sessionID)
+            reply += self.getTokenBytes(self.token, bytes(address, "utf-8")) + b"\x00"
+            
