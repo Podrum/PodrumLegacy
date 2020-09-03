@@ -10,6 +10,8 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+import os
+
 from podrum import Server
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
@@ -36,4 +38,4 @@ class QueryHandler:
         
     def regenerateToken(self):
         self.lastToken = self.token
-        self.token =
+        self.token = os.urandom(16)
