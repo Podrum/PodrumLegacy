@@ -32,5 +32,7 @@ class QueryHandler:
         self.server.getLogger().log("info", f"Setting query port to {port}")
         self.regenerateToken()
         self.lastToken = self.token
-        self.regenerateInfo()
         self.server.getLogger().log("info", f"Query running on {addr}:{port}")
+        
+    def regenerateToken(self):
+        pass
