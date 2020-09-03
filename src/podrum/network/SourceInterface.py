@@ -11,7 +11,7 @@
 """
 
 from podrum.Player import Player
-from podrum.protocol.DataPacket import DataPacket
+from podrum.network.protocol.DataPacket import DataPacket
 
 class SourceInterface:
     def putPacket(self, player: Player, packet: DataPacket, needACK = False, immediate = True): pass
