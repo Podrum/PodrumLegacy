@@ -57,17 +57,13 @@ class Utils:
      
     @staticmethod
     def hex2bin(hexdec):
-        if hexdec == 'x':
-            return False
-        if hexdec == '':
-            return False
-        dec = int(hexdec, 16)
-        b = binascii.unhexlify('%x' % dec)
-        return b
+        hexdec = int(hexdec, 16)
+        dec = binascii.unhexlify('%x' % hexdec)
+        return dec
     
     @staticmethod
-    def binToHex(b):
-        return binascii.hexlify(b)
+    def binToHex(dec):
+        return binascii.hexlify(dec)
     
     @staticmethod
     def bytesToInt(bytes):
