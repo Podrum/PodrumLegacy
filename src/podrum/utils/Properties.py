@@ -22,8 +22,8 @@ class Properties:
         data = {}
         lines = file.readlines()
         for line in lines:
-            kv = line.split(":", 1)
-            key = kv[0]
+            kv = line.split("=", 1)
+            key = kv[0].strip()
             value = kv[1].strip()
             if value.lower() == "true" or value.lower() == "on":
                 value = True
@@ -38,7 +38,7 @@ class Properties:
         for key, value in data.items():
             if isinstance(value, bool):
                 value = "true" if value == True else "false"
-            props += f"{key}: {value}\n"
+            props += f"{key} = {value}\n"
         return props
 
     @staticmethod
