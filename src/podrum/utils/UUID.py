@@ -38,7 +38,7 @@ class UUID:
     def fromBinary(self, uuid, version = None):
         if len(uuid) != 16:
             raise Exception("Must have exactly 16 bytes")
-        return UUID(Binary.readInt(Utils.substr(uuid, 0, 4)), Binary.readInt(Utils.substr(uuid, 4, 4)), Binary.readInt(Utils.substr(uuid, 8, 4)), Binary.readInt(Utils.substr(uuid, 12, 4)), version)
+        return UUID(Binary.readInt(uuid[0:4]), Binary.readInt(uuid[4:4 + 4]), Binary.readInt(uuid[8:8 + 4]), Binary.readInt(uuid[12:12 + 4]), version)
 
     def fromString(self, uuid, version = None):
         return self.fromBinary(Utils.hex2bin(uuid.strip().replace("-", "")), version)
@@ -56,8 +56,8 @@ class UUID:
     def toString(self):
         hex = Utils.bin2hex(self.toBinary())
         if self.version != None:
-            return Utils.substr(hex, 0, 8) + "-" + Utils.substr(hex, 8, 4) + "-" + int(self.version, 16) + Utils.substr(hex, 13, 3) + "-8" + Utils.substr(hex, 17, 3) + "-" + Utils.substr(hex, 20, 12)
-        return Utils.substr(hex, 0, 8) + "-" + Utils.substr(hex, 8, 4) + "-" + Utils.substr(hex, 12, 4) + "-" + Utils.substr(hex, 16, 4) + "-" + Utils.substr(hex, 20, 12)
+            return hex[0:8] + "-" + hex[8:8 + 4] + "-" + int(self.version, 16) + hex[13:13 + 3] + "-8" + hex[17:17 + 3] + "-" + hex[20:20 + 12]
+        return hex[0:8] + "-" + hex[8:8 + 4] + "-" + hex[12:12 + 4] + "-" + hex[16:16 + 4] + "-" + hex[20:20 + 12]
     
     def getPart(self, partNumber: int):
         if partNumber < 0 or partNumber > 3:
