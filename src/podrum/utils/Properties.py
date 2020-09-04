@@ -39,7 +39,7 @@ class Properties:
             if isinstance(value, bool):
                 value = "true" if value == True else "false"
             props += f"{key} = {value}\n"
-        return props
+        return props.strip()
 
     @staticmethod
     def dump(data, file):
