@@ -21,8 +21,6 @@ class QueryHandler:
     server = None
     lastToken = None
     token = None
-    longData = None
-    timeout = None
     
     HANDSHAKE = 9
     STATISTICS = 0
