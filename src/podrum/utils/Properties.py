@@ -13,9 +13,11 @@
 from io import StringIO
 
 class Properties:
+    @staticmethod
     def loads(data):
         return Properties.load(StringIO(data))
 
+    @staticmethod
     def load(file):
         data = {}
         lines = file.readlines()
@@ -30,6 +32,7 @@ class Properties:
             data.update({key: value})
         return data
 
+    @staticmethod
     def dumps(data):
         props = ""
         for key, value in data.items():
@@ -38,5 +41,6 @@ class Properties:
             props += f"{key}: {value}\n"
         return props
 
+    @staticmethod
     def dump(data, file):
         file.write(Properties.dumps(data))
