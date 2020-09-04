@@ -17,6 +17,27 @@ import yaml
 import pickle
 
 from podrum import Server
+from podrum.utils.Properties import Properties
 
 class Config:
-    pass
+    DETECT = -1
+    JSON = 0
+    YAML = 1
+    PROPERTIES = 2
+    
+    formats = {
+        "json": JSON,
+        "yml": YAML,
+        "properties", PROPERTIES
+    }
+    
+    server = None
+    config = {}
+    
+    def __init__(self):
+        self.server = Server.Server()
+        
+    def load(self, file, format = DETECT):
+        if os.path.isfile(file):
+            if format == self,DETECT:
+                pass
