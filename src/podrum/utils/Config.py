@@ -37,14 +37,17 @@ class Config:
     def __init__(self):
         self.server = Server.Server()
         
-    def load(self, file, format = DETECT):
-        if os.path.isfile(file):
-            if format == self,DETECT:
+    def load(self, path, format = DETECT):
+        if os.path.isfile(path):
+            file = open(path)
+            if format == self.DETECT:
                 bname = os.path.basename(self.file)
                 extension = os.path.splitext(bname)[0]
                 try:
                     self.formats[extension]
                 except:
                     return
-            #elif
+            elif format == self.JSON:
+                pass
+                
                 
