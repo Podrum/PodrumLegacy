@@ -40,4 +40,11 @@ class Config:
     def load(self, file, format = DETECT):
         if os.path.isfile(file):
             if format == self,DETECT:
-                pass
+                bname = os.path.basename(self.file)
+                extension = os.path.splitext(bname)[0]
+                try:
+                    self.formats[extension]
+                except:
+                    return
+            #elif
+                
