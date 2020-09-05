@@ -28,7 +28,7 @@ class Config:
     formats = {
         "json": JSON,
         "yml": YAML,
-        "properties", PROPERTIES
+        "properties": PROPERTIES
     }
     
     server = None
@@ -62,4 +62,16 @@ class Config:
                 self.config = yaml.loads(content)
             elif self.formatType == self.PROPERTIES:
                 self.config = Properties.loads(content)
+                
+    def save(self):
+        file = open(self.filePath, "w")
+        try:
+            if self.formatType == self.JSON:
+                json.dump(self.config, file)
+            elif self.formatType == self.YAML:
+                yaml.dump(self.config, file)
+            elif self.formatType == self.PROPERTIES:
+                Properties.dump(self.config, file)
+        except:
+            self.server.getLogger().log("error", f"Could not save the config: {self.filePath}")
                 
