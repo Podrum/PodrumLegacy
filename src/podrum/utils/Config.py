@@ -32,13 +32,17 @@ class Config:
     }
     
     server = None
-    config = {}
+    config = None
     formatType = None
     
     def __init__(self):
         self.server = Server.Server()
         
+    def fixYamlIndexes(self, data):
+        return re.sub(r"#^( *)(y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF)( *)\:#m", "\1\"\2\"\3:", data)
+        
     def load(self, path, formatType = DETECT):
+        self.config = {}
         self.formatType = formatType
         if os.path.isfile(path):
             file = open(path).read()
