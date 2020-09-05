@@ -33,21 +33,27 @@ class Config:
     
     server = None
     config = {}
+    formatType = None
     
     def __init__(self):
         self.server = Server.Server()
         
-    def load(self, path, format = DETECT):
+    def load(self, path, formatType = DETECT):
+        self.formatType = formatType
         if os.path.isfile(path):
-            file = open(path)
-            if format == self.DETECT:
+            file = open(path).read()
+            if self.formatType == self.DETECT:
                 bname = os.path.basename(self.file)
                 extension = os.path.splitext(bname)[0]
                 try:
-                    self.formats[extension]
+                    self.formatType = self.formats[extension]
                 except:
                     return
-            elif format == self.JSON:
-                pass
-                
+            if self.formatType == self.JSON:
+                self.config = json.loads(content)
+            elif self.formatType == self.YAML:
+                self.fixYamlIndexes(content)
+                self.config = yaml.loads(content)
+            elif self.formatType == self.PROPERTIES:
+                self.config = Properties.loads(content)
                 
