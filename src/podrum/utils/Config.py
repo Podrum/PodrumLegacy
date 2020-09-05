@@ -34,6 +34,7 @@ class Config:
     server = None
     config = None
     formatType = None
+    filePath = None
     
     def __init__(self):
         self.server = Server.Server()
@@ -41,13 +42,14 @@ class Config:
     def fixYamlIndexes(self, data):
         return re.sub(r"#^( *)(y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF)( *)\:#m", "\1\"\2\"\3:", data)
         
-    def load(self, path, formatType = DETECT):
+    def load(self, filePath, formatType = DETECT):
         self.config = {}
         self.formatType = formatType
-        if os.path.isfile(path):
-            file = open(path).read()
+        self.filePath = filePath
+        if os.path.isfile(filePath):
+            file = open(filePath).read()
             if self.formatType == self.DETECT:
-                bname = os.path.basename(self.file)
+                bname = os.path.basename(self.filePath)
                 extension = os.path.splitext(bname)[0]
                 try:
                     self.formatType = self.formats[extension]
