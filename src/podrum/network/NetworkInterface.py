@@ -98,7 +98,7 @@ class NetworkInterface(SourceInterface, ServerInstance):
             self.players[identifier].handleDataPacket(pk)
             
     def handleRaw(self, address: str, port: int, payload):
-        self.server.handlePacket(address, port, payload)
+        self.server.handlePacket(self, address, port, payload)
         
     def putRaw(self, address, port, payload):
         self.interface.sendRaw(address, port, payload)
