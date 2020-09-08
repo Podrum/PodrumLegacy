@@ -117,7 +117,7 @@ class SessionManager:
 
             if len(self.block) > 0:
                 now = microtime(True)
-                for address in self.block.keys():
+                for address in list(self.block.keys()):
                     timeout = self.block.get(address)
                     if timeout < now or timeout == now:
                         del self.block[address]
