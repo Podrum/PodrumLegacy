@@ -16,6 +16,7 @@ import os
 from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
 from podrum.network.QueryHandler import QueryHandler
+from podrum.network.NetworkInterface import NetworkInterface
 from podrum.Player import Player
 from podrum.plugin.PluginLoader import PluginLoader
 from podrum.utils.Logger import Logger
@@ -46,7 +47,7 @@ class Server:
         self.path = path
         self.withWizard = withWizard
         self.tickrate = 20/1000
-        self.queryHandler = QueryHandler()
+        self.queryHandler = QueryHandler(self)
         if(withWizard):
             ServerFS.checkAllFiles(path)
         else:
@@ -69,6 +70,8 @@ class Server:
                 cmd = None
             ticking = True
             while ticking:
+                interface = NetworkInterface(self)
+                interface.process()
                 time.sleep(self.tickrate)
                 
     def getLogger(self):
@@ -84,7 +87,7 @@ class Server:
         self.players.insert(identifier, player)
         
     def handlePacket(self, interface, address, port, payload):
-        if len(payload) > 2 and payload[0:2] == b"\xfe\xfd" and isinstance(self.queryHandler, QueryHandler()):
+        if len(payload) > 2 and payload[0:2] == b"\xfe\xfd" and isinstance(self.queryHandler, QueryHandler(self)):
             self.queryHandler.handle(interface, address, port, payload)
 
     @staticmethod
