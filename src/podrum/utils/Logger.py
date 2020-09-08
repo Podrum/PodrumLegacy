@@ -17,6 +17,7 @@ TextFormat = TextFormat()
 
 class Logger:
 
+    @staticmethod
     def log(type_, content):
         time = datetime.now()
         if type_ == 'info':
