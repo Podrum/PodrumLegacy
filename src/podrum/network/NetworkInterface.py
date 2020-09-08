@@ -45,17 +45,11 @@ class NetworkInterface(SourceInterface, ServerInstance):
         server = PyRakLibServer(port = self.server.getPort(), interface = self.server.getAddress() if len(self.server.getAddress().split(".")) == 4 else "0.0.0.0")
         self.interface = ServerHandler(server, self)
         self.setName("Podrum powered server");
-        loop = asyncio.get_event_loop()
-        loop.call_later(5, stop)
-        self.tickTask = loop.create_task(doTick())
-        try:
-            loop.run_until_complete(self.tickTask)
-        except asyncio.CancelledError:
-            pass 
+        asyncio.run(self.doTick())
         
     async def doTick(self):
         while True:
-            self.interface.sendTick()
+            self.interface.server.pushMainToThreadPacket(chr(PyRakLib.PACKET_BLOCK_ADDRESS))
             await asyncio.sleep(1)
             
     def process(self):
