@@ -19,6 +19,7 @@ from podrum.network.PacketPool import PacketPool
 from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.SourceInterface import SourceInterface
+from podrum.Player import Player
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
 
