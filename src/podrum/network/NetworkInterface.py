@@ -12,6 +12,7 @@
 
 from copy import deepcopy
 import pickle
+import asyncio
 
 from podrum.network.CachedEncapsulatedPacket import CachedEncapsulatedPacket
 from podrum.network.PacketPool import PacketPool
@@ -40,7 +41,7 @@ class NetworkInterface(SourceInterface, ServerInstance):
     def __init__(self, server):
         self.server = server
         self.identifers = []
-        server = PyRakLibServer(port = 19132, interface = "0.0.0.0")
+        server = PyRakLibServer(port = self.server.getPort(), interface = self.server.getAddress() if len(self.server.getAddress().spit(".")) == 4 else "0.0.0.0")
         self.interface = ServerHandler(server, self)
         self.setName("Podrum powered server");
         loop = asyncio.get_event_loop()
