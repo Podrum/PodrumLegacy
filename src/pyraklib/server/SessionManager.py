@@ -231,7 +231,6 @@ class SessionManager:
                 offset += length
                 value = packet[offset:]
                 if name == "name":
-                    print(name+" "+value)
                     self.name = value
                 elif name == "portChecking":
                     self.portChecking = bool(value)
