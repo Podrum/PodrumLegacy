@@ -59,6 +59,7 @@ class Server:
         Logger.log('info', str(Base.get("license")))
         PluginLoader.loadAll()
         doneTime = Utils.microtime(True)
+        #NetworkInterface(self).process()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
         if (isTravisBuild):
@@ -70,8 +71,6 @@ class Server:
                 cmd = None
             ticking = True
             while ticking:
-                interface = NetworkInterface(self)
-                interface.process()
                 time.sleep(self.tickrate)
                 
     def getLogger(self):
