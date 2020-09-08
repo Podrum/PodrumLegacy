@@ -46,11 +46,9 @@ class UDPServerSocket:
     def readPacket(self):
         try:
             data = self.socket.recvfrom(65535)
-            print("Packet IN: "+str(data))
             return data
         except Exception as e:
             pass
 
     def writePacket(self, buffer, dest, port):
-        print("Packet OUT: "+str(buffer))
         return self.socket.sendto(buffer, (dest, port))
