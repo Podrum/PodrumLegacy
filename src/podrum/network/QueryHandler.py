@@ -54,7 +54,7 @@ class QueryHandler:
             reply = bytes(chr(self.HANDSHAKE), "utf-8")
             reply += Binary.writeInt(sessionID)
             reply += self.getTokenBytes(self.token, bytes(address, "utf-8")) + b"\x00"
-            interface.sendRawPacket(address, port, reply)
+            interface.putRaw(address, port, reply)
         elif packetType == self.STATISTICS:
             token = Binary.readInt(payload[0:4])
             t1 = self.getTokenBytes(self.token, bytes(address, "utf-8"))
@@ -68,7 +68,7 @@ class QueryHandler:
                 reply += self.server.getQueryInformation().getLongQuery()
             else:
                 reply += self.server.getQueryInformation().getShortQuery()
-            interface.sendRawPacket(address, port, reply)
+            interface.putRaw(address, port, reply)
         else:
             self.server.getLogger("debug", f"Unhandled packet from {address}:{str(port)}")
             
