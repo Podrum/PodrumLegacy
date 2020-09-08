@@ -65,9 +65,11 @@ class QueryHandler:
             reply = bytes(chr(self.STATISTICS), "utf-8")
             reply += Binary.writeInt(sessionID)
             if len(payload) == 8:
-                reply += self.server.getQueryInformation().getLongQuery()
+                #reply += self.server.getQueryInformation().getLongQuery()
+                pass
             else:
-                reply += self.server.getQueryInformation().getShortQuery()
+                #reply += self.server.getQueryInformation().getShortQuery()
+                pass
             interface.putRaw(address, port, reply)
         else:
             self.server.getLogger("debug", f"Unhandled packet from {address}:{str(port)}")
