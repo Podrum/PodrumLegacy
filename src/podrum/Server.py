@@ -47,7 +47,6 @@ class Server:
         self.path = path
         self.withWizard = withWizard
         self.tickrate = 20/1000
-        self.queryHandler = QueryHandler(self)
         if(withWizard):
             ServerFS.checkAllFiles(path)
         else:
@@ -59,7 +58,8 @@ class Server:
         Logger.log('info', str(Base.get("license")))
         PluginLoader.loadAll()
         doneTime = Utils.microtime(True)
-        #NetworkInterface(self).process()
+        self.queryHandler = QueryHandler(self)
+        NetworkInterface(self).process()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
         if (isTravisBuild):
