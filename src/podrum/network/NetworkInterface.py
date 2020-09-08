@@ -152,6 +152,6 @@ class NetworkInterface(SourceInterface, ServerInstance):
                 self.interface.sendEncapsulated(identifier, pk, (PyRakLib.FLAG_NEED_ACK if needACK else 0) | (PyRakLib.PRIORITY_IMMEDIATE if immediate else PyRakLib.PRIORITY_NORMAL))
                 return pk.identifierACK
             else:
-                self.server.batchPackets([player], [packet], True, immediate)
+                #self.server.batchPackets([player], [packet], True, immediate)
                 return None
         return None
