@@ -43,16 +43,33 @@ class QueryHandler:
         hash = hashlib.new("sha512").update(salt + bytes(":", "utf-8") + token).digest()
         return Binary.readInt(hash[7:7 + 4])
     
-    def handle(self, address: str, port: int, packet):
+    def handle(self, interface, address: str, port: int, packet):
         offset = 2
         packetType = packet[offset]
         offset += 1
         sessionID = Binary.readInt(packet[offset:offset + 4])
         offset += 4
         payload = packet[offset:]
-        if packetType == HANDSHAKE:
+        if packetType == self.HANDSHAKE:
             reply = bytes(chr(self.HANDSHAKE), "utf-8")
             reply += Binary.writeInt(sessionID)
             reply += self.getTokenBytes(self.token, bytes(address, "utf-8")) + b"\x00"
-            self.server.sendPacket(address, port, reply)
+            interface.sendRawPacket(address, port, reply)
+        elif packetType == self.STATISTICS:
+            token = Binary.readInt(payload[0:4])
+            t1 = self.getTokenBytes(self.token, bytes(address, "utf-8"))
+            t2 = self.getTokenBytes(self.lastToken, bytes(address, "utf-8"))
+            if token != t1 and token != t2:
+                self.server.getLogger("debug", f"Bad token from {address}:{str(port)}")
+                return
+            reply = bytes(chr(self.STATISTICS), "utf-8")
+            reply += Binary.writeInt(sessionID)
+            if len(payload) == 8:
+                reply += self.server.getQueryInformation().getLongQuery()
+            else:
+                reply += self.server.getQueryInformation().getShortQuery()
+            interface.sendRawPacket(address, port, reply)
+        else:
+            self.server.getLogger("debug", f"Unhandled packet from {address}:{str(port)}")
+            
             
