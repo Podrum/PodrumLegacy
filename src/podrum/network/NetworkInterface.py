@@ -45,12 +45,6 @@ class NetworkInterface(SourceInterface, ServerInstance):
         server = PyRakLibServer(port = self.server.getPort(), interface = self.server.getAddress() if len(self.server.getAddress().split(".")) == 4 else "0.0.0.0")
         self.interface = ServerHandler(server, self)
         self.setName("Podrum powered server");
-        asyncio.run(self.doTick())
-        
-    async def doTick(self):
-        while True:
-            self.interface.server.pushMainToThreadPacket(chr(PyRakLib.PACKET_BLOCK_ADDRESS))
-            await asyncio.sleep(1)
             
     def process(self):
         return self.interface.handlePacket()
