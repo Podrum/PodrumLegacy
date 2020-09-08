@@ -42,7 +42,7 @@ class NetworkInterface(SourceInterface, ServerInstance):
     def __init__(self, server):
         self.server = server
         self.identifers = []
-        server = PyRakLibServer(port = self.server.getPort(), interface = self.server.getAddress() if len(self.server.getAddress().spit(".")) == 4 else "0.0.0.0")
+        server = PyRakLibServer(port = self.server.getPort(), interface = self.server.getAddress() if len(self.server.getAddress().split(".")) == 4 else "0.0.0.0")
         self.interface = ServerHandler(server, self)
         self.setName("Podrum powered server");
         loop = asyncio.get_event_loop()

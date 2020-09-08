@@ -13,7 +13,6 @@
 import hashlib
 import os
 
-from podrum import Server
 from podrum.utils.Binary import Binary
 from podrum.utils.Utils import Utils
 
@@ -25,10 +24,10 @@ class QueryHandler:
     HANDSHAKE = 9
     STATISTICS = 0
     
-    def __init__(self):
-        self.server = Server.Server()
+    def __init__(self, server):
+        self.server = server
         self.server.getLogger().log("info", "Starting GS4 status listener")
-        addr = self.server.getAddress() if len(self.server.getAddress().spit(".")) == 4 else "0.0.0.0"
+        addr = self.server.getAddress() if len(self.server.getAddress().split(".")) == 4 else "0.0.0.0"
         port = self.server.getPort()
         self.server.getLogger().log("info", f"Setting query port to {port}")
         self.regenerateToken()
