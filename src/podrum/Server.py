@@ -33,6 +33,7 @@ class Server:
     port = 19132
     players = []
     queryHandler = None
+    mainInterface = None
     podrumLogo = """
             ____           _                      
            |  _ \ ___   __| |_ __ _   _ _ __ ___  
@@ -59,7 +60,8 @@ class Server:
         PluginLoader.loadAll()
         doneTime = Utils.microtime(True)
         self.queryHandler = QueryHandler(self)
-        NetworkInterface(self).process()
+        self.mainInterface = NetworkInterface(self)
+        self.mainInterface.process()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
         if (isTravisBuild):
