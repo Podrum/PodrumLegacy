@@ -101,7 +101,7 @@ class NetworkInterface(SourceInterface, ServerInstance):
             self.players[identifier].handleACK(identifierACK)
         
     def setName(self, name: str):
-        self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;0;0;PodrumPoweredServer;0")
+        self.interface.sendOption("name", f"MCPE;{name};407;1.16.0;0;500;0;PodrumPoweredServer;0")
 
     def handleOption(self, name: str, value: bytes):
         if name == "bandwidth":
@@ -134,9 +134,9 @@ class NetworkInterface(SourceInterface, ServerInstance):
                     except:
                         packet._encapsulatedPacket = CachedEncapsulatedPacket()
                         packet._encapsulatedPacket.identifierACK = None
-                        paclet._encapsulatedPacket.buffer = packet.buffer
-                        paclet._encapsulatedPacket.reliability = 3
-                        paclet._encapsulatedPacket.orderChannel = 0
+                        packet._encapsulatedPacket.buffer = packet.buffer
+                        packet._encapsulatedPacket.reliability = 3
+                        packet._encapsulatedPacket.orderChannel = 0
                     pk = packet._encapsulatedPacket
                 self.interface.sendEncapsulated(identifier, pk, (PyRakLib.FLAG_NEED_ACK if needACK else 0) | (PyRakLib.PRIORITY_IMMEDIATE if immediate else PyRakLib.PRIORITY_NORMAL))
                 return pk.identifierACK
