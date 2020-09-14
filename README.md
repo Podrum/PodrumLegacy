@@ -29,5 +29,5 @@ start.bat
 ```
 
 # TODO List:
-- [x] MOTD
+- [ ] MOTD
 - [ ] Commands (currently doing)
