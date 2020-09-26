@@ -13,7 +13,7 @@
 from podrum.math.AxisAlignedBB import AxisAlignedBB
 from podrum.math.Vector3 import Vector3
 
-class RayTraceResult:
+class RaycastResult:
     bb = None
     hitFace = None
     hitVector = None

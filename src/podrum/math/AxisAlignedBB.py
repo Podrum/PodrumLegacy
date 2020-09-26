@@ -12,7 +12,7 @@
 
 import sys
 from podrum.math.Facing import Facing
-from podrum.math.RayTraceResult import RayTraceResult
+from podrum.math.RaycastResult import RaycastResult
 from podrum.math.Vector3 import Vector3
 
 class AxisAlignedBB:
@@ -311,7 +311,7 @@ class AxisAlignedBB:
         elif vector == v6:
             f = Facing.SOUTH
 
-        return RayTraceResult(self, f, vector)
+        return RaycastResult(self, f, vector)
 
     def __toString(self):
         return "AxisAlignedBB({self.minX}, {self.minY}, {self.minZ}, {self.maxX}, {self.maxY}, {self.maxZ})"
