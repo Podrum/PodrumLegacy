@@ -10,6 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from podrum.Player import Player
 from rakpy.server.Server import Server
 from rakpy.server.ServerInterface import ServerInterface
 from rakpy.utils.InternetAddress import InternetAddress
@@ -28,6 +29,7 @@ class NetworkInterface(ServerInterface):
     @staticmethod
     def onOpenConnection(connection):
         address = connection.address
+        player = Player(connection, connection.address, self)
         self.players[f"{address.getAddress()}:{address.getPort()}"] = player
  
     def getServerName(self):
