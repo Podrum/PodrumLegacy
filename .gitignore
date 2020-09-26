@@ -16,3 +16,6 @@ server.json
 
 # Just in case
 *.exe
+
+# Tests files
+start.cmdb

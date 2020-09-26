@@ -53,7 +53,7 @@ class ServerFS:
             langDir = os.path.dirname(os.path.abspath(__file__)) + '/../lang'
         else:
             pyzDir = zipfile.ZipFile(os.path.dirname(os.path.abspath(__file__)) + '/..')
-            langDir = pyzFile.open('lang')
+            langDir = pyzFile.open('lang/languages')
         return langDir
 
 
