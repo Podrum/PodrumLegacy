@@ -27,16 +27,15 @@ class Player:
     SPECTATOR = 3
     VIEW = SPECTATOR
 
-    identifier = None
+    connection = None
     server = None
     logger = None
     address = None
-    port = None
     name = None
     username = ""
     displayName = ""
     locale = None
-    clientID = None
+    clientId = None
     uuid = None
     xuid = None
     skin = None
@@ -57,11 +56,10 @@ class Player:
     inAirTicks = 0
     
 
-    def __init__(self, identifier, address, port, clientID):
-        self.identifier = identifier
+    def __init__(self, connection, address, server):
+        self.connection = connection
         self.address = address
-        self.port = port
-        self.clientID = clientID
+        self.server = server
         
     def sendDataPacket(self, packet, needACK = False, immediate = False):
         BatchPacket.addPacket(packet)
@@ -83,7 +81,7 @@ class Player:
         elif packet.NID == ProtocolInfo.LOGIN_PACKET:
             self.name = packet.username
             self.locale = packet.locale
-            self.clientID = packet.clientID
+            self.clientId = packet.clientId
             self.uuid = packet.identityPublicKey
             self.xuid = packet.xuid
             self.sendPlayStatus(PacketPool.PlayStatusPacket.LOGIN_SUCCESS)
