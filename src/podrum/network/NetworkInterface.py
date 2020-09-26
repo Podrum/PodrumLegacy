@@ -41,7 +41,8 @@ class NetworkInterface(ServerInterface):
         pk = BatchPacket()
         pk.buffer = packet.buffer
         pk.decode()
-        
+        for buf in pk.getPackets():
+            pass
  
     def getServerName(self):
         serverName = MinecraftServerName()
