@@ -11,11 +11,11 @@ class OpenConnectionReply1(OfflinePacket):
     def encodePayload(self):
         self.putMagic()
         self.putLong(self.serverId)
-        self.putBool(self.useSecure)
+        self.putBool(self.useSecurity)
         self.putShort(self.mtu)
         
     def decodePayload(self):
         self.magic = self.getMagic()
         self.serverId = self.getLong()
-        self.useSecure = self.getBool()
+        self.useSecurity = self.getBool()
         self.mtu = self.getShort()
