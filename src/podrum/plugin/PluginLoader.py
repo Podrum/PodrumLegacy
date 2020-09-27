@@ -30,7 +30,10 @@ class PluginLoader:
     version = None
     apiVersion = None
     main = None
-    pluginsDir = Plugin.getPluginsDir()
+    pluginsDir = None
+
+    def __init__(self):
+        self.pluginsDir = Plugin().getPluginsDir()
 
     def setPluginValues(self, plugin):
         self.name = Plugin.getName(plugin)

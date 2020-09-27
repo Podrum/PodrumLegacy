@@ -15,7 +15,6 @@ import os
 
 from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
-from podrum.network.QueryHandler import QueryHandler
 from podrum.network.NetworkInterface import NetworkInterface
 from podrum.Player import Player
 from podrum.plugin.PluginLoader import PluginLoader
@@ -25,14 +24,13 @@ from podrum.utils.Utils import Utils
 from podrum.wizard.Wizard import Wizard
 
 class Server:
-
+    pluginLoader = PluginLoader()
     path = None
     withWizard = None
     operators = None
     addr = "0.0.0.0"
     port = 19132
     players = []
-    queryHandler = None
     mainInterface = None
     podrumLogo = """
             ____           _                      
@@ -57,11 +55,9 @@ class Server:
         Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
         Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
         Logger.log('info', str(Base.get("license")))
-        PluginLoader.loadAll()
+        self.pluginLoader.loadAll()
         doneTime = Utils.microtime(True)
-        self.queryHandler = QueryHandler(self)
-        self.mainInterface = NetworkInterface(self)
-        self.mainInterface.process()
+        self.mainInterface = NetworkInterface()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
         Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
         if (isTravisBuild):
@@ -84,18 +80,11 @@ class Server:
     def getPort(self):
         return self.port
     
-    def addPlayer(self, identifier, player):
-        self.players.insert(identifier, player)
-        
-    def handlePacket(self, interface, address, port, payload):
-        if len(payload) > 2 and payload[0:2] == b"\xfe\xfd" and isinstance(self.queryHandler, QueryHandler(self)):
-            self.queryHandler.handle(interface, address, port, payload)
-
     @staticmethod
     def command(string, fromConsole):
         if string.lower() == 'stop':
             Logger.log('info', 'Stopping server...')
-            PluginLoader.unloadAll()
+            Server.pluginLoader.unloadAll()
             Logger.log('info', 'Server stopped.')
             Utils.killServer()
         elif string.lower() == '':
@@ -103,7 +92,7 @@ class Server:
         elif string.lower() == 'help':
             Logger.log('info', '/stop: Stops the server')
         elif string.lower() == 'reload':
-            PluginLoader.reloadAll()
+            Server.pluginLoader.reloadAll()
             Logger.log('info', 'Reload successful!')
         elif string.lower() == 'plugins' or string.lower() == 'pl':
             pluginsString = ""

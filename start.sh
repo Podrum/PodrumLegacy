@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 DIR="$(cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 cd "$DIR"
 
