@@ -78,14 +78,14 @@ class Server(Thread):
         packet.mtu = decodedPacket.mtu
         packet.clientAddress = address
         packet.encode()
-        token = f"{address.getAddress}:{address.getPort}"
+        token = str(address.getAddress()) + ":" str(address.getPort())
         connection = Connection(self, decodedPacket.mtu, address)
         self.connections[token] = connection
         return packet.buffer
         
     def handle(self, data, address):
         header = data[0]
-        token = f"{address.getAddress}:{address.getPort}"
+        token = str(address.getAddress()) + ":" str(address.getPort())
         if token in self.connections:
             connection = self.connections[token]
             connection.receive(data)
