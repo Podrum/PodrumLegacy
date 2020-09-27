@@ -1,9 +1,3 @@
-**Warning**
-This Software is still in early development and currently not usable!
-
-# [Podrum](https://github.com/Podrum/Podrum) | [![Build Status](https://travis-ci.org/Podrum/Podrum.svg?branch=master)](https://travis-ci.org/Podrum/Podrum)
-A server software for Minecraft bedrock edition written in Python (3.X)
-
 <p id="app-name" align="center">
 	<img width="200" height="200" src="https://cdn.discordapp.com/attachments/680861997650280483/705797584735830086/image0.png" title="Podrum" alt="podrum logo"/>
 </p>
