@@ -43,9 +43,12 @@ class BinaryStream:
         return self.buffer
        
     def get(self, length) -> bytes:
-        buffer = self.getBuffer()[self.offset:self.offset + length]
+        if length < 0:
+            self.offset = len(self.buffer) - 1
+            return ""
+        length = min(length, len(self.buffer) - self.offset)
         self.offset += length
-        return buffer
+        return self.buffer[self.offset - length:self.offset]
        
     def getRemaining(self) -> str:
         s = self.buffer[self.offset:]
@@ -181,9 +184,4 @@ class BinaryStream:
         self.put(Binary.writeVarLong(value))
       
     def feof(self):
-        try:
-            self.buffer[self.offset]
-            return True
-        except:
-            return False
-        
+        self.offset < 0 or self.offset >= len(self.buffer)

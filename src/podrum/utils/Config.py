@@ -10,11 +10,12 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import re
-import os
 import json
-import yaml
+import os
 import pickle
+import re
+import toml
+import yaml
 
 from podrum import Server
 from podrum.utils.Properties import Properties
@@ -24,11 +25,15 @@ class Config:
     JSON = 0
     YAML = 1
     PROPERTIES = 2
+    TOML = 4
+    INI = 5
     
     formats = {
         "json": JSON,
         "yml": YAML,
-        "properties": PROPERTIES
+        "properties": PROPERTIES,
+        "toml": TOML,
+        "ini": INI
     }
     
     server = None
@@ -62,6 +67,10 @@ class Config:
                 self.config = yaml.loads(content)
             elif self.formatType == self.PROPERTIES:
                 self.config = Properties.loads(content)
+            elif self.formatType == self.TOML:
+                self.config = toml.loads(content)
+            elif self.formatType == self.INI:
+                self.config = toml.loads(content)
                 
     def save(self):
         file = open(self.filePath, "w")
@@ -72,6 +81,10 @@ class Config:
                 yaml.dump(self.config, file)
             elif self.formatType == self.PROPERTIES:
                 Properties.dump(self.config, file)
+            elif self.formatType == self.TOML:
+                toml.dump(self.config, file)
+            elif self.formatType == self.INI:
+                toml.dump(self.config, file)
         except:
             self.server.getLogger().log("error", f"Could not save the config: {self.filePath}")
                 
