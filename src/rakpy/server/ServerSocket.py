@@ -18,12 +18,12 @@ class ServerSocket:
        
     def receiveBuffer(self):
         data = self.socket.recvfrom(65535)
-        #print(f"IN -> {data}")
+        print(f"IN -> {data}")
         return data
           
     def sendBuffer(self, buffer, address):
         data = self.socket.sendto(buffer, address)
-        #print(f"OUT -> {data}")
+        print(f"OUT -> {data}")
         return data
       
     def closeSocket(self):

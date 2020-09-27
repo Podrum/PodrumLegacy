@@ -47,7 +47,6 @@ class Server(Thread):
         packet.serverId = self.id
         packet.serverName = self.name
         packet.encode()
-        print("UNCONNECTED PING")
         return packet.buffer
     
     def handleOpenConnectionRequest1(self, data):
@@ -61,13 +60,11 @@ class Server(Thread):
             packet.protocol = self.protocol
             packet.serverId = self.id
             packet.encode()
-            print("INCOMPATIBLE PROTOCOL")
             return packet.buffer
         packet = OpenConnectionReply1()
         packet.serverId = self.id
         packet.mtu = decodedPacket.mtu
         packet.encode()
-        print("CONNECTION REQUEST 1")
         return packet.buffer
     
     def handleOpenConnectionRequest2(self, data, address):
@@ -84,7 +81,6 @@ class Server(Thread):
         token = f"{address.getAddress}:{address.getPort}"
         connection = Connection(self, decodedPacket.mtu, address)
         self.connections[token] = connection
-        print("CONNECTION REQUEST 2")
         return packet.buffer
         
     def handle(self, data, address):
@@ -115,7 +111,7 @@ class Server(Thread):
                 connection.update(timeNow())
         else:
             return
-        sleep(self.raknetTickLength * 1000)
+        sleep(self.raknetTickLength)
         
     def run(self):
         while True:
@@ -123,4 +119,4 @@ class Server(Thread):
             if buffer != None:
                 data, address = buffer
                 self.handle(data, InternetAddress(address[0], address[1]))
-                #self.tick()
+                self.tick()
