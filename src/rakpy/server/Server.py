@@ -55,7 +55,7 @@ class Server(Thread):
         decodedPacket.decode()
         if not decodedPacket.isValid:
             raise Exception("Invalid offline message")
-        if decodedPacket.protocol != self.protocol:
+        if decodedPacket.protocolVersion != self.protocol:
             packet = IncompatibleProtocol()
             packet.protocol = self.protocol
             packet.serverId = self.id
@@ -119,4 +119,4 @@ class Server(Thread):
             if buffer != None:
                 data, address = buffer
                 self.handle(data, InternetAddress(address[0], address[1]))
-                self.tick()
+                #self.tick()
