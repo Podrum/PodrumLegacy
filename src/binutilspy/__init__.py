@@ -16,7 +16,7 @@ import warnings
 from urllib import request
 import json
 
-version = "3.1"
+version = "3.2"
 
 def checkForLatestVersion():
     req = request.urlopen('https://pypi.python.org/pypi/BinUtilsPY/json')

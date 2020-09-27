@@ -78,7 +78,7 @@ class BinaryStream:
     def putTriad(self, value):
         self.put(Binary.writeTriad(value))
     
-    def getLTriad():
+    def getLTriad(self):
         return Binary.readLTriad(self.get(3))
     
     def putLTriad(self, value):
