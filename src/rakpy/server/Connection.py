@@ -98,7 +98,8 @@ class Connection:
             if pk.sendTime < (timeNow() - 8):
                 self.packetToSend.append(pk)
                 del self.recoveryQueue[seq]
-        for seq in self.receivedWindow:
+        # Should look at that later
+        for seq, value in enumerate(self.receivedWindow):
             if seq < self.windowStart:
                 del self.receivedWindow[seq]
             else:
@@ -330,7 +331,7 @@ class Connection:
             self.receivePacket(pk)
     
     def sendQueue(self):
-        if len(self.sendQueue.packets) > 0:
+        if len(DataPacket.packets) > 0:
             self.sendQueue.sequenceNumber = self.sendSequenceNumber
             self.sendSequenceNumber += 1
             self.sendPacket(self.sendQueue)
@@ -340,7 +341,7 @@ class Connection:
             
     def sendPacket(self, packet):
         packet.encode()
-        self.socket.sendBuffer(packet.buffer, (self.address.getAddress(), self.address.getPort()))
+        self.server.socket.sendBuffer(packet.buffer, (self.address.getAddress(), self.address.getPort()))
 
     def close(self):
         self.addEncapsulatedToQueue(EncapsulatedPacket.fromBinary('\x00\x00\x08\x15'), self.priority[Immediate])
