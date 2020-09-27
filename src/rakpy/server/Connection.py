@@ -48,8 +48,8 @@ class Connection:
     sendSequenceNumber = 0
     messageIndex = 0
     channelIndex = []
-    needACK = []
-    splitID = 0
+    needAck = []
+    splitId = 0
     lastUpdate = None
     isActive = False
     
