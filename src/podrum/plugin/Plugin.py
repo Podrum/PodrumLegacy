@@ -16,40 +16,31 @@ import json
 import zipfile
 
 class Plugin:
-    @staticmethod
-    def getPluginsDir():
+    def getPluginsDir(self):
         return os.getcwd() + "/plugins"
 
-    @staticmethod
-    def getPlugin(plugin):
+    def getPlugin(self, plugin):
         return zipfile.ZipFile(plugin)
-
-    @staticmethod
-    def getJsonManifest(plugin):
-        data = Plugin.getPlugin(plugin).open("plugin.json").read()
+    
+    def getJsonManifest(self, plugin):
+        data = self.getPlugin(plugin).open("plugin.json").read()
         jsonData = json.loads(data)
         return jsonData
                 
-    @staticmethod
-    def getName(plugin):
-        return Plugin.getJsonManifest(plugin)["name"]
+    def getName(self, plugin):
+        return self.getJsonManifest(plugin)["name"]
 
-    @staticmethod
-    def getDescription(plugin):
-        return Plugin.getJsonManifest(plugin)["description"]
+    def getDescription(self, plugin):
+        return self.getJsonManifest(plugin)["description"]
 
-    @staticmethod
-    def getAuthor(plugin):
-        return Plugin.getJsonManifest(plugin)["author"]
+    def getAuthor(self, plugin):
+        return self.getJsonManifest(plugin)["author"]
 
-    @staticmethod
-    def getVersion(plugin):
-        return Plugin.getJsonManifest(plugin)["version"]
+    def getVersion(self, plugin):
+        return self.getJsonManifest(plugin)["version"]
 
-    @staticmethod
-    def getApiVersion(plugin):
-        return Plugin.getJsonManifest(plugin)["api-version"]
+    def getApiVersion(self, plugin):
+        return self.getJsonManifest(plugin)["api-version"]
 
-    @staticmethod
-    def getMain(plugin):
-        return Plugin.getJsonManifest(plugin)["main"]
+    def getMain(self, plugin):
+        return self.getJsonManifest(plugin)["main"]
