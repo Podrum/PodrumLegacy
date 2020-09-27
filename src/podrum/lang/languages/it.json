@@ -1,5 +1,9 @@
 {
-    "langName": "Italanio",
+    "languageInfos": {
+        "langId": "it-IT",
+        "countries": ["it", "ch"]
+    },
+    "lang:langName": "Italanio",
     "langSelectedAsBase": "Italiano selezionato come lingua di base.",
     "wizardSetup": "Vuoi seguire la configurazione? [y/N]",
     "wizardSkipped": "Saltare la procedura guidata di configurazione...",

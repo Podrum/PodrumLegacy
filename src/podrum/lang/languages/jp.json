@@ -1,5 +1,9 @@
 {
-    "langName": "日本語",
+    "languageInfos": {
+        "langId": "jp-JP",
+        "countries": ["jp"]
+    },
+    "lang:langName": "日本語",
     "langSelectedAsBase": "日本語をベース言語として選択.",
     "wizardSetup": "セットアップをフォローしますか？ [y/N]",
     "wizardSkipped": "セットアップウィザードをスキップしています...",

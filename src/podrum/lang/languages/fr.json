@@ -1,4 +1,8 @@
 {
+    "languageInfos": {
+        "langId": "fr-FR",
+        "countries": ["fr", "ch", "be"]
+    },
     "langName": "Français",
     "langSelectedAsBase": "Français sélectionné comme langue de base.",
     "wizardSetup": "Voulez-vous suivre la configuration? [y/N]",
