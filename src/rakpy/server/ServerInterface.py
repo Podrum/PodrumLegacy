@@ -1,12 +1,9 @@
 class ServerInterface:
-    @staticmethod
-    def onOpenConnection(connection):
+    def onOpenConnection(self, connection):
         pass
         
-    @staticmethod
-    def onCloseConnection(address, reason):
+    def onCloseConnection(self, address, reason):
         pass
         
-    @staticmethod
-    def onEncapsulated(packet, address):
+    def onEncapsulated(self, packet, address):
         pass
