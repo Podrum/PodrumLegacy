@@ -12,6 +12,7 @@
 
 from copy import deepcopy
 
+from binutilspy.Binary import Binary
 from podrum.network.protocol.AdventureSettingsPacket import AdventureSettingsPacket
 from podrum.network.protocol.ClientToServerHandshakePacket import ClientToServerHandshakePacket
 from podrum.network.protocol.DataPacket import DataPacket
@@ -21,7 +22,6 @@ from podrum.network.protocol.PlayStatusPacket import PlayStatusPacket
 from podrum.network.protocol.ResourcePacksInfoPacket import ResourcePacksInfoPacket
 from podrum.network.protocol.ServerToClientHandshakePacket import ServerToClientHandshakePacket
 from podrum.network.protocol.UnknownPacket import UnknownPacket
-from podrum.utils.Binary import Binary
 
 class PacketPool:
     packetPool = {}
