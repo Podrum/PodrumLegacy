@@ -15,7 +15,6 @@ import sys
 import inspect
 from os import getcwd, path
 from threading import Thread
-sys.path.insert(0, path.dirname(path.dirname(path.abspath(inspect.getfile(inspect.currentframe())))))
 from podrum.Server import Server
 
 if __name__ == "__main__":
