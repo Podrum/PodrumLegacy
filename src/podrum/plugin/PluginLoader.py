@@ -30,78 +30,72 @@ class PluginLoader:
     version = None
     apiVersion = None
     main = None
-    pluginsDir = Plugin.getPluginsDir()
+    pluginsDir = None
 
-    @staticmethod
-    def setValues(plugin):
-        PluginLoader.name = Plugin.getName(plugin)
-        PluginLoader.description = Plugin.getDescription(plugin)
-        PluginLoader.author = Plugin.getAuthor(plugin)
-        PluginLoader.version = Plugin.getVersion(plugin)
-        PluginLoader.apiVersion = Plugin.getApiVersion(plugin)
-        PluginLoader.main = Plugin.getMain(plugin)
+    def __init__(self):
+        self.pluginsDir = Plugin().getPluginsDir()
 
-    @staticmethod
-    def load(plugin):
-        if Plugin.getName(plugin) in PluginLoader.loadedPluginNames:
+    def setPluginValues(self, plugin):
+        self.name = Plugin.getName(plugin)
+        self.description = Plugin.getDescription(plugin)
+        self.author = Plugin.getAuthor(plugin)
+        self.version = Plugin.getVersion(plugin)
+        self.apiVersion = Plugin.getApiVersion(plugin)
+        self.main = Plugin.getMain(plugin)
+
+    def load(self, plugin):
+        if Plugin.getName(plugin) in self.loadedPluginNames:
             Logger.log('alert', f'Disabling duplicate plugin {Plugin.getName(plugin)}')
             return
-        PluginLoader.setValues(plugin)
+        self.setPluginValues(plugin)
         sys.path.insert(0, plugin)
-        PluginLoader.pluginModule = importlib.import_module(PluginLoader.main.rsplit('.', 1)[0])
-        pluginClass = getattr(PluginLoader.pluginModule, PluginLoader.main.rsplit('.', 1)[1])
-        Logger.log('info', f'Loading {PluginLoader.name}...')
+        self.pluginModule = importlib.import_module(self.main.rsplit('.', 1)[0])
+        pluginClass = getattr(self.pluginModule, self.main.rsplit('.', 1)[1])
+        Logger.log('info', f'Loading {self.name}...')
         pluginClass.onStart()
-        Logger.log('success', f'Successfully loaded {PluginLoader.name}!')
+        Logger.log('success', f'Successfully loaded {self.name}!')
         pluginClass.onStarted()
-        PluginLoader.loadedPluginFiles.update({plugin: plugin})
-        PluginLoader.loadedPluginNames.update({PluginLoader.name: PluginLoader.name})
-        PluginLoader.loadedPluginsList = list(PluginLoader.loadedPluginNames.keys())
-        PluginLoader.loadedPluginsCount = len(PluginLoader.loadedPluginNames)
+        self.loadedPluginFiles.update({plugin: plugin})
+        self.loadedPluginNames.update({self.name: PluginLoader.name})
+        self.loadedPluginsList = list(self.loadedPluginNames.keys())
+        self.loadedPluginsCount = len(self.loadedPluginNames)
 
-    @staticmethod
-    def unload(plugin):
-        PluginLoader.setValues(plugin)
-        if PluginLoader.main.rsplit('.', 1)[0] in sys.modules:
-            PluginLoader.pluginModule = importlib.import_module(PluginLoader.main.rsplit('.', 1)[0])
-            pluginClass = getattr(PluginLoader.pluginModule, PluginLoader.main.rsplit('.', 1)[1])
-            Logger.log('info', f'Unloading {PluginLoader.name}...')
+    def unload(self, plugin):
+        self.setPluginValues(plugin)
+        if self.main.rsplit('.', 1)[0] in sys.modules:
+            self.pluginModule = importlib.import_module(self.main.rsplit('.', 1)[0])
+            pluginClass = getattr(self.pluginModule, self.main.rsplit('.', 1)[1])
+            Logger.log('info', f'Unloading {self.name}...')
             pluginClass.onStop()
-            Logger.log('success', f'Successfully unloaded {PluginLoader.name}!')
+            Logger.log('success', f'Successfully unloaded {self.name}!')
             pluginClass.onStopped()
             del sys.modules[PluginLoader.main.rsplit('.', 1)[0]]
-            del PluginLoader.loadedPluginFiles[plugin]
-            del PluginLoader.loadedPluginNames[PluginLoader.name]
-            PluginLoader.loadedPluginsList = list(PluginLoader.loadedPluginNames.keys())
-            PluginLoader.loadedPluginsCount = len(PluginLoader.loadedPluginNames)
+            del self.loadedPluginFiles[plugin]
+            del self.loadedPluginNames[self.name]
+            self.loadedPluginsList = list(self.loadedPluginNames.keys())
+            self.loadedPluginsCount = len(self.loadedPluginNames)
 
-    @staticmethod
-    def reload(plugin):
-        PluginLoader.unload(plugin)
-        PluginLoader.load(plugin)
+    def reload(self, plugin):
+        self.unload(plugin)
+        self.load(plugin)
 
-    @staticmethod
-    def loadAll():
-        pluginsDir = PluginLoader.pluginsDir
+    def loadAll(self):
+        pluginsDir = self.pluginsDir
         pluginsPaths = glob(pluginsDir + "/*.pyz")
         for pluginPath in pluginsPaths:
             if os.path.isfile(pluginPath):
-                PluginLoader.load(pluginPath)
+                self.load(pluginPath)
 
-    @staticmethod
-    def unloadAll():
-        pluginsDir = PluginLoader.pluginsDir
-        pluginsPaths = PluginLoader.loadedPluginFiles
+    def unloadAll(self):
+        pluginsDir = self.pluginsDir
+        pluginsPaths = self.loadedPluginFiles
         for pluginPath in list(pluginsPaths):
             if os.path.isfile(pluginPath):
-                PluginLoader.unload(pluginPath)
+                self.unload(pluginPath)
 
-    @staticmethod
-    def reloadAll():
-        pluginsDir = PluginLoader.pluginsDir
-        pluginsPaths = PluginLoader.loadedPluginFiles
+    def reloadAll(self):
+        pluginsDir = self.pluginsDir
+        pluginsPaths = self.loadedPluginFiles
         for pluginPath in list(pluginsPaths):
             if os.path.isfile(pluginPath):
-                PluginLoader.reload(pluginPath)
-
-
+                self.reload(pluginPath)

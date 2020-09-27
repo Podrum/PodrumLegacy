@@ -21,19 +21,18 @@ class NetworkInterface(ServerInterface):
     name = None
     players = {}
 
-    def __init__():
+    def __init__(self):
         self.raknetServer = Server(InternetAddress("0.0.0.0", 19132), self)
-        self.name = self.getServerName.toString()
+        self.name = self.getServerName().toString()
         self.raknetServer.name = self.name
         
-    @staticmethod
-    def onOpenConnection(connection):
+    def onOpenConnection(self, connection):
         address = connection.address
         player = Player(connection, connection.address, self)
         self.players[f"{address.getAddress()}:{address.getPort()}"] = player
+        print("OPEN CONNECTION")
         
-    @staticmethod
-    def onEncapsulated(packet, address):
+    def onEncapsulated(self, packet, address):
         token = f"{address.getAddress()}:{address.getPort()}"
         if not token in self.players:
             return
@@ -43,6 +42,7 @@ class NetworkInterface(ServerInterface):
         pk.decode()
         for buf in pk.getPackets():
             pass
+        print("ENCAPSULATED")
  
     def getServerName(self):
         serverName = MinecraftServerName()
@@ -52,8 +52,7 @@ class NetworkInterface(ServerInterface):
         serverName.protocol = 408
         serverName.version = "1.16.20"
         serverName.players["online"] = 0
-        serverName.players["max"] = 0
+        serverName.players["max"] = 500
         serverName.gamemode = "Creative"
         serverName.serverId = 0
         return serverName
-        

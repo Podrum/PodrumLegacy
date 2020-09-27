@@ -1,21 +1,18 @@
 from rakpy.protocol.OfflinePacket import OfflinePacket
 from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 
-class OpenConnectionReply1(OfflinePacket):
-    id = PacketIdentifiers.OpenConnectionReply1
+class IncompatibleProtocol(OfflinePacket):
+    id = PacketIdentifiers.IncompatibleProtocol
     
+    protocol = None
     serverId = None
-    useSecurity = None
-    mtu = None
     
     def encodePayload(self):
+        self.putByte(self.protocol)
         self.putMagic()
         self.putLong(self.serverId)
-        self.putBool(self.useSecurity)
-        self.putShort(self.mtu)
         
     def decodePayload(self):
+        self.protocol = self.getByte()
         self.magic = self.getMagic()
         self.serverId = self.getLong()
-        self.useSecurity = self.getBool()
-        self.mtu = self.getShort()

@@ -16,8 +16,8 @@ from podrum.network.protocol.BatchPacket import BatchPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum import Server
 
-from pyraklib.protocol.EncapsulatedPacket import EncapsulatedPacket
-from pyraklib.server.Session import Session
+from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
+from rakpy.server.Connection import Connection
 
 class Player:
 
