@@ -52,7 +52,7 @@ class NetworkInterface(ServerInterface):
         serverName.protocol = 408
         serverName.version = "1.16.20"
         serverName.players["online"] = 0
-        serverName.players["max"] = 0
+        serverName.players["max"] = 500
         serverName.gamemode = "Creative"
         serverName.serverId = 0
         return serverName
