@@ -19,7 +19,7 @@ class EncapsulatedPacket:
     def fromBinary(self, buffer):
         offset = 0
         packet = EncapsulatedPacket()
-        header = Binary.readByte(buffer[offset])
+        header = buffer[offset]
         offset += 1
         packet.reliability = (header & 224) >> 5
         packet.split = (header & BitFlags.Split) > 0

@@ -17,7 +17,7 @@ class DataPacket(Packet):
     def decodePayload(self):
         self.sequenceNumber = self.getLTriad()
         while not self.feof():
-            self.packets.append(EncapsulatedPacket.fromBinary(self.getBuffer()))
+            self.packets.append(EncapsulatedPacket().fromBinary(self.getBuffer()))
             
     def length(self):
         length = 4
