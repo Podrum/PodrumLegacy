@@ -10,7 +10,6 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import ini
 import json
 import os
 import pickle
@@ -71,7 +70,7 @@ class Config:
             elif self.formatType == self.TOML:
                 self.config = toml.loads(content)
             elif self.formatType == self.INI:
-                self.config = ini.loads(content)
+                self.config = toml.loads(content)
                 
     def save(self):
         file = open(self.filePath, "w")
@@ -85,7 +84,7 @@ class Config:
             elif self.formatType == self.TOML:
                 toml.dump(self.config, file)
             elif self.formatType == self.INI:
-                ini.dump(self.config, file)
+                toml.dump(self.config, file)
         except:
             self.server.getLogger().log("error", f"Could not save the config: {self.filePath}")
                 
