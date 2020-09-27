@@ -13,34 +13,38 @@
 from podrum.plugin.PluginLoader import PluginLoader
 
 class PluginBase:
-    @staticmethod
-    def onStart(): pass
+    name = ""
+    description = ""
+    author = ""
+    version = ""
+    apiVersion = ""
+    
+    def __init__(self):
+        self.name = PluginLoader.name
+        self.description = PluginLoader.description
+        self.author = PluginLoader.author
+        self.version = PluginLoader.version
+        self.apiVersion = PluginLoader.apiVersion
+    
+    def onStart(self): pass
 
-    @staticmethod
-    def onStarted(): pass
+    def onStarted(self): pass
 
-    @staticmethod
-    def onStop(): pass
+    def onStop(self): pass
 
-    @staticmethod
-    def onStopped(): pass
+    def onStopped(self): pass
+    
+    def getName(self):
+        return self.name
 
-    @staticmethod
-    def getName():
-        return PluginLoader.name
+    def getDescription(self):
+        return self.description
 
-    @staticmethod
-    def getDescription():
-        return PluginLoader.description
+    def getAuthor(self):
+        return self.author
 
-    @staticmethod
-    def getAuthor():
-        return PluginLoader.author
+    def getVersion(self):
+        return self.version
 
-    @staticmethod
-    def getVersion():
-        return PluginLoader.version
-
-    @staticmethod
-    def getApiVersion():
-        return PluginLoader.apiVersion
+    def getApiVersion(self):
+        return self.apiVersion
