@@ -18,14 +18,14 @@ Linux and MacOS (Unix systems):
 python3 -m venv /venv
 ./venv/Scripts/activate.sh
 pip3 install -r requirements.txt
-sh start.sh
+python3 src/__main__.py
 ```
 Windows:
 ```bat
 python -m venv /venv
 call ./venv/Scripts/activate.bat
 pip install -r requirements.txt
-start.bat
+python src/__main__.py
 ```
 
 # TODO List:
