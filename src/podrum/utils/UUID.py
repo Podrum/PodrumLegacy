@@ -15,7 +15,7 @@ import os
 import random
 import time
 
-from podrum.utils.Binary import Binary
+from bintutilspy.Binary import Binary
 from podrum.utils.Utils import Utils
 
 class UUID:
