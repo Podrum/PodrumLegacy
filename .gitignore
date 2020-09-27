@@ -4,6 +4,9 @@
 
 # Python
 *.pyc
+*.pyd
+*.pyz
+*.pyw
 /venv
 /__pycache__
 src/pyraklib/server/__pycache__
