@@ -10,7 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.utils.BinaryStream import BinaryStream
+from binutilspy.BinaryStream import BinaryStream
 from podrum.utils.UUID import UUID
 
 class NetBinaryStream(BinaryStream):
