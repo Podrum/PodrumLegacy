@@ -28,13 +28,13 @@ class EncapsulatedPacket:
         offset += 2
         if length == 0:
             raise Exception("Got an empty encapsulated packet")
-        if Reliability.isReliable(packet.reliability):
+        if Reliability().isReliable(packet.reliability):
             packet.messageIndex = Binary.readLTriad(buffer[offset:offset + 3])
             offset += 3
-        if Reliability.isSequenced(packet.reliability):
+        if Reliability().isSequenced(packet.reliability):
             packet.sequenceIndex = Binary.readLTriad(buffer[offset:offset + 3])
             offset += 3
-        if Reliability.isSequencedOrOrdered(packet.reliability):
+        if Reliability().isSequencedOrOrdered(packet.reliability):
             packet.orderIndex = Binary.readLTriad(buffer[offset:offset + 3])
             offset += 3
             packet.orderChannel = Binary.readByte(buffer[offset:offset + 1])
@@ -57,11 +57,11 @@ class EncapsulatedPacket:
             header |= BitFlags.Split
         buffer += Binary.writeByte(header)
         buffer += Binary.writeShort(len(self.buffer) << 3)
-        if Reliability.isReliable(self.reliability):
+        if Reliability().isReliable(self.reliability):
             buffer += Binary.writeLTriad(self.messageIndex)
-        if Reliability.isSequenced(self.reliability):
+        if Reliability().isSequenced(self.reliability):
             buffer += Binary.writeLTriad(self.sequenceIndex)
-        if Reliability.isSequencedOrOrdered(self.reliability):
+        if Reliability().isSequencedOrOrdered(self.reliability):
             buffer += Binary.writeLTriad(self.orderIndex)
             buffer += Binary.writeByte(self.orderChannel)
         if self.split:
