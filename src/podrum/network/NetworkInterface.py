@@ -30,6 +30,7 @@ class NetworkInterface(ServerInterface):
         address = connection.address
         player = Player(connection, connection.address, self)
         self.players[f"{address.getAddress()}:{address.getPort()}"] = player
+        print("OPEN CONNECTION")
         
     def onEncapsulated(self, packet, address):
         token = f"{address.getAddress()}:{address.getPort()}"
@@ -41,6 +42,7 @@ class NetworkInterface(ServerInterface):
         pk.decode()
         for buf in pk.getPackets():
             pass
+        print("ENCAPSULATED")
  
     def getServerName(self):
         serverName = MinecraftServerName()
