@@ -3,7 +3,7 @@
         "langId": "gr-GR",
         "countries": ["gr"]
     },
-    "lang:langName": "Ελληνικά",
+    "langName": "Ελληνικά",
     "langSelectedAsBase": "Η ελληνική επιλέχθηκε ως η κύρια γλώσσα.",
     "wizardSetup": "Θέλετε να ακολουθήσετε τη ρύθμιση; [y/N]",
     "wizardSkipped": "Παράλειψη Βοηθού ρύθμισης...",

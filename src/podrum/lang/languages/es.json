@@ -3,7 +3,7 @@
         "langId": "es-ES",
         "countries": ["es", "us"]
     },
-    "lang:langName": "Español",
+    "langName": "Español",
     "langSelectedAsBase": "Español seleccionado como idioma base.",
     "wizardSetup": "¿Quieres seguir el asistente de configuración? [y/N]",
     "wizardSkipped": "Saltando el asistente de configuración...",

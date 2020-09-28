@@ -3,7 +3,7 @@
         "langId": "pl-PL",
         "countries": ["pl"]
     },
-    "lang:langName": "Polski",
+    "langName": "Polski",
     "langSelectedAsBase": "Wybrałeś Polski jako język główny.",
     "wizardSetup": "Chcesz skonfigurować serwer? [y/N]",
     "wizardSkipped": "Ominięto etap konfiguracji...",

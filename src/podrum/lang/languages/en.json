@@ -3,7 +3,7 @@
         "langId": "it-IT",
         "countries": ["uk", "us"]
     },
-    "lang:langName": "English",
+    "langName": "English",
     "langSelectedAsBase": "English selected as base language.",
     "wizardSetup": "Do you want to follow the setup? [y/N]",
     "wizardSkipped": "Skipping the setup wizard...",

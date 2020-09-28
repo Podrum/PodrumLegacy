@@ -4,7 +4,7 @@
         "langId": "de-DE",
         "countries": ["de", "ch"]
     },
-    "lang:langName": "Deustch",
+    "langName": "Deustch",
     "langSelectedAsBase": "Deutsch als Basissprache gewählt.",
     "wizardSetup": "Möchten sie den Setup Assistenten benutzen? [y/N]",
     "wizardSkipped": "Setup-Assistent wird übersprugen...",
