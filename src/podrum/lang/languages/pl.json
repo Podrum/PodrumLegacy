@@ -1,0 +1,22 @@
+{
+    "languageInfos": {
+        "langId": "pl-PL",
+        "countries": ["pl"]
+    },
+    "lang:langName": "Polski",
+    "langSelectedAsBase": "Wybrałeś Polski jako język główny.",
+    "wizardSetup": "Chcesz skonfigurować serwer? [y/N]",
+    "wizardSkipped": "Ominięto etap konfiguracji...",
+    "writeYesOrNo": "Wpisz (y) by potwierdzić, lub (n) by zaprzeczyć.",
+    "writeServerPort": "Wpisz port dla serwera (domyślny: 19132):",
+    "writeMOTD": "Wpisz MOTD dla swojego serwera:",
+    "writeMaxPlayers": "Wpisz max liczbę graczy:",
+    "writeGamemode": "Wybierz tryb gry (w cyfrze) [SURVIVAL = 0, CREATIVE = 1, ADVENTURE = 2, SPECTATOR = 3]:",
+    "wizardFinished": "Ukończono etap konfiguracji!",
+    "acceptLicense": "Akceptujesz licencję? [y/n]",
+    "mustAcceptLicence": "Musisz zaakceptować, by użyć Podrum-a.",
+    "startingServer": "Serwer uruchomiono na {ip}:{port}",
+    "extIpMsg": "Twoje publiczne ip to: {ipPublic}. Zaproś znajomych do wspólnej gry!!!!!!",
+    "license": "Podrum używa licencji Apache-2.0",
+    "invalidCommand": "Brak komendy. Sprawdź pisownię"
+}
