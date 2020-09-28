@@ -10,15 +10,16 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.network.protocol.DataPacket import DataPacket
-from podrum.network.protocol.ProtocolInfo import ProtocolInfo
+from podrum.command.Command import Command
 
-class ClientToServerHandshakePacket(DataPacket):
-    NID = ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET
+class SayCommand(Command):
+    def __init__(self, name, description = ""):
+        super().__init__(name, "Say Command")
 
-    def canBeSentBeforeLogin():
-        return True
-
-    def encodePayload(): pass
-
-    def decodePayload(): pass
+    def execute(self, sender, args):
+        try:
+            args[1]
+        except:
+            sender.sendMessage("say <message>")
+        else:
+            sender.sendMessage(" ".join(args[1:]))

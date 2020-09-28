@@ -10,15 +10,14 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.network.protocol.DataPacket import DataPacket
-from podrum.network.protocol.ProtocolInfo import ProtocolInfo
+from podrum.command.Command import Command
+from podrum.plugin.PluginLoader import PluginLoader
 
-class ClientToServerHandshakePacket(DataPacket):
-    NID = ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET
+class ReloadCommand(Command):
+    def __init__(self, name, description = ""):
+        super().__init__(name, "Reload Command")
 
-    def canBeSentBeforeLogin():
-        return True
-
-    def encodePayload(): pass
-
-    def decodePayload(): pass
+    def execute(self, sender, args):
+        sender.sendMessage("Reloading...")
+        PluginLoader().reloadAll()
+        sender.sendMessage("Reload successful!")

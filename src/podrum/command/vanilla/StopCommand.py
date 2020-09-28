@@ -10,9 +10,16 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-class Command:
+from podrum.command.Command import Command
+from podrum.plugin.PluginLoader import PluginLoader
+from podrum.utils.Utils import Utils
+
+class StopCommand(Command):
     def __init__(self, name, description = ""):
-        pass
+        super().__init__(name, "Stop Command")
 
     def execute(self, sender, args):
-        pass
+        sender.sendMessage("Stopping server...")
+        PluginLoader().unloadAll()
+        sender.sendMessage("Server stopped.")
+        Utils.killServer()

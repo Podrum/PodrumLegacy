@@ -13,6 +13,7 @@
 import time
 import os
 
+from podrum.command.CommandReader import CommandReader
 from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
 from podrum.network.NetworkInterface import NetworkInterface
@@ -63,10 +64,8 @@ class Server:
         if (isTravisBuild):
             Server.checkTravisBuild(path)
         else:
-            while Wizard.isInWizard == False:
-                cmd = input('> ')
-                Server.command(cmd, True)
-                cmd = None
+            if Wizard.isInWizard == False:
+                CommandReader(self)
             ticking = True
             while ticking:
                 time.sleep(self.tickrate)
@@ -79,30 +78,9 @@ class Server:
     
     def getPort(self):
         return self.port
-    
-    @staticmethod
-    def command(string, fromConsole):
-        if string.lower() == 'stop':
-            Logger.log('info', 'Stopping server...')
-            Server.pluginLoader.unloadAll()
-            Logger.log('info', 'Server stopped.')
-            Utils.killServer()
-        elif string.lower() == '':
-            return
-        elif string.lower() == 'help':
-            Logger.log('info', '/stop: Stops the server')
-        elif string.lower() == 'reload':
-            Server.pluginLoader.reloadAll()
-            Logger.log('info', 'Reload successful!')
-        elif string.lower() == 'plugins' or string.lower() == 'pl':
-            pluginsString = ""
-            for pluginName in PluginLoader.loadedPluginsList:
-                pluginsString = pluginsString + pluginName
-                if pluginName != PluginLoader.loadedPluginsList[PluginLoader.loadedPluginsCount - 1]:
-                    pluginsString += ", "
-            Logger.log('info', f'Plugins({PluginLoader.loadedPluginsCount}): {pluginsString}')
-        else:
-            Logger.log('error', str(Base.get("invalidCommand")))
+
+    def sendMessage(self, message):
+        self.getLogger().log("info", message)
     
     def checkTravisBuild(path):
         if not ServerFS.checkForFile(path, "server.json"):
