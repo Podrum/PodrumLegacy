@@ -14,8 +14,8 @@ from podrum.command.Command import Command
 from podrum.plugin.PluginLoader import PluginLoader
 
 class ReloadCommand(Command):
-    def __init__(self, name, description = ""):
-        super().__init__(name, "Reload Command")
+    def __init__(self, name = "", description = ""):
+        super().__init__("reload", "Reload Command")
 
     def execute(self, sender, args):
         sender.sendMessage("Reloading...")

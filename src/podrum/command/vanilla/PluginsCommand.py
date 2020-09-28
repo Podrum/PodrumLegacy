@@ -14,8 +14,8 @@ from podrum.command.Command import Command
 from podrum.plugin.PluginLoader import PluginLoader
 
 class PluginsCommand(Command):
-    def __init__(self, name, description = ""):
-        super().__init__(name, "Plugins Command")
+    def __init__(self, name = "", description = ""):
+        super().__init__("plugins", "Plugins Command")
 
     def execute(self, sender, args):
         pluginsString = ""

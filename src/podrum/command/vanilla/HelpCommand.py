@@ -16,8 +16,8 @@ from podrum.command import CommandManager
 class HelpCommand(Command):
     commandManager = None
 
-    def __init__(self, name, description = ""):
-        super().__init__(name, "Help Command")
+    def __init__(self, name = "", description = ""):
+        super().__init__("help", "Help Command")
         self.commandManager = CommandManager.CommandManager
 
     def execute(self, sender, args):

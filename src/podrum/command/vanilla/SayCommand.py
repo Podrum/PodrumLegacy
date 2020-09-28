@@ -13,8 +13,8 @@
 from podrum.command.Command import Command
 
 class SayCommand(Command):
-    def __init__(self, name, description = ""):
-        super().__init__(name, "Say Command")
+    def __init__(self, name = "", description = ""):
+        super().__init__("say", "Say Command")
 
     def execute(self, sender, args):
         try:

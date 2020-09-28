@@ -32,11 +32,11 @@ class CommandManager:
             return False
 
     def registerVanillaCommands(self):
-        self.registerCommand(HelpCommand("help"))
-        self.registerCommand(PluginsCommand("plugins"))
-        self.registerCommand(ReloadCommand("reload"))
-        self.registerCommand(SayCommand("say"))
-        self.registerCommand(StopCommand("stop"))
+        self.registerCommand(HelpCommand())
+        self.registerCommand(PluginsCommand())
+        self.registerCommand(ReloadCommand())
+        self.registerCommand(SayCommand())
+        self.registerCommand(StopCommand())
 
     def registerCommand(self, command):
         self.commands.update({command.getName(): command})

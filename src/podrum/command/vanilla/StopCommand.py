@@ -15,8 +15,8 @@ from podrum.plugin.PluginLoader import PluginLoader
 from podrum.utils.Utils import Utils
 
 class StopCommand(Command):
-    def __init__(self, name, description = ""):
-        super().__init__(name, "Stop Command")
+    def __init__(self, name = "", description = ""):
+        super().__init__("stop", "Stop Command")
 
     def execute(self, sender, args):
         sender.sendMessage("Stopping server...")
