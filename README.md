@@ -31,6 +31,7 @@ python src/__main__.py
 
 > ## Features:
 - [x] MOTD
-- [ ] Commands
+- [ ] NETWORKING
+- [x] Commands
 - [ ] Mobs
 - [ ] World generation
