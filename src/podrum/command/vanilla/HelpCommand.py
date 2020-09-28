@@ -10,19 +10,18 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-class Command:
-    name = None
-    description = None
+from podrum.command.Command import Command
+from podrum.command import CommandManager
+
+class HelpCommand(Command):
+    commandManager = None
 
     def __init__(self, name, description = ""):
-        self.name = name
-        self.description = description
+        super().__init__(name, "Help Command")
+        self.commandManager = CommandManager.CommandManager
 
     def execute(self, sender, args):
-        pass
-
-    def getName(self):
-        return self.name
-
-    def getDescription(self):
-        return self.description
+        sender.sendMessage("--- Showing help ---")
+        for k, v in self.commandManager.commands.items():
+            if k != self.getName():
+                sender.sendMessage("/" + k + ": " + v.getDescription())

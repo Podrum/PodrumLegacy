@@ -11,6 +11,7 @@
 """
 
 from copy import deepcopy
+from podrum.command.vanilla.HelpCommand import HelpCommand
 from podrum.command.vanilla.PluginsCommand import PluginsCommand
 from podrum.command.vanilla.ReloadCommand import ReloadCommand
 from podrum.command.vanilla.SayCommand import SayCommand
@@ -32,6 +33,7 @@ class CommandManager:
             return False
 
     def registerVanillaCommands(self):
+        self.registerCommand("help", HelpCommand("help"))
         self.registerCommand("plugins", PluginsCommand("plugins"))
         self.registerCommand("reload", ReloadCommand("reload"))
         self.registerCommand("say", SayCommand("say"))
