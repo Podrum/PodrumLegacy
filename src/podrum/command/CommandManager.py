@@ -10,7 +10,6 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from copy import deepcopy
 from podrum.command.vanilla.HelpCommand import HelpCommand
 from podrum.command.vanilla.PluginsCommand import PluginsCommand
 from podrum.command.vanilla.ReloadCommand import ReloadCommand
@@ -33,11 +32,11 @@ class CommandManager:
             return False
 
     def registerVanillaCommands(self):
-        self.registerCommand("help", HelpCommand("help"))
-        self.registerCommand("plugins", PluginsCommand("plugins"))
-        self.registerCommand("reload", ReloadCommand("reload"))
-        self.registerCommand("say", SayCommand("say"))
-        self.registerCommand("stop", StopCommand("stop"))
+        self.registerCommand(HelpCommand("help"))
+        self.registerCommand(PluginsCommand("plugins"))
+        self.registerCommand(ReloadCommand("reload"))
+        self.registerCommand(SayCommand("say"))
+        self.registerCommand(StopCommand("stop"))
 
-    def registerCommand(self, name, command):
-        self.commands.update({name: deepcopy(command)})
+    def registerCommand(self, command):
+        self.commands.update({command.getName(): command})
