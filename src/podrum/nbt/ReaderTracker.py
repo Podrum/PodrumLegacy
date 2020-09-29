@@ -14,13 +14,13 @@ class ReaderTracker:
     maxDepth = None
     currentDepth = 0
     
-    def __init__(self, maxDepth: int):
+    def __init__(self, maxDepth):
         self.maxDepth = maxDepth
         
     def protectDepth(self, execute):
         self.currentDepth += 1
         if self.maxDepth > 0 and self.currentDepth > self.maxDepth:
-            raise Exception("Nesting level too deep: reached max depth of " + self.maxDepth + " tags")
+            raise Exception(f"Nesting level too deep: reached max depth of {str(self.maxDepth)} tags")
         try:
             execute()
         except:
