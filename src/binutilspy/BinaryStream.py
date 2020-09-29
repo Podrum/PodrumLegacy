@@ -184,4 +184,4 @@ class BinaryStream:
         self.put(Binary.writeVarLong(value))
       
     def feof(self):
-        self.offset < 0 or self.offset >= len(self.buffer)
+        return self.offset < 0 or self.offset >= len(self.buffer)
