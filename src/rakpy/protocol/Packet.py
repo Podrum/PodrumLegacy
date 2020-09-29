@@ -7,7 +7,7 @@ class Packet(BinaryStream):
     sendTime = None
     
     def getString(self):
-        self.get(self.getShort())
+        return self.get(self.getShort()).decode()
 
     def putString(self, value):
         self.putShort(len(value))
