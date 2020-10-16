@@ -31,4 +31,4 @@ class DifficultyCommand(Command):
             elif args[1] == "3" or args[1].lower() == "hard":
                 pass
             else:
-                sender.sendMessage("Invalid argument!")
+                sender.sendMessage(f"{args[1]} is not a valid parameter!")
