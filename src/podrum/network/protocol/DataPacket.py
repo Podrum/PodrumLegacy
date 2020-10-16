@@ -32,16 +32,17 @@ class DataPacket(NetBinaryStream):
     def getName(self):
         return type(object).__name__
         
-    def canBeBatched():
+    def canBeBatched(self):
         return True
         
-    def canBeSentBeforeLogin():
+    def canBeSentBeforeLogin(self):
         return False
         
-    def mayHaveUnreadBytes():
+    def mayHaveUnreadBytes(self):
         return False
         
-    def decodePayload(): pass
+    def decodePayload(self): 
+        pass
         
     def decode(self):
         self.offset = 0
@@ -52,11 +53,11 @@ class DataPacket(NetBinaryStream):
         header = self.getUnsignedVarInt()
         pid = header & self.PID_MASK
         if pid != self.NID:
-            raise Exception("Expected " + self.NID + " for packet ID, got " + pid)
+            raise Exception(f"Expected {self.NID} for packet ID, got " + pid)
         self.senderSubId = (header >> self.SENDER_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK
         self.recipientSubId = (header >> self.RECIPIENT_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK;
     
-    def encodePayload(): pass
+    def encodePayload(self): pass
     
     def encode(self):
         self.reset()
@@ -71,9 +72,9 @@ class DataPacket(NetBinaryStream):
             (self.recipientSubId << self.RECIPIENT_SUBCLIENT_ID_SHIFT)
         )
         
-    def writePayload(): pass
+    def writePayload(self): pass
     
-    def clean():
+    def clean(self):
         self.buffer = ""
         self.isEncoded = False
         self.offset = 0
