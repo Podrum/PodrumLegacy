@@ -32,11 +32,11 @@ class LoginPacket(DataPacket):
     clientData = {}
     skipVerification = False
     
-    def canBeSentBeforeLogin():
+    def canBeSentBeforeLogin(self):
         return True
         
     def mayHaveUnreadBytes(self):
-        return self.protocol != None and self.protocol != ProtocolInfo.MCBE_PROTOCOL_VERSION
+        return self.protocol is not None and self.protocol != ProtocolInfo.MCBE_PROTOCOL_VERSION
         
     def decodePayload(self):
         self.protocol = self.getInt()
@@ -67,5 +67,6 @@ class LoginPacket(DataPacket):
             if self.protocol == ProtocolInfo.MCBE_PROTOCOL_VERSION:
                 raise Exception("Error")
                 
-    def encodePayload(): pass
+    def encodePayload(self): 
+        pass
     
