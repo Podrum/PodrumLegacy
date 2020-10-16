@@ -10,6 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from podrum.command.vanilla.DifficultyCommand import DifficultyCommand
 from podrum.command.vanilla.HelpCommand import HelpCommand
 from podrum.command.vanilla.PluginsCommand import PluginsCommand
 from podrum.command.vanilla.ReloadCommand import ReloadCommand
@@ -33,6 +34,7 @@ class CommandManager:
             return False
 
     def registerVanillaCommands(self):
+        self.registerCommand(DifficultyCommand())
         self.registerCommand(HelpCommand())
         self.registerCommand(PluginsCommand())
         self.registerCommand(ReloadCommand())
