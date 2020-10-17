@@ -46,7 +46,7 @@ class Server:
         startTime = Utils.microtime(True)
         self.path = path
         self.withWizard = withWizard
-        self.tickrate = 20/1000
+        self.tickrate = 1000/20
         if(withWizard):
             ServerFS.checkAllFiles(path)
         else:
