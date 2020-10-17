@@ -1,0 +1,23 @@
+
+{
+    "languageInfos": {
+        "langId": "de-DE",
+        "countries": ["de", "ch"]
+    },
+    "langName": "Deustch",
+    "langSelectedAsBase": "Deutsch als Basissprache gewählt.",
+    "wizardSetup": "Möchten sie den Setup Assistenten benutzen? [y/N]",
+    "wizardSkipped": "Setup-Assistent wird übersprugen...",
+    "writeYesOrNo": "Bitte wählen Sie ja (y) oder nein (n).",
+    "writeServerPort": "Wählen Sie den Server-Port (Standard: 19132):",
+    "writeMOTD": "Legen Sie die MOTD des Servers fest:",
+    "writeMaxPlayers": "Legen Sie die maximale Spielerzahl fest:",
+    "writeGamemode": "Wählen Sie einen Spielmodus (Nummer) [ÜBERLEBEN = 0, KREATIV = 1, ABENTEUER = 2, Zuschauer = 3]:",
+    "wizardFinished": "Sie haben den Server-Setup-Assistenten abgeschlossen!",
+    "acceptLicense": "Akzeptieren Sie die Lizenz? [y/n]",
+    "mustAcceptLicence": "Sie müssen die Lizenz akzeptieren, wenn Sie diese Software verwenden möchten.",
+    "startingServer": "Server wird auf {ip}:{port} gestartet...",
+    "extIpMsg": "Dies ist Ihre externe ip: {ipPublic}. Wenn Spieler außerhalb ihres Lokalen Netzwerkes beitreten möchten müssen sie evtl. Port-Forwarding für den ausgewählten Port aktivieren.",
+    "license": "Podrum steht unter der Apache-2.0-Lizenz",
+    "invalidCommand": "Befehl nicht gefunden!"
+}

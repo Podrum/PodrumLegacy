@@ -16,7 +16,7 @@ from podrum.network.protocol.DataPacket import DataPacket
 from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 from podrum.utils.Utils import Utils
 
-class DataPacket(DataPacket):
+class LoginPacket(DataPacket):
     NID = ProtocolInfo.LOGIN_PACKET
     
     username = None
@@ -32,16 +32,16 @@ class DataPacket(DataPacket):
     clientData = {}
     skipVerification = False
     
-    def canBeSentBeforeLogin():
+    def canBeSentBeforeLogin(self):
         return True
         
     def mayHaveUnreadBytes(self):
-        return self.protocol != None and self.protocol != ProtocolInfo.MCBE_PROTOCOL_VERSION
+        return self.protocol is not None and self.protocol != ProtocolInfo.MCBE_PROTOCOL_VERSION
         
     def decodePayload(self):
         self.protocol = self.getInt()
         try:
-            buffer = DataPacket.BinaryStream(self.getString())
+            buffer = DataPacket.NetBinaryStream(self.getString())
             self.chainData = json.loads(buffer.get(buffer.getLInt()))
             hasExtraData = False
             for chain in self.chainData["chain"]:
@@ -67,5 +67,6 @@ class DataPacket(DataPacket):
             if self.protocol == ProtocolInfo.MCBE_PROTOCOL_VERSION:
                 raise Exception("Error")
                 
-    def encodePayload(): pass
+    def encodePayload(self): 
+        pass
     

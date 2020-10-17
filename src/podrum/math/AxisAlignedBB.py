@@ -12,7 +12,7 @@
 
 import sys
 from podrum.math.Facing import Facing
-from podrum.math.RayTraceResult import RayTraceResult
+from podrum.math.RaycastResult import RaycastResult
 from podrum.math.Vector3 import Vector3
 
 class AxisAlignedBB:
@@ -264,7 +264,7 @@ class AxisAlignedBB:
         v3 = pos1.getIntermediateWithYValue(pos2, self.minY)
         v4 = pos1.getIntermediateWithYValue(pos2, self.maxY)
         v5 = pos1.getIntermediateWithZValue(pos2, self.minZ)
-        v6 = pos1.getIntermediateWithZValue(pos2, self.maxY)
+        v6 = pos1.getIntermediateWithZValue(pos2, self.maxZ)
 
         if v1 != None and not self.isVectorYZ(v1):
             v1 = None
@@ -285,7 +285,7 @@ class AxisAlignedBB:
             v6 = None
 
         vector = None
-        distance = sys.maxint
+        distance = sys.maxsize
 
         for v in [v1, v2, v3, v4, v5, v6]:
             d = pos1.distanceSquared(v)
@@ -311,7 +311,7 @@ class AxisAlignedBB:
         elif vector == v6:
             f = Facing.SOUTH
 
-        return RayTraceResult(self, f, vector)
+        return RaycastResult(self, f, vector)
 
     def __toString(self):
         return "AxisAlignedBB({self.minX}, {self.minY}, {self.minZ}, {self.maxX}, {self.maxY}, {self.maxZ})"
