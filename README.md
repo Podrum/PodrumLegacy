@@ -35,3 +35,5 @@ python src/__main__.py
 - [x] Commands
 - [ ] Mobs
 - [ ] World generation
+
+**Not joinable yet**
