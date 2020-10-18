@@ -1,5 +1,5 @@
 <p id="app-name" align="center">
-	<img width="200" height="200" src="https://cdn.discordapp.com/attachments/680861997650280483/705797584735830086/image0.png" title="Podrum" alt="podrum logo"/>
+	<img width="200" height="200" src="https://github.com/organizations/Podrum/settings/profile" title="Podrum" alt="podrum logo"/>
 </p>
 <h1 align="center"><a href="https://github.com/Podrum/Podrum">Podrum</a></h1>
 
