@@ -1,5 +1,5 @@
 <p id="app-name" align="center">
-	<img width="200" height="200" src="https://avatars0.githubusercontent.com/u/64708306?s=200&v=4" title="Podrum" alt="podrum logo" styles="border-radius: 50%;"/>
+	<img width="200" height="200" src="https://avatars0.githubusercontent.com/u/64708306?s=200&v=4" title="Podrum" alt="podrum logo" style="border-radius: 50%;"/>
 </p>
 <h1 align="center"><a href="https://github.com/Podrum/Podrum">Podrum</a></h1>
 
