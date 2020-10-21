@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="256" height="256" src="https://cdn.discordapp.com/attachments/576826528671858709/766767561681141790/Logo.png">
+  <img width="256" style="border-radius:10px;" height="256" src="https://cdn.discordapp.com/attachments/576826528671858709/766767561681141790/Logo.png">
 
 
 <div align="center">
@@ -8,18 +8,21 @@
 <hr/>
 
 # Podrum
-Is a Minecraft: Bedrock Edition server software written in Python.
+Is a Minecraft (bedrock) server software written in Python.
 Still under active development, but yet it has few advantages:
-1.  Podrum is written in Python, it is easy to use.
-2.  Simple and fast to pick-up plugin API.
-We welcome contributions!
+1.  Easy to use.
+2.  Written in Python which make plugins easier to write.
 
 ## Features:
  - [ ] World Generation
  - [ ] Networking
- - [x] Commands (Under development)
+ - [x] Commands
  - [X] MOTD
- - [ ] Mobs
+ - [ ] Mobs 
+
+# FAQ:
+ - Can I contribute?
+ > Yes, why do you think it's open source?
 
 ## Running:
 Linux and MacOS (Unix systems):
