@@ -1,6 +1,6 @@
 <p align="center">
   <img width="256" height="256" src="https://cdn.discordapp.com/attachments/576826528671858709/766767561681141790/Logo.png">
-</p>
+
 
 <div align="center">
     <a href="https://discord.gg/SGWCwd6"><img src="https://img.shields.io/discord/705730982338101280?style=flat-square"/></a>
@@ -37,3 +37,12 @@ pip install -r requirements.txt
 python src/__main__.py
 ```
 
+
+> ## Features:
+- [x] MOTD
+- [ ] NETWORKING
+- [x] Commands
+- [ ] Mobs
+- [ ] World generation
+
+**Not joinable yet**
