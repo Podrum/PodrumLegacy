@@ -1,18 +1,27 @@
-<p id="app-name" align="center">
-	<img width="200" height="200" src="https://avatars0.githubusercontent.com/u/64708306?s=200&v=4" title="Podrum" alt="podrum logo"/>
-</p>
-<h1 align="center"><a href="https://github.com/Podrum/Podrum">Podrum</a></h1>
+<p align="center">
+  <img width="256" height="256" src="https://cdn.discordapp.com/attachments/576826528671858709/766767561681141790/Logo.png">
+
 
 <div align="center">
     <a href="https://discord.gg/SGWCwd6"><img src="https://img.shields.io/discord/705730982338101280?style=flat-square"/></a>
 </div>
 <hr/>
 
-> ### Why Podrum?
-- Easy to use.
-- Written in Python, plugins are easy to write.
+# Podrum
+Is a Minecraft: Bedrock Edition server software written in Python.
+Still under active development, but yet it has few advantages:
+1.  Podrum is written in Python, it is easy to use.
+2.  Simple and fast to pick-up plugin API.
+We welcome contributions!
 
-> ## How to run
+## Features:
+ - [ ] World Generation
+ - [ ] Networking
+ - [x] Commands (Under development)
+ - [X] MOTD
+ - [ ] Mobs
+
+## Running:
 Linux and MacOS (Unix systems):
 ```sh
 python3 -m venv /venv
