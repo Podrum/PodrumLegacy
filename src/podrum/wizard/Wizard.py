@@ -10,7 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.lang import Base
+from podrum.lang.Base import Base
 from podrum.utils.ServerFS import ServerFS
 from podrum.wizard.Parser import Parser
 
@@ -51,7 +51,7 @@ class Wizard:
                     step += 1
                 else:
                     print("[!] That language does not exists. Please, choose one from the list.")
-            if(step == 1):
+            elif(step == 1):
                 print(Wizard.podrumLicense)
                 userInput = input("> " + Base.Base.get("acceptLicense") + ": ")
                 if Parser.checkYesNo(userInput) == True:
@@ -60,7 +60,7 @@ class Wizard:
                     print(Base.Base.get("mustAcceptLicense"))
                 elif Parser.checkYesNo(userInput) == None:
                     print(Base.Base.get("writeYesOrNo"))
-            if(step == 2):
+            elif(step == 2):
                 userInput = input("> " + Base.Base.get("wizardSetup") + ": ")
                 if Parser.checkYesNo(userInput) == True:
                     step += 1
@@ -68,11 +68,11 @@ class Wizard:
                     print("> " + Base.Base.get("wizardSkipped"))
                     Wizard.skipWizard(path)
                     break
-            if(step == 3):
+            elif(step == 3):
                 print(Wizard.podrumLogo)
                 print(">- Podrum - Wizard -<\n\n")
                 step += 1
-            if(step == 4):
+            elif(step == 4):
                 userInput = input("[>] " + Base.Base.get("writeServerPort") + " ")
                 if userInput == "":
                     Wizard.options.append("19132")
@@ -80,23 +80,23 @@ class Wizard:
                 elif userInput.isdigit():
                     Wizard.options.append(userInput)
                     step += 1
-            if(step == 5):
+            elif(step == 5):
                 userInput = input("[>] " + Base.Base.get("writeMOTD") + " ")
                 if(userInput != ""):
                     Wizard.options.append(userInput)
                     step += 1
-            if(step == 6):
+            elif(step == 6):
                 userInput = input("[>] " + Base.Base.get("writeGamemode") + " ")
                 if userInput.isdigit():
                     if int(userInput) >= 0 and int(userInput) <= 3:
                         Wizard.options.append(userInput)
                         step += 1
-            if(step == 7):
+            elif(step == 7):
                 userInput = input("[>] " + Base.Base.get("writeMaxPlayers") + " ")
                 if userInput.isdigit():
                     Wizard.options.append(userInput)
                     step += 1
-            if(step == 8):
+            elif(step == 8):
                 print(Base.Base.get("wizardFinished"))
                 Wizard.endWizard(path)
                 break
