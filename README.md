@@ -8,21 +8,22 @@
 <hr/>
 
 # Podrum
-Is a Minecraft (bedrock) server software written in Python.
+Is a Minecraft (Bedrock and Java) server software written in Python.
 Still under active development, but yet it has few advantages:
-1.  Easy to use.
-2.  Written in Python which make plugins easier to write.
+**1.** Easy to use.
+**2.** Written in Python which make plugins easier to write.
+**3.** Work with both Java and Bedrock
 
 ## Features:
  - [ ] World Generation
  - [ ] Networking
  - [x] Commands
- - [X] MOTD
+ - [ ] MOTD (Bedrock only)
  - [ ] Mobs 
 
 # FAQ:
  - Can I contribute?
- > Yes, why do you think it's open source?
+ > Sure.
 
 ## Running:
 Linux and MacOS (Unix systems):
@@ -30,14 +31,14 @@ Linux and MacOS (Unix systems):
 python3 -m venv /venv
 ./venv/Scripts/activate.sh
 pip3 install -r requirements.txt
-python3 src/__main__.py
+python3 -O src/__main__.py
 ```
 Windows:
 ```bat
 python -m venv /venv
 call .\venv\Scripts\activate.bat
 pip install -r requirements.txt
-python src/__main__.py
+python -O src/__main__.py
 ```
 
 
