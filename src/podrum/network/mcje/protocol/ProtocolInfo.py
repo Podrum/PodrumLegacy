@@ -4,7 +4,20 @@ class ProtocolInfo:
     VERSION = "v1.16.3"
     VERSION_NETWORK = "1.16.3"
 
-    # Protocol info
+    # Handshake Protocol info
     HANDSHAKING = 0x00
+    LEGACY_SERVER_LIST = 0xfe
+    RESPONSE = 0x00
     PONG = 0x01
+    REQUEST = 0x00
+    PING = 0x01
     
+    # Login Protocol info
+    DISCONNECT = 0x00
+    ENCRYPTION_REQUEST = 0x01
+    LOGIN_SUCCESS = 0x02
+    SET_COMPRESSION = 0x03
+    LOGIN_PLUGIN_REQUEST = 0x04
+    LOGIN_START = 0x00
+    ENCRYPTION_RESPONSE = 0x01
+    LOGIN_PLUGIN_RESPONSE = 0x02
