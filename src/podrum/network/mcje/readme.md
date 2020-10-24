@@ -1,6 +1,4 @@
-<center>
-  <p><b>Minecraft Java Edition protocol</b></p>
-</center>
+<h1 align="center"><b>Minecraft Java Edition protocol</b></h1>
 
 ### This is the java edition protocol for podrum
 
