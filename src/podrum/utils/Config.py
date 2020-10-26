@@ -10,216 +10,81 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import re
-import os
 import json
-import yaml
+import os
 import pickle
-from podrum.utils import Logger
+import re
+import toml
+import yaml
 
-from podrum.ServerFS.ServerFS import read
-from podrum.Server import Server
+from podrum import Server
+from podrum.utils.Properties import Properties
 
 class Config:
     DETECT = -1
-    PROPERTIES = 0
-    CNF = PROPERTIES
-    JSON = 1
-    YAML = 2
-    EXPORT = 3
-    SERIALIZED = 4
-    ENUM = 5
-    ENUMERATION = ENUM
+    JSON = 0
+    YAML = 1
+    PROPERTIES = 2
+    TOML = 4
+    INI = 5
     
-    config = {}
-    nestedCache = []
-    file = None
-    correct = False
-    _type = DETECT
-
     formats = {
-        "properties" : PROPERTIES,
-        "cnf" : CNF,
-        "conf" : CNF,
-        "config" : CNF,
-        "json" : JSON,
-        "js" : JSON,
-        "yml" : YAML,
-        "yaml" : YAML,
-        "export" : EXPORT,
-        "xport" : EXPORT,
-        "sl" : SERIALIZED,
-        "serialize" : SERIALIZED,
-        "txt" : ENUM,
-        "list" : ENUM,
-        "enum" : ENUM,
+        "json": JSON,
+        "yml": YAML,
+        "properties": PROPERTIES,
+        "toml": TOML,
+        "ini": INI
     }
-
-    def __init__(self, file: str, _type: int = DETECT, default = [], correct = None):
-        self.load(file, _type, default)
-        correct = self.correct
     
-    def reload(self):
+    server = None
+    config = None
+    formatType = None
+    filePath = None
+    
+    def __init__(self):
+        self.server = Server.Server()
+        
+    def fixYamlIndexes(self, data):
+        return re.sub(r"#^( *)(y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF)( *)\:#m", "\1\"\2\"\3:", data)
+        
+    def load(self, filePath, formatType = DETECT):
         self.config = {}
-        self.nestedCache = []
-        self.correct = False
-        self.load(self.file, self._type)
-        
-    @staticmethod
-    def fixYAMLIndexes(_str: str) -> str:
-        return re.sub(r"#^( *)(y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF)( *)\:#m", "\1\"\2\"\3:", _str)
-    
-    def load(self, file, _type = DETECT, default = []):
-        self.correct = True
-        self._type = int(_type)
-        self.file = file
-        if not isinstance(default, dict):
-            default = {}
-        if not os.path.exists(file):
-            self.config = default
-            self.save()
-        else:
-            if self.type == self.DETECT:
-                bname = os.path.basename(self.file)
-                extension = bname.split(".")
-                arrlist = extension.pop()
-                extension = arrlist.strip().lower()
-                if self.isset(self.formats[extension]):
-                    self.type = self.formats[extension]
-                else:
-                    self.correct = False
-            if self.correct:
-                content = open(self.file).read()
-            if (self._type == self.PROPERTIES) and (self._type == self.CNF):
-                self.parseProperties(content)
-            elif self._type == self.JSON:
+        self.formatType = formatType
+        self.filePath = filePath
+        if os.path.isfile(filePath):
+            file = open(filePath).read()
+            if self.formatType == self.DETECT:
+                bname = os.path.basename(self.filePath)
+                extension = os.path.splitext(bname)[0]
+                try:
+                    self.formatType = self.formats[extension]
+                except:
+                    return
+            if self.formatType == self.JSON:
                 self.config = json.loads(content)
-            elif self._type == self.YAML:
-                content = self.fixYAMLIndexes(content)
-                self.config = yaml.load(content)
-            elif self._type == self.SERIALIZED:
-                self.config = pickle.loads(content)
-            elif self._type == self.ENUM:
-                self.parseList(content)
-            else:
-                self.correct = False
-                return False
-            if not self.is_array(self.config): # Is array doesn't exist
-                self.config = default
-            if self.fillDefaults(default, self.config) > 0:
-                self.save()
-            else:
-                return False
-
-        return True
-
-    def check():
-        return correct == True
-    
-    def save(self) -> None:
-        if self.correct == True:
-            try:
-                content = None
-                if (self._type == self.PROPERTIES) or (self._type == self.CNF):
-                    content = writeProperties()
-                elif self._type == self.JSON:
-                    content = json.dumps(config)
-                elif self._type == self.YAML:
-                    content = yaml.emit(config)
-                elif self._type == self.SERIALIZED:
-                    content = pickle.dumps(self.config)
-                elif self._type == self.ENUM:
-                    "\r\n".join(config.keys())
-                else:
-                    correct = False
-                    return False
-            except ValueError:
-                Logger.log('error', 'Could not save Config' + str(self.file))
-            return True
-        else:
-            return false
-        
-    def setJsonOption(self, options: int):
-        if self.__type is not self.JSON:
-            raise RuntimeError("Attempt to set JSON options for non-JSON config")
-        self.json_options = options
-        self.changed = True
-
-        return self
-
-    def enableJsonOption(self, options: int):
-        if self.__type is not self.JSON:
-            raise RuntimeError("Attempt to enable  JSON options for non-JSON config")
-        self.json_options |= options
-        self.changed = True
-
-        return self
-
-    def disableJsonOption(self, options: int):
-        if self.__type is not self.JSON:
-            raise RuntimeError("Attempt to disable JSON options for non-JSON config")
-        self.json_options &= ~options
-        self.changed = True
-
-        return self
-
-    def getJsonOption(self) -> int:
-        if self.__type is not self.JSON:
-            raise RuntimeError("Attempt to get JSON options for non-JSON config")
-        return self.json_options
-
-    def get(self, k, default = False):
-        return self.config[k] if self.config[k] else default
-
-    def set(self, k, v = True):
-        self.config[k] = v
-        self.changed = True
-        for nkey, nvalue in self.nested_cache:
-            if nkey[0:len(k) + 1] is k + ".":
-                del self.nested_cache[nkey]
+            elif self.formatType == self.YAML:
+                self.fixYamlIndexes(content)
+                self.config = yaml.loads(content)
+            elif self.formatType == self.PROPERTIES:
+                self.config = Properties.loads(content)
+            elif self.formatType == self.TOML:
+                self.config = toml.loads(content)
+            elif self.formatType == self.INI:
+                self.config = toml.loads(content)
                 
-    def getAll(self, keys = False):
-        return self.config.keys() if keys == True else self.config   
-
-    def setAll(self, v):
-        self.config = v
-        
-    def fillDefaults(self, default, data):
-        changed = 0
-        for k, v in default:
-            if isinstance(v, dict):
-                if(not data[k] in locals() or data[k] in globals() or not isinstance(data[k], dict)):
-                    data[k] = {}
-                changed += self.fillDefaults(v, data[k])
-            elif(not data[k] in locals() or data[k] in globals()):
-                data[k] = v
-                changed = changed + 1
-        return changed
-    
-    def setDefaults(self, defaults: dict):
-        self.fillDefaults(defaults, self.config)
-
-    def writeProperties(self) -> str:
-        content = "#Properties Config file\r\n#" + time.strftime("%c") + "\r\n"
-        for k, v in self.config.items():
-            if isinstance(v, bool):
-                v = "on" if v else "off"
-            elif isinstance(v, list):
-                v = ';'.join(v)
-            content += str(k) + "=" + str(v) + "\r"
-        return content
-
-    def parseProperties(self, content: str):
-        matches = re.findall(r'/([a-zA-Z0-9\-_\.]+)[ \t]*=([^\r\n]*)/u', content)
-        if len(matches) > 0:
-            for i, k in enumerate(matches[1]):
-                v = str(matches[2][i]).strip()
-                if v.lower() == "on" or v.lower() == "true" or v.lower() == "yes":
-                    v = True
-                    break
-                if v.lower() == "off" or v.lower() == "false" or v.lower() == "no":
-                    v = False
-                    break
-                if self.config[k]:
-                    Logger.log('debug', "[Config] Repeated property {} on file {}".format(k, self.file))
-                self.config[k] = v
+    def save(self):
+        file = open(self.filePath, "w")
+        try:
+            if self.formatType == self.JSON:
+                json.dump(self.config, file)
+            elif self.formatType == self.YAML:
+                yaml.dump(self.config, file)
+            elif self.formatType == self.PROPERTIES:
+                Properties.dump(self.config, file)
+            elif self.formatType == self.TOML:
+                toml.dump(self.config, file)
+            elif self.formatType == self.INI:
+                toml.dump(self.config, file)
+        except:
+            self.server.getLogger().log("error", f"Could not save the config: {self.filePath}")
+                

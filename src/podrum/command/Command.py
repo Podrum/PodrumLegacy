@@ -11,6 +11,18 @@
 """
 
 class Command:
+    name = None
+    description = None
 
-    def onCommand(string, fromConsole):
+    def __init__(self, name = "", description = ""):
+        self.name = name
+        self.description = description
+
+    def execute(self, sender, args):
         pass
+
+    def getName(self):
+        return self.name
+
+    def getDescription(self):
+        return self.description
