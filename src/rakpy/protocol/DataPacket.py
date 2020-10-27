@@ -10,7 +10,7 @@ class DataPacket(Packet):
     sequenceNumber = None
     
     def encodePayload(self):
-        self.putLTriad(self..sequenceNumber)
+        self.putLTriad(self.sequenceNumber)
         for packet in self.packets:
             self.put(packet.toBinary() if isinstance(packet, EncapsulatedPacket) else packet.buffer)
         
