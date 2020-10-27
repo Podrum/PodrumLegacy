@@ -10,67 +10,61 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from abc import ABCMeta, abstractmethod
-
-from podrum.nbt.tag.ByteArrayTag import ByteArrayTag
-from podrum.nbt.tag.ByteTag import ByteTag
-from podrum.nbt.tag.CompoundTag import CompoundTag
-from podrum.nbt.tag.DoubleTag import DoubleTag
-from podrum.nbt.tag.FloatTag import FloatTag
-from podrum.nbt.tag.IntArrayTag import IntArrayTag
-from podrum.nbt.tag.IntTag import IntTag
-from podrum.nbt.tag.ListTag import ListTag
-from podrum.nbt.tag.LongArrayTag import LongArrayTag
-from podrum.nbt.tag.LongTag import LongTag
-from podrum.nbt.tag.NamedTag import NamedTag
-from podrum.nbt.tag.ShortTag import ShortTag
-from podrum.nbt.tag.StringTag import StringTag
+from podrum.nbt.tag import ByteArrayTag
+from podrum.nbt.tag import ByteTag
+from podrum.nbt.tag import CompoundTag
+from podrum.nbt.tag import DoubleTag
+from podrum.nbt.tag import FloatTag
+from podrum.nbt.tag import IntArrayTag
+from podrum.nbt.tag import IntTag
+from podrum.nbt.tag import ListTag
+from podrum.nbt.tag import LongArrayTag
+from podrum.nbt.tag import LongTag
+from podrum.nbt.tag import NamedTag
+from podrum.nbt.tag import ShortTag
+from podrum.nbt.tag import StringTag
 
 class NBT:
-    __metaclass__ = ABCMeta
-    
-    TAG_End = 0
-    TAG_Byte = 1
-    TAG_Short = 2
-    TAG_Int = 3
-    TAG_Long = 4
-    TAG_Float = 5
-    TAG_Double = 6
-    TAG_ByteArray = 7
-    TAG_String = 8
-    TAG_List = 9
-    TAG_COMPOUND = 10
-    TAG_IntArray = 11
-    TAG_LongArray = 12
-    
-    @staticmethod
-    def createTag(type: int) -> NamedTag:
-        if type == NBT.TAG_Byte:
-            return ByteTag()
-        elif type == NBT.TAG_Short:
-            return ShortTag()
-        elif type == NBT.TAG_Int:
-            return IntTag()
-        elif type == NBT.TAG_Long:
-            return LongTag()
-        elif type == NBT.TAG_Float:
-            return FloatTag()
-        elif type == NBT.TAG_Double:
-            return DoubleTag()
-        elif type == NBT.TAG_ByteArray:
-            return ByteArrayTag()
-        elif type == NBT.TAG_String:
-            return StringTag()
-        elif type == NBT.TAG_List:
-            return ListTag()
-        elif type == NBT.TAG_Compound:
-            return CompoundTag()
-        elif type == NBT.TAG_IntArray:
-            return IntArrayTag()
-        elif type == NBT.TAG_LongArray:
-            return LongArrayTag()
+    tagType = {
+        "EndTag": 0,
+        "ByteTag": 1,
+        "ShortTag": 2,
+        "IntTag": 3,
+        "LongTag": 4,
+        "FloatTag": 5,
+        "DoubleTag": 6,
+        "ByteArrayTag": 7,
+        "StringTag": 8,
+        "ListTag": 9,
+        "CompoundTag": 10,
+        "IntArrayTag": 11,
+        "LongArrayTag": 12
+    }
+
+    def createTag(self, type: int) -> NamedTag:
+        if type == self.tagType["ByteTag"]:
+            return ByteTag.ByteTag()
+        elif type == self.tagType["ShortTag"]:
+            return ShortTag.ShortTag()
+        elif type == self.tagType["IntTag"]:
+            return IntTag.IntTag()
+        elif type == self.tagType["LongTag"]:
+            return LongTag.LongTag()
+        elif type == self.tagType["FloatTag"]:
+            return FloatTag.FloatTag()
+        elif type == self.tagType["DoubleTag"]:
+            return DoubleTag.DoubleTag()
+        elif type == self.tagType["ByteArrayTag"]:
+            return ByteArrayTag.ByteArrayTag()
+        elif type == self.tagType["StringTag"]:
+            return StringTag.StringTag()
+        elif type == self.tagType["ListTag"]:
+            return ListTag.ListTag()
+        elif type == self.tagType["CompoundTag"]:
+            return CompoundTag.CompoundTag()
+        elif type == self.tagType["IntArrayTag"]:
+            return IntArrayTag.IntArrayTag()
+        elif type == self.tagType["LongArrayTag"]:
+            return LongArrayTag.LongArrayTag()
         else:
-            raise ValueError("Unknown NBT tag type " + str(type))
-    
-    
-    
+            raise Exception(f"Unknown NBT tag type {str(type)}")
