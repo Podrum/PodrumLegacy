@@ -26,7 +26,7 @@ class Packet(BinaryStream):
             InternetAddress(addr, port, ver)
         elif ver == 6:
             self.getLShort()
-            port = this.getShort()
+            port = self.getShort()
             self.getInt()
             addr = socket.inet_ntop(socket.AF_INET6, self.get(16))
             self.getInt()
