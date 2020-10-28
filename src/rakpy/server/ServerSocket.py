@@ -19,14 +19,17 @@ class ServerSocket:
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
        
     def receiveBuffer(self):
-        data = self.socket.recvfrom(65535, 0)
-        print(f"IN -> {data}")
-        return data
+        try:
+            data = self.socket.recvfrom(65535, 0)
+            print(f"IN -> {data}")
+            return data
+        except:
+            pass
           
     def sendBuffer(self, buffer, address):
         data = self.socket.sendto(buffer, address)
         print(f"OUT -> {data}")
         return data
-      
+    
     def closeSocket(self):
         self.socket.close()

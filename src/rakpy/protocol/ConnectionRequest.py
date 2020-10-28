@@ -11,9 +11,9 @@ class ConnectionRequest(Packet):
     def encodePayload(self):
         self.putLong(self.clientId)
         self.putLong(self.time)
-        self.putBool(self.useSecure)
+        self.putByte(self.useSecure)
         
     def decodePayload(self):
         self.clientId = self.getLong()
         self.time = self.getLong()
-        self.useSecure = self.getBool()
+        self.useSecure = self.getByte()
