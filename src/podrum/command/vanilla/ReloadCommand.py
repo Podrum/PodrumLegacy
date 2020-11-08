@@ -18,7 +18,7 @@ class ReloadCommand(Command):
         super().__init__("reload", "Reload Command")
 
     def execute(self, sender, args):
-        plugin = GeneralVariable.plugin
+        plugin = GeneralVariables.plugin
         sender.sendMessage("Reloading...")
         plugin.unloadAll()
         plugin.loadAll()
