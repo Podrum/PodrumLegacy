@@ -56,6 +56,7 @@ class Server:
         Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
         Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
         Logger.log('info', str(Base.get("license")))
+        GeneralVariables.server = self
         GeneralVariables.plugin = Plugin("./plugins", self)
         GeneralVariables.plugin.loadAll()
         doneTime = Utils.microtime(True)
