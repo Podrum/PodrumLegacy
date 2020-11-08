@@ -9,6 +9,11 @@ class Plugin:
     pluginsDir = ""
     plugins = {}
     pluginsCount = 0
+    
+    def __init__(self, pluginsDir, server = None):
+         self.pluginsDir = pluginsDir
+         if server:
+             self.server = server
 
     def load(self, dir):
         plugin = ZipFile(dir, "r")
