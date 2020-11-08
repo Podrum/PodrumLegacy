@@ -5,12 +5,15 @@ import sys
 from zipfile import ZipFile
 
 class Plugin:
+    server = None
     pluginsDir = ""
     plugins = {}
     pluginsCount = 0
 
-    def __init__(self, pluginsDir):
+    def __init__(self, pluginsDir, server = None):
         self.pluginsDir = pluginsDir
+        if server:
+            self.server = server
 
     def load(self, dir):
         plugin = ZipFile(dir, "r")
@@ -33,6 +36,7 @@ class Plugin:
         obj.description = pluginInfo["description"]
         obj.author = pluginInfo["author"]
         obj.version = pluginInfo["version"]
+        obj.server = self.server
         obj().onEnable()
         self.pluginsCount += 1
 
