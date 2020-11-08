@@ -57,7 +57,7 @@ class Server:
         Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
         Logger.log('info', str(Base.get("license")))
         GeneralVariables.plugin = Plugin("./plugins", self)
-        GeneralVariables.loadAll()
+        GeneralVariables.plugin.loadAll()
         doneTime = Utils.microtime(True)
         self.mainInterface = NetworkInterface()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
