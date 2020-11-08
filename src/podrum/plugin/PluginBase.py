@@ -16,9 +16,12 @@ class PluginBase:
 
     def getVersion(self):
         return self.version
-    
+
     def getServer(self):
         return self.server
+
+    def onLoad(self):
+        pass
 
     def onEnable(self):
         pass
