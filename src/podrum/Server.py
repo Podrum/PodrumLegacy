@@ -14,6 +14,7 @@ import time
 import os
 
 from podrum.command.CommandReader import CommandReader
+from podrum.GeneralVariables import GeneralVariables
 from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
 from podrum.network.NetworkInterface import NetworkInterface
@@ -25,7 +26,6 @@ from podrum.utils.Utils import Utils
 from podrum.wizard.Wizard import Wizard
 
 class Server:
-    plugin = None
     path = None
     withWizard = None
     operators = None
@@ -56,10 +56,8 @@ class Server:
         Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
         Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
         Logger.log('info', str(Base.get("license")))
-        Plugin.pluginsDir = "./plugins"
-        Plugin.server = self
-        self.plugin = Plugin()
-        self.plugin.loadAll()
+        GeneralVariables.plugin = Plugin("./plugins", self)
+        GeneralVariables.loadAll()
         doneTime = Utils.microtime(True)
         self.mainInterface = NetworkInterface()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
