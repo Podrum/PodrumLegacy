@@ -21,7 +21,7 @@ class PluginsCommand(Command):
         plugin = GeneralVariables.plugin
         pluginsString = ""
         for count, pluginName in enumerate(plugin.plugins):
-            pluginsString.join(pluginName)
+            pluginsString += pluginName
             if count >= plugin.pluginsCount:
-                pluginsString.join(", ")
+                pluginsString += ", "
         sender.sendMessage(f"Plugins({plugin.pluginsCount}): {pluginsString}")
