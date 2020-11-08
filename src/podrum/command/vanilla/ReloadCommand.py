@@ -19,6 +19,6 @@ class ReloadCommand(Command):
 
     def execute(self, sender, args):
         sender.sendMessage("Reloading...")
-        Plugin.unloadAll()
-        Plugin.loadAll()
+        Plugin().unloadAll()
+        Plugin().loadAll()
         sender.sendMessage("Reload successful!")
