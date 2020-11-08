@@ -19,6 +19,9 @@ class PluginBase:
     
     def getServer(self):
         return self.server
+    
+    def onLoad(self):
+        pass
 
     def onEnable(self):
         pass
