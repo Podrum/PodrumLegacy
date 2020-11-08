@@ -11,7 +11,7 @@
 """
 
 from podrum.command.Command import Command
-from podrum.plugin.PluginLoader import PluginLoader
+from podrum.plugin.Plugin import Plugin
 
 class PluginsCommand(Command):
     def __init__(self, name = "", description = ""):
@@ -19,8 +19,8 @@ class PluginsCommand(Command):
 
     def execute(self, sender, args):
         pluginsString = ""
-        for pluginName in PluginLoader.loadedPluginsList:
+        for count, pluginName in enumerate(Plugin.plugins):
             pluginsString.join(pluginName)
-            if pluginName != PluginLoader().loadedPluginsList[PluginLoader().loadedPluginsCount - 1]:
+            if count >= Plugin.pluginsCount:
                 pluginsString.join(", ")
-        sender.sendMessage(f"Plugins({PluginLoader.loadedPluginsCount}): {pluginsString}")
+        sender.sendMessage(f"Plugins({Plugin.pluginsCount}): {pluginsString}")
