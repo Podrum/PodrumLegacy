@@ -11,7 +11,7 @@
 """
 
 from podrum.command.Command import Command
-from podrum.plugin.PluginLoader import PluginLoader
+from podrum.plugin.Plugin import Plugin
 
 class ReloadCommand(Command):
     def __init__(self, name = "", description = ""):
@@ -19,5 +19,6 @@ class ReloadCommand(Command):
 
     def execute(self, sender, args):
         sender.sendMessage("Reloading...")
-        PluginLoader().reloadAll()
+        Plugin.unloadAll()
+        Plugin.loadAll()
         sender.sendMessage("Reload successful!")
