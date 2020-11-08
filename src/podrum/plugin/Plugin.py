@@ -28,6 +28,7 @@ class Plugin:
         module_str, obj_str = pluginInfo["main"].rsplit(".", 1)
         module = importlib.import_module(module_str)
         obj = getattr(module, obj_str)
+        obj().onLoad()
         self.plugins[pluginInfo["name"]] = {
             "description": pluginInfo["description"] if "description" in pluginInfo else "",
             "author": pluginInfo["author"] if "author" in pluginInfo else "",
