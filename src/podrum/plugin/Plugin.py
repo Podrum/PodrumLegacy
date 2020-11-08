@@ -46,7 +46,7 @@ class Plugin:
     def loadAll(self):
         for fileName in os.listdir(self.pluginsDir):
             path = self.pluginsDir
-            if not self.pluginsDir.endswith("/") or not self.pluginsDir.endswith("\"):
+            if not self.pluginsDir.endswith("/") or not self.pluginsDir.endswith("\\"):
                 path += "/"
             path += fileName
             if os.path.isfile(path):
