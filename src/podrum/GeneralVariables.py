@@ -1,0 +1,2 @@
+class GeneralVariables:
+    plugin = None
