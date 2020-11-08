@@ -44,7 +44,11 @@ class Plugin:
         self.pluginsCount += 1
 
     def loadAll(self):
-        for path in os.listdir(self.pluginsDir):
+        for fileName in os.listdir(self.pluginsDir):
+            path = self.pluginsDir
+            if not self.pluginsDir.endswith("/") or not self.pluginsDir.endswith("\"):
+                path += "/"
+            path += fileName
             if os.path.isfile(path):
                 if path.endswith(".pyz"):
                     self.load(path)
