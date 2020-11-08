@@ -18,14 +18,13 @@ from podrum.lang.Base import Base
 from podrum.network.PacketPool import PacketPool as Pool
 from podrum.network.NetworkInterface import NetworkInterface
 from podrum.Player import Player
-from podrum.plugin.PluginLoader import PluginLoader
+from podrum.plugin.Plugin import Plugin
 from podrum.utils.Logger import Logger
 from podrum.utils.ServerFS import ServerFS
 from podrum.utils.Utils import Utils
 from podrum.wizard.Wizard import Wizard
 
 class Server:
-    pluginLoader = PluginLoader()
     path = None
     withWizard = None
     operators = None
@@ -56,7 +55,8 @@ class Server:
         Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
         Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
         Logger.log('info', str(Base.get("license")))
-        self.pluginLoader.loadAll()
+        plugin = Plugin()
+        plugin.loadAll()
         doneTime = Utils.microtime(True)
         self.mainInterface = NetworkInterface()
         finishStartupSeconds = "%.3f" % (doneTime - startTime)
