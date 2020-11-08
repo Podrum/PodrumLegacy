@@ -20,6 +20,6 @@ class StopCommand(Command):
 
     def execute(self, sender, args):
         sender.sendMessage("Stopping server...")
-        Plugin.unloadAll()
+        Plugin().unloadAll()
         sender.sendMessage("Server stopped.")
         Utils.killServer()
