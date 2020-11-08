@@ -3,6 +3,7 @@ class PluginBase:
     description = ""
     author = ""
     version = ""
+    server = None
 
     def getName(self):
         return self.name
