@@ -10,8 +10,11 @@ class Plugin:
     plugins = {}
     pluginsCount = 0
     
-    def __init__(self, pluginsDir, server = None):
-         self.pluginsDir = pluginsDir
+    def __init__(self, pluginsDir = None, server = None):
+         if pluginsDir:
+             if not os.path.isdir(pluginsDir):
+                 os.mkdir(pluginsDir)
+             self.pluginsDir = pluginsDir
          if server:
              self.server = server
 
