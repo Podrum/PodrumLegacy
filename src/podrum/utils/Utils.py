@@ -81,24 +81,12 @@ class Utils:
         return result
     
     @staticmethod
-    def HMACSHA256(data, secret):
-        encodedData = data.encode()
-        byteSecret = secret.encode()
-        return hmac.new(byteSecret, encodedData, hashlib.sha256).hexdigest().upper()
-    
-    @staticmethod
-    def base64UrlEncode(data):
-        return base64.urlsafe_b64encode(data.encode()).replace(b"=", b"").decode()
-    
-    @staticmethod
-    def base64UrlDecode(data):
-        return base64.urlsafe_b64decode(data).decode()
-    
-    @staticmethod
-    def encodeJWT(header, payload, secret):
-        body = Utils.base64UrlEncode(json.dumps(header)) + "." + Utils.base64UrlEncode(json.dumps(payload))
-        secret = Utils.HMACSHA256(body, secret)
-        return body + "." + Utils.base64UrlEncode(secret)
+    def encodeJwt(header, payload, verifySigniture):
+        body = []
+        body.insert(0, base64.b64encode(json.dumps(header).encode()).decode())
+        body.insert(1, base64.b64encode(json.dumps(payload).encode()).decode())
+        body.insert(2, base64.b64encode(hmac.new(verifySigniture.encode(), ".".join(body).encode(), hashlib.sha256).hexdigest().upper().encode()).decode())
+        return ".".join(body)
     
     @staticmethod
     def decodeJwt(token):
