@@ -101,17 +101,11 @@ class Utils:
         return body + "." + Utils.base64UrlEncode(secret)
     
     @staticmethod
-    def decodeJWT(token: str):
-        [headB64, payloadB64, sigB64] = token.split(".")
-        rawPayloadJSON = Utils.base64UrlDecode(payloadB64)
-        if rawPayloadJSON == False:
-            raise Exception("Payload base64 is invalid and cannot be decoded")
-        decodedPayload = json.loads(rawPayloadJSON)
-        if isinstance(decodedPayload, str):
-            decodedPayload = json.loads(decodedPayload)
-        if not isinstance(decodedPayload, dict):
-            raise Exception("Decoded payload should be dict, " + str(type(decodedPayload).__name__)  + " received")
-        return decodedPayload
+    def decodeJwt(token):
+        header, payload, verifySigniture = token.split(".")
+        payload += "=="
+        json_data = base64.b64decode(payload.replace("-_", "+/")).decode()
+        return json.loads(json_data)
     
     @staticmethod
     def searchList(lst: list, item):
