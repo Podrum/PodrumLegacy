@@ -10,6 +10,8 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from podrum.network.raknet.Reliability import Reliability
+
 class EncapsulatedPacket:
     buffer = None
     messageIndex = None
@@ -30,3 +32,17 @@ class EncapsulatedPacket:
         length = stream.getShort() >> 3
         if length == 0:
             raise Exception("Got an empty encapsulated packet")       
+        if Reliability.isReliable(packet.reliability):
+            packet.messageIndex = stream.getLTriad()
+        if Reliability.isSequenced(packet.reliability):
+            packet.sequenceIndex = stream.getLTriad()
+        if Reliability.isSequencedOrOrdered(packet.reliability):
+            packet.orderIndex = stream.getLTriad()
+            packet.orderChannel = stream.getByte()
+        if packet.split:
+            packet.splitCount = stream.getInt()
+            packet.splitId = stream.getShort()
+            packet.splitIndex = stream.getInt()
+        packet.buffer = stream.buffer[stream.offset:]
+        stream.offset += length
+        return packet
