@@ -71,4 +71,8 @@ class EncapsulatedPacket:
     
     def getTotalLength(self):
         length = 3
-        length += 
+        length += len(self.buffer)
+        length += 3 if self.messageIndex else 0
+        length += 4 if self.orderIndex else 0
+        length += 10 if self.split else 0
+        return length
