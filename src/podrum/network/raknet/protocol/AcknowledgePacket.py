@@ -10,6 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from binutilspy.BinaryStream import BinaryStream
 from podrum.network.raknet.protocol.Packet import Packetfrom podrum.network.raknet.protocol.Packet import Packet
 
 class AcknowledgePacket:
@@ -28,3 +29,37 @@ class AcknowledgePacket:
             else:
                 packet = self.getLTriad()
                 self.packets.append(packet)
+
+    def encodePayload(self):
+        records = 0
+        stream = BinaryStream()
+        self.packets.sort()
+        if len(self.packets) > 0:
+            start = self.packets[0]
+            last = self.packets[0]
+            for pointer in range(1, len(self.packets)):
+                current = self.packets[pointer]
+                diff = current - last
+                if diff == 1:
+                    last = current
+                elif diff > 1:
+                    if start == last:
+                        stream.putByte(1)
+                        stream.putLTriad(start)
+                        start = last = current
+                    else:
+                        stream.putByte(0)
+                        stream.putLTriad(start)
+                        stream.putLTriad(last)
+                        start = last = current
+                    records += 1
+            if start == last:
+                stream.putByte(1)
+                stream.putLTriad(start)
+            else:
+                stream.putByte(0)
+                stream.putLTriad(start)
+                stream.putLTriad(last)
+            records += 1
+        self.putShort(records)
+        self.put(stream.buffer)
