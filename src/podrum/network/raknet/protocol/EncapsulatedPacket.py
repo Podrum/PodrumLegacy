@@ -55,17 +55,17 @@ class EncapsulatedPacket:
             header |= 0x10
         stream.putByte(header)
         stream.putShort(len(self.buffer) << 3)
-        if Reliability.isReliable(packet.reliability):
-            stream.putLTriad(packet.messageIndex)
-        if Reliability.isSequenced(packet.reliability):
-            stream.putLTriad(packet.sequenceIndex)
-        if Reliability.isSequencedOrOrdered(packet.reliability):
-            stream.putLTriad(packet.orderIndex)
-            stream.putByte(packet.orderChannel)
+        if Reliability.isReliable(self.reliability):
+            stream.putLTriad(self.messageIndex)
+        if Reliability.isSequenced(self.reliability):
+            stream.putLTriad(self.sequenceIndex)
+        if Reliability.isSequencedOrOrdered(self.reliability):
+            stream.putLTriad(self.orderIndex)
+            stream.putByte(self.orderChannel)
         if packet.split:
-            stream.putInt(packet.splitCount)
-            stream.putShort(packet.splitId)
-            stream.putInt(packet.splitIndex)
+            stream.putInt(self.splitCount)
+            stream.putShort(self.splitId)
+            stream.putInt(self.splitIndex)
         stream.put(self.buffer)
         return stream
     
