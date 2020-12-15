@@ -11,7 +11,7 @@
 """
 
 from binutilspy.BinaryStream import BinaryStream
-from podrum.network.raknet.protocol.Packet import Packetfrom podrum.network.raknet.protocol.Packet import Packet
+from podrum.network.raknet.protocol.Packet import Packet
 
 class AcknowledgePacket:
     def decodePayload(self):
