@@ -14,6 +14,8 @@ from binutilspy.BinaryStream import BinaryStream
 from podrum.network.raknet.protocol.Packet import Packet
 
 class AcknowledgePacket:
+    packets = []
+    
     def decodePayload(self):
         self.packets = []
         recordCount = self.getShort()
