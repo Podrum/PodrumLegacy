@@ -4,14 +4,7 @@ $depsURL = 'https://raw.githubusercontent.com/Podrum/Podrum/master/requirements.
 
 function A-Start {
     if (Is-First-Launch) {
-        Write-Host 'First launch, creating venv...'
-        Create-Venv
-        Activate-Venv
-
-        Write-Host 'Installing dependencies...'
-        wget $depsURL -outfile ".\tmp-requirements.txt"
-        pip install -r tmp-requirements.txt
-        Remove-Item '.\tmp-requirements.txt'
+        First-Launch
     }
     Activate-Venv
     if (Is-Dev) {
@@ -33,5 +26,15 @@ function Is-Dev {
 }
 function Activate-Venv {
     .\venv\Scripts\Activate.ps1
+}
+function First-Launch {
+    Write-Host 'First launch, creating venv...'
+    Create-Venv
+    Activate-Venv
+
+    Write-Host 'Installing dependencies...'
+    wget $depsURL -outfile ".\tmp-requirements.txt"
+    pip install -r tmp-requirements.txt
+    Remove-Item '.\tmp-requirements.txt'
 }
 A-Start
