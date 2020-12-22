@@ -8,13 +8,12 @@ class AcknowledgePacket(Packet):
     def encodePayload(self):
         payload = b""
         records = 0
-        self.packets.sort(key=int)
-        count = len(self.packets)
-        if count > 0:
+        self.packets.sort()
+        if len(self.packets) > 0:
             pointer = 1
             start = self.packets[0]
             last = self.packets[0]
-            while pointer < count:
+            while pointer < len(self.packets):
                 current = self.packets[pointer]
                 pointer += 1
                 diff = current - last
@@ -44,21 +43,17 @@ class AcknowledgePacket(Packet):
           
     def decodePayload(self):
         self.packets = []
-        count = self.getShort()
-        cnt = 0
-        i = 0
-        while i < count and not self.feof() and cnt < 4096:
+        recordCount = self.getShort()
+        for i in range(0, recordCount):
             recordType = self.getByte()
             if recordType == 0:
                 start = self.getLTriad()
                 end = self.getLTriad()
-                if (end - start) > 512:
-                    end = start + 512
-                c = start
-                while c <= end:
-                    self.packets.insert(cnt, c)
-                    cnt += 1
-                    c += 1
+                current = start
+                while current <= end:
+                    self.packets.append(current)
+                    if len(self.packets) > 4096:
+                        raise Exception("Max acknowledgement packet count exceed")
+                    current += 1
             else:
-                self.packets.insert(cnt, self.getLTriad())
-                cnt += 1
+                self.packets.append(self.getLTriad())

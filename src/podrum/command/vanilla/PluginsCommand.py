@@ -11,16 +11,17 @@
 """
 
 from podrum.command.Command import Command
-from podrum.plugin.PluginLoader import PluginLoader
+from podrum.GeneralVariables import GeneralVariables
 
 class PluginsCommand(Command):
     def __init__(self, name = "", description = ""):
         super().__init__("plugins", "Plugins Command")
 
     def execute(self, sender, args):
+        plugin = GeneralVariables.plugin
         pluginsString = ""
-        for pluginName in PluginLoader.loadedPluginsList:
-            pluginsString.join(pluginName)
-            if pluginName != PluginLoader().loadedPluginsList[PluginLoader().loadedPluginsCount - 1]:
-                pluginsString.join(", ")
-        sender.sendMessage(f"Plugins({PluginLoader.loadedPluginsCount}): {pluginsString}")
+        for count, pluginName in enumerate(plugin.plugins):
+            pluginsString += pluginName
+            if count >= plugin.pluginsCount:
+                pluginsString += ", "
+        sender.sendMessage(f"Plugins({plugin.pluginsCount}): {pluginsString}")

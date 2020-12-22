@@ -7,7 +7,7 @@
     "langSelectedAsBase": "تم إختياراللغه العربيه كلغه اساسيه.",
     "wizardSetup": "هل تريد اتباع الخطوات؟ [Y/N]",
     "wizardSkipped": "تم تخطي البرنامج.",
-    "writeYesOrNo": "الرجاء كتابة (y) او (no).,
+    "writeYesOrNo": "الرجاء كتابة (y) او (no).",
     "writeServerPort": "اكتب منفذ الخادم (الاساسي: 19132)",
     "writeMOTD": "اكتب رسالة الخادم اليوميه.",
     "writeMaxPlayers": "اكتب العدد الاقصى المسموح به لدخول اللاعبين.",
