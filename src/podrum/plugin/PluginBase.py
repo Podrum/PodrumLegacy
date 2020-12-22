@@ -1,39 +1,10 @@
-"""
-*  ____           _
-* |  _ \ ___   __| |_ __ _   _ _ __ ___
-* | |_) / _ \ / _` | '__| | | | '_ ` _ \
-* |  __/ (_) | (_| | |  | |_| | | | | | |
-* |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
-*
-* Licensed under the Apache License, Version 2.0 (the "License")
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-"""
-
-from podrum.plugin.PluginLoader import PluginLoader
-
 class PluginBase:
     name = ""
     description = ""
     author = ""
     version = ""
-    apiVersion = ""
-    
-    def __init__(self):
-        self.name = PluginLoader.name
-        self.description = PluginLoader.description
-        self.author = PluginLoader.author
-        self.version = PluginLoader.version
-        self.apiVersion = PluginLoader.apiVersion
-    
-    def onStart(self): pass
+    server = None
 
-    def onStarted(self): pass
-
-    def onStop(self): pass
-
-    def onStopped(self): pass
-    
     def getName(self):
         return self.name
 
@@ -45,6 +16,15 @@ class PluginBase:
 
     def getVersion(self):
         return self.version
+    
+    def getServer(self):
+        return self.server
+    
+    def onLoad(self):
+        pass
 
-    def getApiVersion(self):
-        return self.apiVersion
+    def onEnable(self):
+        pass
+
+    def onDisable(self):
+        pass

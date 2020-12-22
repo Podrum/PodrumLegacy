@@ -10,10 +10,16 @@ class UnconnectedPing(OfflinePacket):
     def encodePayload(self):
         self.putLong(self.time)
         self.putMagic()
-        self.putLong(self.clientId)
+        try:
+            self.putLong(self.clientId)
+        except:
+            pass
         
     def decodePayload(self):
         self.time = self.getLong()
         self.magic = self.getMagic()
-        self.clientId = self.getLong()
+        try:
+            self.clientId = self.getLong()
+        except:
+            pass
     

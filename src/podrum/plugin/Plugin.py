@@ -1,46 +1,65 @@
-"""
-*  ____           _
-* |  _ \ ___   __| |_ __ _   _ _ __ ___
-* | |_) / _ \ / _` | '__| | | | '_ ` _ \
-* |  __/ (_) | (_| | |  | |_| | | | | | |
-* |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
-*
-* Licensed under the Apache License, Version 2.0 (the "License")
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-"""
-
-import array
-import os
+import importlib
 import json
-import zipfile
+import os
+import sys
+from zipfile import ZipFile
 
 class Plugin:
-    def getPluginsDir(self):
-        return os.getcwd() + "/plugins"
-
-    def getPlugin(self, plugin):
-        return zipfile.ZipFile(plugin)
+    server = None
+    pluginsDir = ""
+    plugins = {}
+    pluginsCount = 0
     
-    def getJsonManifest(self, plugin):
-        data = self.getPlugin(plugin).open("plugin.json").read()
-        jsonData = json.loads(data)
-        return jsonData
-                
-    def getName(self, plugin):
-        return self.getJsonManifest(plugin)["name"]
+    def __init__(self, pluginsDir = None, server = None):
+         if pluginsDir:
+             if not os.path.isdir(pluginsDir):
+                 os.mkdir(pluginsDir)
+             self.pluginsDir = pluginsDir
+         if server:
+             self.server = server
 
-    def getDescription(self, plugin):
-        return self.getJsonManifest(plugin)["description"]
+    def load(self, dir):
+        plugin = ZipFile(dir, "r")
+        pluginInfo = json.loads(plugin.read("plugin.json"))
+        if pluginInfo["name"] in self.plugins:
+            print("Cannot load duplicate plugin " + pluginInfo["name"])
+            return
+        sys.path.append(dir)
+        module_str, obj_str = pluginInfo["main"].rsplit(".", 1)
+        module = importlib.import_module(module_str)
+        obj = getattr(module, obj_str)
+        obj().onLoad()
+        self.plugins[pluginInfo["name"]] = {
+            "description": pluginInfo["description"] if "description" in pluginInfo else "",
+            "author": pluginInfo["author"] if "author" in pluginInfo else "",
+            "version": pluginInfo["version"] if "version" in pluginInfo else "",
+            "api-version": pluginInfo["api-version"],
+            "main": obj()
+        }
+        obj.name = pluginInfo["name"]
+        obj.description = pluginInfo["description"]
+        obj.author = pluginInfo["author"]
+        obj.version = pluginInfo["version"]
+        obj.server = self.server
+        obj().onEnable()
+        self.pluginsCount += 1
 
-    def getAuthor(self, plugin):
-        return self.getJsonManifest(plugin)["author"]
+    def loadAll(self):
+        for fileName in os.listdir(self.pluginsDir):
+            path = self.pluginsDir
+            if not self.pluginsDir.endswith("/") or not self.pluginsDir.endswith("\\"):
+                path += "/"
+            path += fileName
+            if os.path.isfile(path):
+                if path.endswith(".pyz"):
+                    self.load(path)
 
-    def getVersion(self, plugin):
-        return self.getJsonManifest(plugin)["version"]
+    def unload(self, name):
+        if name in self.plugins:
+            self.plugins[name]["main"].onDisable()
+            del self.plugins[name]
+            self.pluginsCount -= 1
 
-    def getApiVersion(self, plugin):
-        return self.getJsonManifest(plugin)["api-version"]
-
-    def getMain(self, plugin):
-        return self.getJsonManifest(plugin)["main"]
+    def unloadAll(self):
+        for name in dict(self.plugins):
+            self.unload(name)

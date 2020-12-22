@@ -44,12 +44,4 @@ pip install -r requirements.txt
 python -O src/__main__.py
 ```
 
-
-> ## Features:
-- [x] MOTD
-- [ ] NETWORKING
-- [x] Commands
-- [ ] Mobs
-- [ ] World generation
-
 **Not joinable yet**

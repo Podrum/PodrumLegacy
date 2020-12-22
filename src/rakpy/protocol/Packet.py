@@ -1,3 +1,5 @@
+import socket
+
 from binutilspy.BinaryStream import BinaryStream
 from rakpy.utils.InternetAddress import InternetAddress
 
@@ -7,7 +9,7 @@ class Packet(BinaryStream):
     sendTime = None
     
     def getString(self):
-        return self.get(self.getShort()).decode()
+        return self.get(self.getShort())
 
     def putString(self, value):
         self.putShort(len(value))
@@ -23,14 +25,14 @@ class Packet(BinaryStream):
                 str((~self.getByte()) & 0xff)
             ])
             port = self.getShort()
-            InternetAddress(addr, port, ver)
+            return InternetAddress(addr, port, ver)
         elif ver == 6:
             self.getLShort()
-            port = this.getShort()
+            port = self.getShort()
             self.getInt()
             addr = socket.inet_ntop(socket.AF_INET6, self.get(16))
             self.getInt()
-            InternetAddress(addr, port, ver)
+            return InternetAddress(addr, port, ver)
         else:
             raise Exception(f"Unknown address version {ver}")
 

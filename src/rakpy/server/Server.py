@@ -1,6 +1,7 @@
 from binutilspy.Binary import Binary
 from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 from rakpy.protocol.UnconnectedPing import UnconnectedPing
+from rakpy.protocol.UnconnectedPingOpenConnection import UnconnectedPingOpenConnection
 from rakpy.protocol.UnconnectedPong import UnconnectedPong
 from rakpy.protocol.OpenConnectionRequest1 import OpenConnectionRequest1
 from rakpy.protocol.OpenConnectionReply1 import OpenConnectionReply1
@@ -16,7 +17,7 @@ from threading import Thread
 from time import sleep, time as timeNow
 
 class Server(Thread):
-    protocol = 10
+    accepted_protocols = [5, 6, 7, 8, 9, 10]
     raknetTps = 100
     raknetTickLength = 1 / raknetTps
     
@@ -30,7 +31,7 @@ class Server(Thread):
     def __init__(self, address, interface = None):
         super().__init__()
         self.socket = ServerSocket(address)
-        if interface != None:
+        if interface is not None:
             self.interface = interface
         else:
             self.interface = ServerInterface()
@@ -48,6 +49,19 @@ class Server(Thread):
         packet.serverName = self.name
         packet.encode()
         return packet.buffer
+
+    def handleUnconnectedPingOpenConnection(self, data):
+        decodedPacket = UnconnectedPingOpenConnection()
+        decodedPacket.buffer = data
+        decodedPacket.decode()
+        if not decodedPacket.isValid:
+            raise Exception("Invalid offline message")
+        packet = UnconnectedPong()
+        packet.time = decodedPacket.time
+        packet.serverId = self.id
+        packet.serverName = self.name
+        packet.encode()
+        return packet.buffer
     
     def handleOpenConnectionRequest1(self, data):
         decodedPacket = OpenConnectionRequest1()
@@ -55,9 +69,10 @@ class Server(Thread):
         decodedPacket.decode()
         if not decodedPacket.isValid:
             raise Exception("Invalid offline message")
-        if decodedPacket.protocolVersion != self.protocol:
+        print(decodedPacket.protocolVersion)
+        if decodedPacket.protocolVersion not in self.accepted_protocols:
             packet = IncompatibleProtocol()
-            packet.protocol = self.protocol
+            packet.protocol = decodedPacket.protocolVersion
             packet.serverId = self.id
             packet.encode()
             return packet.buffer
@@ -92,6 +107,8 @@ class Server(Thread):
         else:
             if header == PacketIdentifiers.UnconnectedPing:
                 self.socket.sendBuffer(self.handleUnconnectedPing(data), (address.getAddress(), address.getPort()))
+            elif header == PacketIdentifiers.UnconnectedPingOpenConnection:
+                self.socket.sendBuffer(self.handleUnconnectedPingOpenConnection(data), (address.getAddress(), address.getPort()))
             elif header == PacketIdentifiers.OpenConnectionRequest1:
                 self.socket.sendBuffer(self.handleOpenConnectionRequest1(data), (address.getAddress(), address.getPort()))
             elif header == PacketIdentifiers.OpenConnectionRequest2:
@@ -116,7 +133,7 @@ class Server(Thread):
     def run(self):
         while True:
             buffer = self.socket.receiveBuffer()
-            if buffer != None:
+            if buffer is not None:
                 data, address = buffer
                 self.handle(data, InternetAddress(address[0], address[1]))
                 self.tick()
