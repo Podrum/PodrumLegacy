@@ -36,12 +36,11 @@ python3 -m venv /venv
 pip3 install -r requirements.txt
 python3 -O src/__main__.py
 ```
+Or you can use Powershell.
+
 Windows:
-```bat
-python -m venv /venv
-call .\venv\Scripts\activate.bat
-pip install -r requirements.txt
-python -O src/__main__.py
+```powershell
+.\start.ps1
 ```
 
 **Not joinable yet**
