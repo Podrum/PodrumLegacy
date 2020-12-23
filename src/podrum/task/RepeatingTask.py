@@ -10,9 +10,9 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from podrum.task.Task import Task
 from threading import Thread
-import time
-from Task import Task
+import time import sleep
 
 class RepeatingTask(Task):
     interval = None
@@ -28,4 +28,4 @@ class RepeatingTask(Task):
     def run(self):
         while self.isRunning:
             self.taskObject()
-            time.sleep(self.interval)
+            sleep(self.interval)
