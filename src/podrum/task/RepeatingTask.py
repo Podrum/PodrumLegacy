@@ -11,7 +11,6 @@
 """
 
 from podrum.task.Task import Task
-from threading import Thread
 from time import sleep
 
 class RepeatingTask(Task):
