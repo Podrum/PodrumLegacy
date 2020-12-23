@@ -16,7 +16,7 @@ from time import sleep
 class DelayedTask(Task):
     delay = None
 
-    def __init__(self, taskObject, taskId, delay = 0):
+    def __init__(self, taskObject, taskId, delay):
         self.delay = delay
         super().__init__(taskObject, taskId)
 
