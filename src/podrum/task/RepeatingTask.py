@@ -12,7 +12,7 @@
 
 from podrum.task.Task import Task
 from threading import Thread
-import time import sleep
+from time import sleep
 
 class RepeatingTask(Task):
     interval = None
