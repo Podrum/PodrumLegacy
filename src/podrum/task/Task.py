@@ -10,9 +10,8 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import time
+from podrum.task.TaskManager import TaskManager
 from threading import Thread
-from TaskManager import TaskManager
 
 class Task(Thread):
     taskObject = None
