@@ -71,13 +71,13 @@ class Utils:
         pluginsFolder = f"{path}/plugins"
         worldsFolder = f"{path}/worlds"
         if not os.path.isfile(serverConfig):
-            file = open(serverConfig, "+w")
+            file = open(serverConfig, "+wb")
             if os.path.isfile(Utils.getPodrumDir()):
                 zip = ZipFile(Utils.getPodrumDir(), "r")
                 file.write(zip.read("podrum/resources/server.json"))
             else:
                 file2 = open(Utils.getPodrumDir() + "/podrum/resources/server.json", "r")
-                file.write(file2.read())
+                file.write(file2.read().encode())
             return False
         if not os.path.isdir(pluginsFolder):
             os.mkdir(pluginsFolder)
@@ -88,11 +88,7 @@ class Utils:
     @staticmethod
     def getDefaultConfigFile():
         path = os.getcwd()
-        if os.path.isfile(Utils.getPodrumDir()):
-            zip = ZipFile(Utils.getPodrumDir())
-            file = zip.open(path + "/server.json", "r+")
-        else:
-            file = open(path + "/server.json", "r+")
+        file = open(path + "/server.json", "r+")
         return file
 
     @staticmethod
