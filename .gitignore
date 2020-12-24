@@ -13,7 +13,6 @@ src/pyraklib/server/__pycache__
 
 # Server/Podrum files
 /src/test
-server.json
 /plugins/
 /worlds/
 
