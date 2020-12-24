@@ -46,7 +46,7 @@ class Wizard:
             return
 
     @staticmethod
-    def start(server):
+    def start():
         config = Utils.getDefaultConfig()
         step = 0
         while step >= 0:
