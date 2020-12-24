@@ -52,7 +52,7 @@ class Server:
             Base.addFromZipDir(Utils.getPodrumDir(), "podrum/lang/languages")
         else:
             Base.addFromDir(Utils.getPodrumDir() + "/" + "podrum/lang/languages")
-        if not Utils.checkAllFiles():
+        if not Utils.checkAllFiles() and withWizard:
             Wizard.start()
             while Wizard.isInWizard:
                 pass
