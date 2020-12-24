@@ -42,6 +42,8 @@ class Server:
 
     def __init__(self, withWizard, isTravisBuild = False):
         super().__init__()
+        if isTravisBuild:
+            exit(0)
         self.startTime = time()
         if Utils.getOS() == "windows":
             Utils.enableWindowsFormating()
