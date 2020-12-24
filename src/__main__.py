@@ -12,25 +12,23 @@
 """
 
 import sys
-import inspect
-from os import getcwd, path
 from threading import Thread
 from podrum.Server import Server
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
         if sys.argv[1] == "--no_wizard" and sys.argv[2] == "-travis":
-            serverThread = Thread(target=Server, args=(getcwd(), False, True))
+            serverThread = Thread(target=Server, args=(False, True))
         else:
             print("[!] None valid args selected.")
-            serverThread = Thread(target=Server, args=(getcwd(), True))
+            serverThread = Thread(target=Server, args=(True))
     elif len(sys.argv) == 2:
         if sys.argv[1] == "--no_wizard":
-                serverThread = Thread(target=Server, args=(getcwd(), False))
+                serverThread = Thread(target=Server, args=(False))
         else:
             print("[!] None valid args selected.")
-            serverThread = Thread(target=Server, args=(getcwd(), True))
+            serverThread = Thread(target=Server, args=(True))
     else:
-        serverThread = Thread(target=Server, args=(getcwd(), True))
+        serverThread = Thread(target=Server, args=(True))
 
     serverThread.start()
