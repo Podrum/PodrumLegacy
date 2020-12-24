@@ -53,7 +53,7 @@ class Server:
         else:
             Base.addFromDir(Utils.getPodrumDir() + "/" + "podrum/lang/languages")
         if not Utils.checkAllFiles():
-            Wizard.start(self)
+            Wizard.start()
             while Wizard.isInWizard:
                 pass
         print(str(self.podrumLogo))
