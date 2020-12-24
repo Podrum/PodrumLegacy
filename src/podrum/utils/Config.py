@@ -12,79 +12,74 @@
 
 import json
 import os
-import pickle
+from podrum.utils.Properties import Properties
+from podrum.utils.Logger import Logger
 import re
 import toml
 import yaml
 
-from podrum import Server
-from podrum.utils.Properties import Properties
 
 class Config:
-    DETECT = -1
-    JSON = 0
-    YAML = 1
-    PROPERTIES = 2
-    TOML = 4
-    INI = 5
-    
     formats = {
-        "json": JSON,
-        "yml": YAML,
-        "properties": PROPERTIES,
-        "toml": TOML,
-        "ini": INI
+        "detect": -1,
+        "json": 0,
+        "yml": 1,
+        "properties": 2,
+        "toml": 3,
+        "ini": 4
     }
     
     server = None
     config = None
-    formatType = None
-    filePath = None
-    
-    def __init__(self):
-        self.server = Server.Server()
+    format = None
+    file = None
         
     def fixYamlIndexes(self, data):
         return re.sub(r"#^( *)(y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF)( *)\:#m", "\1\"\2\"\3:", data)
         
-    def load(self, filePath, formatType = DETECT):
+    def load(self, file, configFormat = formats["detect"]):
         self.config = {}
-        self.formatType = formatType
-        self.filePath = filePath
-        if os.path.isfile(filePath):
-            file = open(filePath).read()
-            if self.formatType == self.DETECT:
-                bname = os.path.basename(self.filePath)
-                extension = os.path.splitext(bname)[0]
-                try:
-                    self.formatType = self.formats[extension]
-                except:
-                    return
-            if self.formatType == self.JSON:
-                self.config = json.loads(content)
-            elif self.formatType == self.YAML:
-                self.fixYamlIndexes(content)
-                self.config = yaml.loads(content)
-            elif self.formatType == self.PROPERTIES:
-                self.config = Properties.loads(content)
-            elif self.formatType == self.TOML:
-                self.config = toml.loads(content)
-            elif self.formatType == self.INI:
-                self.config = toml.loads(content)
+        self.format = configFormat
+        self.file = file
+        content = file.read()
+        if self.format == self.formats["detect"]:
+            baseName = os.path.basename(self.file.name)
+            extension = baseName.rsplit(".", 1)[1]
+            if extension in self.formats:
+                self.format = self.formats[extension]
+        if self.format == self.formats["json"]:
+            self.config = json.loads(content)
+        elif self.format == self.formats["yaml"]:
+            self.fixYamlIndexes(content)
+            self.config = yaml.loads(content)
+        elif self.format == self.formats["properties"]:
+            self.config = Properties.loads(content)
+        elif self.format == self.formats["toml"]:
+            self.config = toml.loads(content)
+        elif self.format == self.formats["ini"]:
+            self.config = toml.loads(content)
+
+    def close(self):
+        self.file.close()
                 
     def save(self):
-        file = open(self.filePath, "w")
         try:
-            if self.formatType == self.JSON:
-                json.dump(self.config, file)
-            elif self.formatType == self.YAML:
-                yaml.dump(self.config, file)
-            elif self.formatType == self.PROPERTIES:
-                Properties.dump(self.config, file)
-            elif self.formatType == self.TOML:
-                toml.dump(self.config, file)
-            elif self.formatType == self.INI:
-                toml.dump(self.config, file)
-        except:
-            self.server.getLogger().log("error", f"Could not save the config: {self.filePath}")
+            if self.format == self.formats["json"]:
+                self.file = open(self.file.name , "+w")
+                json.dump(self.config, self.file)
+            elif self.format == self.formats["yaml"]:
+                self.file = open(self.file.name , "+w")
+                yaml.dump(self.config, self.file)
+            elif self.format == self.formats["properties"]:
+                self.file = open(self.file.name , "+w")
+                Properties.dump(self.config, self.file)
+            elif self.format == self.formats["toml"]:
+                self.file = open(self.file.name , "+w")
+                toml.dump(self.config, self.file)
+            elif self.format == self.formats["ini"]:
+                self.file = open(self.file.name , "+w")
+                toml.dump(self.config, self.file)
+        except Exception as e:
+            Logger.error(f"Could not save the config: {self.file.name}")
+            Logger.error(e)
                 

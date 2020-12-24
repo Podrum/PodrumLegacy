@@ -11,16 +11,16 @@
 """
 
 import base64
-import binascii
 import json
 import os
+from podrum.utils.Config import Config
 import signal
 import sys
 import socket
-import time
-import urllib.request
+from urllib import request
 import hmac
 import hashlib
+from zipfile import ZipFile
 
 class Utils:
     @staticmethod
@@ -31,6 +31,12 @@ class Utils:
             return 'osx'
         elif sys.platform == 'win32' or sys.platform == 'win64':
             return 'windows'
+
+    @staticmethod
+    def enableWindowsFormating():
+        from ctypes import windll
+        kernel = windll.kernel32
+        kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)
         
     @staticmethod
     def killServer():
@@ -45,40 +51,55 @@ class Utils:
     
     @staticmethod
     def getPublicIpAddress():
-        ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+        ip = request.urlopen('https://ident.me').read().decode('utf8')
         return ip
-    
+
     @staticmethod
-    def microtime(get_as_float = False) :
-        if get_as_float:
-            return time.time()
+    def getPodrumDir():
+        return os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/../../")
+
+    @staticmethod
+    def isPacked():
+        if os.path.isfile(Utils.getPodrumDir()):
+            return True
+        return False
+
+    @staticmethod
+    def checkAllFiles():
+        path = os.getcwd()
+        serverConfig = f"{path}/server.json"
+        pluginsFolder = f"{path}/plugins"
+        worldsFolder = f"{path}/worlds"
+        if not os.path.isfile(serverConfig):
+            file = open(serverConfig, "+w")
+            if os.path.isfile(Utils.getPodrumDir()):
+                zip = ZipFile(Utils.getPodrumDir(), "r")
+                file.write(zip.read("podrum/resources/server.json"))
+            else:
+                file2 = open(Utils.getPodrumDir() + "/podrum/resources/server.json", "r")
+                file.write(file2.read())
+            return False
+        if not os.path.isdir(pluginsFolder):
+            os.mkdir(pluginsFolder)
+        if not os.path.isdir(worldsFolder):
+            os.mkdir(worldsFolder)
+        return True
+
+    @staticmethod
+    def getDefaultConfigFile():
+        path = os.getcwd()
+        if os.path.isfile(Utils.getPodrumDir()):
+            zip = ZipFile(Utils.getPodrumDir())
+            file = zip.open(path + "/server.json", "r+")
         else:
-            return '%f %d' % math.modf(time.time())
-     
+            file = open(path + "/server.json", "r+")
+        return file
+
     @staticmethod
-    def hex2bin(hexdec):
-        hexdec = int(hexdec, 16)
-        dec = binascii.unhexlify('%x' % hexdec)
-        return dec
-    
-    @staticmethod
-    def binToHex(dec):
-        return binascii.hexlify(dec)
-    
-    @staticmethod
-    def bytesToInt(bytes):
-        result = 0
-        for b in bytes:
-            result = result * 256 + int(b)
-        return result
-    
-    @staticmethod
-    def intToBytes(value, length):
-        result = []
-        for i in range(0, length):
-            result.append(value >> (i * 8) & 0xff)
-        result.reverse()
-        return result
+    def getDefaultConfig():
+        config = Config()
+        config.load(Utils.getDefaultConfigFile())
+        return config
     
     @staticmethod
     def encodeJwt(header, payload, verifySigniture):
@@ -94,29 +115,3 @@ class Utils:
         payload += "=="
         json_data = base64.b64decode(payload.replace("-_", "+/")).decode()
         return json.loads(json_data)
-    
-    @staticmethod
-    def searchList(lst: list, item):
-        i = 0
-        length = len(lst)
-        while i < length:
-            key = lst[i]
-            if key == item:
-                return True
-            else:
-                pass
-            i += 1
-        return False
-    
-    @staticmethod
-    def getKeyInListFromItem(lst: list, item):
-        i = 0
-        length = len(lst)
-        while i < length:
-            key = lst[i]
-            if key == item:
-                return i
-            else:
-                pass
-            i += 1
-        return None

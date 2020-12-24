@@ -10,71 +10,64 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+from io import BytesIO
+from podrum.utils.Config import Config
 import os
-import glob
-import json
-
-from podrum.utils.TextFormat import TextFormat
-from podrum.wizard import Wizard
+from podrum.utils.Config import Config
+from podrum.utils.Utils import Utils
+from zipfile import ZipFile
 
 class Base:
+    languages = {}
 
-    """
-    getLangFiles and getLangNames are 
-    for the wizard's use
-    """
+    @staticmethod
+    def addFromFile(file):
+        newConfig = Config()
+        newConfig.load(file)
+        config = newConfig.config
+        langId = config["languageInfos"]["langId"]
+        Base.languages[langId] = config
 
-    langsList = [0]
+    @staticmethod
+    def addFromPath(path):
+        Base.addFromFile(open(path, "rb"))
 
-    def getLangFiles():
-        path = Wizard.ServerFS.getLangDir()
-        allFiles = glob.glob(path + '/*.json')
-        for file in allFiles:
-            with open(f'{file}', 'r', encoding="utf8") as langFiles:
-                data = json.load(langFiles)
-                if "langName" in data:
-                    name = data['langName']
-                else:
-                    name = 'Unknown name'
-            langs = str(file.replace(path, '').replace("\\", "").replace('.json', '').replace("/", ""))
-            Base.langsList.append(langs)
-            print(f'[{langs}] -> {name}')
+    @staticmethod
+    def addFromDir(dir):
+        for path in os.listdir(dir):
+            fullDir = dir + "/" + path
+            if os.path.isfile(fullDir):
+                Base.addFromPath(fullDir)
 
-    def getLangNames(dir):
-        return Base.langsList
+    @staticmethod
+    def addFromZipFile(zip, path):
+        file = zip.open(path)
+        Base.addFromFile(file)
 
-    """
-    A translation from the selected 
-    language is returned
-    """
-    def get(string):
-        if Wizard.Wizard.isInWizard == True:
-            path = Wizard.ServerFS.getLangDir()
-            with open(f'{path}/{Wizard.Wizard.options[0]}.json', 'r', encoding="utf8") as lF:
-                data = json.load(lF)
-                if string in data:
-                    return data[string]
-                else:
-                    print(f"The value '{string}' does not exists in this language.")
-        else:
-            if not Wizard.ServerFS.checkForFile(os.getcwd(), "server.json") or os.path.getsize(os.getcwd() + "/server.json") == 0:
-                with open(Wizard.ServerFS.getLangDir() + "/en.json", 'r', encoding='utf-8') as lF:
-                    data = json.load(lF)
-                    if string in data:
-                        return data[string]
-                    else:
-                        return print(f"{TextFormat.RED}The value '{string}' does not exists in this language")
-            serverConfig = os.getcwd() + "/server.json"
-            with open(f'{serverConfig}', 'r', encoding="utf8") as serverCfg:
-                pref = json.load(serverCfg)
-                if "Language" in pref:
-                    lang = pref["Language"]
-                else:
-                    print(f"{TextFormat.RED}Language not found in server.json")
-            path = Wizard.ServerFS.getLangDir()
-            with open(f'{path}/{lang}.json', 'r', encoding="utf8") as lF:
-                data = json.load(lF)
-                if string in data:
-                    return data[string]
-                else:
-                    print(f"{TextFormat.RED}The value '{string}' does not exists in this language")
+    @staticmethod
+    def addFromZipPath(path, path2):
+        Base.addLanguageFromZipFile(ZipFile(path, "r"), path2)
+
+    @staticmethod
+    def addFromZipDir(path, dir):
+        zip = ZipFile(path, "r")
+        for filePath in zip.namelist():
+            if filePath.startswith(dir) and filePath != (dir + "/"):
+                Base.addFromZipFile(zip, filePath)
+
+    @staticmethod
+    def translate(lang, translation):
+        if lang in Base.languages:
+            if translation in Base.languages[lang]:
+                return Base.languages[lang][translation]
+
+    @staticmethod
+    def printLanguages():
+        for langId, content in Base.languages.items():
+            print(f"{langId} -> {content['langName']}")
+
+    @staticmethod
+    def getTranslation(content):
+        config = Utils.getDefaultConfig()
+        langId = config.config["language"]
+        return Base.translate(langId, content)

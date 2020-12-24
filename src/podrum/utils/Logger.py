@@ -11,32 +11,67 @@
 """
 
 from datetime import datetime
+import inspect
 from podrum.utils.TextFormat import TextFormat
 
-TextFormat = TextFormat()
-
 class Logger:
+    @staticmethod
+    def log(logType, content):
+        dateTime = datetime.now()
+        if logType.lower() == "info":
+            color = TextFormat.blue
+        elif logType.lower() == "warn":
+            color = TextFormat.yellow
+        elif logType.lower() == "error":
+            color = TextFormat.red
+        elif logType.lower() == "success":
+            color = TextFormat.green
+        elif logType.lower() == "emergency":
+            color = TextFormat.gold
+        elif logType.lower() == "alert":
+            color = TextFormat.purple
+        elif logType.lower() == "notice":
+            color = TextFormat.aqua
+        elif logType.lower() == "critical":
+            color = TextFormat.darkRed
+        elif logType.lower() == "debug":
+            color = TextFormat.gray
+        else:
+            return
+        print(f"{color}[{logType.upper()}: {dateTime.strftime('%H:%M')}]{TextFormat.white} {content}")
 
     @staticmethod
-    def log(type_, content):
-        time = datetime.now()
-        if type_ == 'info':
-            print(f'{TextFormat.BLUE}[INFO: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == 'warn':
-            print(f'{TextFormat.YELLOW}[WARNING: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == 'error':
-            print(f'{TextFormat.RED}[ERROR: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == 'success':
-            print(f'{TextFormat.GREEN}[SUCCESS: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == "emergency":
-            print(f'{TextFormat.GOLD}[EMERGENCY: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == "alert":
-            print(f'{TextFormat.PURPLE}[ALERT: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == "notice":
-            print(f'{TextFormat.AQUA}[NOTICE: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == "critical":
-            print(f'{TextFormat.RED}[CRITICAL: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        elif type_ == "debug":
-            print(f'{TTextFormat.GRAY}[DEBUG: {time.strftime("%H:%M")}]{TextFormat.WHITE} {content}')
-        else:
-            print(f'[{type_.upper()}: {time.strftime("%H:%M")}]{content}')
+    def info(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def warn(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def error(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def success(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def emergency(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def alert(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def notice(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def critical(content):
+        Logger.log(inspect.stack()[0][3], content)
+
+    @staticmethod
+    def debug(content):
+        Logger.log(inspect.stack()[0][3], content)

@@ -10,9 +10,6 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import time
-import os
-
 from podrum.command.CommandReader import CommandReader
 from podrum.GeneralVariables import GeneralVariables
 from podrum.lang.Base import Base
@@ -21,17 +18,19 @@ from podrum.network.NetworkInterface import NetworkInterface
 from podrum.Player import Player
 from podrum.plugin.Plugin import Plugin
 from podrum.utils.Logger import Logger
-from podrum.utils.ServerFS import ServerFS
 from podrum.utils.Utils import Utils
+from time import time, sleep
 from podrum.wizard.Wizard import Wizard
 
 class Server:
-    path = None
-    withWizard = None
-    operators = None
+    tickrate = 1000 / 20
+    isTicking = True
     addr = "0.0.0.0"
     port = 19132
     players = []
+    startTime = None
+    endTime = None
+    timeDiff = None
     mainInterface = None
     podrumLogo = """
             ____           _                      
@@ -41,36 +40,34 @@ class Server:
            |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
     """
 
-    def __init__(self, path, withWizard, isTravisBuild = False):
+    def __init__(self, withWizard, isTravisBuild = False):
         super().__init__()
-        startTime = Utils.microtime(True)
-        self.path = path
-        self.withWizard = withWizard
-        self.tickrate = 1000/20
-        if(withWizard):
-            ServerFS.checkAllFiles(path)
+        self.startTime = time()
+        if Utils.getOS() == "windows":
+            Utils.enableWindowsFormating()
+        if Utils.isPacked():
+            print(Utils.getPodrumDir())
+            Base.addFromZipDir(Utils.getPodrumDir(), "podrum/lang/languages")
         else:
-            Wizard.skipWizard(path, True)
+            Base.addFromDir(Utils.getPodrumDir() + "/" + "podrum/lang/languages")
+        if not Utils.checkAllFiles():
+            Wizard.start(self)
+            while Wizard.isInWizard:
+                pass
         print(str(self.podrumLogo))
-        Wizard.isInWizard = False
-        Logger.log('info',  str(Base.get("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
-        Logger.log('info', str(Base.get("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
-        Logger.log('info', str(Base.get("license")))
+        Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
+        Logger.info(str(Base.getTranslation("extIpMsg")).replace("{ipPublic}", str(Utils.getPublicIpAddress())))
+        Logger.info(str(Base.getTranslation("license")))
         GeneralVariables.server = self
         GeneralVariables.plugin = Plugin("./plugins", self)
         GeneralVariables.plugin.loadAll()
-        doneTime = Utils.microtime(True)
+        self.endTime = time()
         self.mainInterface = NetworkInterface()
-        finishStartupSeconds = "%.3f" % (doneTime - startTime)
-        Logger.log('info', f'Done in {str(finishStartupSeconds)}s. Type "help" to view all available commands.')
-        if (isTravisBuild):
-            Server.checkTravisBuild(path)
-        else:
-            if Wizard.isInWizard == False:
-                CommandReader(self)
-            ticking = True
-            while ticking:
-                time.sleep(self.tickrate)
+        self.timeDiff = "%.3f" % (self.endTime - self.startTime)
+        Logger.info(f'Done in {str(self.timeDiff)}s. Type "help" to view all available commands.')
+        CommandReader(self)
+        while self.isTicking:
+            sleep(self.tickrate)
                 
     def getLogger(self):
         return Logger()
@@ -83,19 +80,3 @@ class Server:
 
     def sendMessage(self, message):
         self.getLogger().log("info", message)
-    
-    def checkTravisBuild(path):
-        if not ServerFS.checkForFile(path, "server.json"):
-            Logger.log("error", "Couldn't find server.json file.")
-            os._exit(1)
-        if os.path.getsize(f'{path}/server.json') == 0:
-            Logger.log("error", "The server.json file is empty.")
-            os._exit(1)
-        print("Build success.")
-        os._exit(0)
-
-    def isOp(self, name):
-        return self.operators.exists(name, True)
-
-    def getOps(self):
-        return self.operators

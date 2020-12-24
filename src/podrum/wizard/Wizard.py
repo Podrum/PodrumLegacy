@@ -10,13 +10,10 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.lang import Base
-from podrum.utils.ServerFS import ServerFS
-from podrum.wizard.Parser import Parser
+from podrum.lang.Base import Base
+from podrum.utils.Utils import Utils
 
 class Wizard:
-    
-    options = []
     isInWizard = True
     podrumLogo = """
             ____           _                      
@@ -39,74 +36,80 @@ class Wizard:
         limitations under the License.
     """
 
-    def startWizard(path):
+    @staticmethod
+    def checkYesNo(value):
+        if value.lower() == 'y' or value.lower() == 'yes':
+            return True
+        elif value.lower() == 'n' or value.lower() == 'no':
+            return False
+        else:
+            return
+
+    @staticmethod
+    def start(server):
+        config = Utils.getDefaultConfig()
         step = 0
         while step >= 0:
             if(step == 0):
-                Base.Base.getLangFiles()
+                Base.printLanguages()
                 userInput = input("> Please, select a language: ")
-                if Parser.checkIfLangExists(userInput) == True:
-                    Wizard.options.append(userInput)
-                    print("- " + Base.Base.get("langSelectedAsBase"))
+                if userInput in Base.languages:
+                    config.config["language"] = userInput
+                    print("- " + Base.getTranslation("langSelectedAsBase"))
                     step += 1
                 else:
                     print("[!] That language does not exists. Please, choose one from the list.")
             elif(step == 1):
                 print(Wizard.podrumLicense)
-                userInput = input("> " + Base.Base.get("acceptLicense") + ": ")
-                if Parser.checkYesNo(userInput) == True:
+                userInput = input("> " + Base.getTranslation("acceptLicense") + ": ")
+                if Wizard.checkYesNo(userInput) == True:
                     step += 1
-                elif Parser.checkYesNo(userInput) == False:
-                    print(Base.Base.get("mustAcceptLicense"))
-                elif Parser.checkYesNo(userInput) == None:
-                    print(Base.Base.get("writeYesOrNo"))
+                elif Wizard.checkYesNo(userInput) == False:
+                    print(Base.getTranslation("mustAcceptLicense"))
+                elif Wizard.checkYesNo(userInput) == None:
+                    print(Base.getTranslation("writeYesOrNo"))
             elif(step == 2):
-                userInput = input("> " + Base.Base.get("wizardSetup") + ": ")
-                if Parser.checkYesNo(userInput) == True:
+                userInput = input("> " + Base.getTranslation("wizardSetup") + ": ")
+                if Wizard.checkYesNo(userInput) == True:
                     step += 1
-                elif Parser.checkYesNo(userInput) == False:
-                    print("> " + Base.Base.get("wizardSkipped"))
-                    Wizard.skipWizard(path)
+                elif Wizard.checkYesNo(userInput) == False:
+                    print("> " + Base.getTranslation("wizardSkipped"))
+                    Wizard.isInWizard = False
+                    config.save()
                     break
             elif(step == 3):
                 print(Wizard.podrumLogo)
                 print(">- Podrum - Wizard -<\n\n")
                 step += 1
             elif(step == 4):
-                userInput = input("[>] " + Base.Base.get("writeServerPort") + " ")
+                userInput = input("[>] " + Base.getTranslation("writeServerPort") + " ")
                 if userInput == "":
-                    Wizard.options.append("19132")
+                    config.config["server-port"] = 19132
                     step += 1
                 elif userInput.isdigit():
-                    Wizard.options.append(userInput)
+                    config.config["server-port"] = int(userInput)
                     step += 1
             elif(step == 5):
-                userInput = input("[>] " + Base.Base.get("writeMOTD") + " ")
+                userInput = input("[>] " + Base.getTranslation("writeMOTD") + " ")
                 if(userInput != ""):
-                    Wizard.options.append(userInput)
+                    config.config["motd"] = userInput
                     step += 1
             elif(step == 6):
-                userInput = input("[>] " + Base.Base.get("writeGamemode") + " ")
+                userInput = input("[>] " + Base.getTranslation("writeGamemode") + " ")
                 if userInput.isdigit():
                     if int(userInput) >= 0 and int(userInput) <= 3:
-                        Wizard.options.append(userInput)
+                        config.config["gamemode"] = int(userInput)
                         step += 1
             elif(step == 7):
-                userInput = input("[>] " + Base.Base.get("writeMaxPlayers") + " ")
+                userInput = input("[>] " + Base.getTranslation("writeMaxPlayers") + " ")
                 if userInput.isdigit():
-                    Wizard.options.append(userInput)
+                    config.config["max-players"] = int(userInput)
                     step += 1
             elif(step == 8):
-                print(Base.Base.get("wizardFinished"))
-                Wizard.endWizard(path)
+                print(Base.getTranslation("wizardFinished"))
+                Wizard.isInWizard = False
+                config.save()
                 break
-                        
-    def skipWizard(path, isTravisBuild = False):
-        if isTravisBuild == True: Wizard.options.append("en")
-        ServerFS.createServerConfigFromWizard(path, True, Wizard.options)
-        
-    def endWizard(path):
-        ServerFS.createServerConfigFromWizard(path, False, Wizard.options)
                     
                     
                     

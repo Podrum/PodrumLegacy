@@ -10,36 +10,26 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import os
-from re import M
-from podrum.utils.Utils import Utils
-
 class TextFormat:
-
-    def __init__(self):
-        if Utils.getOS() == 'windows':
-            from ctypes import windll
-            kernel = windll.kernel32
-            kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)
-        self.BOLD = '\x1b[1m'
-        self.OBFUSCATED = ''
-        self.ITALIC = '\x1b[3m'
-        self.UNDERLINE = '\x1b[4m'
-        self.STRIKETHROUGH = '\x1b[9m'
-        self.RESET = '\x1b[m'
-        self.BLACK = '\x1b[38;5;16m'
-        self.DARKBLUE = '\x1b[38;5;19m'
-        self.DARKGREEN = '\x1b[38;5;34m'
-        self.DARKAQUA = '\x1b[38;5;37m'
-        self.DARKRED = '\x1b[38;5;124m'
-        self.PURPLE = '\x1b[38;5;127m'
-        self.GOLD = '\x1b[38;5;214m'
-        self.GRAY = '\x1b[38;5;145m'
-        self.DARKGRAY = '\x1b[38;5;59m'
-        self.BLUE = '\x1b[38;5;63m'
-        self.GREEN = '\x1b[38;5;83m'
-        self.AQUA = '\x1b[38;5;87m'
-        self.RED = '\x1b[38;5;203m'
-        self.LIGHTPURPLE = '\x1b[38;5;207m'
-        self.YELLOW = '\x1b[38;5;227m'
-        self.WHITE = '\x1b[38;5;231m'
+    bold = "\x1b[1m"
+    obfuscated = ""
+    italic = "\x1b[3m"
+    underline = "\x1b[4m"
+    strikeThrough = "\x1b[9m"
+    reset = "\x1b[m"
+    black = "\x1b[38;5;16m"
+    darkBlue = "\x1b[38;5;19m"
+    darkGreen = "\x1b[38;5;34m"
+    darkAqua = "\x1b[38;5;37m"
+    darkRed = "\x1b[38;5;124m"
+    purple = "\x1b[38;5;127m"
+    gold = "\x1b[38;5;214m"
+    gray = "\x1b[38;5;145m"
+    darkGray = "\x1b[38;5;59m"
+    blue = "\x1b[38;5;63m"
+    green = "\x1b[38;5;83m"
+    aqua = "\x1b[38;5;87m"
+    red = "\x1b[38;5;203m"
+    lightPurple = "\x1b[38;5;207m"
+    yellow = "\x1b[38;5;227m"
+    white = "\x1b[38;5;231m"
