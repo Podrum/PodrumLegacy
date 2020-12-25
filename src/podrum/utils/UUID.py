@@ -10,54 +10,41 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import hashlib
+import bin2ascii
+from binutilspy.BinaryStream import BinaryStream
 import os
+from podrum.utils.Utils import Utils
 import random
 import time
-
-from binutilspy.Binary import Binary
-from podrum.utils.Utils import Utils
 
 class UUID:
     parts = [0, 0, 0, 0]
     version = None
     
     def __init__(self, part1 = 0, part2 = 0, part3 = 0, part4 = 0, version = None):
-        self.parts[0] = int(part1)
-        self.parts[1] = int(part2)
-        self.parts[2] = int(part3)
-        self.parts[3] = int(part4)
-        self.version = (self.parts[1] & 0xf000) >> 12 if version == None else int(version)
-        
-    def getVersion(self):
-        return self.version
-    
-    def equals(self, uuid):
-        return uuid.parts[0] == self.parts[0] and uuid.parts[1] == self.parts[1] and uuid.parts[2] == self.parts[2] and uuid.parts[3] == self.parts[3]
-    
+        self.parts = [part1, part2, part3, part4]
+        self.version = version if version else ((self.parts[1] & 0xf000) >> 12)
+
     def fromBinary(self, uuid, version = None):
         if len(uuid) != 16:
             raise Exception("Must have exactly 16 bytes")
-        return UUID(Binary.readInt(uuid[0:4]), Binary.readInt(uuid[4:4 + 4]), Binary.readInt(uuid[8:8 + 4]), Binary.readInt(uuid[12:12 + 4]), version)
-
-    def fromString(self, uuid, version = None):
-        return self.fromBinary(Utils.hex2bin(uuid.strip().replace("-", "")), version)
-    
-    def fromData(self, data):
-        hash = hashlib.new("md5").update("".join(data))
-        return self.fromBinary(hash, 3)
-
-    def fromRandom(self):
-        return self.fromData(Binary.writeInt(int(time.time())), Binary.writeShort(os.getpid()), Binary.writeShort(os.geteuid()), Binary.writeInt(random.randint(-0x7fffffff, 0x7fffffff)), Binary.writeInt(random.randint(-0x7fffffff, 0x7fffffff)))
+        stream = BinaryStream(uuid)
+        return UUID(stream.getInt(), stream.getInt(), stream.getInt(), stream.getInt(), version)
     
     def toBinary(self):
-        return Binary.writeInt(self.parts[0]) + Binary.writeInt(self.parts[1]) + Binary.writeInt(self.parts[2]) + Binary.writeInt(self.parts[3])
-    
+        stream = BinaryStream()
+        stream.putInt(self.parts[0])
+        stream.putInt(self.parts[1])
+        stream.putInt(self.parts[2])
+        stream.putInt(self.parts[3])
+        return stream.buffer
+
+    def fromString(self, uuid, version = None):
+        return self.fromBinary(bin2ascii.unhexlify(uuid.strip().replace("/-/g", "").encode()), version)
+
     def toString(self):
-        hex = Utils.bin2hex(self.toBinary())
-        if self.version != None:
-            return hex[0:8] + "-" + hex[8:8 + 4] + "-" + int(self.version, 16) + hex[13:13 + 3] + "-8" + hex[17:17 + 3] + "-" + hex[20:20 + 12]
-        return hex[0:8] + "-" + hex[8:8 + 4] + "-" + hex[12:12 + 4] + "-" + hex[16:16 + 4] + "-" + hex[20:20 + 12]
+        stream = BinaryStream(bin2ascii.hexlify(self.toBinary()))
+        return f"{stream.get(8).decode()}-{stream.get(4).decode()}-{stream.get(4).decode()}-{stream.get(4).decode()}-{stream.get(16).decode()}"
     
     def getPart(self, partNumber: int):
         if partNumber < 0 or partNumber > 3:
