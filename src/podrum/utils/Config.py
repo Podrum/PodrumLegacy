@@ -66,7 +66,7 @@ class Config:
         try:
             if self.format == self.formats["json"]:
                 self.file = open(self.file.name , "+w")
-                json.dump(self.config, self.file)
+                json.dump(self.config, self.file, indent = 4)
             elif self.format == self.formats["yaml"]:
                 self.file = open(self.file.name , "+w")
                 yaml.dump(self.config, self.file)
