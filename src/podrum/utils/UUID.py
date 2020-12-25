@@ -10,7 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-import bin2ascii
+import binascii
 from binutilspy.BinaryStream import BinaryStream
 import os
 from podrum.utils.Utils import Utils
@@ -40,10 +40,10 @@ class UUID:
         return stream.buffer
 
     def fromString(self, uuid, version = None):
-        return self.fromBinary(bin2ascii.unhexlify(uuid.strip().replace("/-/g", "").encode()), version)
+        return self.fromBinary(binascii.unhexlify(uuid.strip().replace("/-/g", "").encode()), version)
 
     def toString(self):
-        stream = BinaryStream(bin2ascii.hexlify(self.toBinary()))
+        stream = BinaryStream(binascii.hexlify(self.toBinary()))
         return f"{stream.get(8).decode()}-{stream.get(4).decode()}-{stream.get(4).decode()}-{stream.get(4).decode()}-{stream.get(16).decode()}"
     
     def getPart(self, partNumber: int):
