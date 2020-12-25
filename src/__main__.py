@@ -33,4 +33,4 @@ if __name__ == "__main__":
             print("[!] None valid args selected.")
             start(True)
     else:
-        start(True))
+        start(True)
