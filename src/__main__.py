@@ -15,20 +15,22 @@ import sys
 from threading import Thread
 from podrum.Server import Server
 
+def start(withWizard, isTravisBuild = False):
+    thread = Thread(target = Server, args = (withWizard, isTravisBuild))
+    thread.start()          
+
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
         if sys.argv[1] == "--no_wizard" and sys.argv[2] == "-travis":
-            serverThread = Thread(target=Server, args=(False, True))
+            start(False, True)
         else:
             print("[!] None valid args selected.")
-            serverThread = Thread(target=Server, args=(True))
+            start(True)
     elif len(sys.argv) == 2:
         if sys.argv[1] == "--no_wizard":
-                serverThread = Thread(target=Server, args=(False))
+                start(False)
         else:
             print("[!] None valid args selected.")
-            serverThread = Thread(target=Server, args=(True))
+            start(True)
     else:
-        serverThread = Thread(target=Server, args=(True))
-
-    serverThread.start()
+        start(True))
