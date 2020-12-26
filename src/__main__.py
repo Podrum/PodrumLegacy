@@ -17,20 +17,16 @@ from podrum.Server import Server
 
 def start(withWizard, isTravisBuild = False):
     thread = Thread(target = Server, args = (withWizard, isTravisBuild))
-    thread.start()          
+    thread.start()
+
+def usage():
+    print("Usage: \"python3 -O src/__main__.py [OPTIONS]\"\nAvaiable Options:\n  --no_wizard  Starts the Server without the Wizard")
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 3:
-        if sys.argv[1] == "--no_wizard" and sys.argv[2] == "-travis":
-            start(False, True)
-        else:
-            print("[!] None valid args selected.")
-            start(True)
-    elif len(sys.argv) == 2:
+    if len(sys.argv) == 2:
         if sys.argv[1] == "--no_wizard":
                 start(False)
         else:
-            print("[!] None valid args selected.")
-            start(True)
+            usage()
     else:
         start(True)
