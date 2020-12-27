@@ -266,22 +266,22 @@ class AxisAlignedBB:
         v5 = pos1.getIntermediateWithZValue(pos2, self.minZ)
         v6 = pos1.getIntermediateWithZValue(pos2, self.maxZ)
 
-        if v1 != None and not self.isVectorYZ(v1):
+        if v1 is not None and not self.isVectorYZ(v1):
             v1 = None
 
-        if v2 != None and not self.isVectorYZ(v2):
+        if v2 is not None and not self.isVectorYZ(v2):
             v2 = None
 
-        if v3 != None and not self.isVectorXZ(v3):
+        if v3 is not None and not self.isVectorXZ(v3):
             v3 = None
 
-        if v4 != None and not self.isVectorXZ(v4):
+        if v4 is not None and not self.isVectorXZ(v4):
             v4 = None
 
-        if v5 != None and not self.isVectorXY(v5):
+        if v5 is not None and not self.isVectorXY(v5):
             v5 = None
 
-        if v6 != None and not self.isVectorXY(v6):
+        if v6 is not None and not self.isVectorXY(v6):
             v6 = None
 
         vector = None
@@ -293,7 +293,7 @@ class AxisAlignedBB:
                 vector = v
                 distance = d
 
-        if vector == None:
+        if vector is None:
             return None
 
         f = -1

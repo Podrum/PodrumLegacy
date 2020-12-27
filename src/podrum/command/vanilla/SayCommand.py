@@ -17,9 +17,7 @@ class SayCommand(Command):
         super().__init__("say", "Say Command")
 
     def execute(self, sender, args):
-        try:
-            args[1]
-        except:
-            sender.sendMessage("say <message>")
-        else:
+        if len(args) > 1:
             sender.sendMessage(" ".join(args[1:]))
+        else:
+            sender.sendMessage("say <message>")

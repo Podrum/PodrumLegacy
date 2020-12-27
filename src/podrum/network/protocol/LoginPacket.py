@@ -63,9 +63,9 @@ class LoginPacket(DataPacket):
             self.clientId = self.clientData["ClientRandomId"] if self.clientData["ClientRandomId"] != None else None
             self.serverAddress = self.clientData["ServerAddress"] if self.clientData["ServerAddress"] != None else None
             self.locale = self.clientData["LanguageCode"] if self.clientData["LanguageCode"] != None else None
-        except:
+        except Exception as e:
             if self.protocol == ProtocolInfo.MCBE_PROTOCOL_VERSION:
-                raise Exception("Error")
+                raise Exception(f"Error: {str(e)}")
                 
     def encodePayload(self): 
         pass

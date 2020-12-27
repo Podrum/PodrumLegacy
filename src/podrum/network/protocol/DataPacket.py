@@ -55,9 +55,10 @@ class DataPacket(NetBinaryStream):
         if pid != self.NID:
             raise Exception(f"Expected {self.NID} for packet ID, got " + pid)
         self.senderSubId = (header >> self.SENDER_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK
-        self.recipientSubId = (header >> self.RECIPIENT_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK;
+        self.recipientSubId = (header >> self.RECIPIENT_SUBCLIENT_ID_SHIFT) & self.SUBCLIENT_ID_MASK
     
-    def encodePayload(self): pass
+    def encodePayload(self):
+        pass
     
     def encode(self):
         self.reset()
@@ -72,8 +73,9 @@ class DataPacket(NetBinaryStream):
             (self.recipientSubId << self.RECIPIENT_SUBCLIENT_ID_SHIFT)
         )
         
-    def writePayload(self): pass
-    
+    def writePayload(self):
+        pass
+
     def clean(self):
         self.buffer = ""
         self.isEncoded = False

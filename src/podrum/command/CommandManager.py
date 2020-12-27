@@ -25,10 +25,9 @@ class CommandManager:
         self.registerVanillaCommands()
 
     def isCommand(self, command):
-        try:
-            self.commands[command]
-            return True
-        except:
+        if command in self.commands:
+            return self.commands[command]
+        else:
             Logger.log("error", "Invalid Command")
             return False
 

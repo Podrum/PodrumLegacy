@@ -40,10 +40,9 @@ class Wizard:
     def checkYesNo(value):
         if value.lower() == 'y' or value.lower() == 'yes':
             return True
-        elif value.lower() == 'n' or value.lower() == 'no':
+        if value.lower() == 'n' or value.lower() == 'no':
             return False
-        else:
-            return
+        return
 
     @staticmethod
     def start():
@@ -62,17 +61,17 @@ class Wizard:
             elif(step == 1):
                 print(Wizard.podrumLicense)
                 userInput = input("> " + Base.getTranslation("acceptLicense") + ": ")
-                if Wizard.checkYesNo(userInput) == True:
+                if Wizard.checkYesNo(userInput):
                     step += 1
-                elif Wizard.checkYesNo(userInput) == False:
+                elif not Wizard.checkYesNo(userInput):
                     print(Base.getTranslation("mustAcceptLicense"))
-                elif Wizard.checkYesNo(userInput) == None:
+                elif Wizard.checkYesNo(userInput) is None:
                     print(Base.getTranslation("writeYesOrNo"))
             elif(step == 2):
                 userInput = input("> " + Base.getTranslation("wizardSetup") + ": ")
-                if Wizard.checkYesNo(userInput) == True:
+                if Wizard.checkYesNo(userInput):
                     step += 1
-                elif Wizard.checkYesNo(userInput) == False:
+                elif not Wizard.checkYesNo(userInput):
                     print("> " + Base.getTranslation("wizardSkipped"))
                     Wizard.isInWizard = False
                     config.save()

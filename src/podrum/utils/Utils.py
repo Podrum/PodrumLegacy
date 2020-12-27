@@ -25,9 +25,9 @@ class Utils:
     def getOS():
         if sys.platform == 'linux' or sys.platform == 'linux2':
             return 'linux'
-        elif sys.platform == 'darwin':
+        if sys.platform == 'darwin':
             return 'osx'
-        elif sys.platform == 'win32' or sys.platform == 'win64':
+        if sys.platform == 'win32' or sys.platform == 'win64':
             return 'windows'
 
     @staticmethod
@@ -59,8 +59,8 @@ class Utils:
         if not os.path.isfile(serverConfig):
             file = open(serverConfig, "+wb")
             if os.path.isfile(Utils.getPodrumDir()):
-                zip = ZipFile(Utils.getPodrumDir(), "r")
-                file.write(zip.read("podrum/resources/server.json"))
+                zipFile = ZipFile(Utils.getPodrumDir(), "r")
+                file.write(zipFile.read("podrum/resources/server.json"))
             else:
                 file2 = open(Utils.getPodrumDir() + "/podrum/resources/server.json", "r")
                 file.write(file2.read().encode())

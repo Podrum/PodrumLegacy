@@ -14,14 +14,20 @@ from podrum.Player import Player
 from podrum.network.protocol.DataPacket import DataPacket
 
 class SourceInterface:
-    def putPacket(self, player: Player, packet: DataPacket, needACK = False, immediate = True): pass
+    def putPacket(self, player: Player, packet: DataPacket, needACK = False, immediate = True):
+        pass
     
-    def close(self, player: Player, reason = "unknown reason"): pass
+    def close(self, player: Player, reason = "unknown reason"):
+        pass
     
-    def setName(self, name): pass
+    def setName(self, name):
+        pass
     
-    def process(self): pass
+    def process(self):
+        pass
     
-    def shutdown(self): pass
+    def shutdown(self):
+        pass
     
-    def emergencyShutdown(self): pass
+    def emergencyShutdown(self):
+        pass

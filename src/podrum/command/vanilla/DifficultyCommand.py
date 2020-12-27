@@ -17,11 +17,7 @@ class DifficultyCommand(Command):
         super().__init__("difficulty", "Difficulty Command")
 
     def execute(self, sender, args):
-        try:
-            args[1]
-        except:
-            sender.sendMessage("difficulty <difficulty>")
-        else:
+        if len(args) == 2:
             if args[1] == "0" or args[1].lower() == "peaceful":
                 pass
             elif args[1] == "1" or args[1].lower() == "easy":
@@ -32,3 +28,5 @@ class DifficultyCommand(Command):
                 pass
             else:
                 sender.sendMessage(f"{args[1]} is not a valid parameter!")
+        else:
+            sender.sendMessage("difficulty <difficulty>")

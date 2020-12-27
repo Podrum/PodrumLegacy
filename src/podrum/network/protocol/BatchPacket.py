@@ -36,7 +36,7 @@ class BatchPacket(DataPacket):
         data = self.getRemaining()
         try:
             self.payload = zlib.decompress(data, 1024 * 1024 * 2)
-        except:
+        except Exception:
             self.payload = ""
             
     def encodeHeader(self):

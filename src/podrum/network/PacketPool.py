@@ -42,12 +42,10 @@ class PacketPool:
         self.registerPacket(ServerToClientHandshakePacket())
         
     def getPacketById(self, pid: int) -> DataPacket:
-        try:
-            self.pool[pid]
-        except:
-            return UnknownPacket()
-        else:
+        if pid in self.pool
             return deepcopy(self.pool[pid])
+        else:
+            return UnknownPacket()
         
     def getPacket(self, buffer: bytes) -> DataPacket:
         offset = 0

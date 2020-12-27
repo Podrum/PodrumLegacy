@@ -62,18 +62,16 @@ class Vector3:
     def add(self, x, y=None, z=None):
         if isinstance(x, Vector3):
             return Vector3(self.x + x.get_x(), self.y + x.get_y(), self.z + x.get_z())
-        elif x is not None and y is None and z is None:
+        if x is not None and y is None and z is None:
             return self.add(x, 0, 0)
-        elif x is not None and y is not None and z is None:
+        if x is not None and y is not None and z is None:
             return self.add(x, y, 0)
-        else:
-            return Vector3(self.x + x, self.y + y, self.z + z)
+        return Vector3(self.x + x, self.y + y, self.z + z)
 
     def substract(self, x=0, y=0, z=0):
         if isinstance(x, Vector3):
             return self.add(-x.x, -x.y, -x.z)
-        else:
-            return self.add(-x, -y, -z)
+        return self.add(-x, -y, -z)
 
     def multiply(self, number):
         return Vector3(self.x * number, self.y * number, self.z * number)
@@ -96,18 +94,17 @@ class Vector3:
     def get_side(self, side, step):
         if side is Facing.DOWN:
             return Vector3(self.x, self.y - step, self.z)
-        elif side is Facing.UP:
+        if side is Facing.UP:
             return Vector3(self.x, self.y + step, self.z)
-        elif side is Facing.NORTH:
+        if side is Facing.NORTH:
             return Vector3(self.x, self.y, self.z - step)
-        elif side is Facing.SOUTH:
+        if side is Facing.SOUTH:
             return Vector3(self.x, self.y, self.z + step)
-        elif side is Facing.WEST:
+        if side is Facing.WEST:
             return Vector3(self.x - step, self.y, self.z)
-        elif side is Facing.EAST:
+        if side is Facing.EAST:
             return Vector3(self.x + step, self.y, self.z)
-        else:
-            return self
+        return self
 
     def up(self, step):
         return self.get_side(Facing.UP, step)

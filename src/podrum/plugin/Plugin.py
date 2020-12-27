@@ -18,13 +18,13 @@ class Plugin:
          if server:
              self.server = server
 
-    def load(self, dir):
-        plugin = ZipFile(dir, "r")
+    def load(self, pluginDir):
+        plugin = ZipFile(pluginDir, "r")
         pluginInfo = json.loads(plugin.read("plugin.json"))
         if pluginInfo["name"] in self.plugins:
             print("Cannot load duplicate plugin " + pluginInfo["name"])
             return
-        sys.path.append(dir)
+        sys.path.append(pluginDir)
         module_str, obj_str = pluginInfo["main"].rsplit(".", 1)
         module = importlib.import_module(module_str)
         obj = getattr(module, obj_str)

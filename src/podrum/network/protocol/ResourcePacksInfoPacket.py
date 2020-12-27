@@ -54,17 +54,17 @@ class ResourcePacksInfoPacket(DataPacket):
             self.putString(entry.getPackId())
             self.putString(entry.getPackVersion())
             self.putLLong(entry.getPackSize())
-            self.putString("") # TODO: encryption key
-            self.putString("") # TODO: subpack name
-            self.putString("") # TODO: content identity
-            self.putBool(False) # TODO: has scripts (?)
+            self.putString("")
+            self.putString("")
+            self.putString("")
+            self.putBool(False)
 
         self.putLShort(len(self.resourcePackEntries))
         for entry in self.resourcePackEntries:
             self.putString(entry.getPackId())
             self.putString(entry.getPackVersion())
             self.putLLong(entry.getPackSize())
-            self.putString("") # TODO: encryption key
-            self.putString("") # TODO: subpack name
-            self.putString("") # TODO: content identity
-            self.putBool(False) # TODO: seems useless for resource packs
+            self.putString("")
+            self.putString("")
+            self.putString("")
+            self.putBool(False)

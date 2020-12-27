@@ -17,7 +17,7 @@ class Socket:
     def receiveBuffer(self, connection):
         try:
             return connection.recv(1446)
-        except:
+        except socket.error:
             return b""
           
     def sendBuffer(self, buffer, connection):

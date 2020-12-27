@@ -11,7 +11,6 @@
 """
 
 from io import BytesIO
-from podrum.utils.Config import Config
 import os
 from podrum.utils.Config import Config
 from podrum.utils.Utils import Utils
@@ -40,8 +39,8 @@ class Base:
                 Base.addFromPath(fullDir)
 
     @staticmethod
-    def addFromZipFile(zip, path):
-        file = zip.open(path)
+    def addFromZipFile(zipFile, path):
+        file = zipFile.open(path)
         Base.addFromFile(file)
 
     @staticmethod
@@ -49,11 +48,11 @@ class Base:
         Base.addLanguageFromZipFile(ZipFile(path, "r"), path2)
 
     @staticmethod
-    def addFromZipDir(path, dir):
-        zip = ZipFile(path, "r")
-        for filePath in zip.namelist():
-            if filePath.startswith(dir) and filePath != (dir + "/"):
-                Base.addFromZipFile(zip, filePath)
+    def addFromZipDir(path, langDir):
+        zipFile = ZipFile(path, "r")
+        for filePath in zipFile.namelist():
+            if filePath.startswith(langDir) and filePath != (langDir + "/"):
+                Base.addFromZipFile(zipFile, filePath)
 
     @staticmethod
     def translate(lang, translation):
