@@ -48,7 +48,7 @@ class Wizard:
     def start():
         config = Utils.getDefaultConfig()
         step = 0
-        while step >= 0:
+        while True:
             if step == 0:
                 Base.printLanguages()
                 userInput = input("> Please, select a language: ")
