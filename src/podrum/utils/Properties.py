@@ -37,7 +37,7 @@ class Properties:
         props = ""
         for key, value in data.items():
             if isinstance(value, bool):
-                value = "true" if value == True else "false"
+                value = "true" if value else "false"
             props += f"{key} = {value}\n"
         return props.strip()
 
