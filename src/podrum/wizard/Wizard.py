@@ -49,7 +49,7 @@ class Wizard:
         config = Utils.getDefaultConfig()
         step = 0
         while step >= 0:
-            if(step == 0):
+            if step == 0:
                 Base.printLanguages()
                 userInput = input("> Please, select a language: ")
                 if userInput in Base.languages:
@@ -58,7 +58,7 @@ class Wizard:
                     step += 1
                 else:
                     print("[!] That language does not exists. Please, choose one from the list.")
-            elif(step == 1):
+            elif step == 1:
                 print(Wizard.podrumLicense)
                 userInput = input("> " + Base.getTranslation("acceptLicense") + ": ")
                 if Wizard.checkYesNo(userInput):
@@ -67,7 +67,7 @@ class Wizard:
                     print(Base.getTranslation("mustAcceptLicense"))
                 elif Wizard.checkYesNo(userInput) is None:
                     print(Base.getTranslation("writeYesOrNo"))
-            elif(step == 2):
+            elif step == 2:
                 userInput = input("> " + Base.getTranslation("wizardSetup") + ": ")
                 if Wizard.checkYesNo(userInput):
                     step += 1
@@ -76,11 +76,11 @@ class Wizard:
                     Wizard.isInWizard = False
                     config.save()
                     break
-            elif(step == 3):
+            elif step == 3:
                 print(Wizard.podrumLogo)
                 print(">- Podrum - Wizard -<\n\n")
                 step += 1
-            elif(step == 4):
+            elif step == 4:
                 userInput = input("[>] " + Base.getTranslation("writeServerPort") + " ")
                 if userInput == "":
                     config.config["server-port"] = 19132
@@ -88,23 +88,23 @@ class Wizard:
                 elif userInput.isdigit():
                     config.config["server-port"] = int(userInput)
                     step += 1
-            elif(step == 5):
+            elif step == 5:
                 userInput = input("[>] " + Base.getTranslation("writeMOTD") + " ")
                 if(userInput != ""):
                     config.config["motd"] = userInput
                     step += 1
-            elif(step == 6):
+            elif step == 6:
                 userInput = input("[>] " + Base.getTranslation("writeGamemode") + " ")
                 if userInput.isdigit():
                     if int(userInput) >= 0 and int(userInput) <= 3:
                         config.config["gamemode"] = int(userInput)
                         step += 1
-            elif(step == 7):
+            elif step == 7:
                 userInput = input("[>] " + Base.getTranslation("writeMaxPlayers") + " ")
                 if userInput.isdigit():
                     config.config["max-players"] = int(userInput)
                     step += 1
-            elif(step == 8):
+            elif step == 8:
                 print(Base.getTranslation("wizardFinished"))
                 Wizard.isInWizard = False
                 config.save()
