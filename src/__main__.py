@@ -15,8 +15,8 @@ import sys
 from threading import Thread
 from podrum.Server import Server
 
-def start(withWizard, isTravisBuild = False):
-    thread = Thread(target = Server, args = (withWizard, isTravisBuild))
+def start(withWizard):
+    thread = Thread(target = Server(withWizard))
     thread.start()
 
 def usage():

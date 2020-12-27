@@ -20,6 +20,9 @@ from time import time, sleep
 from podrum.wizard.Wizard import Wizard
 
 class Server:
+    config = None
+    ip = None
+    port = None
     tickrate = 1000 / 20
     isTicking = True
     players = []
@@ -48,8 +51,11 @@ class Server:
             Wizard.start()
             while Wizard.isInWizard:
                 pass
+        self.config = Utils.getDefaultConfig()
+        self.ip = self.config.config["server-ip"]
+        self.port = self.config.config["server-port"]
         print(str(self.podrumLogo))
-        Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(Utils.getPrivateIpAddress())).replace("{port}", str(self.port)))
+        Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(self.ip)).replace("{port}", str(self.port)))
         Logger.info(str(Base.getTranslation("license")))
         GeneralVariables.server = self
         GeneralVariables.plugin = Plugin("./plugins", self)
@@ -63,6 +69,12 @@ class Server:
                 
     def getLogger(self):
         return Logger()
+
+    def getIp(self):
+        return self.ip
+
+    def getPort(self):
+        return self.port
 
     def sendMessage(self, message):
         self.getLogger().log("info", message)

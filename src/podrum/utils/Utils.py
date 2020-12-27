@@ -11,7 +11,7 @@
 """
 
 import base64
-inport hmac
+import hmac
 import json
 import os
 from podrum.utils.Config import Config
@@ -35,17 +35,10 @@ class Utils:
         from ctypes import windll
         kernel = windll.kernel32
         kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)
-        
+
     @staticmethod
     def killServer():
         os.kill(os.getpid(), signal.SIGTERM)
-    
-    @staticmethod
-    def getPrivateIpAddress():
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
-        return ip
 
     @staticmethod
     def getPodrumDir():
@@ -89,7 +82,7 @@ class Utils:
         config = Config()
         config.load(Utils.getDefaultConfigFile())
         return config
-    
+
     @staticmethod
     def encodeJwt(header, payload, verifySigniture):
         body = []
@@ -97,7 +90,7 @@ class Utils:
         body.insert(1, base64.b64encode(json.dumps(payload).encode()).decode())
         body.insert(2, base64.b64encode(hmac.new(verifySigniture.encode(), ".".join(body).encode(), hashlib.sha256).hexdigest().upper().encode()).decode())
         return ".".join(body)
-    
+
     @staticmethod
     def decodeJwt(token):
         header, payload, verifySigniture = token.split(".")

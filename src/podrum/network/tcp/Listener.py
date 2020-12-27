@@ -20,13 +20,12 @@ class Listener(Thread):
     def run(self):
         self.socket = deepcopy(Socket(self.address))
         while True:
-            try:
-                connection, clientAddress = self.socket.socket.accept()
+            accept = self.socket.socket.accept()
+            if accept is not None:
+                connection, clientAddress = accept
                 while True:
                     data = self.socket.receiveBuffer(connection)
                     if data:
                         self.interface.handle(data, connection, clientAddress, self.socket)
                     else:
                         break
-            except:
-                pass

@@ -1,0 +1,8 @@
+{
+    "language": "en-EN",
+    "motd": "A Podrum Server",
+    "server-ip": "0.0.0.0",
+    "server-port": 19132,
+    "max-players": 20,
+    "gamemode": 0
+}
