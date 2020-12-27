@@ -289,7 +289,7 @@ class AxisAlignedBB:
 
         for v in [v1, v2, v3, v4, v5, v6]:
             d = pos1.distanceSquared(v)
-            if v != None and d < distance:
+            if v is not None and d < distance:
                 vector = v
                 distance = d
 
