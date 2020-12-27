@@ -1,6 +1,6 @@
 {
     "languageInfos": {
-        "langId": "de-DE",
+        "langId": "de",
         "countries": ["de", "ch"]
     },
     "langName": "Deutsch",
@@ -16,7 +16,6 @@
     "acceptLicense": "Akzeptieren Sie die Lizenz? [y/n]",
     "mustAcceptLicence": "Die Lizenz muss aktzeptiert werden um die Software zu nutzen.",
     "startingServer": "Server wird auf {ip}:{port} gestartet...",
-    "extIpMsg": "Dies ist Ihre externe ip: {ipPublic}. Wenn Spieler außerhalb ihres Lokalem Netzwerkes beitreten möchten müssen sie evtl. Port-Forwarding für den ausgewählten Port aktivieren.",
     "license": "Podrum steht unter der Apache-2.0-Lizenz",
     "invalidCommand": "Befehl nicht gefunden!"
 }

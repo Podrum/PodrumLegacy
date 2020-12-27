@@ -1,6 +1,6 @@
 {
     "languageInfos": {
-        "langId": "pl-PL",
+        "langId": "pl",
         "countries": ["pl"]
     },
     "langName": "Polski",
@@ -16,7 +16,6 @@
     "acceptLicense": "Akceptujesz licencję? [y/n]",
     "mustAcceptLicence": "Musisz zaakceptować, by użyć Podrum-a.",
     "startingServer": "Serwer uruchomiono na {ip}:{port}",
-    "extIpMsg": "Twoje publiczne ip to: {ipPublic}. Zaproś znajomych do wspólnej gry!!!!!!",
     "license": "Podrum używa licencji Apache-2.0",
     "invalidCommand": "Brak komendy. Sprawdź pisownię"
 }

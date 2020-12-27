@@ -1,6 +1,6 @@
 {
     "languageInfos": {
-        "langId": "es-ES",
+        "langId": "es",
         "countries": ["es", "us"]
     },
     "langName": "Español",
@@ -16,7 +16,6 @@
     "acceptLicense": "¿Aceptas la licencia? [y/n]",
     "mustAcceptLicence": "Debes aceptar la licencia si quieres utilizar este software.",
     "startingServer": "Iniciando el servidor en {ip}:{port}",
-    "extIpMsg": "Esta es tu ip externa: {ipPublic}. Si quieres que jugadores que no estén en tu red local se puedan unir debes hacer portforwarding.",
     "license": "Podrum está licenciado bajo la licencia Apache-2.0",
     "invalidCommand": "Comando inválido"
 }

@@ -1,6 +1,6 @@
 {
     "languageInfos": {
-        "langId": "ar-AR",
+        "langId": "ar",
         "countries": ["SA", "EG"]
     },
     "langName": "العربيه",
@@ -16,7 +16,6 @@
     "acceptLicense": "هل توافق على الترخيص؟ [Y/N]",
     "mustAcceptLicence": "يجب عليك الموافقه للإكمال.",
     "startingServer": "يتم الان تشغيل الخادم. {ip}:{port}",
-    "extIpMsg": "هذا هو عنوان البروتوكل الخارج لديك: {ipPublic}. إذا كنت تريد للاعبين الاخرين دخول خادمك يجب عليك ان تفتح المنفذ.",
     "license": "بودرم تحت رخصة Apache-2.0.",
     "invalidCommand": "لا يوجد امر بهذا الاسم."
 }

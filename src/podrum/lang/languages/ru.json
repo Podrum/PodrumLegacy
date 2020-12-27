@@ -1,7 +1,7 @@
 {
     "languageInfos": {
-        "langId": "ru-RU",
-        "countries": ["ru", "rus"]
+        "langId": "ru",
+        "countries": ["ru"]
     },
     "langName": "Русский",
     "langSelectedAsBase": "Был выбран русский язык в качестве основного языка.",
@@ -16,7 +16,6 @@
     "acceptLicense": "Вы принимаете лицензию? [y/n]",
     "mustAcceptLicence": "Вы должны принять лицензию, для использования данного программного обеспечения!",
     "startingServer": "Запуск сервера - {ip}:{port} ...",
-    "extIpMsg": "Это ваш локальный IP: {ipPublic}. Если вы хотите что бы на ваш сервер зашли игроки, вам следует открыть порты!",
     "license": "Podrum лицензируется под лицензией Apache-2.0",
     "invalidCommand": "Неизвестная команда!"
 }

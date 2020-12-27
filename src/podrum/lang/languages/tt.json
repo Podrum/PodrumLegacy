@@ -1,7 +1,7 @@
 {
     "languageInfos": {
-        "langId": "tt-TT",
-        "countries": ["tt", "tat"]
+        "langId": "tt",
+        "countries": ["tt"]
     },
     "langName": "Татар",
     "langSelectedAsBase": "Татар теле төп тел буларак сайланды.",
@@ -16,7 +16,6 @@
     "acceptLicense": "Сез лицензия аласызмы? [y/n]",
     "mustAcceptLicence": "Сез кабул итәргә тиеш лицензия куллану өчен әлеге программа белән тәэмин итү!",
     "startingServer": "Эшләтеп җибәрү Серверы - {ip}: {port....",
-    "extIpMsg": "Бу сезнең локаль IP: {ipPublic}. Әгәр телисез икән, сезнең серверы керде уенчылар, сез ачарга тиеш портлары!",
     "license": "Podrum лицензия астында Apache-2.0 лицензиясе",
     "invalidCommand": "Билгесез команда!"
 }
