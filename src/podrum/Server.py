@@ -53,7 +53,7 @@ class Server:
                 pass
         self.config = Utils.getDefaultConfig()
         self.ip = self.config.config["server-ip"]
-        self.port = self.config.config["server-port"]
+        self.port = int(self.config.config["server-port"])
         print(str(self.podrumLogo))
         Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(self.ip)).replace("{port}", str(self.port)))
         Logger.info(str(Base.getTranslation("license")))
