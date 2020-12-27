@@ -257,8 +257,6 @@ class AxisAlignedBB:
         return vector.x >= self.minX and vector.x <= self.maxX and vector.y >= self.minY and vector.y <= self.maxY
 
     def calculateIntercept(self, pos1, pos2):
-        pos1 = Vector3()
-        pos2 = Vector3()
         v1 = pos1.getIntermediateWithXValue(pos2, self.minX)
         v2 = pos1.getIntermediateWithXValue(pos2, self.maxX)
         v3 = pos1.getIntermediateWithYValue(pos2, self.minY)
