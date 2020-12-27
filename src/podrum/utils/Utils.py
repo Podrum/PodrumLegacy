@@ -11,15 +11,13 @@
 """
 
 import base64
+inport hmac
 import json
 import os
 from podrum.utils.Config import Config
 import signal
 import sys
 import socket
-from urllib import request
-import hmac
-import hashlib
 from zipfile import ZipFile
 
 class Utils:
@@ -47,11 +45,6 @@ class Utils:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
-        return ip
-    
-    @staticmethod
-    def getPublicIpAddress():
-        ip = request.urlopen('https://ident.me').read().decode('utf8')
         return ip
 
     @staticmethod
