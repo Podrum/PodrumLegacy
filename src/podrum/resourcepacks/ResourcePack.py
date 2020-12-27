@@ -11,16 +11,23 @@
 """
 
 class ResourcePack:
-    def getPath(): pass
+    def getPath():
+        pass
 
-    def getPackName(): pass
+    def getPackName():
+        pass
 
-    def getPackId(): pass
+    def getPackId():
+        pass
 
-    def getPackSize(): pass
+    def getPackSize():
+        pass
 
-    def getPackVersion(): pass
+    def getPackVersion():
+        pass
 
-    def getSha256(): pass
+    def getSha256():
+        pass
 
-    def getPackChunk(start, length): pass
+    def getPackChunk(start, length):
+        pass
