@@ -32,9 +32,9 @@ class Base:
         Base.addFromFile(open(path, "rb"))
 
     @staticmethod
-    def addFromDir(dir):
-        for path in os.listdir(dir):
-            fullDir = dir + "/" + path
+    def addFromDir(langDir):
+        for path in os.listdir(langDir):
+            fullDir = langDir + "/" + path
             if os.path.isfile(fullDir):
                 Base.addFromPath(fullDir)
 
