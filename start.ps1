@@ -28,11 +28,11 @@ function Activate-Venv {
     .\venv\Scripts\Activate.ps1
 }
 function First-Launch {
-    Write-Host 'First launch, creating venv...'
+    Write-Output 'First launch, creating venv...'
     Create-Venv
     Activate-Venv
 
-    Write-Host 'Installing dependencies...'
+    Write-Output 'Installing dependencies...'
     wget $depsURL -outfile ".\tmp-requirements.txt"
     pip install -r tmp-requirements.txt
     Remove-Item '.\tmp-requirements.txt'
