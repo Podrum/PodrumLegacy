@@ -16,9 +16,11 @@ from podrum.network.protocol.ProtocolInfo import ProtocolInfo
 class ClientToServerHandshakePacket(DataPacket):
     NID = ProtocolInfo.CLIENT_TO_SERVER_HANDSHAKE_PACKET
 
-    def canBeSentBeforeLogin():
+    def canBeSentBeforeLogin(self):
         return True
 
-    def encodePayload(): pass
+    def encodePayload(self):
+        pass
 
-    def decodePayload(): pass
+    def decodePayload(self):
+        pass
