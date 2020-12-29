@@ -16,7 +16,6 @@ from podrum.command.vanilla.PluginsCommand import PluginsCommand
 from podrum.command.vanilla.ReloadCommand import ReloadCommand
 from podrum.command.vanilla.SayCommand import SayCommand
 from podrum.command.vanilla.StopCommand import StopCommand
-from podrum.utils.Logger import Logger
 
 class CommandManager:
     commands = {}
@@ -26,8 +25,7 @@ class CommandManager:
 
     def isCommand(self, command):
         if command in self.commands:
-            return self.commands[command]
-        Logger.log("error", "Invalid Command")
+            return True
         return False
 
     def registerVanillaCommands(self):
