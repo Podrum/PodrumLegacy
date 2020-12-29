@@ -22,6 +22,7 @@ class CommandReader(Thread):
         super().__init__()
         self.server = server
         self.commandManager = CommandManager()
+        self.setDaemon(True)
         self.start()
 
     def run(self):
