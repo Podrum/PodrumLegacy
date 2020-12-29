@@ -10,8 +10,8 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from copy import copy
 from podrum.command.CommandManager import CommandManager
+from podrum.lang.Base import Base
 from threading import Thread
 
 class CommandReader(Thread):
@@ -32,3 +32,5 @@ class CommandReader(Thread):
                 command = args[0]
                 if self.commandManager.isCommand(command):
                     self.commandManager.commands[command].execute(self.server, args)
+                else:
+                    self.server.getLogger().error(Base.getTranslation("invalidCommand"))
