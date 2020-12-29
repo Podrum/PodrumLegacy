@@ -12,12 +12,7 @@
 """
 
 import sys
-from threading import Thread
 from podrum.Server import Server
-
-def start(withWizard):
-    thread = Thread(target = Server(withWizard))
-    thread.start()
 
 def usage():
     print("Usage: \"python3 -O src/__main__.py [OPTIONS]\"\nAvaiable Options:\n  --no_wizard  Starts the Server without the Wizard")
@@ -25,8 +20,8 @@ def usage():
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         if sys.argv[1] == "--no_wizard":
-                start(False)
+                Server(False)
         else:
             usage()
     else:
-        start(True)
+        Server(True)
