@@ -10,6 +10,7 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
+import os
 from podrum.command.CommandReader import CommandReader
 from podrum.command.vanilla.RegisterVanilla import RegisterVanilla
 from podrum.lang.Base import Base
@@ -58,7 +59,7 @@ class Server:
         Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(self.ip)).replace("{port}", str(self.port)))
         Logger.info(str(Base.getTranslation("license")))
         RegisterVanilla()
-        Plugin.pluginsDir = "./plugins"
+        Plugin.pluginsDir = os.getcwd() + "/plugins"
         Plugin.server = self
         Plugin.loadAll()
         self.endTime = time()
