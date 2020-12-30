@@ -10,13 +10,6 @@
 * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from podrum.command.vanilla.DifficultyCommand import DifficultyCommand
-from podrum.command.vanilla.HelpCommand import HelpCommand
-from podrum.command.vanilla.PluginsCommand import PluginsCommand
-from podrum.command.vanilla.ReloadCommand import ReloadCommand
-from podrum.command.vanilla.SayCommand import SayCommand
-from podrum.command.vanilla.StopCommand import StopCommand
-
 class CommandManager:
     commands = {}
 
@@ -26,15 +19,6 @@ class CommandManager:
             return True
         return False
     
-    @staticmethod
-    def registerVanillaCommands():
-        CommandManager.registerCommand(DifficultyCommand())
-        CommandManager.registerCommand(HelpCommand())
-        CommandManager.registerCommand(PluginsCommand())
-        CommandMamager.registerCommand(ReloadCommand())
-        CommandManager.registerCommand(SayCommand())
-        CommandManager.registerCommand(StopCommand())
-
     @staticmethod
     def registerCommand(command):
         CommandManager.commands[command.name] = command
