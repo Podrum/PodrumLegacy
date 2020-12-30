@@ -23,6 +23,6 @@ class RegisterVanilla:
         CommandManager.registerCommand(DifficultyCommand())
         CommandManager.registerCommand(HelpCommand())
         CommandManager.registerCommand(PluginsCommand())
-        CommandMamager.registerCommand(ReloadCommand())
+        CommandManager.registerCommand(ReloadCommand())
         CommandManager.registerCommand(SayCommand())
         CommandManager.registerCommand(StopCommand())
