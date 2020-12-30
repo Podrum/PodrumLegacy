@@ -70,4 +70,4 @@ class Server:
             sleep(self.tickrate)
 
     def sendMessage(self, message):
-        Logger.log("info", message)
+        Logger.info(message)
