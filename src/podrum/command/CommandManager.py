@@ -20,21 +20,21 @@ from podrum.command.vanilla.StopCommand import StopCommand
 class CommandManager:
     commands = {}
 
-    def __init__(self):
-        self.registerVanillaCommands()
-
-    def isCommand(self, command):
-        if command in self.commands:
+    @staticmethod
+    def isCommand(command):
+        if command in CommandManager.commands:
             return True
         return False
+    
+    @staticmethod
+    def registerVanillaCommands():
+        CommandManager.registerCommand(DifficultyCommand())
+        CommandManager.registerCommand(HelpCommand())
+        CommandManager.registerCommand(PluginsCommand())
+        CommandMamager.registerCommand(ReloadCommand())
+        CommandManager.registerCommand(SayCommand())
+        CommandManager.registerCommand(StopCommand())
 
-    def registerVanillaCommands(self):
-        self.registerCommand(DifficultyCommand())
-        self.registerCommand(HelpCommand())
-        self.registerCommand(PluginsCommand())
-        self.registerCommand(ReloadCommand())
-        self.registerCommand(SayCommand())
-        self.registerCommand(StopCommand())
-
-    def registerCommand(self, command):
-        self.commands[command.name] = command
+    @staticmethod
+    def registerCommand(command):
+        CommandManager.commands[command.name] = command
