@@ -12,6 +12,7 @@
 
 from podrum.command.CommandManager import CommandManager
 from podrum.lang.Base import Base
+from podrum.utils.Logger import Logger
 from threading import Thread
 
 class CommandReader(Thread):
@@ -33,4 +34,4 @@ class CommandReader(Thread):
                 if CommandManager.isCommand(command):
                     CommandManager.commands[command].execute(self.server, args)
                 else:
-                    self.server.getLogger().error(Base.getTranslation("invalidCommand"))
+                    Logger.error(Base.getTranslation("invalidCommand"))

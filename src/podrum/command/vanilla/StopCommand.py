@@ -11,7 +11,7 @@
 """
 
 from podrum.command.Command import Command
-from podrum.GeneralVariables import GeneralVariables
+from podrum.plugin.Plugin import Plugin
 from podrum.utils.Utils import Utils
 
 class StopCommand(Command):
@@ -20,7 +20,6 @@ class StopCommand(Command):
 
     def execute(self, sender, args):
         sender.sendMessage("Stopping server...")
-        plugin = GeneralVariables.plugin
-        plugin.unloadAll()
+        Plugin.unloadAll()
         sender.sendMessage("Server stopped.")
         Utils.killServer()

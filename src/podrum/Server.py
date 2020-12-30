@@ -12,7 +12,6 @@
 
 from podrum.command.CommandReader import CommandReader
 from podrum.command.vanilla.RegisterVanilla import RegisterVanilla
-from podrum.GeneralVariables import GeneralVariables
 from podrum.lang.Base import Base
 from podrum.plugin.Plugin import Plugin
 from podrum.utils.Logger import Logger
@@ -59,8 +58,9 @@ class Server:
         Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(self.ip)).replace("{port}", str(self.port)))
         Logger.info(str(Base.getTranslation("license")))
         RegisterVanilla()
-        GeneralVariables.plugin = Plugin("./plugins", self)
-        GeneralVariables.plugin.loadAll()
+        Plugin.pluginsDir = "./plugins"
+        Plugin.server = self
+        Plugin.loadAll()
         self.endTime = time()
         self.timeDiff = "%.3f" % (self.endTime - self.startTime)
         Logger.info(f'Done in {str(self.timeDiff)}s. Type "help" to view all available commands.')

@@ -9,19 +9,12 @@ class Plugin:
     pluginsDir = ""
     plugins = {}
     pluginsCount = 0
-    
-    def __init__(self, pluginsDir = None, server = None):
-         if pluginsDir:
-             if not os.path.isdir(pluginsDir):
-                 os.mkdir(pluginsDir)
-             self.pluginsDir = pluginsDir
-         if server:
-             self.server = server
 
-    def load(self, pluginDir):
+    @staticmethod
+    def load(pluginDir):
         plugin = ZipFile(pluginDir, "r")
         pluginInfo = json.loads(plugin.read("plugin.json"))
-        if pluginInfo["name"] in self.plugins:
+        if pluginInfo["name"] in Plugin.plugins:
             print("Cannot load duplicate plugin " + pluginInfo["name"])
             return
         sys.path.append(pluginDir)
@@ -29,7 +22,7 @@ class Plugin:
         module = importlib.import_module(module_str)
         obj = getattr(module, obj_str)
         obj().onLoad()
-        self.plugins[pluginInfo["name"]] = {
+        Plugin.plugins[pluginInfo["name"]] = {
             "description": pluginInfo["description"] if "description" in pluginInfo else "",
             "author": pluginInfo["author"] if "author" in pluginInfo else "",
             "version": pluginInfo["version"] if "version" in pluginInfo else "",
@@ -40,26 +33,29 @@ class Plugin:
         obj.description = pluginInfo["description"]
         obj.author = pluginInfo["author"]
         obj.version = pluginInfo["version"]
-        obj.server = self.server
+        obj.server = Plugin.server
         obj().onEnable()
-        self.pluginsCount += 1
+        Plugin.pluginsCount += 1
 
-    def loadAll(self):
-        for fileName in os.listdir(self.pluginsDir):
-            path = self.pluginsDir
-            if not self.pluginsDir.endswith("/") or not self.pluginsDir.endswith("\\"):
+    @staticmethod
+    def loadAll():
+        for fileName in os.listdir(Plugin.pluginsDir):
+            path = Plugin.pluginsDir
+            if not self.pluginsDir.endswith("/") or not Plugin.pluginsDir.endswith("\\"):
                 path += "/"
             path += fileName
             if os.path.isfile(path):
                 if path.endswith(".pyz"):
-                    self.load(path)
+                    Plugin.load(path)
 
-    def unload(self, name):
-        if name in self.plugins:
-            self.plugins[name]["main"].onDisable()
-            del self.plugins[name]
-            self.pluginsCount -= 1
+    @staticmethod
+    def unload(name):
+        if name in PLugin.plugins:
+            PLugin.plugins[name]["main"].onDisable()
+            del Plugin.plugins[name]
+            Plugin.pluginsCount -= 1
 
-    def unloadAll(self):
-        for name in dict(self.plugins):
-            self.unload(name)
+    @staticmethod
+    def unloadAll():
+        for name in dict(Plugin.plugins):
+            Plugin.unload(name)
