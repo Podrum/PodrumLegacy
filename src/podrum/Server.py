@@ -11,6 +11,7 @@
 """
 
 from podrum.command.CommandReader import CommandReader
+from podrum.command.vanilla.RegisterVanilla import RegisterVanilla
 from podrum.GeneralVariables import GeneralVariables
 from podrum.lang.Base import Base
 from podrum.plugin.Plugin import Plugin
@@ -57,6 +58,7 @@ class Server:
         print(str(self.podrumLogo))
         Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(self.ip)).replace("{port}", str(self.port)))
         Logger.info(str(Base.getTranslation("license")))
+        RegisterVanilla()
         GeneralVariables.server = self
         GeneralVariables.plugin = Plugin("./plugins", self)
         GeneralVariables.plugin.loadAll()
