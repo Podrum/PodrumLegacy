@@ -37,4 +37,4 @@ class CommandManager:
         self.registerCommand(StopCommand())
 
     def registerCommand(self, command):
-        self.commands.update({command.getName(): command})
+        self.commands[command.getName()] = command
