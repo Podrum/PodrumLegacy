@@ -23,5 +23,5 @@ class HelpCommand(Command):
     def execute(self, sender, args):
         sender.sendMessage("--- Showing help ---")
         for k, v in self.commandManager.commands.items():
-            if k != self.getName():
-                sender.sendMessage("/" + k + ": " + v.getDescription())
+            if k != self.name:
+                sender.sendMessage("/" + k + ": " + v.description)
