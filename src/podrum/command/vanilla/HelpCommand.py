@@ -11,17 +11,14 @@
 """
 
 from podrum.command.Command import Command
-from podrum.command import CommandManager
+from podrum.command.CommandManager import CommandManager
 
 class HelpCommand(Command):
-    commandManager = None
-
     def __init__(self, name = "", description = ""):
         super().__init__("help", "Help Command")
-        self.commandManager = CommandManager.CommandManager
 
     def execute(self, sender, args):
         sender.sendMessage("--- Showing help ---")
-        for k, v in self.commandManager.commands.items():
+        for k, v in CommandManager.commands.items():
             if k != self.name:
                 sender.sendMessage("/" + k + ": " + v.description)
