@@ -21,7 +21,6 @@ class CommandReader(Thread):
     def __init__(self, server):
         super().__init__()
         self.server = server
-        self.commandManager = CommandManager()
         self.setDaemon(True)
         self.start()
 
@@ -31,7 +30,7 @@ class CommandReader(Thread):
             if line != "":
                 args = line.split()
                 command = args[0]
-                if self.commandManager.isCommand(command):
-                    self.commandManager.commands[command].execute(self.server, args)
+                if CommandManager.isCommand(command):
+                    CommandManager.commands[command].execute(self.server, args)
                 else:
                     self.server.getLogger().error(Base.getTranslation("invalidCommand"))
