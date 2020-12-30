@@ -59,7 +59,6 @@ class Server:
         Logger.info(str(Base.getTranslation("startingServer")).replace("{ip}", str(self.ip)).replace("{port}", str(self.port)))
         Logger.info(str(Base.getTranslation("license")))
         RegisterVanilla()
-        GeneralVariables.server = self
         GeneralVariables.plugin = Plugin("./plugins", self)
         GeneralVariables.plugin.loadAll()
         self.endTime = time()
