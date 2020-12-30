@@ -68,15 +68,6 @@ class Server:
         CommandReader(self)
         while self.isTicking:
             sleep(self.tickrate)
-                
-    def getLogger(self):
-        return Logger()
-
-    def getIp(self):
-        return self.ip
-
-    def getPort(self):
-        return self.port
 
     def sendMessage(self, message):
-        self.getLogger().log("info", message)
+        Logger.log("info", message)
