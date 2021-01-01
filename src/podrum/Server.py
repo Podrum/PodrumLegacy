@@ -14,6 +14,7 @@ import os
 from podrum.command.CommandReader import CommandReader
 from podrum.command.vanilla.RegisterVanilla import RegisterVanilla
 from podrum.lang.Base import Base
+from podrum.network.mcbe.Interface import Interface
 from podrum.plugin.Plugin import Plugin
 from podrum.utils.Logger import Logger
 from podrum.utils.Utils import Utils
@@ -66,6 +67,7 @@ class Server:
         self.timeDiff = "%.3f" % (self.endTime - self.startTime)
         Logger.info(f'Done in {str(self.timeDiff)}s. Type "help" to view all available commands.')
         CommandReader(self)
+        Interface(self.ip, self.port)
         while self.isTicking:
             sleep(self.tickrate)
 
