@@ -51,7 +51,7 @@ class Plugin:
     @staticmethod
     def unload(name):
         if name in PLugin.plugins:
-            PLugin.plugins[name]["main"].onDisable()
+            Plugin.plugins[name]["main"].onDisable()
             del Plugin.plugins[name]
             Plugin.pluginsCount -= 1
 
