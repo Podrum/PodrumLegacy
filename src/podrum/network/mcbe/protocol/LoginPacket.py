@@ -11,17 +11,17 @@
 """
 
 import json
+from podrum.network.mcbe.NetworkStream import NetworkStream
 from podrum.network.mcbe.protocol.DataPacket import DataPacket
 from podrum.network.mcbe.protocol.Info import Info
 from podrum.utils.Utils import Utils
 
 class LoginPacket(DataPacket):
     networkId = Info.LOGIN_PACKET
-
+    protocol = None
     xuid = None
     identity = None
     displayName = None
-    protocol = None
     identityPublicKey = None
     clientRandomId = None
     deviceOS = None
@@ -31,4 +31,6 @@ class LoginPacket(DataPacket):
 
     def decodePayload(self):
         self.protocol = self.getInt()
-        print(self.protocol)
+        stream = NetworkStream(self.getBytesString())
+        chainData = json.loads(stream.get(stream.getLInt()).decode())
+        print(chainData)
