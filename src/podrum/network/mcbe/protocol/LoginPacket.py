@@ -15,6 +15,7 @@
 * source code for files added in the larger work.
 """
 
+import base64
 import json
 from podrum.network.mcbe.NetworkStream import NetworkStream
 from podrum.network.mcbe.protocol.DataPacket import DataPacket
@@ -28,11 +29,36 @@ class LoginPacket(DataPacket):
     identity = None
     displayName = None
     identityPublicKey = None
-    clientRandomId = None
-    deviceOS = None
     deviceId = None
+    deviceOS = None
     deviceModel = None
+    clientRandomId = None
+    serverAddress = None
+    languageCode = None
     skin = None
+
+    def skinFromDecodedJwt(self, decodedJwt):
+        return {
+            "SkinId": decodedJwt["SkinId"],
+            "SkinResourcePatch": decodedJwt["SkinResourcePatch"],
+            "SkinImageWidth": decodedJwt["SkinImageWidth"],
+            "SkinImageHeight": decodedJwt["SkinImageHeight"],
+            "SkinData": base64.b64decode(decodedJwt["SkinData"]),
+            "AnimatedImageData": decodedJwt["AnimatedImageData"],
+            "CapeImageWidth": decodedJwt["CapeImageWidth"],
+            "CapeImageHeight": decodedJwt["CapeImageHeight"],
+            "CapeData": base64.b64decode(decodedJwt["CapeData"]),
+            "SkinGeometryData": base64.b64decode(decodedJwt["SkinGeometryData"]),
+            "SkinAnimationData": base64.b64decode(decodedJwt["SkinAnimationData"]),
+            "PremiumSkin": decodedJwt["PremiumSkin"],
+            "PersonaSkin": decodedJwt["PersonaSkin"],
+            "CapeOnClassicSkin": decodedJwt["CapeOnClassicSkin"],
+            "CapeId": decodedJwt["CapeId"],
+            "SkinColor": decodedJwt["SkinColor"],
+            "ArmSize": decodedJwt["ArmSize"],
+            "PersonaPieces": decodedJwt["PersonaPieces"],
+            "PieceTintColors": decodedJwt["PieceTintColors"]
+        }
 
     def decodePayload(self):
         self.protocol = self.getInt()
@@ -40,7 +66,6 @@ class LoginPacket(DataPacket):
         chainData = json.loads(stream.get(stream.getLInt()).decode())
         for chain in chainData["chain"]:
             decodedChain = Utils.decodeJwt(chain)
-            print(decodedChain)
             if "extraData" in decodedChain:
                 extraData = decodedChain["extraData"]
                 self.xuid = extraData["XUID"]
@@ -48,4 +73,10 @@ class LoginPacket(DataPacket):
                 self.displayName = extraData["displayName"]
             self.identityPublicKey = decodedChain["identityPublicKey"]
         decodedJwt = Utils.decodeJwt(stream.get(stream.getLInt()).decode())
-        print(decodedJwt)
+        self.deviceId = decodedJwt["DeviceId"]
+        self.deviceOs = decodedJwt["DeviceOS"]
+        self.deviceModel = decodedJwt["DeviceModel"]
+        self.clientRandomId = decodedJwt["ClientRandomId"]
+        self.serverAddress = decodedJwt["ServerAddress"]
+        self.languageCode = decodedJwt["LanguageCode"]
+        self.skin = self.skinFromDecodedJwt(decodedJwt)
