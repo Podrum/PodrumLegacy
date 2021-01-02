@@ -33,4 +33,6 @@ class LoginPacket(DataPacket):
         self.protocol = self.getInt()
         stream = NetworkStream(self.getBytesString())
         chainData = json.loads(stream.get(stream.getLInt()).decode())
-        print(chainData)
+        for chain in chainData["chain"]:
+            decodedChain = Utils.decodeJwt(chain)
+            print(decodedChain)
