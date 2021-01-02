@@ -15,9 +15,9 @@
 * source code for files added in the larger work.
 """
 
-from podrum.network.mcbe.protocol.ClientToServerHandshakePacketPacket import ClientToServerHandshakePacketPacket
+from podrum.network.mcbe.protocol.ClientToServerHandshakePacket import ClientToServerHandshakePacket
 from podrum.network.mcbe.protocol.LoginPacket import LoginPacket
-from podrum.network.mcbe.protocol.ServerToClientHandshakePacketPacket import ServerToClientHandshakePacketPacket
+from podrum.network.mcbe.protocol.ServerToClientHandshakePacket import ServerToClientHandshakePacket
 
 
 class Pool:
@@ -30,6 +30,6 @@ class Pool:
         self.pool[packet.networkId] = packet
         
     def registerPackets(self):
-        self.registerPacket(ClientToServerHandshakePacketPacket())
+        self.registerPacket(ClientToServerHandshakePacket())
         self.registerPacket(LoginPacket())
-        self.registerPacket(ServerToClientHandshakePacketPacket())
+        self.registerPacket(ServerToClientHandshakePacket())
