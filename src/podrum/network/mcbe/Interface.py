@@ -15,6 +15,7 @@
 * source code for files added in the larger work.
 """
 
+from podrum.BedrockPlayer import BedrockPlayer
 from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.Pool import Pool
 from rakpy.server.Server import Server
@@ -32,7 +33,7 @@ class Interface(RaknetInterface):
         self.pool = Pool()
 
     def onOpenConnection(self, connection):
-        self.players[connection.address.address] = None # Not made the player class yet
+        self.players[connection.address.address] = BedrockPlayer(connection, connection.address)
         
     def onCloseConnection(self, address, reason):
         pass
@@ -49,4 +50,4 @@ class Interface(RaknetInterface):
                 packet = self.pool.pool[buffer[0]]
                 packet.buffer = buffer
                 packet.decode()
-                # Handle data packets
+                player.handleDataPacket(packet)
