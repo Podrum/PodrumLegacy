@@ -46,6 +46,6 @@ class LoginPacket(DataPacket):
                 self.xuid = extraData["XUID"]
                 self.identity = extraData["identity"]
                 self.displayName = extraData["displayName"]
-            self.identityPublicKey = extraData["identityPublicKey"]
+            self.identityPublicKey = decodedChain["identityPublicKey"]
         decodedJwt = Utils.decodeJwt(stream.get(stream.getLInt()).decode())
         print(decodedJwt)
