@@ -37,3 +37,6 @@ class Player:
     def __init__(self, connection, address):
         self.connection = connection
         self.address = address
+        
+    def handleDataPacket(self, packet):
+        pass
