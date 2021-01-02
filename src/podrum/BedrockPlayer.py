@@ -15,7 +15,7 @@
 * source code for files added in the larger work.
 """
 
-class Player:
+class BedrockPlayer:
     connection = None
     address = None
     name = None
