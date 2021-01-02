@@ -41,3 +41,11 @@ class LoginPacket(DataPacket):
         for chain in chainData["chain"]:
             decodedChain = Utils.decodeJwt(chain)
             print(decodedChain)
+            if "extraData" in decodedChain:
+                extraData = decodedChain["extraData"]
+                self.xuid = extraData["XUID"]
+                self.identity = extraData["identity"]
+                self.displayName = extraData["displayName"]
+            self.identityPublicKey = extraData["identityPublicKey"]
+        decodedJwt = Utils.decodeJwt(stream.get(stream.getLInt()).decode())
+        print(decodedJwt)
