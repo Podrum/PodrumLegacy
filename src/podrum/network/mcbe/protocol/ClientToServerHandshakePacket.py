@@ -18,5 +18,5 @@
 from podrum.network.mcbe.protocol.DataPacket import DataPacket
 from podrum.network.mcbe.protocol.Info import Info
 
-class ClientToServerHandshakePacketPacket(DataPacket):
+class ClientToServerHandshakePacket(DataPacket):
     networkId = Info.CLIENT_TO_SERVER_HANDSHAKE_PACKET
