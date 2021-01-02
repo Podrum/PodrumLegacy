@@ -5,9 +5,14 @@
 * |  __/ (_) | (_| | |  | |_| | | | | | |
 * |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
 *
-* Licensed under the Apache License, Version 2.0 (the "License")
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+* Licensed under the Mozilla Public License, Version 2.
+* Permissions of this weak copyleft license are conditioned on making
+* available source code of licensed files and modifications of those files 
+* under the same license (or in certain cases, one of the GNU licenses).
+* Copyright and license notices must be preserved. Contributors
+* provide an express grant of patent rights. However, a larger work
+* using the licensed work may be distributed under different terms and without 
+* source code for files added in the larger work.
 """
 
 from io import BytesIO
