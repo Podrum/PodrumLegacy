@@ -61,6 +61,10 @@ class Utils:
         serverConfig = f"{path}/server.json"
         pluginsFolder = f"{path}/plugins"
         worldsFolder = f"{path}/worlds"
+        if not os.path.isdir(pluginsFolder):
+            os.mkdir(pluginsFolder)
+        if not os.path.isdir(worldsFolder):
+            os.mkdir(worldsFolder)
         if not os.path.isfile(serverConfig):
             file = open(serverConfig, "+wb")
             if os.path.isfile(Utils.getPodrumDir()):
@@ -70,10 +74,6 @@ class Utils:
                 file2 = open(Utils.getPodrumDir() + "/podrum/resources/server.json", "r")
                 file.write(file2.read().encode())
             return False
-        if not os.path.isdir(pluginsFolder):
-            os.mkdir(pluginsFolder)
-        if not os.path.isdir(worldsFolder):
-            os.mkdir(worldsFolder)
         return True
 
     @staticmethod
