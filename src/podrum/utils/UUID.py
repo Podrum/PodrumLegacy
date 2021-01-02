@@ -11,7 +11,7 @@
  """
 
 import binascii
-from binutilspy.BinaryStream import BinaryStream
+from rakpy.utils.BinaryStream import BinaryStream
 import os
 from podrum.utils.Utils import Utils
 import random
