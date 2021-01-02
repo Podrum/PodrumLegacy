@@ -16,6 +16,15 @@ src/pyraklib/server/__pycache__
 /plugins/
 /worlds/
 
+# MacOS
+.DS_Store
+
+# Windows
+[Tt]humbs.db
+[Tt]humbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
 # Just in case
 *.exe
 
