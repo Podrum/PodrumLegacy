@@ -4,7 +4,7 @@
 
 <div align="center">
     <a href="https://discord.gg/SGWCwd6"><img src="https://img.shields.io/discord/705730982338101280?style=flat-square"/></a>
-    [![CodeFactor](https://www.codefactor.io/repository/github/podrum/podrum/badge)](https://www.codefactor.io/repository/github/podrum/podrum)
+    <a href="https://www.codefactor.io/repository/github/podrum/podrum"><img src="https://www.codefactor.io/repository/github/podrum/podrum/badge"/></>
 </div>
 <hr/>
 
