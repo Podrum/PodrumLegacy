@@ -6,7 +6,7 @@
 * |  __/ (_) | (_| | |  | |_| | | | | | |
 * |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
 *
-* Licensed under the Mozilla Public License, Version 2.0.
+* Licensed under the Mozilla Public License, Version 2.
 * Permissions of this weak copyleft license are conditioned on making
 * available source code of licensed files and modifications of those files 
 * under the same license (or in certain cases, one of the GNU licenses).
