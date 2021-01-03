@@ -41,6 +41,13 @@ class BedrockPlayer:
         self.address = address
         
     def handleDataPacket(self, packet):
-        pass
-    
-    
+        if packet.networkId == Info.LOGIN_PACKET:
+            self.name = packet.displayName
+            self.locale = packet.languageCode
+            self.randomId = packet.clientRandomId
+            self.uuid = packet.identity
+            self.xuid = packet.xuid
+            self.deviceId = packet.deviceId
+            self.deviceOs = packet.deviceOs
+            self.deviceModel = packet.deviceModel  
+            self.skin = packet.skin
