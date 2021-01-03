@@ -81,7 +81,7 @@ class Connection:
                 pk.encode()
                 self.recoveryQueue[pk.sequenceNumber] = pk
                 del self.packetToSend[count]
-                self.sendPacket(pk)
+                #self.sendPacket(pk)
                 limit -= 1
                 if limit <= 0:
                     break
