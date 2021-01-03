@@ -9,7 +9,6 @@ class EncapsulatedPacket:
     sequenceIndex = None
     orderIndex = None
     orderChannel = None
-    split = None
     splitCount = None
     splitIndex = None
     splitId = None
@@ -61,8 +60,9 @@ class EncapsulatedPacket:
     
     def getTotalLength(self):
         length = 3
+        length += 3 if Reliability.isReliable(self.reliability) else 0
+        length += 3 if Reliability.isSequenced(self.reliability) else 0
+        length += 4 if Reliability.isSequencedOrOrdered(self.reliability) else 0
+        length += 10 if self.splitCount > 0 else 0
         length += len(self.buffer)
-        length += 3 if self.messageIndex else 0
-        length += 4 if self.orderIndex else 0
-        length += 10 if self.split else 0
         return length
