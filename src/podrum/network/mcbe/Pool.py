@@ -18,6 +18,7 @@
 from podrum.network.mcbe.protocol.ClientToServerHandshakePacket import ClientToServerHandshakePacket
 from podrum.network.mcbe.protocol.LoginPacket import LoginPacket
 from podrum.network.mcbe.protocol.PlayStatusPacket import PlayStatusPacket
+from podrum.network.mcbe.protocol.ResourcePacksInfoPacket import ResourcePacksInfoPacket
 from podrum.network.mcbe.protocol.ServerToClientHandshakePacket import ServerToClientHandshakePacket
 
 
@@ -34,4 +35,5 @@ class Pool:
         self.registerPacket(ClientToServerHandshakePacket())
         self.registerPacket(LoginPacket())
         self.registerPacket(PlayStatusPacket())
+        self.registerPacket(ResourcePacksInfoPacket())
         self.registerPacket(ServerToClientHandshakePacket())
