@@ -1,4 +1,3 @@
-from rakpy.protocol.BitFlags import BitFlags
 from rakpy.protocol.Reliability import Reliability
 from rakpy.utils.BinaryStream import BinaryStream
 
@@ -18,7 +17,7 @@ class EncapsulatedPacket:
         packet = EncapsulatedPacket()
         header = stream.getByte()
         packet.reliability = (header & 224) >> 5
-        packet.split = (header & 0x10) > 0
+        split = (header & 0x10) > 0
         length = stream.getShort() >> 3
         if length == 0:
             raise Exception("Got an empty encapsulated packet")       
@@ -29,7 +28,7 @@ class EncapsulatedPacket:
         if Reliability.isSequencedOrOrdered(packet.reliability):
             packet.orderIndex = stream.getLTriad()
             packet.orderChannel = stream.getByte()
-        if packet.split:
+        if split:
             packet.splitCount = stream.getInt()
             packet.splitId = stream.getShort()
             packet.splitIndex = stream.getInt()
@@ -40,7 +39,7 @@ class EncapsulatedPacket:
     def toBinary(self):
         stream = BinaryStream()
         header = self.reliability << 5
-        if self.split:
+        if self.splitCount > 0:
             header |= 0x10
         stream.putByte(header)
         stream.putShort(len(self.buffer) << 3)
@@ -51,7 +50,7 @@ class EncapsulatedPacket:
         if Reliability.isSequencedOrOrdered(self.reliability):
             stream.putLTriad(self.orderIndex)
             stream.putByte(self.orderChannel)
-        if self.split:
+        if self.splitCount > 0:
             stream.putInt(self.splitCount)
             stream.putShort(self.splitId)
             stream.putInt(self.splitIndex)
