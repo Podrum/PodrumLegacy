@@ -53,6 +53,12 @@ class BedrockPlayer:
             self.deviceOs = packet.deviceOs
             self.deviceModel = packet.deviceModel  
             self.skin = packet.skin
+            self.sendPlayStatus(0)
+            
+    def sendPlayStatus(self, status):
+        pk = PlayStatusPacket()
+        pk.status = status
+        self.sendDataPacket(pk)
             
     def sendDataPacket(self, packet):
         pk = BatchPacket()
