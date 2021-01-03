@@ -16,6 +16,10 @@ class Reliability:
             return True
         if reliability == Reliability.reliableSequenced:
             return True
+        if reliability == Reliability.reliableAckReceipt:
+            return True
+        if reliability == Reliability.reliableOrderedAckReceipt:
+            return True
         return False
         
     @staticmethod
@@ -33,5 +37,7 @@ class Reliability:
         if reliability == Reliability.reliableOrdered:
             return True
         if reliability == Reliability.reliableSequenced:
+            return True
+        if reliability == Reliability.reliableOrderedAckReceipt:
             return True
         return False
