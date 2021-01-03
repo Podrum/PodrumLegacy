@@ -18,6 +18,7 @@
 from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.protocol.Info import Info
 from podrum.network.mcbe.protocol.PlayStatusPacket import PlayStatusPacket
+from podrum.network.mcbe.protocol.ResourcePacksInfoPacket import ResourcePacksInfoPacket
 from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
 
 class BedrockPlayer:
@@ -55,6 +56,8 @@ class BedrockPlayer:
             self.deviceModel = packet.deviceModel  
             self.skin = packet.skin
             self.sendPlayStatus(0)
+            pk = ResourcePacksInfoPacket()
+            self.sendDataPacket(pk)
             
     def sendPlayStatus(self, status):
         pk = PlayStatusPacket()
