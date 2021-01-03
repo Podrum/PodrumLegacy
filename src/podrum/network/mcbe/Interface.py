@@ -51,3 +51,5 @@ class Interface(RaknetInterface):
                 packet.buffer = buffer
                 packet.decode()
                 player.handleDataPacket(packet)
+            else:
+                print(hex(buffer[0]))
