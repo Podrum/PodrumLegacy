@@ -4,13 +4,13 @@ from rakpy.utils.BinaryStream import BinaryStream
 class EncapsulatedPacket:
     buffer = None
     reliability = None
-    messageIndex = None
-    sequenceIndex = None
-    orderIndex = None
-    orderChannel = None
-    splitCount = None
-    splitIndex = None
-    splitId = None
+    messageIndex = 0
+    sequenceIndex = 0
+    orderIndex = 0
+    orderChannel = 0
+    splitCount = 0
+    splitIndex = 0
+    splitId = 0
     
     @staticmethod
     def fromBinary(stream):
