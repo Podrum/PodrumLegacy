@@ -4,7 +4,6 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 
 class DataPacket(Packet):
     id = 0x80
-    
     packets = []
     sequenceNumber = None
     
