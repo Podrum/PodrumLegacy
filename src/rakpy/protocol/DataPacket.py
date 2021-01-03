@@ -1,10 +1,9 @@
-from rakpy.protocol.BitFlags import BitFlags
 from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
 from rakpy.protocol.Packet import Packet
 from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 
 class DataPacket(Packet):
-    id = BitFlags.Valid | 0
+    id = 0x80 | 0
     
     packets = []
     sequenceNumber = None
