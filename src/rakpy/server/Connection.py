@@ -162,7 +162,7 @@ class Connection:
                 del self.recoveryQueue[seq]
                 
     def receivePacket(self, packet):
-        if Reliability.isReliable(packet.reliability):
+        if not Reliability.isReliable(packet.reliability):
             self.handlePacket(packet)
         else:
             if packet.messageIndex < self.reliableWindowStart:
