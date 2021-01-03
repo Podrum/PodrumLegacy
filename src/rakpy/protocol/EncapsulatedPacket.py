@@ -4,6 +4,7 @@ from rakpy.utils.BinaryStream import BinaryStream
 
 class EncapsulatedPacket:
     buffer = None
+    reliability = None
     messageIndex = None
     sequenceIndex = None
     orderIndex = None
