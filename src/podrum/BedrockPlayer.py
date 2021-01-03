@@ -15,7 +15,9 @@
 * source code for files added in the larger work.
 """
 
+from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.protocol.Info import Info
+from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
 
 class BedrockPlayer:
     connection = None
@@ -51,3 +53,12 @@ class BedrockPlayer:
             self.deviceOs = packet.deviceOs
             self.deviceModel = packet.deviceModel  
             self.skin = packet.skin
+            
+    def sendDataPacket(self, packet):
+        pk = BatchPacket()
+        pk.addPacket(packet)
+        pk.encode()
+        sendPacket = EncapsulatedPacket()
+        sendPacket.reliability = 0
+        sendPacket.buffer = pk.buffer
+        self.connection.addEncapsulatedToQueue(sendPacket)
