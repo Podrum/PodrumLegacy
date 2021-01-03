@@ -8,6 +8,7 @@ from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
 from rakpy.protocol.Nack import Nack
 from rakpy.protocol.NewIncomingConnection import NewIncomingConnection
 from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
+from rakpy.protocol.Reliability import Reliability
 from rakpy.utils.InternetAddress import InternetAddress
 from rakpy.utils.BinaryStream import BinaryStream
 from time import time as timeNow
@@ -187,35 +188,35 @@ class Connection:
                 self.reliableWindow[packet.messageIndex] = packet
                 
     def addEncapsulatedToQueue(self, packet, flags = priority["Normal"]):
-        if 2 <= packet.reliability <= 7 and packet.reliability != 5:
+        if Reliability.isReliable(packet.reliability):
             packet.messageIndex = self.messageIndex
             self.messageIndex += 1
-            if packet.reliability == 3:
+            if packet.reliability == Reliability.reliableOrdered:
                 packet.orderIndex = self.channelIndex[packet.orderChannel]
                 self.channelIndex[packet.orderChannel] += 1
-        if packet.getTotalLength() + 4 > self.mtuSize:
-            buffers = []
-            for i in range(0, len(packet.buffer), self.mtuSize - 34):
-                buffers.append(packet.buffer[i:i - (self.mtuSize - 34)])
-            self.splitId += 1
-            splitId = self.splitId % 65536
-            for count, buffer in enumerate(buffers):
+        if packet.getTotalLength() > self.mtuSize:
+            buffers = {}
+            i = 0
+            splitIndex = 0
+            while i < len(packet.buffer):
+                buffers[splitIndex] = packet.buffer[i:i + self.mtuSize]
+                splitIndex += 1
+                i += self.mtuSize
+            for index, buffer in buffers.items():
                 pk = EncapsulatedPacket()
-                pk.splitId = splitId
-                pk.split = True
+                pk.splitId = self.splitId
                 pk.splitCount = len(buffers)
                 pk.reliability = packet.reliability
-                pk.splitIndex = count
+                pk.splitIndex = index
                 pk.buffer = buffer
-                if count > 0:
+                if index != 0:
                     pk.messageIndex = self.messageIndex
                     self.messageIndex += 1
-                else:
-                    pk.messageIndex = packet.messageIndex
                 if pk.reliability == 3:
                     pk.orderChannel = packet.orderChannel
                     pk.orderIndex = packet.orderIndex
-                self.addToQueue(pk, flags | self.priority["Immediate"])
+                self.addToQueue(pk, flags)
+            self.splitId += 1
         else:
             self.addToQueue(packet, flags)
             
