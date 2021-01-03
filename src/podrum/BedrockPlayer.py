@@ -15,6 +15,8 @@
 * source code for files added in the larger work.
 """
 
+from podrum.network.mcbe.protocol.Info import Info
+
 class BedrockPlayer:
     connection = None
     address = None
@@ -40,3 +42,5 @@ class BedrockPlayer:
         
     def handleDataPacket(self, packet):
         pass
+    
+    
