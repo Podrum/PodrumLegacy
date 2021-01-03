@@ -17,6 +17,7 @@
 
 from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.protocol.Info import Info
+from podrum.network.mcbe.protocol.PlayStatusPacket import PlayStatusPacket
 from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
 
 class BedrockPlayer:
