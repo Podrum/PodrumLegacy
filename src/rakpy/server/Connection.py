@@ -36,6 +36,7 @@ class Connection:
     packetToSend = []
     sendQueue = DataPacket()
     splitPackets = {}
+    receivedWindow = []
     lastReliableIndex = 0
     lastSequenceNumber = -1
     sendSequenceNumber = 0
