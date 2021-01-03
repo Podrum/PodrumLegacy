@@ -1,5 +1,4 @@
 from rakpy.protocol.Ack import Ack
-from rakpy.protocol.BitFlags import BitFlags
 from rakpy.protocol.ConnectedPing import ConnectedPing
 from rakpy.protocol.ConnectedPong import ConnectedPong
 from rakpy.protocol.ConnectionRequest import ConnectionRequest
@@ -105,11 +104,11 @@ class Connection:
         self.isActive = True
         self.lastUpdate = timeNow()
         header = buffer[0]
-        if (header & BitFlags.Valid) == 0:
+        if (header & 0x80) == 0:
             return
-        if header & BitFlags.Ack:
+        if header & 0x40:
             return self.handleAck(buffer)
-        if header & BitFlags.Nack:
+        if header & 0x20:
             return self.handleNack(buffer)
         return self.handleDatagram(buffer)
         
