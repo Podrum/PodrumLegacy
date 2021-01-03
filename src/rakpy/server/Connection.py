@@ -60,7 +60,7 @@ class Connection:
         self.channelIndex = [0] * 32
             
     def update(self, timestamp):
-        if not self.isActive and (self.lastUpdate + 10000) < timestamp:
+        if not self.isActive and (self.lastUpdate + 10) < timestamp:
             self.disconnect("timeout")
             return
         self.isActive = False
@@ -88,7 +88,7 @@ class Connection:
             if len(self.packetToSend) > 2048:
                 self.packetToSend = []
         for seq, pk in dict(self.recoveryQueue).items():
-            if pk.sendTime < (timeNow() - 8000):
+            if pk.sendTime < (timeNow() - 8):
                 self.packetToSend.append(pk)
                 del self.recoveryQueue[seq]
         for count, seq in enumerate(self.receivedWindow):
