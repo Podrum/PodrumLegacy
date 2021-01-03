@@ -36,14 +36,7 @@ class Connection:
     packetToSend = []
     sendQueue = DataPacket()
     splitPackets = {}
-    windowStart = -1
-    windowEnd = 2048
-    reliableWindowStart = 0
-    reliableWindowEnd = 2048
-    reliableWindow = {}
-    lastReliableIndex = -1
-    receivedWindow = []
-    sequenceNumber = 0
+    lastReliableIndex = 0
     lastSequenceNumber = -1
     sendSequenceNumber = 0
     messageIndex = 0
@@ -91,11 +84,6 @@ class Connection:
             if pk.sendTime < (timeNow() - 8):
                 self.packetToSend.append(pk)
                 del self.recoveryQueue[seq]
-        for count, seq in enumerate(self.receivedWindow):
-            if seq < self.windowStart:
-                del self.receivedWindow[count]
-            else:
-                break
         self.sendTheQueue()
         
     def disconnect(self, reason = "unknown"):
@@ -117,17 +105,13 @@ class Connection:
         dataPacket = DataPacket()
         dataPacket.buffer = buffer
         dataPacket.decode()
-        if dataPacket.sequenceNumber < self.windowStart:
-            return
-        if dataPacket.sequenceNumber > self.windowEnd:
-            return
         if dataPacket.sequenceNumber in self.receivedWindow:
             return
-        diff = dataPacket.sequenceNumber - self.lastSequenceNumber
-        if dataPacket.sequenceNumber < len(self.nackQueue):
+        if dataPacket.sequenceNumber in self.nackQueue:
             self.nackQueue.remove(dataPacket.sequenceNumber)
         self.ackQueue.append(dataPacket.sequenceNumber)
         self.receivedWindow.append(dataPacket.sequenceNumber)
+        diff = dataPacket.sequenceNumber - self.lastSequenceNumber
         if diff != 1:
             i = self.lastSequenceNumber + 1
             while i < dataPacket.sequenceNumber:
@@ -136,8 +120,6 @@ class Connection:
                 i += 1
         if diff >= 1:
             self.lastSequenceNumber = dataPacket.sequenceNumber
-            self.windowStart += diff
-            self.windowEnd += diff
         for packet in dataPacket.packets:
             self.receivePacket(packet)
             
@@ -156,8 +138,8 @@ class Connection:
         for seq in packet.packets:
             if seq in self.recoveryQueue:
                 pk = self.recoveryQueue[seq]
-                pk.sequenceNumber = self.sequenceNumber
-                self.sequenceNumber += 1
+                pk.sequenceNumber = self.sendSequenceNumber
+                self.sendSequenceNumber += 1
                 pk.sendTime = timeNow()
                 pk.encode()
                 self.sendPacket(pk)
@@ -167,27 +149,10 @@ class Connection:
         if not Reliability.isReliable(packet.reliability):
             self.handlePacket(packet)
         else:
-            if packet.messageIndex < self.reliableWindowStart:
-                return
-            if packet.messageIndex > self.reliableWindowEnd:
-                return
-            if (packet.messageIndex - self.lastReliableIndex) == 1:
-                self.lastReliableIndex += 1
-                self.reliableWindowStart += 1
-                self.reliableWindowEnd += 1
+            holeCount = self.lastReliableIndex - packet.messageIndex
+            if holeCount == 0:
                 self.handlePacket(packet)
-                if len(self.reliableWindow) > 0:
-                    self.reliableWindow = dict(sorted(self.reliableWindow.items()))
-                    for seqIndex, pk in dict(self.reliableWindow).items():
-                        if (seqIndex - self.lastReliableIndex) != 1:
-                            break
-                        self.lastReliableIndex += 1
-                        self.reliableWindowStart += 1
-                        self.reliableWindowEnd += 1
-                        self.handlePacket(pk)
-                        del self.reliableWindow[seqIndex]
-            else:
-                self.reliableWindow[packet.messageIndex] = packet
+                self.lastReliableIndex += 1
                 
     def addEncapsulatedToQueue(self, packet, flags = priority["Normal"]):
         if Reliability.isReliable(packet.reliability):
