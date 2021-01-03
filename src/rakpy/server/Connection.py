@@ -236,7 +236,7 @@ class Connection:
         self.sendQueue.packets.append(pk)
 
     def handlePacket(self, packet):
-        if packet.split:
+        if packet.splitCount > 0:
             self.handleSplit(packet)
             return
         pid = packet.buffer[0]
