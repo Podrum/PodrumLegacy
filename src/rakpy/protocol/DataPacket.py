@@ -5,9 +5,10 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class DataPacket(Packet):
     id = 0x80
     packets = []
-    sequenceNumber = None
+    sequenceNumber = 0
     
     def encodePayload(self):
+        self.packets = []
         self.putLTriad(self.sequenceNumber)
         for packet in self.packets:
             self.put(packet.toBinary().buffer)
