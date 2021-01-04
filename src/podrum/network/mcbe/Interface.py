@@ -18,6 +18,7 @@
 from podrum.BedrockPlayer import BedrockPlayer
 from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.Pool import Pool
+from podrum.utils.Logger import Logger
 from rakpy.server.Server import Server
 from rakpy.server.Interface import Interface as RaknetInterface
 from rakpy.utils.InternetAddress import InternetAddress
@@ -36,7 +37,7 @@ class Interface(RaknetInterface):
         self.players[connection.address.address] = BedrockPlayer(connection, connection.address)
         
     def onCloseConnection(self, address, reason):
-        pass
+        Logger.info(f"{address} disconnected due to {reason}")
         
     def onEncapsulated(self, packet, address):
         if address.address not in self.players:
