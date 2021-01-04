@@ -37,7 +37,7 @@ class Interface(RaknetInterface):
         self.players[connection.address.address] = BedrockPlayer(connection, connection.address)
         
     def onCloseConnection(self, address, reason):
-        Logger.info(f"{address} disconnected due to {reason}")
+        Logger.info(f"{address.address} disconnected due to {reason}")
         
     def onEncapsulated(self, packet, address):
         if address.address not in self.players:
