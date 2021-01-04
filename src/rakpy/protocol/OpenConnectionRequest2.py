@@ -1,6 +1,6 @@
 from rakpy.protocol.OfflinePacket import OfflinePacket
 from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
-from rakpy.protocol.InternetAddress import InternetAddress
+from rakpy.utils.InternetAddress import InternetAddress
 
 class OpenConnectionRequest2(OfflinePacket):
     id = PacketIdentifiers.OpenConnectionRequest2
