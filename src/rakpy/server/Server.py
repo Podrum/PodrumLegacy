@@ -115,7 +115,7 @@ class Server(Thread):
     def removeConnection(self, connection, reason):
         address = connection.address
         token = f"{address.address}:{address.port}"
-        if token in self.connections:
+        if token in dict(self.connections):
             self.connections[token].close()
             del self.connections[token]
         self.interface.onCloseConnection(connection.address, reason)
