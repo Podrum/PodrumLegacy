@@ -128,7 +128,7 @@ class Server(Thread):
                 sleep(self.raknetTickLength)
         
     def run(self):
-        tickProcessor = Thread(target = self.tick())
+        tickProcessor = Thread(target = self.tick, args = ())
         tickProcessor.setDaemon(True)
         tickProcessor.start()
         while True:
