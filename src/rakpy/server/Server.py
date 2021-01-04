@@ -125,9 +125,7 @@ class Server(Thread):
             if not self.shutdown:
                 for token, connection in self.connections.items():
                     connection.update(timeNow())
-            else:
-                return
-            sleep(self.raknetTickLength)
+                sleep(self.raknetTickLength)
         
     def run(self):
         tickProcessor = Thread(target = self.tick())
