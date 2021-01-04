@@ -4,8 +4,8 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class OpenConnectionRequest1(OfflinePacket):
     id = PacketIdentifiers.OpenConnectionRequest1
     
-    protocolVersion = None
-    mtu = None
+    protocolVersion = 0
+    mtu = 0
     
     def encodePayload(self):
         self.putMagic()

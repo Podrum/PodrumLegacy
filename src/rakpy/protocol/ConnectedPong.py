@@ -4,8 +4,8 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class ConnectedPong(Packet):
     id = PacketIdentifiers.ConnectedPong
     
-    pingTime = None
-    pongTime = None
+    pingTime = 0
+    pongTime = 0
     
     def encodePayload(self):
         self.putLong(self.pingTime)

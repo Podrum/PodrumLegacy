@@ -8,7 +8,6 @@ class DataPacket(Packet):
     sequenceNumber = 0
     
     def encodePayload(self):
-        self.packets = []
         self.putLTriad(self.sequenceNumber)
         for packet in self.packets:
             self.put(packet.toBinary().buffer)

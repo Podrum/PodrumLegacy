@@ -5,7 +5,7 @@ from rakpy.utils.InternetAddress import InternetAddress
 
 class Packet(BinaryStream):
     id = -1
-    sendTime = None
+    sendTime = 0
     
     def getString(self):
         return self.get(self.getShort()).decode()

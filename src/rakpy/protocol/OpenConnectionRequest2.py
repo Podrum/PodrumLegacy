@@ -1,12 +1,13 @@
 from rakpy.protocol.OfflinePacket import OfflinePacket
 from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
+from rakpy.protocol.InternetAddress import InternetAddress
 
 class OpenConnectionRequest2(OfflinePacket):
     id = PacketIdentifiers.OpenConnectionRequest2
     
-    serverAddress = None
-    mtu = None
-    clientId = None
+    serverAddress = InternetAddress("127.0.0.1", 0, 4)
+    mtu = 0
+    clientId = 0
     
     def encodePayload(self):
         self.putMagic()

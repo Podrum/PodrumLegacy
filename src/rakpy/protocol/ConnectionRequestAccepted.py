@@ -5,11 +5,11 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class ConnectionRequestAccepted(Packet):
     id = PacketIdentifiers.ConnectionRequestAccepted
     
-    clientAddress = None
-    systemIndex = None
+    clientAddress = InternetAddress("127.0.0.1", 0, 4)
+    systemIndex = 0
     systemAddresses = []
-    requestTime = None
-    time = None
+    requestTime = 0
+    time = 0
     
     def encodePayload(self):
         self.putAddress(self.clientAddress)

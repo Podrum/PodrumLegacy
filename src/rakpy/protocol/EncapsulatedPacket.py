@@ -2,8 +2,8 @@ from rakpy.protocol.Reliability import Reliability
 from rakpy.utils.BinaryStream import BinaryStream
 
 class EncapsulatedPacket:
-    buffer = None
-    reliability = None
+    buffer = b""
+    reliability = 0
     messageIndex = 0
     sequenceIndex = 0
     orderIndex = 0

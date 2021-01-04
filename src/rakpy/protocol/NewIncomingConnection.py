@@ -5,10 +5,10 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class NewIncomingConnection(Packet):
     id = PacketIdentifiers.NewIncomingConnection
     
-    address = None
+    address = InternetAddress("127.0.0.1", 0, 4)
     systemAddresses = []
-    pingTime = None
-    pongTime = None
+    pingTime = 0
+    pongTime = 0
     
     def encodePayload(self):
         self.putAddress(self.address)

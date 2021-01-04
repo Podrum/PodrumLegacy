@@ -4,8 +4,8 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class IncompatibleProtocol(OfflinePacket):
     id = PacketIdentifiers.IncompatibleProtocol
     
-    protocol = None
-    serverId = None
+    protocol = 0
+    serverId = 0
     
     def encodePayload(self):
         self.putByte(self.protocol)

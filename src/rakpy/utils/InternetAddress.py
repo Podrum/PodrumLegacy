@@ -1,7 +1,7 @@
 class InternetAddress:
-    address = None
-    port = None
-    version = None
+    address = ""
+    port = 0
+    version = 0
 
     def __init__(self, address: str, port: int, version: int = 4):
         self.address = address

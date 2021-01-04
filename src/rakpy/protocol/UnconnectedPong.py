@@ -4,9 +4,9 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class UnconnectedPong(OfflinePacket):
     id = PacketIdentifiers.UnconnectedPong
     
-    time = None
-    serverId = None
-    serverName = None
+    time = 0
+    serverId = 0
+    serverName = ""
     
     def encodePayload(self):
         self.putLong(self.time)

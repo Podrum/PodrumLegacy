@@ -4,9 +4,9 @@ from rakpy.protocol.PacketIdentifiers import PacketIdentifiers
 class ConnectionRequest(Packet):
     id = PacketIdentifiers.ConnectionRequest
     
-    clientId = None
-    time = None
-    useSecure = None
+    clientId = 0
+    time = 0
+    useSecure = 0
     
     def encodePayload(self):
         self.putLong(self.clientId)

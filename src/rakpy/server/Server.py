@@ -127,6 +127,6 @@ class Server(Thread):
                 data, address = buffer
                 self.handle(data, InternetAddress(address[0], address[1]))
             if not self.shutdown:
-                for token, connection in self.connections.items():
-                    connection.update(timeNow())
+                for token in self.connections:
+                    self.connections[token].update(timeNow())
                 sleep(self.raknetTickLength)
