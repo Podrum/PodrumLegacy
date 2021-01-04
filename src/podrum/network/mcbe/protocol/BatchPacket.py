@@ -58,10 +58,6 @@ class BatchPacket(DataPacket):
     def getPackets(self):
         stream = NetworkStream(self.payload)
         packets = []
-        count = 0
         while not stream.feof():
-            if count >= 500:
-                raise Exception("Too many packets in a batch packet")
-            count += 1
             packets.append(stream.getBytesString())
         return packets
