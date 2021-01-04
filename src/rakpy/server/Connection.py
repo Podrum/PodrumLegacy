@@ -180,7 +180,7 @@ class Connection:
                 if index != 0:
                     pk.messageIndex = self.messageIndex
                     self.messageIndex += 1
-                if pk.reliability == 3:
+                if pk.reliability == Reliability.reliableOrdered:
                     pk.orderChannel = packet.orderChannel
                     pk.orderIndex = packet.orderIndex
                 self.addToQueue(pk, flags)
