@@ -24,8 +24,6 @@ class BatchPacket(DataPacket):
     networkId = Info.BATCH_PACKET
     payload = b""
     compressionLevel = 7
-    allowBatching = False
-    allowBeforeLogin = True
 
     def decodeHeader(self):
         pid = self.getByte()
