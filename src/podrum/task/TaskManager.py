@@ -24,10 +24,10 @@ class TaskManager:
         
     @staticmethod
     def removeTask(taskId):
-        if taskId in self.tasks:
+        if taskId in TaskManager.tasks:
             del TaskManager.tasks[taskId]
             
     @staticmethod
     def getTask(taskId):
-        if taskId in self.tasks:
+        if taskId in TaskManager.tasks:
             return TaskManager.tasks[taskId]
