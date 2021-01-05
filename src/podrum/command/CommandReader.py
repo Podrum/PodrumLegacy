@@ -33,7 +33,7 @@ class CommandReader(Thread):
     def run(self):
         while True:
             try:
-                line = input("> ")
+                line = input()
                 if line != "":
                     args = line.split()
                     command = args[0]
