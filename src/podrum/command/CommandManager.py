@@ -27,3 +27,14 @@ class CommandManager:
     @staticmethod
     def registerCommand(command):
         CommandManager.commands[command.name] = command
+
+    @staticmethod
+    def getCommand(command):
+        if command in CommandManager.commands:   
+            return CommandManager.commands[command]
+        return None
+
+    @staticmethod
+    def deleteCommand(command):
+        if command in CommandManager.commands:   
+            del CommandManager.commands[command]
