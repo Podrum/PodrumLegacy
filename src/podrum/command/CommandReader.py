@@ -32,14 +32,11 @@ class CommandReader(Thread):
 
     def run(self):
         while True:
-            try:
-                line = input()
-                if line != "":
-                    args = line.split()
-                    command = args[0]
-                    if CommandManager.isCommand(command):
-                        CommandManager.commands[command].execute(self.server, args)
-                    else:
-                        Logger.error(Base.getTranslation("invalidCommand"))
-            except:
-                pass
+            line = input()
+            if line != "":
+                args = line.split()
+                command = args[0]
+                if CommandManager.isCommand(command):
+                    CommandManager.commands[command].execute(self.server, args)
+                else:
+                    Logger.error(Base.getTranslation("invalidCommand"))
