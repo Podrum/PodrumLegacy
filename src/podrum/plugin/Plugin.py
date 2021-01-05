@@ -41,7 +41,7 @@ class Plugin:
     def loadAll():
         for fileName in os.listdir(Plugin.pluginsDir):
             path = Plugin.pluginsDir
-            if not self.pluginsDir.endswith("/") or not Plugin.pluginsDir.endswith("\\"):
+            if not Plugin.pluginsDir.endswith("/") or not Plugin.pluginsDir.endswith("\\"):
                 path += "/"
             path += fileName
             if os.path.isfile(path):
@@ -50,7 +50,7 @@ class Plugin:
 
     @staticmethod
     def unload(name):
-        if name in PLugin.plugins:
+        if name in Plugin.plugins:
             Plugin.plugins[name]["main"].onDisable()
             del Plugin.plugins[name]
             Plugin.pluginsCount -= 1
