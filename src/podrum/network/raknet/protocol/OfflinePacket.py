@@ -25,7 +25,7 @@ class OfflinePacket(Packet):
         self.magic = self.get(16)
         
     def putMagic(self):
-        self.put(self.raknetMagic)
+        self.put(RakNet.magic)
         
     def isValid(self):
         return self.magic == RakNet.magic
