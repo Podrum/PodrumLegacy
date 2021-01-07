@@ -36,6 +36,7 @@ class AcknowledgePacket(Packet):
                 self.sequenceNumbers.append(self.getLTriad())
                 
     def encodePayload(self):
+        self.sequenceNumbers.sort()
         recordCount = len(self.sequenceNumbers)
         if recordCount > 0:
             self.putShort(recordCount)
