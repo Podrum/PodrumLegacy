@@ -17,6 +17,7 @@
 
 from podrum.network.raknet.InternetAddress import InternetAddress
 from podrum.utils.BinaryStream import BinaryStream
+import socket
 
 class Packet(BinaryStream):
     pid = -1
@@ -28,3 +29,21 @@ class Packet(BinaryStream):
     def putString(self, value):
         self.putShort(len(value))
         self.put(value.encode())
+
+    def getAddress(self):
+        version = self.getByte()
+        if version == 4:
+            parts = []
+            for i in range(0, 4):
+                parts.append(str(~self.getByte() & 0xff))
+            ip = ".".join(parts)
+            port = self.getShort()
+            return InternetAddress(ip, port, version)
+        if version == 6:
+            self.getLShort()
+            port = self.getShort()
+            self.getInt()
+            ip = socket.inet_ntop(socket.AF_INET6, self.get(16))
+            self.getInt()
+            return InternetAddress(ip, port, version)
+        raise Exception(f"Unknown address version {version}")
