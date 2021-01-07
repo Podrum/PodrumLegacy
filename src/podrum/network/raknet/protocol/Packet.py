@@ -47,3 +47,19 @@ class Packet(BinaryStream):
             self.getInt()
             return InternetAddress(ip, port, version)
         raise Exception(f"Unknown address version {version}")
+
+    def putAddress(self, value):
+        self.putByte(value.version)
+        if value.ip == 4:
+            parts = value.ip.split(".")
+            for i in range(0, 4):
+                self.putByte(~int(parts[i]) & 0xff)
+            self.putShort(value.port)
+        elif value.version == 6:
+            self.putLShort(socket.AF_INET6)
+            self.putShort(value.port)
+            self.putInt(0)
+            self.put(socket.inet_pton(socket.AF_INET6, value.ip))
+            self.putInt(0)
+        else:
+            raise Exception(f"Unknown address version {value.version}")
