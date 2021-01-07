@@ -63,3 +63,17 @@ class Packet(BinaryStream):
             self.putInt(0)
         else:
             raise Exception(f"Unknown address version {value.version}")
+
+    def decode(self):
+        self.getByte()
+        self.decodePayload()
+        
+    def decodePayload(self):
+        pass
+    
+    def encode(self):
+        self.putByte(self.id)
+        self.encodePayload()
+        
+    def encodePayload(self):
+        pass
