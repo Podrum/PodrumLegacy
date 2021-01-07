@@ -26,10 +26,10 @@ class PacketIdentifiers:
     openConnectionReply2 = 0x08
     connectionRequest = 0x09
     connectionRequestAccepted = 0x10
+    offlinePong = 0x1c
+    advertiseSystem = 0x1d
     newIncommingConnection = 0x13
     disconnectNotification = 0x15
     incompatibleProtocol = 0x19
-    offlinePong = 0x1c
-    advertiseSystem = 0x1d
     nack = 0xa0
     ack = 0xc0
