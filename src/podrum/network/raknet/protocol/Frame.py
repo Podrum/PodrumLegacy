@@ -15,9 +15,10 @@
 * source code for files added in the larger work.
 """
 
+from podrum.network.raknet.protocol.Reliability import Reliability
 from podrum.utils.BinaryStream import BinaryStream
 
-class FramePacket:
+class Frame:
     reliability = None
     isFragmented = None
     reliableIndex = None
@@ -28,3 +29,10 @@ class FramePacket:
     fragmentId = None
     fragmentIndex = None
     body = None
+
+    @staticmethod
+    def fromStream(stream):
+        pass
+    
+    def toStream(self):
+        pass
