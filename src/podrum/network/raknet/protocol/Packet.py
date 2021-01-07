@@ -20,7 +20,7 @@ from podrum.utils.BinaryStream import BinaryStream
 import socket
 
 class Packet(BinaryStream):
-    pid = -1
+    id = -1
     sendTime = None
     
     def getString(self):
