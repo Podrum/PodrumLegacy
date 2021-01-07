@@ -16,6 +16,7 @@
 """
 
 from podrum.network.raknet.protocol.Packet import Packet
+from podrum.utils.BinaryStream import BinaryStream
 
 class AcknowledgePacket(Packet):
     sequenceNumbers = []
@@ -37,10 +38,34 @@ class AcknowledgePacket(Packet):
                 
     def encodePayload(self):
         self.sequenceNumbers.sort()
-        recordCount = len(self.sequenceNumbers)
-        if recordCount > 0:
-            self.putShort(recordCount)
-            self.putBool(True if recordCount == 1 else False)
-            self.putTriad(self.sequenceNumbers[0])
-            if recordCount > 1:
-                self.putTriad(self.sequenceNumbers[-1])
+        recordCount = 0
+        count = len(self.sequenceNumbers)
+        stream = BinaryStream()
+        if count > 0:
+            start = self.packets[0]
+            end = self.packets[0]
+            for i in range(1, count):
+                current = self.packets[i]
+                if (current - end) == 1:
+                    end = current
+                elif (current - end) > 1:
+                    if start == last:
+                        stream.putByte(True)
+                        stream.putLTriad(start)
+                        start = end = current
+                    else:
+                        stream.putByte(False)
+                        stream.putLTriad(start)
+                        stream.putLTriad(end)
+                        start = end = current
+                    recordCount += 1
+            if start == last:
+                stream.putByte(True)
+                stream.putLTriad(start)
+            else:
+                stream.putByte(False)
+                stream.putLTriad(start)
+                stream.putLTriad(end)
+            recordCount += 1
+        self.putShort(recordCount)
+        self.put(stream.buffer)
