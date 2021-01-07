@@ -32,6 +32,6 @@ class OfflinePong(OfflinePacket):
         
     def encodePayload(self):
         self.putLong(self.timestamp)
-        self.putLong(self.clientGuid)
+        self.putLong(self.serverGuid)
         self.putMagic()
         self.putString(self.serverName)
