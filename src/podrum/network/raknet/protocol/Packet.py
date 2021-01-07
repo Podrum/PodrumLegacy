@@ -15,8 +15,16 @@
 * source code for files added in the larger work.
 """
 
+from podrum.network.raknet.InternetAddress import InternetAddress
 from podrum.utils.BinaryStream import BinaryStream
 
 class Packet(BinaryStream):
     pid = -1
     sendTime = None
+    
+    def getString(self):
+        return self.get(self.getShort()).decode()
+    
+    def putString(self, value):
+        self.putShort(len(value))
+        self.put(value.encode())
