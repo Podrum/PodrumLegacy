@@ -15,7 +15,7 @@
 * source code for files added in the larger work.
 """
 
-from rakpy.utils.BinaryStream import BinaryStream
+from podrum.utils.BinaryStream import BinaryStream
 from podrum.utils.UUID import UUID
 
 class NetworkStream(BinaryStream):
