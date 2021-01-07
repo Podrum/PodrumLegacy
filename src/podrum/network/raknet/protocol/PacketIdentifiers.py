@@ -24,8 +24,8 @@ class PacketIdentifiers:
     openConnectionReply1 = 0x06
     openConnectionRequest2 = 0x07
     openConnectionReply2 = 0x08
-    ConnectionRequest = 0x09
-    ConnectionRequestAccepted = 0x10
+    connectionRequest = 0x09
+    connectionRequestAccepted = 0x10
     newIncommingConnection = 0x13
     disconnectNotification = 0x15
     incompatibleProtocol = 0x19
