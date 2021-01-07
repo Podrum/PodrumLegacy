@@ -15,7 +15,7 @@
 * source code for files added in the larger work.
 """
 
-from podrum.network.raknet.protocol.OfflinePong import OfflinePing
+from podrum.network.raknet.protocol.OfflinePong import OfflinePong
 from podrum.network.raknet.protocol.PacketIdentifiers import PacketIdentifiers
 
 class AdvertiseSystem(OfflinePong):
