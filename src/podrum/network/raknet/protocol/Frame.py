@@ -56,7 +56,7 @@ class Frame:
     
     def toStream(self):
         stream = BinaryStream()
-        flags = (self.reliability << 5)
+        flags = self.reliability << 5
         if self.isFragmented:
             flags |= RakNet.flagFragment
         stream.putByte(flags)
@@ -74,3 +74,15 @@ class Frame:
             stream.putInt(self.fragmentIndex)
         stream.put(packet.body)
         return stream
+    
+    def getFrameLength(self):
+        length = 0
+        if Reliability.isReliable(self.reliability):
+            length += 3
+        if Reliability.isSequenced(self.reliability):
+            length += 3
+        if Reliability.isOrdered(self.reliability):
+            length += 4
+        if self.isFragmented:
+            length += 10
+        return length
