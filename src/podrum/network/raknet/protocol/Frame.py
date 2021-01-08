@@ -55,4 +55,22 @@ class Frame:
         return packet
     
     def toStream(self):
-        pass
+        stream = BinaryStream()
+        flags = (self.reliability << 5)
+        if self.isFragmented:
+            flags |= RakNet.flagFragment
+        stream.putByte(flags)
+        stream.putShort(len(self.body) << 3)
+        if Reliability.isReliable(self.reliability):
+            stream.putLTriad(self.reliableIndex)
+        if Reliability.isSequenced(self.reliability):
+            stream.putLTriad(self.sequencedIndex)
+        if Reliability.isOrdered(self.reliability):
+            stream.putLTriad(self.orderedIndex)
+            stream.putByte(self.orderChannel)
+        if self.isFragmented:
+            stream.putInt(self.fragmentSize)
+            stream.putShort(self.fragmentId)
+            stream.putInt(self.fragmentIndex)
+        stream.put(packet.body)
+        return stream
