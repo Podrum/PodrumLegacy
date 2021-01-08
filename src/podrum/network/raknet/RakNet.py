@@ -20,7 +20,7 @@ class RakNet:
     flagValid = 0x80
     flagAck = 0x40
     flagNack = 0x20
-    flagSplit = 0x10
+    flagFragment = 0x10
     flagNeedAck = 0x08
     flagPriority = 0x07
     systemAddressCount = 20
