@@ -17,9 +17,10 @@
 
 from podrum.network.raknet.protocol.Frame import Frame
 from podrum.network.raknet.protocol.Packet import Packet
+from podrum.network.raknet.RakNet import RakNet
 
 class FrameSetPacket(Packet):
-    id = 0x80
+    id = RakNet.flagValid
     sequenceNumber = None
     frames = []
     
