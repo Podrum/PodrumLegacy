@@ -16,6 +16,7 @@
 """
 
 from podrum.network.raknet.protocol.Reliability import Reliability
+from podrum.network.raknet.RakNet import RakNet
 from podrum.utils.BinaryStream import BinaryStream
 
 class Frame:
@@ -32,7 +33,26 @@ class Frame:
 
     @staticmethod
     def fromStream(stream):
-        pass
+        packet = Frame()
+        flags = stream.getByte()
+        packet.reliability = (flags & 224) >> 5
+        packet.isFragmented = (flags & RakNet.flagFragment) > 0
+        length = stream.readShort() >> 3
+        if length == 0:
+            raise Exception("Got empty frame!")
+        if Reliability.isReliable(packet.reliability):
+            packet.reliableIndex = stream.getLTriad()
+        if Reliability.isSequenced(packet.reliability):
+            packet.sequencedIndex = stream.getLTriad()
+        if Reliability.isOrdered(packet.reliability):
+            packet.orderedIndex = stream.getLTriad()
+            packet.orderChannel = stream.getByte()
+        if packet.isFragmented:
+            packet.fragmentSize = stream.getInt()
+            packet.fragmentId = stream.getShort()
+            packet.fragmentIndex = stream.getInt()
+        packet.body = stream.get(length)
+        return packet
     
     def toStream(self):
         pass
