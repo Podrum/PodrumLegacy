@@ -22,7 +22,7 @@ from podrum.network.raknet.protocol.ConnectionRequestAccepted import ConnectionR
 from podrum.network.raknet.protocol.DisconnectNotification import DisconnectNotification
 from podrum.network.raknet.protocol.FrameSetPacket import FrameSetPacket
 from podrum.network.raknet.protocol.Nack import Nack
-from podrum.network.raknet.protocol.NewIncomingConnection import Ack
+from podrum.network.raknet.protocol.NewIncomingConnection import NewIncomingConnection
 from podrum.network.raknet.protocol.OfflinePing import OfflinePing
 from podrum.network.raknet.protocol.OfflinePingOpenConnections import OfflinePingOpenConnections
 from podrum.network.raknet.protocol.OfflinePong import OfflinePong
@@ -43,4 +43,23 @@ class PacketPool:
         self.pool[packet.id] = packet
         
     def registerPackets(self):
-        pass
+        self.registerPacket(Ack())
+        self.registerPacket(AdvertiseSystem())
+        self.registerPacket(ConnectionRequest())
+        self.registerPacket(ConnectionRequestAccepted())
+        self.registerPacket(DisconnectNotification())
+        for identifier in range(0x80, 0x8f + 1):
+            frameSetPacket = FrameSetPacket()
+            frameSetPacket.id = identifier
+            self.registerPacket(frameSetPacket)
+        self.registerPacket(Nack())
+        self.registerPacket(NewIncomingConnection())
+        self.registerPacket(OfflinePing())
+        self.registerPacket(OfflinePingOpenConnections())
+        self.registerPacket(OfflinePong())
+        self.registerPacket(OnlinePing())
+        self.registerPacket(OnlinePong())
+        self.registerPacket(OpenConnectionReply1())
+        self.registerPacket(OpenConnectionReply2())
+        self.registerPacket(OpenConnectionRequest1())
+        self.registerPacket(OpenConnectionRequest2())
