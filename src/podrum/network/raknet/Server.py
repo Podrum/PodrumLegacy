@@ -25,16 +25,22 @@ from time import sleep
 from time import time
 
 class Server(Thread):
-  id = None
-  name = None
-  socket = None
-  interface = None
-  sessions = {}
-  shutdown = False
-  pool = None
+    id = None
+    name = None
+    socket = None
+    interface = None
+    sessions = {}
+    shutdown = False
+    pool = None
   
-  def __init__(self, address, interface = None):
-    super().__init__()
-    self.id = int.from_bytes(os.urandom(4), "little")
-    self.socket = Socket(address)
-    self.start()
+    def __init__(self, address, interface = None):
+        super().__init__()
+        self.id = int.from_bytes(os.urandom(4), "little")
+        self.socket = Socket(address)
+        if interface is not None:
+            self.interface = interface
+        else:
+            self.interface = None
+        self.pool = PacketPool()
+        self.pool.registerPackets()
+        self.start()
