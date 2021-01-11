@@ -24,3 +24,6 @@ class InternetAddress:
         self.ip = ip
         self.port = port
         self.version = version
+
+    def toString(self):
+        return f"{self.ip}:{self.port}"
