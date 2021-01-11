@@ -17,9 +17,6 @@
 
 class RakNet:
     protocol = 10
-    flagValid = 0x80
-    flagAck = 0x40
-    flagNack = 0x20
     flagFragment = 0x10
     flagNeedAck = 0x08
     flagPriority = 0x07
