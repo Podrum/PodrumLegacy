@@ -41,7 +41,7 @@ class Socket:
             buffer, source = self.socket.recvfrom(65535, 0)
             return BinaryStream(buffer), InternetAddress(source[0], source[1])
         except socket.error:
-            pass
+            return
           
     def send(self, stream, address):
         try:
@@ -49,7 +49,7 @@ class Socket:
             source = (address.ip, address.port)
             return self.socket.sendto(buffer, source)
         except socket.error:
-            pass
+            return
     
     def close(self):
         self.socket.close()
