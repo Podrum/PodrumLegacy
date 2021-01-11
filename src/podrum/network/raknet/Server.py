@@ -45,11 +45,16 @@ class Server(Thread):
         self.pool.registerPackets()
         self.start()
         
+    def handle(self, packet, address):
+        pass
+        
     def run(self):
         while not self.shutdown:
             streamAndAddress = self.socket.receive()
             if streamAndAddress is not None:
                 stream, address = streamAndAddress
+                packet = self.pool[stream.buffer[0]]
+                self.handle(packet, address)
             for token in self.connections:
                 self.sessions[token].update(time())
             sleep(1 / RakNet.tps)
