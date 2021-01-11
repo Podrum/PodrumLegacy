@@ -17,6 +17,7 @@
 
 class RakNet:
     protocol = 10
+    tps = 100
     flagFragment = 0x10
     flagNeedAck = 0x08
     flagPriority = 0x07
