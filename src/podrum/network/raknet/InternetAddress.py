@@ -25,5 +25,5 @@ class InternetAddress:
         self.port = port
         self.version = version
 
-    def toString(self):
+    def getToken(self):
         return f"{self.ip}:{self.port}"
