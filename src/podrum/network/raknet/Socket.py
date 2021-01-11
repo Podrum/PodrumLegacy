@@ -20,8 +20,8 @@ from podrum.utils.BinaryStream import BinaryStream
 import socket
 
 class Socket:
-    address
-    socket
+    address = None
+    socket = None
     
     def __init__(self, address):
         self.address = address
