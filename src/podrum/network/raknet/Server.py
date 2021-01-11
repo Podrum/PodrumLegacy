@@ -44,3 +44,9 @@ class Server(Thread):
         self.pool = PacketPool()
         self.pool.registerPackets()
         self.start()
+        
+    def run(self):
+        while not self.shutdown:
+            streamAndAddress = self.socket.receive()
+            if streamAndAddress is not None:
+                stream, address = streamAndAddress
