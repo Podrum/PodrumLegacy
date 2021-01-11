@@ -46,7 +46,8 @@ class Server(Thread):
         self.start()
         
     def handle(self, packet, address):
-        pass
+        if packet.id == PacketIdentifiers.offlinePing or packet.id == PacketIdentifiers.offlinePingOpenConnections:
+            pass            
         
     def run(self):
         while not self.shutdown:
