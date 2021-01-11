@@ -50,3 +50,6 @@ class Server(Thread):
             streamAndAddress = self.socket.receive()
             if streamAndAddress is not None:
                 stream, address = streamAndAddress
+            for token in self.connections:
+                self.sessions[token].update(time())
+            sleep(1 / RakNet.tps)
