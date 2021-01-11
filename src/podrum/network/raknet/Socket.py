@@ -39,7 +39,7 @@ class Socket:
     def receive(self):
         try:
             buffer, source = self.socket.recvfrom(65535, 0)
-            return (BinaryStream(buffer), InternetAddress(source[0], source[1]))
+            return BinaryStream(buffer), InternetAddress(source[0], source[1])
         except socket.error:
             pass
           
