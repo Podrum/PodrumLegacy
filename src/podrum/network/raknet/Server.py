@@ -16,6 +16,7 @@
 """
 
 import os
+from podrum.network.raknet.protocol.OfflinePacket import OfflinePacket
 from podrum.network.raknet.protocol.PacketIdentifiers import PacketIdentifiers
 from podrum.network.raknet.protocol.PacketPool import PacketPool
 from podrum.network.raknet.RakNet import RakNet
@@ -46,6 +47,9 @@ class Server(Thread):
         self.start()
         
     def handle(self, packet, address):
+        if isinstance(packet, OfflinePacket):
+            if not packet.isValid:
+                raise Exception("Invalid offline message")
         if packet.id == PacketIdentifiers.offlinePing or packet.id == PacketIdentifiers.offlinePingOpenConnections:
             pass            
         
