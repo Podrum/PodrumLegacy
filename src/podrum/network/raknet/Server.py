@@ -18,6 +18,13 @@
 from copy import deepcopy
 import os
 from podrum.network.raknet.protocol.OfflinePacket import OfflinePacket
+from podrum.network.raknet.protocol.OfflinePing import OfflinePing
+from podrum.network.raknet.protocol.OfflinePingOpenConnections import OfflinePingOpenConnections
+from podrum.network.raknet.protocol.OfflinePong import OfflinePong
+from podrum.network.raknet.protocol.OpenConnectionReply1 import OpenConnectionReply1
+from podrum.network.raknet.protocol.OpenConnectionReply2 import OpenConnectionReply2
+from podrum.network.raknet.protocol.OpenConnectionRequest1 import OpenConnectionRequest1
+from podrum.network.raknet.protocol.OpenConnectionRequest2 import OpenConnectionRequest2
 from podrum.network.raknet.protocol.PacketIdentifiers import PacketIdentifiers
 from podrum.network.raknet.protocol.PacketPool import PacketPool
 from podrum.network.raknet.RakNet import RakNet
@@ -51,8 +58,8 @@ class Server(Thread):
         if isinstance(packet, OfflinePacket):
             if not packet.isValid:
                 raise Exception("Invalid offline message")
-        if packet.id == PacketIdentifiers.offlinePing or packet.id == PacketIdentifiers.offlinePingOpenConnections:
-            pass            
+        if isinstance(packet, (OfflinePing, OfflinePingOpenConnections)):
+            print("Offline Ping")
         
     def run(self):
         while not self.shutdown:
