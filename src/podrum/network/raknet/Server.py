@@ -15,6 +15,7 @@
 * source code for files added in the larger work.
 """
 
+from copy import deepcopy
 import os
 from podrum.network.raknet.protocol.OfflinePacket import OfflinePacket
 from podrum.network.raknet.protocol.PacketIdentifiers import PacketIdentifiers
@@ -58,7 +59,8 @@ class Server(Thread):
             streamAndAddress = self.socket.receive()
             if streamAndAddress is not None:
                 stream, address = streamAndAddress
-                packet = self.pool[stream.buffer[0]]
+                packet = deepcopy(self.pool[stream.buffer[0]])
+                packet.buffer = stream.buffer
                 self.handle(packet, address)
             for token in self.connections:
                 self.sessions[token].update(time())
