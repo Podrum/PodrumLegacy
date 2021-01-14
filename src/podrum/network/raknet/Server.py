@@ -61,6 +61,7 @@ class Server(Thread):
                 stream, address = streamAndAddress
                 packet = deepcopy(self.pool[stream.buffer[0]])
                 packet.buffer = stream.buffer
+                packet.decode()
                 self.handle(packet, address)
             for token in self.connections:
                 self.sessions[token].update(time())
