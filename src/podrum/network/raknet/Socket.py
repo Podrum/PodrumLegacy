@@ -29,7 +29,7 @@ class Socket:
         if address.version == 6:
             self.socket.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 1)
         try:
-            self.socket.bind((self.address.address, self.address.port))
+            self.socket.bind((self.address.ip, self.address.port))
         except socket.error as e:
             print(f"Unable to binto to {str(address.port)}")
             print(str(e))
