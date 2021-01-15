@@ -55,21 +55,26 @@ class Server(Thread):
         self.start()
         
     def handle(self, packet, address):
+        print(packet.getName())
         if isinstance(packet, OfflinePacket):
             if not packet.isValid:
                 raise Exception("Invalid offline message")
         if isinstance(packet, (OfflinePing, OfflinePingOpenConnections)):
-            print("Offline Ping")
+            pass
         
     def run(self):
         while not self.shutdown:
             streamAndAddress = self.socket.receive()
             if streamAndAddress is not None:
                 stream, address = streamAndAddress
-                packet = deepcopy(self.pool.pool[stream.buffer[0]])
-                packet.buffer = stream.buffer
-                packet.decode()
-                self.handle(packet, address)
+                identifier = stream.buffer[0]
+                if identifier in self.pool.pool:
+                    packet = deepcopy(self.pool.pool[identifier])
+                    packet.buffer = stream.buffer
+                    packet.decode()
+                    self.handle(packet, address)
+                else:
+                    pass # Add raw packet notification
             for token in self.sessions:
                 self.sessions[token].update(time())
             sleep(1 / RakNet.tps)
