@@ -18,10 +18,10 @@
 from podrum.BedrockPlayer import BedrockPlayer
 from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.Pool import Pool
+from podrum.network.raknet.Interface import Interface as RaknetInterface
+from podrum.network.raknet.InternetAddress import InternetAddress
+from podrum.network.raknet.Server import Server
 from podrum.utils.Logger import Logger
-from rakpy.server.Server import Server
-from rakpy.server.Interface import Interface as RaknetInterface
-from rakpy.utils.InternetAddress import InternetAddress
 
 class Interface(RaknetInterface):
     raknet = None
