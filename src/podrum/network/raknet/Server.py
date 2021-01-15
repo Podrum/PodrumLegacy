@@ -17,6 +17,7 @@
 
 from copy import deepcopy
 import os
+from podrum.network.raknet.Interface import Interface
 from podrum.network.raknet.protocol.OfflinePacket import OfflinePacket
 from podrum.network.raknet.protocol.OfflinePing import OfflinePing
 from podrum.network.raknet.protocol.OfflinePingOpenConnections import OfflinePingOpenConnections
@@ -49,7 +50,7 @@ class Server(Thread):
         if interface is not None:
             self.interface = interface
         else:
-            self.interface = None
+            self.interface = Interface()
         self.pool = PacketPool()
         self.pool.registerPackets()
         self.start()
@@ -74,7 +75,7 @@ class Server(Thread):
                     packet.decode()
                     self.handle(packet, address)
                 else:
-                    pass # Add raw packet notification
+                    self.interface.onRaw(stream, address)
             for token in self.sessions:
                 self.sessions[token].update(time())
             sleep(1 / RakNet.tps)
