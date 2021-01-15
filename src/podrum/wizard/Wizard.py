@@ -111,7 +111,3 @@ class Wizard:
                 Wizard.isInWizard = False
                 config.save()
                 break
-                    
-                    
-                    
-    
