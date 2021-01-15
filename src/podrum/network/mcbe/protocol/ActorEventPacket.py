@@ -3,6 +3,9 @@ from podrum.network.mcbe.protocol.Info import Info
 
 class ActorEventPacket(DataPacket):
     networkId = Info.ACTOR_EVENT_PACKET
+    entityRuntimeId = None
+    event = None
+    data = 0
 
     JUMP = 1
     HURT_ANIMATION = 2
@@ -58,10 +61,6 @@ class ActorEventPacket(DataPacket):
     AGENT_SUMMON = 73
     CHARGED_CROSSBOW = 74
     FALL = 75
-
-    entityRuntimeId = None
-    event = None
-    data = 0
 
     def decodePayload(self):
         self.entityRuntimeId = self.getUnsignedVarLong()
