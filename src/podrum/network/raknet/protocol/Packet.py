@@ -77,3 +77,6 @@ class Packet(BinaryStream):
         
     def encodePayload(self):
         pass
+    
+    def getName(self):
+        return type(self).__name__
