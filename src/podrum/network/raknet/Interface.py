@@ -23,5 +23,8 @@ class Interface:
     def onCloseConnection(self, address, reason):
         pass
         
-    def onEncapsulated(self, packet, address):
+    def onFrame(self, packet, address):
+        pass
+    
+    def onRaw(self, stream, address):
         pass
