@@ -19,7 +19,7 @@ from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.protocol.Info import Info
 from podrum.network.mcbe.protocol.PlayStatusPacket import PlayStatusPacket
 from podrum.network.mcbe.protocol.ResourcePacksInfoPacket import ResourcePacksInfoPacket
-from rakpy.protocol.EncapsulatedPacket import EncapsulatedPacket
+from podrum.network.raknet.protocol.Frame import Frame
 
 class BedrockPlayer:
     connection = None
@@ -68,7 +68,7 @@ class BedrockPlayer:
         pk = BatchPacket()
         pk.addPacket(packet)
         pk.encode()
-        sendPacket = EncapsulatedPacket()
+        sendPacket = Frame()
         sendPacket.reliability = 0
         sendPacket.buffer = pk.buffer
-        self.connection.addEncapsulatedToQueue(sendPacket)
+        self.connection.addFrameToQueue(sendPacket)
