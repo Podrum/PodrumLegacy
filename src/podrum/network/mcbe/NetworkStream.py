@@ -40,8 +40,14 @@ class NetworkStream(BinaryStream):
         part2 = self.getLInt()
         return UUID(part0, part1, part2, part3)
     
-    def putUUID(self, uuid: UUID):
+    def putUUID(self, uuid):
         self.putLInt(uuid.getPart(1))
         self.putLInt(uuid.getPart(0))
         self.putLInt(uuid.getPart(3))
         self.putLInt(uuid.getPart(2))
+
+    def getBlockCoordinates(self):
+        pass # just one sec
+    
+    def putBlockCoordinates(self, vector3):
+        pass # just one sec
