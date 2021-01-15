@@ -39,7 +39,7 @@ class Interface(RaknetInterface):
     def onCloseConnection(self, address, reason):
         Logger.info(f"{address.address} disconnected due to {reason}")
         
-    def onEncapsulated(self, packet, address):
+    def onFrame(self, packet, address):
         if address.address not in self.players:
             return
         player = self.players[address.address]
