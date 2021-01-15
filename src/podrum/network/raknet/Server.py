@@ -66,10 +66,10 @@ class Server(Thread):
             streamAndAddress = self.socket.receive()
             if streamAndAddress is not None:
                 stream, address = streamAndAddress
-                packet = deepcopy(self.pool[stream.buffer[0]])
+                packet = deepcopy(self.pool.pool[stream.buffer[0]])
                 packet.buffer = stream.buffer
                 packet.decode()
                 self.handle(packet, address)
-            for token in self.connections:
+            for token in self.sessions:
                 self.sessions[token].update(time())
             sleep(1 / RakNet.tps)
