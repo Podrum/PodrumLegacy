@@ -17,7 +17,7 @@
 """
 
 class Interface:
-    def onOpenConnection(self, connection):
+    def onOpenConnection(self, session):
         pass
         
     def onCloseConnection(self, address, reason):
