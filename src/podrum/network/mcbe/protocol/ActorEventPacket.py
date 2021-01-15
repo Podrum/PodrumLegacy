@@ -1,4 +1,3 @@
-from podrum.utils.BinaryStream import BinaryStream
 from podrum.network.mcbe.protocol.DataPacket import DataPacket
 from podrum.network.mcbe.protocol.Info import Info
 
@@ -60,16 +59,16 @@ class ActorEventPacket(DataPacket):
     CHARGED_CROSSBOW = 74
     FALL = 75
 
-    entityruntime = None
+    entityRuntimeId = None
     event = None
     data = 0
 
     def decodePayload(self):
-        self.entityruntime = None # should be the entity runtime id!
-        self.event = BinaryStream.getByte()
-        self.data = BinaryStream.getVarInt()
+        self.entityRuntimeId = self.getUnsignedVarLong()
+        self.event = self.getByte()
+        self.data = self.getVarInt()
 
     def encodePayload(self):
-        BinaryStream.putUnsignedVarLong(self.entityruntime)
-        BinaryStream.putByte(self.event)
-        BinaryStream.putVarInt(self.data)
+        self.putUnsignedVarLong(self.entityRuntimeId)
+        self.putByte(self.event)
+        self.putVarInt(self.data)
