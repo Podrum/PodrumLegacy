@@ -20,13 +20,13 @@ from podrum.network.mcbe.protocol.Info import Info
 
 class ActorPickRequest(DataPacket, BinaryStream):
     networkId = Info.ACTOR_PICK_REQUEST_PACKET
-    entityUniqueid = None
+    entityUniqueId = None
     hotbarSlot = None
 
     def decodePayload(self):
-        self.entityUniqueid = self.getLLong()
+        self.entityUniqueId = self.getLLong()
         self.hotbarSlot = self.getByte()
 
     def encodePayload(self):
-        self.putLLong(self.entityUniqueid)
+        self.putLLong(self.entityUniqueId)
         self.putByte(self.hotbarSlot)
