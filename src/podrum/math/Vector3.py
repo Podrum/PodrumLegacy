@@ -27,14 +27,26 @@ class Vector3:
     ceilX = None
     ceilY = None
     ceilZ = None
+    absX = None
+    absY = None
+    absZ = None
+    roundX = None
+    roundY = None
+    roundZ = None
     
     def __init__(self, x, y, z):
         self.x = x
         self.y = y
         self.z = z
-        self.floorX = math.floor(x)
-        self.floorY = math.floor(y)
-        self.floorZ = math.floor(z)
-        self.ceilX = math.ceil(x)
-        self.ceilY = math.ceil(y)
-        self.ceilZ = math.ceil(z)  
+        self.floorX = int(math.floor(x))
+        self.floorY = int(math.floor(y))
+        self.floorZ = int(math.floor(z))
+        self.ceilX = int(math.ceil(x))
+        self.ceilY = int(math.ceil(y))
+        self.ceilZ = int(math.ceil(z))
+        self.absX = abs(x)
+        self.absY = abs(y)
+        self.absZ = abs(z)
+        self.roundX = round(x)
+        self.roundY = round(y)
+        self.roundZ = round(z)
