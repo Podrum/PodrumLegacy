@@ -18,6 +18,7 @@
 from copy import deepcopy
 import os
 from podrum.network.raknet.Interface import Interface
+from podrum.network.raknet.protocol.IncompatibleProtocol import IncompatibleProtocol
 from podrum.network.raknet.protocol.OfflinePacket import OfflinePacket
 from podrum.network.raknet.protocol.OfflinePing import OfflinePing
 from podrum.network.raknet.protocol.OfflinePingOpenConnections import OfflinePingOpenConnections
@@ -66,6 +67,24 @@ class Server(Thread):
             newPacket.timestamp = packet.timestamp
             newPacket.serverGuid = self.guid
             newPacket.serverName = self.name
+            newPacket.encode()
+            self.socket.send(newPacket, address)
+        elif isinstance(packet, OpenConnectionRequest1):
+            if packet.protocol != RakNet.protocol:
+                newPacket = IncompatibleProtocol()
+                newPacket.protocol = RakNet.protocol
+                newPacket.serverGuid = self.guid
+                self.socket.send(newPacket, address)
+            newPacket = OpenConnectionReply1()
+            newPacket.serverGuid = self.guid
+            newPacket.mtuSize = packet.mtuSize
+            newPacket.encode()
+            self.socket.send(newPacket, address)
+        elif isinstance(packet, OpenConnectionRequest2):
+            newPacket = OpenConnectionReply2()
+            newPacket.serverGuid = self.guid
+            newPacket.clientAddress = address
+            newPacket.mtuSize = packet.mtuSize
             newPacket.encode()
             self.socket.send(newPacket, address)
         
