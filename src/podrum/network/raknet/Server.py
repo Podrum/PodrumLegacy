@@ -37,6 +37,7 @@ from time import time
 class Server(Thread):
     id = None
     name = None
+    guid = None
     socket = None
     interface = None
     sessions = {}
@@ -45,7 +46,7 @@ class Server(Thread):
   
     def __init__(self, address, interface = None):
         super().__init__()
-        self.id = int.from_bytes(os.urandom(4), "little")
+        self.guid = int.from_bytes(os.urandom(4), "little")
         self.socket = Socket(address)
         if interface is not None:
             self.interface = interface
@@ -61,7 +62,12 @@ class Server(Thread):
             if not packet.isValid:
                 raise Exception("Invalid offline message")
         if isinstance(packet, (OfflinePing, OfflinePingOpenConnections)):
-            pass
+            newPacket = OfflinePong()
+            newPacket.timestamp = packet.timestamp
+            newPacket.serverGuid = self.guid
+            newPacket.serverGuid = self.name
+            newPacket.encode()
+            self.socket.send(newPacket, address)
         
     def run(self):
         while not self.shutdown:
