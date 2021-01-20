@@ -23,6 +23,7 @@ from podrum.utils.Config import Config
 import signal
 import sys
 import socket
+import hashlib
 from zipfile import ZipFile
 
 class Utils:
