@@ -65,7 +65,7 @@ class Server(Thread):
             newPacket = OfflinePong()
             newPacket.timestamp = packet.timestamp
             newPacket.serverGuid = self.guid
-            newPacket.serverGuid = self.name
+            newPacket.serverName = self.name
             newPacket.encode()
             self.socket.send(newPacket, address)
         
