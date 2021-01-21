@@ -15,5 +15,14 @@
 * source code for files added in the larger work.
 """
 
+from podrum.network.raknet.RakNet import RakNet
+
 class Session:
-    pass
+    reliableIndex = 0
+    channelIndex = [0] * 32
+    address = None
+    state = RakNet.state["Connecting"]
+    mtuSize = None
+    fragmentId = 0
+    sendSequenceNumber = 0
+    lastSequenceNumber = -1
