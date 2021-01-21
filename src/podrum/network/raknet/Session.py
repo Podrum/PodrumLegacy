@@ -16,13 +16,37 @@
 """
 
 from podrum.network.raknet.RakNet import RakNet
+from podrum.network.raknet.protocol.FrameSetPacket import FrameSetPacket
+import time
 
 class Session:
-    reliableIndex = 0
-    channelIndex = [0] * 32
+    server = None
     address = None
-    state = RakNet.state["Connecting"]
     mtuSize = None
+    lastUpdate = None
+    isActive = False
+    state = RakNet.state["Connecting"]
+    channelIndex = [0] * 32
+    reliableIndex = 0
     fragmentId = 0
     sendSequenceNumber = 0
     lastSequenceNumber = -1
+    resendQueue = []
+    ackQueue = []
+    nackQueue = []
+    recoveryQueue = {}
+    frameQueue = FrameSetPacket()
+    fragmentedPackets = {}
+    windowStart = -1
+    windowEnd = 2048
+    receivedWindow = []
+    reliableWindowStart = 0
+    reliableWindowEnd = 2048
+    reliableWindow = {}
+    lastReliableIndex = -1
+
+    def __init__(self, server, address, mtuSize):
+        self.server = server
+        self.address = address
+        self.mtuSize = mtuSize
+        self.lastUpdate = time.time()
