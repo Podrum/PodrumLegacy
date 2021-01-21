@@ -23,3 +23,11 @@ class RakNet:
     flagPriority = 0x07
     systemAddressCount = 20
     magic = b"\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78"
+    state = {
+        "Connecting": 0,
+        "Connected": 1
+    }
+    priority = {
+        "Queue": 0,
+        "Heap": 1
+    }
