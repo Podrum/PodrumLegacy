@@ -16,7 +16,9 @@
 """
 
 from podrum.network.raknet.RakNet import RakNet
+from podrum.network.raknet.protocol.Ack import Ack
 from podrum.network.raknet.protocol.FrameSetPacket import FrameSetPacket
+from podrum.network.raknet.protocol.Nack import Nack
 import time
 
 class Session:
@@ -50,3 +52,44 @@ class Session:
         self.address = address
         self.mtuSize = mtuSize
         self.lastUpdate = time.time()
+        
+    def update(self, timestamp):
+        if not self.isActive and self.lastUpdate + 10 < timestamp:
+            # disconnect due to timeout
+            return
+        self.isActive = False
+        if len(self.ackQueue) > 0:
+            newPacket = Ack()
+            newPacket.sequenceNumbers = self.ackQueue
+            self.sendPacket(newPacket)
+            self.ackQueue.clear()
+        if len(self.nackQueue) > 0:
+            newPacket = Nack()
+            newPacket.sequenceNumbers = self.nackQueue
+            self.sendPacket(newPacket)
+            self.nackQueue.clear()
+        if len(self.resendQueue) > 0:
+            limit = 16
+            for index, packet in enumerate(self.resendQueue):
+                packet.sendTime = timestamp
+                packet.encode()
+                self.recoveryQueue[packet.sequenceNumber] = packet
+                del self.packetToSend[index]
+                self.sendPacket(packet)
+                limit -= 1
+                if limit <= 0:
+                    break
+            if len(self.resendQueue) > 2048:
+                self.resendQueue.clear()
+        for sequenceNumber, packet in dict(self.recoveryQueue).items():
+            if packet.sendTime < (time.time() - 8):
+                self.packetToSend.append(packet)
+                del self.recoveryQueue[sequenceNumber]
+            else:
+                break
+        for index, sequenceNumber in enumerate(self.receivedWindow):
+            if sequenceNumber < self.windowStart:
+                del self.receivedWindow[index]
+            else:
+                break
+        # send the queue
