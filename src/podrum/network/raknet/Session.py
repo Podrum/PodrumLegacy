@@ -82,7 +82,7 @@ class Session:
             if len(self.resendQueue) > 2048:
                 self.resendQueue.clear()
         for sequenceNumber, packet in dict(self.recoveryQueue).items():
-            if packet.sendTime < (time.time() - 8):
+            if packet.sendTime < time.time() - 8:
                 self.packetToSend.append(packet)
                 del self.recoveryQueue[sequenceNumber]
             else:
