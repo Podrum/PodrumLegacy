@@ -92,4 +92,17 @@ class Session:
                 del self.receivedWindow[index]
             else:
                 break
-        # send the queue
+        self.sendFrameQueue()
+        
+    def sendPacket(self, packet):
+        packet.encode()
+        self.server.socket.send(packet, self.address)
+
+    def sendFrameQueue(self):
+        if len(self.frameQueue.frames) > 0:
+            self.frameQueue.sequenceNumber = self.sendSequenceNumber
+            self.sendSequenceNumber += 1
+            self.sendPacket(self.frameQueue)
+            self.frameQueue.sendTime = time.time()
+            self.recoveryQueue[self.frameQueue.sequenceNumber] = self.frameQueue
+            self.frameQueue = FrameSetPacket()
