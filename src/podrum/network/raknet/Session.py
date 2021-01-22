@@ -62,12 +62,12 @@ class Session:
             newPacket = Ack()
             newPacket.sequenceNumbers = self.ackQueue
             self.sendPacket(newPacket)
-            self.ackQueue.clear()
+            self.ackQueue = []
         if len(self.nackQueue) > 0:
             newPacket = Nack()
             newPacket.sequenceNumbers = self.nackQueue
             self.sendPacket(newPacket)
-            self.nackQueue.clear()
+            self.nackQueue = []
         if len(self.resendQueue) > 0:
             limit = 16
             for index, packet in enumerate(self.resendQueue):
@@ -80,7 +80,7 @@ class Session:
                 if limit <= 0:
                     break
             if len(self.resendQueue) > 2048:
-                self.resendQueue.clear()
+                self.resendQueue = []
         for sequenceNumber, packet in dict(self.recoveryQueue).items():
             if packet.sendTime < time.time() - 8:
                 self.resendQueue.append(packet)
