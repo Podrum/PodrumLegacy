@@ -74,7 +74,7 @@ class Session:
                 packet.sendTime = timestamp
                 packet.encode()
                 self.recoveryQueue[packet.sequenceNumber] = packet
-                del self.packetToSend[index]
+                del self.resendQueue[index]
                 self.sendPacket(packet)
                 limit -= 1
                 if limit <= 0:
@@ -83,7 +83,7 @@ class Session:
                 self.resendQueue.clear()
         for sequenceNumber, packet in dict(self.recoveryQueue).items():
             if packet.sendTime < time.time() - 8:
-                self.packetToSend.append(packet)
+                self.resendQueue.append(packet)
                 del self.recoveryQueue[sequenceNumber]
             else:
                 break
@@ -106,3 +106,19 @@ class Session:
             self.frameQueue.sendTime = time.time()
             self.recoveryQueue[self.frameQueue.sequenceNumber] = self.frameQueue
             self.frameQueue = FrameSetPacket()
+
+    def handleAck(self, packet):
+        packet.decode()
+        for sequenceNumber in packet.sequenceNumbers:
+            if sequenceNumber in self.recoveryQueue:
+                del self.recoveryQueue[sequenceNumber]
+                
+    def handleNack(self, packet):
+        packet.decode()
+        for sequenceNumber in packet.sequenceNumbers:
+            if sequenceNumber in self.recoveryQueue:
+                lostPacket = self.recoveryQueue[sequenceNumber]
+                lostPacket.sequenceNumber = self.sendSequenceNumber
+                self.sendSequenceNumber += 1
+                self.resendQueue.append(lostPacket)
+                del self.recoveryQueue[sequenceNumber]
