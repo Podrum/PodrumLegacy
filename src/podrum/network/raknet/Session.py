@@ -111,6 +111,24 @@ class Session:
             self.frameQueue.sendTime = time.time()
             self.recoveryQueue[self.frameQueue.sequenceNumber] = self.frameQueue
             self.frameQueue = FrameSetPacket()
+            
+    def addToQueue(self, frame, flags = RakNet.priority["Queue"]):
+        priority = flags & RakNet.flag["flagPriority"]
+        if priority == RakNet.priority["Heap"]:
+            packet = FrameSetPacket()
+            packet.sequenceNumber = self.sendSequenceNumber
+            self.sendSequenceNumber += 1
+            packet.frames.append(frame)
+            self.sendPacket(packet)
+            packet.sendTime = time.time()
+            self.recoveryQueue[packet.sequenceNumber] = packet
+        else:
+            if self.sendQueue.getLength() + frame.getFrameLength() > self.mtuSize:
+                self.sendFrameQueue()
+            self.frameQueue.frames.append(frame)
+            
+    def addFrameToQueue(self, frame, flags):
+        pass
 
     def handleAck(self, packet):
         for sequenceNumber in packet.sequenceNumbers:
@@ -176,9 +194,6 @@ class Session:
                 self.reliableWindow[frame.reliableIndex] = frame
                 
     def handlePacket(self, frame):
-        pass
-                
-    def addFrameToQueue(self, frame, flags):
         pass
                 
     def close(self):
