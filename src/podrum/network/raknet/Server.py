@@ -59,7 +59,7 @@ class Server(Thread):
         self.start()
         
     def createSession(self, address, mtuSize):
-        self.sessions[address.getToken()] = Session(self, address mtuSize)
+        self.sessions[address.getToken()] = Session(self, address, mtuSize)
         
     def removeSession(self, address):
         if address.getToken() in self.sessions:
@@ -99,6 +99,7 @@ class Server(Thread):
             newPacket.mtuSize = packet.mtuSize
             newPacket.encode()
             self.socket.send(newPacket, address)
+            self.createSession(address, packet.mtuSize)
         
     def run(self):
         while not self.shutdown:
