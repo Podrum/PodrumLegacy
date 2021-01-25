@@ -30,6 +30,7 @@ from podrum.network.raknet.protocol.OpenConnectionRequest2 import OpenConnection
 from podrum.network.raknet.protocol.PacketIdentifiers import PacketIdentifiers
 from podrum.network.raknet.protocol.PacketPool import PacketPool
 from podrum.network.raknet.RakNet import RakNet
+from podrum.network.raknet.Session import Session
 from podrum.network.raknet.Socket import Socket
 from threading import Thread
 from time import sleep
@@ -56,6 +57,17 @@ class Server(Thread):
         self.pool = PacketPool()
         self.pool.registerPackets()
         self.start()
+        
+    def createSession(self, address, mtuSize):
+        self.sessions[address.getToken()] = Session(self, address mtuSize)
+        
+    def removeSession(self, address):
+        if address.getToken() in self.sessions:
+            del self.sessions[address.getToken()]
+            
+    def getSession(self, address):
+        if address.getToken() in self.sessions:
+            return self.sessions[address.getToken()]
         
     def handle(self, packet, address):
         print(packet.getName())
