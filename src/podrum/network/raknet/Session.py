@@ -113,13 +113,11 @@ class Session:
             self.frameQueue = FrameSetPacket()
 
     def handleAck(self, packet):
-        packet.decode()
         for sequenceNumber in packet.sequenceNumbers:
             if sequenceNumber in self.recoveryQueue:
                 del self.recoveryQueue[sequenceNumber]
                 
     def handleNack(self, packet):
-        packet.decode()
         for sequenceNumber in packet.sequenceNumbers:
             if sequenceNumber in self.recoveryQueue:
                 lostPacket = self.recoveryQueue[sequenceNumber]
