@@ -21,6 +21,7 @@ from podrum.network.raknet.protocol.ConnectionRequest import ConnectionRequest
 from podrum.network.raknet.protocol.ConnectionRequestAccepted import ConnectionRequestAccepted
 from podrum.network.raknet.protocol.DisconnectNotification import DisconnectNotification
 from podrum.network.raknet.protocol.FrameSetPacket import FrameSetPacket
+from podrum.network.raknet.protocol.IncompatibleProtocol import IncompatibleProtocol
 from podrum.network.raknet.protocol.Nack import Nack
 from podrum.network.raknet.protocol.NewIncomingConnection import NewIncomingConnection
 from podrum.network.raknet.protocol.OfflinePing import OfflinePing
@@ -52,6 +53,7 @@ class PacketPool:
             frameSetPacket = FrameSetPacket()
             frameSetPacket.id = identifier
             self.registerPacket(frameSetPacket)
+        self.registerPacket(IncompatibleProtocol())
         self.registerPacket(Nack())
         self.registerPacket(NewIncomingConnection())
         self.registerPacket(OfflinePing())

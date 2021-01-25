@@ -36,8 +36,8 @@ class Frame:
         packet = Frame()
         flags = stream.getByte()
         packet.reliability = (flags & 224) >> 5
-        packet.isFragmented = (flags & RakNet.flagFragment) > 0
-        length = stream.readShort() >> 3
+        packet.isFragmented = (flags & RakNet.flag["Fragment"]) > 0
+        length = stream.getShort() >> 3
         if length == 0:
             raise Exception("Got empty frame!")
         if Reliability.isReliable(packet.reliability):
@@ -58,7 +58,7 @@ class Frame:
         stream = BinaryStream()
         flags = self.reliability << 5
         if self.isFragmented:
-            flags |= RakNet.flagFragment
+            flags |= RakNet.flag["Fragment"]
         stream.putByte(flags)
         stream.putShort(len(self.body) << 3)
         if Reliability.isReliable(self.reliability):

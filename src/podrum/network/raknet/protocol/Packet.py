@@ -50,7 +50,7 @@ class Packet(BinaryStream):
 
     def putAddress(self, value):
         self.putByte(value.version)
-        if value.ip == 4:
+        if value.version == 4:
             parts = value.ip.split(".")
             for i in range(0, 4):
                 self.putByte(~int(parts[i]) & 0xff)

@@ -18,8 +18,17 @@
 class RakNet:
     protocol = 10
     tps = 100
-    flagFragment = 0x10
-    flagNeedAck = 0x08
-    flagPriority = 0x07
     systemAddressCount = 20
     magic = b"\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78"
+    flag = {
+        "flagPriority": 0b1,
+        "Fragment": 0x10
+    }
+    state = {
+        "Connecting": 0,
+        "Connected": 1
+    }
+    priority = {
+        "Queue": 0,
+        "Heap": 1
+    }
