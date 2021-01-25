@@ -17,8 +17,10 @@
 
 from podrum.network.raknet.RakNet import RakNet
 from podrum.network.raknet.protocol.Ack import Ack
+from podrum.network.raknet.protocol.Frame import Frame
 from podrum.network.raknet.protocol.FrameSetPacket import FrameSetPacket
 from podrum.network.raknet.protocol.Nack import Nack
+from podrum.utils.BinaryStream import BinaryStream
 import time
 
 class Session:
@@ -55,7 +57,7 @@ class Session:
         
     def update(self, timestamp):
         if not self.isActive and self.lastUpdate + 10 < timestamp:
-            # disconnect due to timeout
+            self.disconnect("timeout")
             return
         self.isActive = False
         if len(self.ackQueue) > 0:
@@ -94,6 +96,9 @@ class Session:
                 break
         self.sendFrameQueue()
         
+    def disconnect(self, reason = "unknown"):
+        self.server.removeSession(self.address, reason)
+        
     def sendPacket(self, packet):
         packet.encode()
         self.server.socket.send(packet, self.address)
@@ -122,3 +127,9 @@ class Session:
                 self.sendSequenceNumber += 1
                 self.resendQueue.append(lostPacket)
                 del self.recoveryQueue[sequenceNumber]
+                
+    def addFrameToQueue(self, frame, flags):
+        pass
+                
+    def close(self):
+        self.addFrameToQueue(Frame.fromStream(BinaryStream(b"\x00\x00\x08\x15")), RakNet.priority["Heap"])
