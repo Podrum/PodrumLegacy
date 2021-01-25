@@ -61,9 +61,11 @@ class Server(Thread):
     def createSession(self, address, mtuSize):
         self.sessions[address.getToken()] = Session(self, address, mtuSize)
         
-    def removeSession(self, address):
+    def removeSession(self, address, reason):
         if address.getToken() in self.sessions:
+            self.sessions[address.getToken()].close()
             del self.sessions[address.getToken()]
+            self.interface.onCloseConnection(address, reason)
             
     def getSession(self, address):
         if address.getToken() in self.sessions:
@@ -71,35 +73,44 @@ class Server(Thread):
         
     def handle(self, packet, address):
         print(packet.getName())
-        if isinstance(packet, OfflinePacket):
-            if not packet.isValid:
-                raise Exception("Invalid offline message")
-        if isinstance(packet, (OfflinePing, OfflinePingOpenConnections)):
-            newPacket = OfflinePong()
-            newPacket.timestamp = packet.timestamp
-            newPacket.serverGuid = self.guid
-            newPacket.serverName = self.name
-            newPacket.encode()
-            self.socket.send(newPacket, address)
-        elif isinstance(packet, OpenConnectionRequest1):
-            if packet.protocol != RakNet.protocol:
-                newPacket = IncompatibleProtocol()
-                newPacket.protocol = RakNet.protocol
+        if self.getSession(address) is not None:
+            if not isinstance(packet, OfflinePacket):
+                if isinstance(packet, Ack):
+                    pass # Handle Ack
+                elif isinstance(packet, OfflinePacket):
+                    pass # Handle Nack
+                else:
+                    pass # Handle frame set
+        else:
+            if isinstance(packet, OfflinePacket):
+                if not packet.isValid:
+                    raise Exception("Invalid offline message")
+            if isinstance(packet, (OfflinePing, OfflinePingOpenConnections)):
+                newPacket = OfflinePong()
+                newPacket.timestamp = packet.timestamp
                 newPacket.serverGuid = self.guid
+                newPacket.serverName = self.name
+                newPacket.encode()
                 self.socket.send(newPacket, address)
-            newPacket = OpenConnectionReply1()
-            newPacket.serverGuid = self.guid
-            newPacket.mtuSize = packet.mtuSize
-            newPacket.encode()
-            self.socket.send(newPacket, address)
-        elif isinstance(packet, OpenConnectionRequest2):
-            newPacket = OpenConnectionReply2()
-            newPacket.serverGuid = self.guid
-            newPacket.clientAddress = address
-            newPacket.mtuSize = packet.mtuSize
-            newPacket.encode()
-            self.socket.send(newPacket, address)
-            self.createSession(address, packet.mtuSize)
+            elif isinstance(packet, OpenConnectionRequest1):
+                if packet.protocol != RakNet.protocol:
+                    newPacket = IncompatibleProtocol()
+                    newPacket.protocol = RakNet.protocol
+                    newPacket.serverGuid = self.guid
+                    self.socket.send(newPacket, address)
+                newPacket = OpenConnectionReply1()
+                newPacket.serverGuid = self.guid
+                newPacket.mtuSize = packet.mtuSize
+                newPacket.encode()
+                self.socket.send(newPacket, address)
+            elif isinstance(packet, OpenConnectionRequest2):
+                newPacket = OpenConnectionReply2()
+                newPacket.serverGuid = self.guid
+                newPacket.clientAddress = address
+                newPacket.mtuSize = packet.mtuSize
+                newPacket.encode()
+                self.socket.send(newPacket, address)
+                self.createSession(address, packet.mtuSize)
         
     def run(self):
         while not self.shutdown:
