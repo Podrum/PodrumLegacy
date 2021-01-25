@@ -128,6 +128,32 @@ class Session:
                 self.resendQueue.append(lostPacket)
                 del self.recoveryQueue[sequenceNumber]
                 
+    def handleFrameSetPacket(self, packet):
+        if packet.sequenceNumber < self.windowStart:
+            return
+        if packet.sequenceNumber > self.windowEnd:
+            return
+        if packet.sequenceNumber in self.receivedWindow:
+            return
+        difference = packet.sequenceNumber - self.lastSequenceNumber
+        if packet.sequenceNumber in self.nackQueue:
+            self.nackQueue.remove(packet.sequenceNumber)
+        self.ackQueue.append(packet.sequenceNumber)
+        self.receivedWindow.append(packet.sequenceNumber)
+        if difference != 1:
+            for i in range(self.lastSequenceNumber + 1, packet.sequenceNumber):
+                if i not in self.receivedWindow:
+                    self.nackQueue.append(i)
+        if difference >= 1:
+            self.lastSequenceNumber = packet.sequenceNumber
+            self.windowStart += difference
+            self.windowEnd += difference
+        for frame in packet.frames:
+            self.handleFrame(frame)
+            
+    def handleFrame(self, frame):
+        pass
+                
     def addFrameToQueue(self, frame, flags):
         pass
                 
