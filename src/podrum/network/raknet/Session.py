@@ -150,6 +150,32 @@ class Session:
             self.handleFrame(frame)
             
     def handleFrame(self, frame):
+        if frame.reliableIndex is None:
+            self.handlePacket(frame)
+        else:
+            if frame.reliableIndex < self.reliableWindowStart:
+                return
+            if frame.reliableIndex > self.reliableWindowEnd:
+                return
+            if frame.reliableIndex - self.lastReliableIndex == 1:
+                self.lastReliableIndex += 1
+                self.reliableWindowStart += 1
+                self.reliableWindowEnd += 1
+                self.handlePacket(frame)
+                if len(self.reliableWindow) > 0:
+                    self.reliableWindow = dict(sorted(self.reliableWindow.items()))
+                    for index, reliableFrame in self.reliableWindow.items():
+                        if index - self.lastReliableIndex != 1:
+                            break
+                        self.lastReliableIndex += 1
+                        self.reliableWindowStart += 1
+                        self.reliableWindowEnd += 1
+                        self.handlePacket(reliableFrame)
+                        del self.reliableWindow[index]
+            else:
+                self.reliableWindow[frame.reliableIndex] = frame
+                
+    def handlePacket(self, frame):
         pass
                 
     def addFrameToQueue(self, frame, flags):
