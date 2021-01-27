@@ -16,6 +16,6 @@
     "acceptLicense": "Do you accept the license? [y/n]",
     "mustAcceptLicence": "You must to accept the license if do you want to use this software.",
     "startingServer": "Starting server on {ip}:{port}",
-    "license": "Podrum is licensed under the Apache-2.0 license",
+    "license": "Podrum is licensed under the Mozilla Public License, Version 2",
     "invalidCommand": "Invalid command"
 }
