@@ -39,6 +39,7 @@ from time import time
 class Server(Thread):
     name = None
     guid = None
+    address = None
     socket = None
     interface = None
     sessions = {}
@@ -48,6 +49,7 @@ class Server(Thread):
     def __init__(self, address, interface = None):
         super().__init__()
         self.guid = int.from_bytes(os.urandom(4), "little")
+        self.address = address
         self.socket = Socket(address)
         if interface is not None:
             self.interface = interface
