@@ -201,6 +201,8 @@ class Session:
                 self.reliableWindow[frame.reliableIndex] = frame
                 
     def handlePacket(self, frame):
+        if packet.isFragmented:
+            return
         identifer = frame.body[0]
         if identifer < 0x80:
             if identifer == ConnectionRequest.id:
