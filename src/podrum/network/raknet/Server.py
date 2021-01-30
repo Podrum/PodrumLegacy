@@ -37,7 +37,6 @@ from time import sleep
 from time import time
 
 class Server(Thread):
-    id = None
     name = None
     guid = None
     socket = None
