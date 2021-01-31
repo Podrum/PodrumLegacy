@@ -35,7 +35,7 @@ class FrameSetPacket(Packet):
             self.put(frame.toStream().buffer)
             
     def getLength(self):
-        length = 3
+        length = 4
         for frame in self.frames:
             length += frame.getFrameLength()
         return length
