@@ -49,7 +49,7 @@ class AcknowledgePacket(Packet):
                 if (current - end) == 1:
                     end = current
                 elif (current - end) > 1:
-                    if start == last:
+                    if start == end:
                         stream.putByte(True)
                         stream.putLTriad(start)
                         start = end = current
@@ -59,7 +59,7 @@ class AcknowledgePacket(Packet):
                         stream.putLTriad(end)
                         start = end = current
                     recordCount += 1
-            if start == last:
+            if start == end:
                 stream.putByte(True)
                 stream.putLTriad(start)
             else:
