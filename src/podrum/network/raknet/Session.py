@@ -245,7 +245,7 @@ class Session:
             self.handlePacket(newFrame)
                 
     def handlePacket(self, frame):
-        if packet.isFragmented:
+        if frame.isFragmented:
             self.handleFrameFragment(frame)
         else:
             identifer = frame.body[0]
