@@ -258,7 +258,7 @@ class Session:
                     newPacket.clientAddress = self.address
                     newPacket.systemIndex = 0
                     newPacket.systemAddresses = [InternetAddress("255.255.255.255", 19132)] * 20
-                    newPacket.requestTimestamp = dataPacket.timestamp
+                    newPacket.requestTimestamp = packet.timestamp
                     newPacket.timestamp = time.time()
                     newPacket.encode()
                     newFrame = Frame()
