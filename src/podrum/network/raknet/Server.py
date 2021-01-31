@@ -19,6 +19,7 @@ from copy import deepcopy
 import os
 from podrum.network.raknet.Interface import Interface
 from podrum.network.raknet.protocol.Ack import Ack
+from podrum.network.raknet.protocol.FrameSetPacket import FrameSetPacket
 from podrum.network.raknet.protocol.IncompatibleProtocol import IncompatibleProtocol
 from podrum.network.raknet.protocol.Nack import Nack
 from podrum.network.raknet.protocol.OfflinePacket import OfflinePacket
@@ -82,7 +83,7 @@ class Server(Thread):
                     self.getSession(address).handleAck(packet)
                 elif isinstance(packet, Nack):
                     self.getSession(address).handleNack(packet)
-                else:
+                elif isinstance(packet, FrameSetPacket):
                     self.getSession(address).handleFrameSetPacket(packet)
         else:
             if isinstance(packet, OfflinePacket):
