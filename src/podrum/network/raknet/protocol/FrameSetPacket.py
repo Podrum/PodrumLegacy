@@ -36,4 +36,5 @@ class FrameSetPacket(Packet):
     def getLength(self):
         length = 3
         for frame in self.frames:
-            length += frame.getFrameLength() if isinstance(frame, Frame) else len(frame.buffer)
+            length += frame.getFrameLength()
+        return length
