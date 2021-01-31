@@ -29,12 +29,15 @@ class Reliability:
     def isReliable(reliability):
         if reliability == Reliability.reliable:
             return True
+        if reliability == Reliability.reliableOrdered:
+            return True
         if reliability == Reliability.reliableSequenced:
             return True
         if reliability == Reliability.reliableAckReceipt:
             return True
         if reliability == Reliability.reliableOrderedAckReceipt:
             return True
+        return False
             
     @staticmethod
     def isSequenced(reliability):
@@ -42,6 +45,7 @@ class Reliability:
             return True
         if reliability == Reliability.reliableSequenced:
             return True
+        return False
        
     @staticmethod
     def isOrdered(reliability):
@@ -53,3 +57,4 @@ class Reliability:
             return True
         if reliability == Reliability.reliableSequenced:
             return True
+        return False
