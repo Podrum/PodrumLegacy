@@ -76,7 +76,7 @@ class Frame:
         return stream
     
     def getFrameLength(self):
-        length = 0
+        length = 3
         if Reliability.isReliable(self.reliability):
             length += 3
         if Reliability.isSequenced(self.reliability):
