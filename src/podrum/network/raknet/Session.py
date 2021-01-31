@@ -200,49 +200,63 @@ class Session:
             else:
                 self.reliableWindow[frame.reliableIndex] = frame
                 
+    def handleFrameFragment(self, frame):
+        if frame.fragmentId not in self.fragmentedPackets:
+            self.fragmentedPackets[frame.fragmentId] = {frame.fragmentIndex: frame}
+        else:
+            self.fragmentedPackets[frame.fragmentId][frame.fragmentIndex] = frame
+        if len(self.fragmentedPackets[frame.fragmentId]) == frame.fragmentSize:
+            newFrame = Frame()
+            newFrame.body = b""
+            for i in range(0, frame.fragmentSize):
+                newFrame.body += self.fragmentedPackets[frame.fragmentId][i].body
+            del self.fragmentedPackets[frame.fragmentId]
+            self.handlePacket(newFrame)
+                
     def handlePacket(self, frame):
         if packet.isFragmented:
-            return
-        identifer = frame.body[0]
-        if identifer < 0x80:
-            if identifer == ConnectionRequest.id:
-                packet = ConnectionRequest()
-                packet.buffer = frame.boby
-                packet.decode()
-                newPacket = ConnectionRequestAccepted()
-                newPacket.clientAddress = self.address
-                newPacket.systemIndex = 0
-                newPacket.systemAddresses = [InternetAddress("255.255.255.255", 19132)] * 20
-                newPacket.requestTimestamp = dataPacket.timestamp
-                newPacket.timestamp = time.time()
-                newPacket.encode()
-                newFrame = Frame()
-                newFrame.reliability = 0
-                newFrame.body = newPacket.buffer
-                self.addToQueue(newFrame, RakNet.priority["Heap"])
-            elif identifer == NewIncomingConnection.id:
-                packet = NewIncomingConnection()
-                packet.buffer = frame.boby
-                packet.decode()
-                if packet.port == self.server.address.port:
-                    self.state = RakNet.state["Connected"]
-                    self.server.interface.onOpenConnection(self)
-            elif identifer == DisconnectNotification.id:
-                self.disconnect("client disconnect")
-            elif identifer == OnlinePing.id:
-                packet = OnlinePing()
-                packet.buffer = frame.boby
-                packet.decode()
-                newPacket = OnlinePong()
-                newPacket.pingTimestamp = packet.timestamp
-                newPacket.pongTimestamp
-                newPacket.encode()
-                newFrame = Frame()
-                newFrame.reliability = 0
-                newFrame.body = newPacket.buffer
-                self.addToQueue(newFrame)
-        elif self.state == RakNet.state["Connected"]:
-            self.server.interface.onFrame(self, frame, self.address)
+            self.handleFrameFragment(frame)
+        else:
+            identifer = frame.body[0]
+            if identifer < 0x80:
+                if identifer == ConnectionRequest.id:
+                    packet = ConnectionRequest()
+                    packet.buffer = frame.boby
+                    packet.decode()
+                    newPacket = ConnectionRequestAccepted()
+                    newPacket.clientAddress = self.address
+                    newPacket.systemIndex = 0
+                    newPacket.systemAddresses = [InternetAddress("255.255.255.255", 19132)] * 20
+                    newPacket.requestTimestamp = dataPacket.timestamp
+                    newPacket.timestamp = time.time()
+                    newPacket.encode()
+                    newFrame = Frame()
+                    newFrame.reliability = 0
+                    newFrame.body = newPacket.buffer
+                    self.addToQueue(newFrame, RakNet.priority["Heap"])
+                elif identifer == NewIncomingConnection.id:
+                    packet = NewIncomingConnection()
+                    packet.buffer = frame.boby
+                    packet.decode()
+                    if packet.port == self.server.address.port:
+                        self.state = RakNet.state["Connected"]
+                        self.server.interface.onOpenConnection(self)
+                elif identifer == DisconnectNotification.id:
+                    self.disconnect("client disconnect")
+                elif identifer == OnlinePing.id:
+                    packet = OnlinePing()
+                    packet.buffer = frame.boby
+                    packet.decode()
+                    newPacket = OnlinePong()
+                    newPacket.pingTimestamp = packet.timestamp
+                    newPacket.pongTimestamp
+                    newPacket.encode()
+                    newFrame = Frame()
+                    newFrame.reliability = 0
+                    newFrame.body = newPacket.buffer
+                    self.addToQueue(newFrame)
+            elif self.state == RakNet.state["Connected"]:
+                self.server.interface.onFrame(self, frame, self.address)
                 
     def close(self):
         self.addFrameToQueue(Frame.fromStream(BinaryStream(b"\x00\x00\x08\x15")), RakNet.priority["Heap"])
