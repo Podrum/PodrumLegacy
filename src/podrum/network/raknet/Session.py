@@ -252,7 +252,7 @@ class Session:
             if identifer < 0x80:
                 if identifer == ConnectionRequest.id:
                     packet = ConnectionRequest()
-                    packet.buffer = frame.boby
+                    packet.buffer = frame.body
                     packet.decode()
                     newPacket = ConnectionRequestAccepted()
                     newPacket.clientAddress = self.address
@@ -276,7 +276,7 @@ class Session:
                     self.disconnect("client disconnect")
                 elif identifer == OnlinePing.id:
                     packet = OnlinePing()
-                    packet.buffer = frame.boby
+                    packet.buffer = frame.body
                     packet.decode()
                     newPacket = OnlinePong()
                     newPacket.pingTimestamp = packet.timestamp
