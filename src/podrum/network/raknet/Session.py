@@ -27,6 +27,7 @@ from podrum.network.raknet.protocol.Nack import Nack
 from podrum.network.raknet.protocol.NewIncomingConnection import NewIncomingConnection
 from podrum.network.raknet.protocol.OnlinePing import OnlinePing
 from podrum.network.raknet.protocol.OnlinePong import OnlinePong
+from podrum.network.raknet.protocol.Reliability import Reliability
 from podrum.utils.BinaryStream import BinaryStream
 import time
 
@@ -135,7 +136,37 @@ class Session:
             self.frameQueue.frames.append(frame)
             
     def addFrameToQueue(self, frame, flags):
-        pass
+        if Reliability.isReliable(frame.reliability):
+            frame.reliableIndex = self.reliableIndex
+            self.reliableIndex += 1
+            if frame.reliability == Reliability.reliableOrdered:
+                frame.orderedIndex = self.channelIndex[frame.orderChannel]
+                self.channelIndex[frame.orderChannel] += 1
+        if packet.getFrameLength() > self.mtuSize:
+            buffers = []
+            for i in range(0, len(packet.buffer), self.mtuSize):
+                buffers.append(packet.buffer[i:i + self.mtuSize])
+            self.fragmentId += 1
+            fragmentId = self.fragmentId % 65536
+            for count, buffer in enumerate(buffers):
+                newFrame = Frame()
+                newFrame.fragmentId = splitID
+                newFrame.isFragmented = True
+                newFrame.fragmentSize = len(buffers)
+                newFrame.reliability = frame.reliability
+                newFrame.fragmentIndex = count
+                newFrame.body = buffer
+                if count > 0:
+                    newFrame.reliableIndex = self.reliableIndex
+                    self.reliableIndex += 1
+                else:
+                    newFrame.reliableIndex = frame.reliableIndex
+                if newFrame.reliability == Reliability.reliableOrdered == 3:
+                    newFrame.orderChannel = frame.orderChannel
+                    newFrame.orderedIndex = frame.orderedIndex
+                self.addToQueue(newFrame, flags | RakNet.priority["Heap"])
+        else:
+            self.addToQueue(frame, flags)
 
     def handleAck(self, packet):
         for sequenceNumber in packet.sequenceNumbers:
