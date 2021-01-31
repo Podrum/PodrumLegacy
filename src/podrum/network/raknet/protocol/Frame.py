@@ -72,7 +72,7 @@ class Frame:
             stream.putInt(self.fragmentSize)
             stream.putShort(self.fragmentId)
             stream.putInt(self.fragmentIndex)
-        stream.put(packet.body)
+        stream.put(self.body)
         return stream
     
     def getFrameLength(self):
