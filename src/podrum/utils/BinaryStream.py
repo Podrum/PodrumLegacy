@@ -200,7 +200,11 @@ class BinaryStream:
             i += 1
 
     def feof(self):
-        return len(self.buffer) <= self.offset or self.offset < 0
+        try:
+            buffer = self.buffer[self.offset]
+        except Exception:
+            return True
+        return False
     
     def getRemaining(self):
         buffer = self.buffer[self.offset:]
