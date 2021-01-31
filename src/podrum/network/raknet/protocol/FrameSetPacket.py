@@ -27,12 +27,7 @@ class FrameSetPacket(Packet):
     def decodePayload(self):
         self.sequenceNumber = self.getLTriad()
         while not self.feof():
-            stream = BinaryStream(self.buffer[self.offset:])
-            frame = Frame.fromStream(stream)
-            self.offset += frame.getFrameLength()
-            if len(frame.body) == 0:
-                break
-            self.frames.append(frame)
+            self.frames.append(Frame.fromStream(self))
                 
     def encodePayload(self):
         self.putLTriad(self.sequenceNumber)
