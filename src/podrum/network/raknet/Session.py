@@ -121,7 +121,7 @@ class Session:
             self.frameQueue = FrameSetPacket()
             
     def addToQueue(self, frame, flags = RakNet.priority["Queue"]):
-        priority = flags & RakNet.flag["flagPriority"]
+        priority = flags & 0b1
         if priority == RakNet.priority["Heap"]:
             packet = FrameSetPacket()
             packet.sequenceNumber = self.sendSequenceNumber
