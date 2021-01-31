@@ -29,7 +29,7 @@ class FrameSetPacket(Packet):
         while not self.feof():
             stream = BinaryStream(self.buffer[self.offset:])
             frame = Frame.fromStream(stream)
-            self.offset += Frame.getFrameLength()
+            self.offset += frame.getFrameLength()
             if len(frame.body) == 0:
                 break
             self.frames.append(frame)
