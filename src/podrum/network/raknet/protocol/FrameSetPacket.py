@@ -17,6 +17,7 @@
 
 from podrum.network.raknet.protocol.Frame import Frame
 from podrum.network.raknet.protocol.Packet import Packet
+from podrum.utils.BinaryStream import BinaryStream
 
 class FrameSetPacket(Packet):
     id = 0x80
@@ -26,7 +27,12 @@ class FrameSetPacket(Packet):
     def decodePayload(self):
         self.sequenceNumber = self.getLTriad()
         while not self.feof():
-            self.frames.append(Frame.fromStream(self))
+            stream = BinaryStream(self.buffer[self.offset:])
+            frame = Frame.fromStream(stream)
+            self.offset += Frame.getFrameLength()
+            if len(frame.body) == 0:
+                break
+            self.frames.append(frame)
                 
     def encodePayload(self):
         self.putLTriad(self.sequenceNumber)
