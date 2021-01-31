@@ -131,7 +131,7 @@ class Session:
             packet.sendTime = time.time()
             self.recoveryQueue[packet.sequenceNumber] = packet
         else:
-            if self.sendQueue.getLength() + frame.getFrameLength() > self.mtuSize:
+            if self.frameQueue.getLength() + frame.getFrameLength() > self.mtuSize:
                 self.sendFrameQueue()
             self.frameQueue.frames.append(frame)
             
