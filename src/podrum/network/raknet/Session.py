@@ -267,7 +267,7 @@ class Session:
                     self.addToQueue(newFrame, RakNet.priority["Heap"])
                 elif identifer == NewIncomingConnection.id:
                     packet = NewIncomingConnection()
-                    packet.buffer = frame.boby
+                    packet.buffer = frame.body
                     packet.decode()
                     if packet.port == self.server.address.port:
                         self.state = RakNet.state["Connected"]
