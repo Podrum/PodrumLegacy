@@ -42,8 +42,8 @@ class AcknowledgePacket(Packet):
         count = len(self.sequenceNumbers)
         stream = BinaryStream()
         if count > 0:
-            start = self.packets[0]
-            end = self.packets[0]
+            start = self.sequenceNumbers[0]
+            end = self.sequenceNumbers[0]
             for i in range(1, count):
                 current = self.packets[i]
                 if (current - end) == 1:
