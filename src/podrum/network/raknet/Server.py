@@ -80,7 +80,7 @@ class Server(Thread):
             if not isinstance(packet, OfflinePacket):
                 if isinstance(packet, Ack):
                     self.getSession(address).handleAck(packet)
-                elif isinstance(packet, OfflinePacket):
+                elif isinstance(packet, Nack):
                     self.getSession(address).handleNack(packet)
                 else:
                     self.getSession(address).handleFrameSetPacket(packet)
