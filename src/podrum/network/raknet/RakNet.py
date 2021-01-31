@@ -20,10 +20,6 @@ class RakNet:
     tps = 100
     systemAddressCount = 20
     magic = b"\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78"
-    flag = {
-        "flagPriority": 0b1,
-        "Fragment": 0x10
-    }
     state = {
         "Connecting": 0,
         "Connected": 1
