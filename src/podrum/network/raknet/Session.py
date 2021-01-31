@@ -259,7 +259,7 @@ class Session:
                     newPacket.systemIndex = 0
                     newPacket.systemAddresses = [InternetAddress("255.255.255.255", 19132)] * 20
                     newPacket.requestTimestamp = packet.timestamp
-                    newPacket.timestamp = time.time()
+                    newPacket.timestamp = int(time.time())
                     newPacket.encode()
                     newFrame = Frame()
                     newFrame.reliability = 0
@@ -280,7 +280,7 @@ class Session:
                     packet.decode()
                     newPacket = OnlinePong()
                     newPacket.pingTimestamp = packet.timestamp
-                    newPacket.pongTimestamp
+                    newPacket.pongTimestamp = int(time.time())
                     newPacket.encode()
                     newFrame = Frame()
                     newFrame.reliability = 0
