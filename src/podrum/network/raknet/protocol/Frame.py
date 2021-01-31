@@ -85,4 +85,5 @@ class Frame:
             length += 4
         if self.isFragmented:
             length += 10
+        length += len(self.body)
         return length
