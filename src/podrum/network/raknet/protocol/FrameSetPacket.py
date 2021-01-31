@@ -31,7 +31,7 @@ class FrameSetPacket(Packet):
     def encodePayload(self):
         self.putLTriad(self.sequenceNumber)
         for frame in self.frames:
-            self.put(frame.toStream() if isinstance(frame, Frame) else frame.buffer)
+            self.put(frame.toStream().buffer)
             
     def getLength(self):
         length = 3
