@@ -76,7 +76,6 @@ class Server(Thread):
             return self.sessions[address.getToken()]
         
     def handle(self, packet, address):
-        print(packet.getName())
         if self.getSession(address) is not None:
             if not isinstance(packet, OfflinePacket):
                 if isinstance(packet, Ack):
