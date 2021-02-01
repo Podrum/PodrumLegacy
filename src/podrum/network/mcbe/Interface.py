@@ -44,7 +44,7 @@ class Interface(RaknetInterface):
             return
         player = self.players[address.ip]
         pk = BatchPacket()
-        pk.buffer = packet.buffer
+        pk.buffer = packet.body
         pk.decode()
         for buffer in pk.getPackets():
             if buffer[0] in self.pool.pool:
