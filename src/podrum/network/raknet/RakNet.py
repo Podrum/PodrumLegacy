@@ -16,7 +16,7 @@
 """
 
 class RakNet:
-    protocol = [5, 10]
+    protocol = [5, 6, 7, 8, 9, 10]
     tps = 100
     systemAddressCount = 10 # The latest mcbe uses 20 
                             # but for the sake of backwards 
