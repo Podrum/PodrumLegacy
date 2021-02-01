@@ -23,7 +23,7 @@ class Interface:
     def onCloseConnection(self, address, reason):
         pass
         
-    def onFrame(self, packet, address):
+    def onFrame(self, frame, address):
         pass
     
     def onRaw(self, stream, address):
