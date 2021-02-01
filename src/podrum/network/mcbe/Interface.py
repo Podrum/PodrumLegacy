@@ -42,7 +42,7 @@ class Interface(RaknetInterface):
     def onFrame(self, packet, address):
         if address.ip not in self.players:
             return
-        player = self.players[address.address]
+        player = self.players[address.ip]
         pk = BatchPacket()
         pk.buffer = packet.buffer
         pk.decode()
