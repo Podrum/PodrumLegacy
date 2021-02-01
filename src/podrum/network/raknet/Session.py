@@ -287,7 +287,7 @@ class Session:
                     newFrame.body = newPacket.buffer
                     self.addToQueue(newFrame)
             elif self.state == RakNet.state["Connected"]:
-                self.server.interface.onFrame(self, frame, self.address)
+                self.server.interface.onFrame(frame, self.address)
                 
     def close(self):
         self.addFrameToQueue(Frame.fromStream(BinaryStream(b"\x00\x00\x08\x15")), RakNet.priority["Heap"])
