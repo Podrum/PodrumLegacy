@@ -33,14 +33,14 @@ class Interface(RaknetInterface):
         self.raknet.name = "MCPE;Dedicated Server;390;1.14.60;0;10;13253860892328930865;Bedrock level;Survival;1;19132;19133;"
         self.pool = Pool()
 
-    def onOpenConnection(self, connection):
-        self.players[connection.address.address] = BedrockPlayer(connection, connection.address)
+    def onOpenConnection(self, session):
+        self.players[session.address.ip] = BedrockPlayer(session, session.address)
         
     def onCloseConnection(self, address, reason):
-        Logger.info(f"{address.address} disconnected due to {reason}")
+        Logger.info(f"{address.ip} disconnected due to {reason}")
         
     def onFrame(self, packet, address):
-        if address.address not in self.players:
+        if address.ip not in self.players:
             return
         player = self.players[address.address]
         pk = BatchPacket()
