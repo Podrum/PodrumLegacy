@@ -39,18 +39,18 @@ class Interface(RaknetInterface):
     def onCloseConnection(self, address, reason):
         Logger.info(f"{address.ip} disconnected due to {reason}")
         
-    def onFrame(self, packet, address):
+    def onFrame(self, frame, address):
         if address.ip not in self.players:
             return
         player = self.players[address.ip]
-        pk = BatchPacket()
-        pk.buffer = packet.body
-        pk.decode()
-        for buffer in pk.getPackets():
+        packet = BatchPacket()
+        packet.buffer = frame.body
+        packet.decode()
+        for buffer in packet.getPackets():
             if buffer[0] in self.pool.pool:
-                packet = self.pool.pool[buffer[0]]
-                packet.buffer = buffer
-                packet.decode()
-                player.handleDataPacket(packet)
+                newPacket = self.pool.pool[buffer[0]]
+                newPacket.buffer = buffer
+                newPacket.decode()
+                player.handleDataPacket(newPacket)
             else:
                 print(hex(buffer[0]))
