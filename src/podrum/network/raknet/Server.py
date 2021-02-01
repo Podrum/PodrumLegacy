@@ -96,9 +96,9 @@ class Server(Thread):
                 newPacket.encode()
                 self.socket.send(newPacket, address)
             elif isinstance(packet, OpenConnectionRequest1):
-                if packet.protocol != RakNet.protocol:
+                if packet.protocol not in RakNet.protocol:
                     newPacket = IncompatibleProtocol()
-                    newPacket.protocol = RakNet.protocol
+                    newPacket.protocol = RakNet.protocol[-1]
                     newPacket.serverGuid = self.guid
                     self.socket.send(newPacket, address)
                 newPacket = OpenConnectionReply1()
