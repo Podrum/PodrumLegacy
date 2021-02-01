@@ -135,7 +135,7 @@ class Session:
                 self.sendFrameQueue()
             self.frameQueue.frames.append(frame)
             
-    def addFrameToQueue(self, frame, flags):
+    def addFrameToQueue(self, frame, flags = RakNet.priority["Queue"]):
         if Reliability.isReliable(frame.reliability):
             frame.reliableIndex = self.reliableIndex
             self.reliableIndex += 1
