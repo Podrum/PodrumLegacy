@@ -20,7 +20,7 @@ class Info:
     mcpiVersion = "v0.1.1"
     mcpiVersionNetwork = "0.1.1"
     loginPacket = 0x82
-    loginStatus = 9x83
+    loginStatus = 0x83
     readyPacket = 0x84
     messagePacket = 0x85
     setTimePacket = 0x86
