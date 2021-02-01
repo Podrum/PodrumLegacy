@@ -129,6 +129,6 @@ class Server(Thread):
                     self.handle(packet, address)
                 else:
                     self.interface.onRaw(stream, address)
-            for token in self.sessions:
+            for token in dict(self.sessions):
                 self.sessions[token].update(time())
             sleep(1 / RakNet.tps)
