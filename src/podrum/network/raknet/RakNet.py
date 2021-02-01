@@ -16,7 +16,7 @@
 """
 
 class RakNet:
-    protocol = 10
+    protocol = [5, 10]
     tps = 100
     systemAddressCount = 20
     magic = b"\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78"
