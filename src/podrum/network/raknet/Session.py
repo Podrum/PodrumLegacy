@@ -142,7 +142,7 @@ class Session:
             if frame.reliability == Reliability.reliableOrdered:
                 frame.orderedIndex = self.channelIndex[frame.orderChannel]
                 self.channelIndex[frame.orderChannel] += 1
-        if packet.getFrameLength() > self.mtuSize:
+        if frame.getFrameLength() > self.mtuSize:
             buffers = []
             for i in range(0, len(packet.buffer), self.mtuSize):
                 buffers.append(packet.buffer[i:i + self.mtuSize])
