@@ -26,7 +26,10 @@ class OfflinePing(OfflinePacket):
     def decodePayload(self):
         self.timestamp = self.getLong()
         self.getMagic()
-        self.clientGuid = self.getLong()
+        try:
+            self.clientGuid = self.getLong()
+        except Exception:
+            return
         
     def encodePayload(self):
         self.putLong(self.timestamp)
