@@ -56,19 +56,19 @@ class BedrockPlayer:
             self.deviceModel = packet.deviceModel  
             self.skin = packet.skin
             self.sendPlayStatus(0)
-            pk = ResourcePacksInfoPacket()
-            self.sendDataPacket(pk)
+            newPacket = ResourcePacksInfoPacket()
+            self.sendDataPacket(newPacket)
             
     def sendPlayStatus(self, status):
-        pk = PlayStatusPacket()
-        pk.status = status
-        self.sendDataPacket(pk)
+        packet = PlayStatusPacket()
+        packet.status = status
+        self.sendDataPacket(packet)
             
     def sendDataPacket(self, packet):
-        pk = BatchPacket()
-        pk.addPacket(packet)
-        pk.encode()
-        sendPacket = Frame()
-        sendPacket.reliability = 0
-        sendPacket.buffer = pk.buffer
-        self.connection.addFrameToQueue(sendPacket)
+        newPacket = BatchPacket()
+        newPacket.addPacket(packet)
+        newPacket.encode()
+        frame = Frame()
+        frame.reliability = 0
+        frame.buffer = newPacket.buffer
+        self.connection.addFrameToQueue(frame)
