@@ -18,7 +18,9 @@
 class RakNet:
     protocol = [5, 10]
     tps = 100
-    systemAddressCount = 20
+    systemAddressCount = 10 # The latest mcbe uses 20 
+                            # but for the sake of backwards 
+                            # compatibility I put 10
     magic = b"\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78"
     state = {
         "Connecting": 0,
