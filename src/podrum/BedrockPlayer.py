@@ -70,5 +70,5 @@ class BedrockPlayer:
         newPacket.encode()
         frame = Frame()
         frame.reliability = 0
-        frame.buffer = newPacket.buffer
+        frame.body = newPacket.buffer
         self.connection.addFrameToQueue(frame)
