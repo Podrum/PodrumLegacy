@@ -32,26 +32,26 @@ class Frame:
 
     @staticmethod
     def fromStream(stream):
-        packet = Frame()
+        frame = Frame()
         flags = stream.getByte()
-        packet.reliability = (flags & 224) >> 5
-        packet.isFragmented = (flags & 0x10) > 0
+        frame.reliability = (flags & 224) >> 5
+        frame.isFragmented = (flags & 0x10) > 0
         length = stream.getShort() >> 3
         if length == 0:
             raise Exception("Got empty frame!")
-        if Reliability.isReliable(packet.reliability):
-            packet.reliableIndex = stream.getLTriad()
-        if Reliability.isSequenced(packet.reliability):
-            packet.sequencedIndex = stream.getLTriad()
-        if Reliability.isOrdered(packet.reliability):
-            packet.orderedIndex = stream.getLTriad()
-            packet.orderChannel = stream.getByte()
-        if packet.isFragmented:
-            packet.fragmentSize = stream.getInt()
-            packet.fragmentId = stream.getShort()
-            packet.fragmentIndex = stream.getInt()
-        packet.body = stream.get(length)
-        return packet
+        if Reliability.isReliable(frame.reliability):
+            frame.reliableIndex = stream.getLTriad()
+        if Reliability.isSequenced(frame.reliability):
+            frame.sequencedIndex = stream.getLTriad()
+        if Reliability.isOrdered(frame.reliability):
+            frame.orderedIndex = stream.getLTriad()
+            frame.orderChannel = stream.getByte()
+        if frame.isFragmented:
+            frame.fragmentSize = stream.getInt()
+            frame.fragmentId = stream.getShort()
+            frame.fragmentIndex = stream.getInt()
+        frame.body = stream.get(length)
+        return frame
     
     def toStream(self):
         stream = BinaryStream()
