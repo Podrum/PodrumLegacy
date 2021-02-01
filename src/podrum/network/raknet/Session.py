@@ -269,7 +269,7 @@ class Session:
                     packet = NewIncomingConnection()
                     packet.buffer = frame.body
                     packet.decode()
-                    if packet.port == self.server.address.port:
+                    if packet.serverAddress.port == self.server.address.port:
                         self.state = RakNet.state["Connected"]
                         self.server.interface.onOpenConnection(self)
                 elif identifer == DisconnectNotification.id:
