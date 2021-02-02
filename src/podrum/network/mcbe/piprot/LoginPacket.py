@@ -25,7 +25,11 @@ class LoginPacket(Packet):
     protocol2 = None
     
     def decodePayload(self):
-        pass
+        self.username = self.getString()
+        self.protocol1 = self.getInt()
+        self.protocol2 = self.getInt()
         
     def encodePayload(self):
-        pass
+        self.putString(self.username)
+        self.putInt(self.protocol1)
+        self.putInt(self.protocol2)
