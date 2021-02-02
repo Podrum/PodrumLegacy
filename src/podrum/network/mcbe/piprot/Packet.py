@@ -20,6 +20,13 @@ from podrum.utils.BinaryStream import BinaryStream
 class Packet(BinaryStream):
     id = -1
     
+    def getString(self):
+        return self.get(self.getShort()).decode()
+    
+    def putString(self, value):
+        self.putShort(len(value))
+        self.put(value.encode())
+    
     def decodePayload(self):
         pass
         
