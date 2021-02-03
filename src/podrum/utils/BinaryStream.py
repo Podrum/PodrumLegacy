@@ -33,15 +33,9 @@ class BinaryStream:
         self.buffer += data
         
     def getByte(self):
-        return struct.unpack("b", self.get(1))[0]
-
-    def putByte(self, value):
-        self.put(struct.pack("b", value))
-        
-    def getUnsignedByte(self):
         return struct.unpack("B", self.get(1))[0]
 
-    def putUnsignedByte(self, value):
+    def putByte(self, value):
         self.put(struct.pack("B", value))
         
     def getBool(self):
