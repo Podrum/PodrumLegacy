@@ -26,6 +26,20 @@ class Packet(BinaryStream):
     def putString(self, value):
         self.putShort(len(value))
         self.put(value.encode())
+        
+    def getPosition(self):
+        x = self.getFloat() - 128.0
+        y = self.getFloat() - 64.0
+        z = self.getFloat() - 128.0
+        return [x, y, z]
+    
+    def putPosition(self, pos):
+        x = pos[0] + 128.0
+        y = pos[1] + 64.0
+        z = pos[2] + 128.0
+        self.putFloat(x)
+        self.putFloat(y)
+        self.putFloat(z)
     
     def decodePayload(self):
         pass
