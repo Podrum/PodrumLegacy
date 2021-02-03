@@ -21,6 +21,13 @@ from podrum.network.mcbe.protocol.PlayStatusPacket import PlayStatusPacket
 from podrum.network.mcbe.protocol.ResourcePacksInfoPacket import ResourcePacksInfoPacket
 from podrum.network.raknet.protocol.Frame import Frame
 
+from podrum.network.mcbe.piprot.LoginPacket import LoginPacket as McpiLoginPacket
+from podrum.network.mcbe.piprot.LoginStatusPacket import LoginStatusPacket as McpiLoginStatusPacket
+from podrum.network.mcbe.piprot.MessagePacket import MessagePacket as McpiMessagePacket
+from podrum.network.mcbe.piprot.ReadyPacket import ReadyPacket as McpiReadyPacket
+from podrum.network.mcbe.piprot.SetTimePacket import SetTimePacket as McpiSetTimePacket
+from podrum.network.mcbe.piprot.StartGamePacket import StartGamePacket as McpiStartGamePacket
+
 class BedrockPlayer:
     connection = None
     address = None
@@ -43,6 +50,29 @@ class BedrockPlayer:
     def __init__(self, connection, address):
         self.connection = connection
         self.address = address
+        
+    def handleMcpiPacket(self, packet):
+        if isinstance(packet, McpiLoginPacket):
+            self.sendMcpiLoginStatus(0)
+            packet = StartGamePacket()
+            packet.seed = 1312451
+            packet.generator = 0
+            packet.gamemode = self.gamemode
+            packet.entityId = 1
+            packet.position = [12, 46, 34]
+            self.sendMcpiPacket(packet)
+        
+    def sendMcpiLoginStatus(self, status):
+        packet = McpiLoginStatus()
+        packet.status = status
+        self.sendMcpiPacket(packet)
+            
+    def sendMcpiPacket(self, packet):
+        packet.encode()
+        frame = Frame()
+        frame.reliability = 0
+        frame.body = packet.buffer
+        self.connection.addToQueue(frame, 1)
         
     def handleDataPacket(self, packet):
         if packet.networkId == Info.LOGIN_PACKET:
