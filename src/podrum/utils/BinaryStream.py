@@ -176,16 +176,14 @@ class BinaryStream:
         return temp
     
     def getUnsignedVarInt(self):
-        value = 0
-        i = 0
-        while i <= 28:
+        result = 0
+        for i in range(0, 35, 7):
             if self.feof():
                 raise Exception("No bytes left in the buffer")
             b = self.getByte()
-            value |= ((b & 0x7f) << i)
-            if (b & 0x80) == 0:
-                return value
-            i += 7
+            result |= (b & 0x7f) << i
+            if not (i & 0x80):
+                return result
         raise Exception("VarInt did not terminate after 5 bytes!")
         
     def putVarInt(self, value):
@@ -194,16 +192,14 @@ class BinaryStream:
     def putUnsignedVarInt(self, value):
         stream = BinaryStream()
         value &= 0xffffffff
-        i = 0
-        while i < 5:
-            if (value >> 7) != 0:
-                stream.putByte(value | 0x80)
-            else:
-                stream.putByte(value & 0x7f)
-                self.put(stream.buffer)
-                return
+        for i in range(0, 5):
+            toWrite = value & 0x7f
             value >>= 7
-            i += 1
+            if value:
+                stream.putByte(toWrite | 0x80)
+            else:
+                stream.putByte(toWrite)
+                break
         self.put(stream.buffer)
         
     def getVarLong(self):
@@ -212,32 +208,31 @@ class BinaryStream:
         return temp
     
     def getUnsignedVarLong(self):
-        value = 0
-        i = 0
-        while i <= 63:
+        result = 0
+        for i in range(0, 70, 7):
             if self.feof():
                 raise Exception("No bytes left in the buffer")
             b = self.getByte()
-            value |= ((b & 0x7f) << i)
-            if (b & 0x80) == 0:
-                return value
-            i += 7
+            result |= (b & 0x7f) << i
+            if not (i & 0x80):
+                return result
         raise Exception("VarInt did not terminate after 10 bytes!")
         
     def putVarLong(self, value):
         return self.putUnsignedVarLong(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
     
     def putUnsignedVarLong(self, value):
-        i = 0
-        while i < 10:
-            if (value >> 7) != 0:
-                self.putByte(value | 0x80)
-            else:
-                self.putByte(value & 0x7f)
-                break
+        stream = BinaryStream()
+        for i in range(0, 10):
+            toWrite = value & 0x7f
             value >>= 7
-            i += 1
-
+            if value:
+                stream.putByte(toWrite | 0x80)
+            else:
+                stream.putByte(toWrite)
+                break
+        self.put(stream.buffer)
+        
     def feof(self):
         return len(self.buffer) <= self.offset or self.offset < 0
     
