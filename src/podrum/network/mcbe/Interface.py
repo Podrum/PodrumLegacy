@@ -43,8 +43,7 @@ class Interface(RaknetInterface):
             self.setName("MCPE", "Dedicated Server", len(self.players), 10)
             self.setName("MCCPP", "Dedicated Server", len(self.players), 10)
         
-    @staticmethod
-    def setName(edition, motd, playerCount, playerMaxCount):
+    def setName(self, edition, motd, playerCount, playerMaxCount):
         edition = edition.upper()
         name = edition
         name += ";"
