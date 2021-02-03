@@ -54,7 +54,7 @@ class BedrockPlayer:
     def handleMcpiPacket(self, packet):
         if isinstance(packet, McpiLoginPacket):
             self.sendMcpiLoginStatus(0)
-            packet = StartGamePacket()
+            packet = McpiStartGamePacket()
             packet.seed = 1312451
             packet.generator = 0
             packet.gamemode = self.gamemode
