@@ -16,12 +16,15 @@
 """
 
 from podrum.BedrockPlayer import BedrockPlayer
-from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.Pool import Pool
+from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
+from podrum.network.mcbe.protocol.Info import Info as McbeInfo
+from podrum.network.mcbe.piprot.Info import Info as McpiInfo
 from podrum.network.raknet.Interface import Interface as RaknetInterface
 from podrum.network.raknet.InternetAddress import InternetAddress
 from podrum.network.raknet.Server import Server
 from podrum.utils.Logger import Logger
+from threading import Thread
 
 class Interface(RaknetInterface):
     raknet = None
@@ -30,8 +33,29 @@ class Interface(RaknetInterface):
 
     def __init__(self, address, port):
         self.raknet = Server(InternetAddress(address, port), self)
-        self.raknet.name = "MCPE;Dedicated Server;390;1.14.60;0;10;13253860892328930865;Bedrock level;Survival;1;19132;19133;"
         self.pool = Pool()
+        tick = Thread(target = self.tick())
+        tick.setDaemon(True)
+        tick.start()
+        
+    def tick(self):
+        while True:
+            self.setName("MCPE", "Dedicated Server", len(self.players), 10)
+            self.setName("MCCPP", "Dedicated Server", len(self.players), 10)
+        
+    @staticmethod
+    def setName(edition, motd, playerCount, playerMaxCount):
+        edition = edition.upper()
+        name = edition
+        name += ";"
+        if edition == "MCCPP":
+            name += "Demo;"
+        name += motd
+        if edition == "MCPE":
+            name += f";{McbeInfo.MCBE_PROTOCOL_VERSION};{McbeInfo.MCBE_VERSION};{playerCount};{playerMaxCount};{self.raknet.guid};"
+        elif edition == "MCCPP":
+            name += f" | {playerCount}/{playerMaxCount} | {McpiInfo.mcpiVersionNetwork}"
+        self.raknet.name = name    
 
     def onOpenConnection(self, session):
         self.players[session.address.ip] = BedrockPlayer(session, session.address)
