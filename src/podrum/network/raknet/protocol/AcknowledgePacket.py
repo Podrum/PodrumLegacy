@@ -27,8 +27,8 @@ class AcknowledgePacket(Packet):
         for i in range(0, recordCount):
             isSingle = self.getBool()
             if not isSingle:
-                start = self.getLTriad()
-                end = self.getLTriad()
+                start = self.getUnsignedLTriad()
+                end = self.getUnsignedLTriad()
                 for sequenceNumber in range(start, end + 1):
                     self.sequenceNumbers.append(sequenceNumber)
                     if len(self.sequenceNumbers) > 4096:
@@ -51,21 +51,21 @@ class AcknowledgePacket(Packet):
                 elif (current - end) > 1:
                     if start == end:
                         stream.putByte(True)
-                        stream.putLTriad(start)
+                        stream.putUnsignedLTriad(start)
                         start = end = current
                     else:
                         stream.putByte(False)
-                        stream.putLTriad(start)
-                        stream.putLTriad(end)
+                        stream.putUnsignedLTriad(start)
+                        stream.putUnsignedLTriad(end)
                         start = end = current
                     recordCount += 1
             if start == end:
                 stream.putByte(True)
-                stream.putLTriad(start)
+                stream.putUnsignedLTriad(start)
             else:
                 stream.putByte(False)
-                stream.putLTriad(start)
-                stream.putLTriad(end)
+                stream.putUnsignedLTriad(start)
+                stream.putUnsignedLTriad(end)
             recordCount += 1
         self.putShort(recordCount)
         self.put(stream.buffer)
