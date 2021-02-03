@@ -69,7 +69,7 @@ class Interface(RaknetInterface):
             return
         player = self.players[address.ip]
         identifer = frame.body[0]
-        if identifer == BatchPacket.id:
+        if identifer == BatchPacket.networkId:
             packet = BatchPacket()
             packet.buffer = frame.body
             packet.decode()
