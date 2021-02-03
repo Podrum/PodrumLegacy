@@ -24,10 +24,10 @@ class Packet(BinaryStream):
     sendTime = None
     
     def getString(self):
-        return self.get(self.getShort()).decode()
+        return self.get(self.getUnsignedShort()).decode()
     
     def putString(self, value):
-        self.putShort(len(value))
+        self.putUnsignedShort(len(value))
         self.put(value.encode())
 
     def getAddress(self):
@@ -37,11 +37,11 @@ class Packet(BinaryStream):
             for i in range(0, 4):
                 parts.append(str(~self.getByte() & 0xff))
             ip = ".".join(parts)
-            port = self.getShort()
+            port = self.getUnsignedShort()
             return InternetAddress(ip, port, version)
         if version == 6:
-            self.getLShort()
-            port = self.getShort()
+            self.getUnsignedLShort()
+            port = self.getUnsignedShort()
             self.getInt()
             ip = socket.inet_ntop(socket.AF_INET6, self.get(16))
             self.getInt()
@@ -54,10 +54,10 @@ class Packet(BinaryStream):
             parts = value.ip.split(".")
             for i in range(0, 4):
                 self.putByte(~int(parts[i]) & 0xff)
-            self.putShort(value.port)
+            self.putUnsignedShort(value.port)
         elif value.version == 6:
-            self.putLShort(socket.AF_INET6)
-            self.putShort(value.port)
+            self.putUnsignedLShort(socket.AF_INET6)
+            self.putUnsignedShort(value.port)
             self.putInt(0)
             self.put(socket.inet_pton(socket.AF_INET6, value.ip))
             self.putInt(0)
