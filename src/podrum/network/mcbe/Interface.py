@@ -20,6 +20,7 @@ from podrum.network.mcbe.Pool import Pool
 from podrum.network.mcbe.protocol.BatchPacket import BatchPacket
 from podrum.network.mcbe.protocol.Info import Info as McbeInfo
 from podrum.network.mcbe.piprot.Info import Info as McpiInfo
+from podrum.network.mcbe.piprot.Pool import Pool as McpiPool
 from podrum.network.raknet.Interface import Interface as RaknetInterface
 from podrum.network.raknet.InternetAddress import InternetAddress
 from podrum.network.raknet.Server import Server
@@ -30,10 +31,12 @@ class Interface(RaknetInterface):
     raknet = None
     players = {}
     pool = None
+    mcpiPool = None
 
     def __init__(self, address, port):
         self.raknet = Server(InternetAddress(address, port), self)
         self.pool = Pool()
+        self.mcpiPool = McpiPool()
         tick = Thread(target = self.tick())
         tick.setDaemon(True)
         tick.start()
@@ -81,3 +84,8 @@ class Interface(RaknetInterface):
                     player.handleDataPacket(newPacket)
                 else:
                     print(hex(buffer[0]))
+        elif identifier in self.mcpiPool.pool:
+            packet = self.mcpiPool.pool[identifier]
+            packet.buffer = frame.body
+            packet.decode()
+            player.handleMcpiPacket(packet)
