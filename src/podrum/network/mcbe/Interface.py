@@ -71,8 +71,8 @@ class Interface(RaknetInterface):
         if address.ip not in self.players:
             return
         player = self.players[address.ip]
-        identifer = frame.body[0]
-        if identifer == BatchPacket.networkId:
+        identifier = frame.body[0]
+        if identifier == BatchPacket.networkId:
             packet = BatchPacket()
             packet.buffer = frame.body
             packet.decode()
