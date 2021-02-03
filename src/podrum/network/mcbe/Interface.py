@@ -35,6 +35,7 @@ class Interface(RaknetInterface):
 
     def onOpenConnection(self, session):
         self.players[session.address.ip] = BedrockPlayer(session, session.address)
+        Logger.info(f"{session.address.ip} connected")
         
     def onCloseConnection(self, address, reason):
         Logger.info(f"{address.ip} disconnected due to {reason}")
