@@ -33,13 +33,16 @@ class BinaryStream:
         self.buffer += data
         
     def getByte(self):
-        return struct.unpack("B", self.get(1))[0]
-    
-    def getSignedByte(self):
         return struct.unpack("b", self.get(1))[0]
 
     def putByte(self, value):
-        self.put(bytes([value & 0xff]))
+        self.put(struct.pack("b", value))
+        
+    def getUnsignedByte(self):
+        return struct.unpack("B", self.get(1))[0]
+
+    def putUnsignedByte(self, value):
+        self.put(struct.pack("B", value))
         
     def getBool(self):
         return self.getByte() != 0
@@ -48,22 +51,28 @@ class BinaryStream:
         self.putByte(1 if value else 0)
         
     def getShort(self):
-        return struct.unpack(">H", self.get(2))[0]
-    
-    def getSignedShort(self):
         return struct.unpack(">h", self.get(2))[0]
     
     def putShort(self, value):
-        self.put(struct.pack(">H", value))
+        self.put(struct.pack(">h", value))
         
     def getLShort(self):
-        return struct.unpack("<H", self.get(2))[0]
-    
-    def getSignedLShort(self):
         return struct.unpack("<h", self.get(2))[0]
     
     def putLShort(self, value):
         self.put(struct.pack("<h", value))
+        
+    def getUnsignedShort(self):
+        return struct.unpack(">H", self.get(2))[0]
+    
+    def putUnsignedShort(self, value):
+        self.put(struct.pack(">H", value))
+        
+    def getUnsignedLShort(self):
+        return struct.unpack("<H", self.get(2))[0]
+    
+    def putUnsignedLShort(self, value):
+        self.put(struct.pack("<H", value))
         
     def getTriad(self):
         return struct.unpack(">i", b"\x00" + self.get(3))[0]
@@ -72,9 +81,21 @@ class BinaryStream:
         self.put(struct.pack(">i", value)[1:])
         
     def getLTriad(self):
-        return struct.unpack("<I", self.get(3) + b"\x00")[0]
+        return struct.unpack("<i", self.get(3) + b"\x00")[0]
     
     def putLTriad(self, value):
+        self.put(struct.pack("<i", value)[:-1])
+        
+    def getUnsignedTriad(self):
+        return struct.unpack(">I", b"\x00" + self.get(3))[0]
+    
+    def putUnsignedTriad(self, value):
+        self.put(struct.pack(">I", value)[1:])
+        
+    def getUnsignedLTriad(self):
+        return struct.unpack("<I", self.get(3) + b"\x00")[0]
+    
+    def putUnsignedLTriad(self, value):
         self.put(struct.pack("<I", value)[:-1])
         
     def getInt(self):
@@ -88,6 +109,18 @@ class BinaryStream:
     
     def putLInt(self, value):
         self.put(struct.pack("<i", value))
+        
+    def getUnsignedInt(self):
+        return struct.unpack(">I", self.get(4))[0]
+    
+    def putUnsignedInt(self, value):
+        self.put(struct.pack(">I", value))
+        
+    def getUnsignedLInt(self):
+        return struct.unpack("<I", self.get(4))[0]
+    
+    def putUnsignedLInt(self, value):
+        self.put(struct.pack("<I", value))
 
     def getFloat(self):
         return struct.unpack(">f", self.get(4))[0]
@@ -130,6 +163,18 @@ class BinaryStream:
     
     def putLLong(self, value):
         self.put(struct.pack("<q", value))
+        
+    def getUnsignedLong(self):
+        return struct.unpack(">Q", self.get(8))[0]
+    
+    def putUnsignedLong(self, value):
+        self.put(struct.pack(">Q", value))
+        
+    def getUnsignedLLong(self):
+        return struct.unpack("<Q", self.get(8))[0]
+    
+    def putUnsignedLLong(self, value):
+        self.put(struct.pack("<Q", value))
         
     def getVarInt(self):
         raw = self.getUnsignedVarInt()
