@@ -63,7 +63,7 @@ class BedrockPlayer:
             self.sendMcpiPacket(packet)
         
     def sendMcpiLoginStatus(self, status):
-        packet = McpiLoginStatus()
+        packet = McpiLoginStatusPacket()
         packet.status = status
         self.sendMcpiPacket(packet)
             
