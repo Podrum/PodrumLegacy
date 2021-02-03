@@ -61,6 +61,7 @@ class Interface(RaknetInterface):
         Logger.info(f"{session.address.ip} connected")
         
     def onCloseConnection(self, address, reason):
+        del self.players[address.ip] 
         Logger.info(f"{address.ip} disconnected due to {reason}")
         
     def onFrame(self, frame, address):
