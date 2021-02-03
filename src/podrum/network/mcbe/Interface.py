@@ -68,14 +68,16 @@ class Interface(RaknetInterface):
         if address.ip not in self.players:
             return
         player = self.players[address.ip]
-        packet = BatchPacket()
-        packet.buffer = frame.body
-        packet.decode()
-        for buffer in packet.getPackets():
-            if buffer[0] in self.pool.pool:
-                newPacket = self.pool.pool[buffer[0]]
-                newPacket.buffer = buffer
-                newPacket.decode()
-                player.handleDataPacket(newPacket)
-            else:
-                print(hex(buffer[0]))
+        identifer = frame.body[0]
+        if identifer == BatchPacket.id:
+            packet = BatchPacket()
+            packet.buffer = frame.body
+            packet.decode()
+            for buffer in packet.getPackets():
+                if buffer[0] in self.pool.pool:
+                    newPacket = self.pool.pool[buffer[0]]
+                    newPacket.buffer = buffer
+                    newPacket.decode()
+                    player.handleDataPacket(newPacket)
+                else:
+                    print(hex(buffer[0]))
