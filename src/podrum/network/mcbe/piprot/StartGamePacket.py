@@ -24,10 +24,18 @@ class StartGamePacket(Packet):
     generator = None
     gamemode = None
     entityId = None
-    coords = None
+    position = None
     
     def decodePayload(self):
-        pass
+        self.seed = self.getInt()
+        self.generator = self.getInt()
+        self.gamemode = self.getInt()
+        self.entityId = self.getInt()
+        self.position = self.getPosition()
         
     def encodePayload(self):
-        pass
+        self.putInt(self.seed)
+        self.putInt(self.generator)
+        self.putInt(self.gamemode)
+        self.putInt(self.entityId)
+        self.putPosition(self.position)
