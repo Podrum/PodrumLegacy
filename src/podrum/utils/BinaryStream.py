@@ -176,35 +176,34 @@ class BinaryStream:
         return temp
     
     def getUnsignedVarInt(self):
-        value = 0
-        i = 0
-        while i <= 28:
+        numRead = 0
+        result = 0
+        while True:
             if self.feof():
                 raise Exception("No bytes left in the buffer")
-            b = self.getByte()
-            value |= ((b & 0x7f) << i)
-            if (b & 0x80) == 0:
-                return value
-            i += 7
-        raise Exception("VarInt did not terminate after 5 bytes!")
+            read = self.getByte()
+            value = (read & 0x7f)
+            result |= (value << (7 * numRead))
+            numRead += 1
+            if numRead > 5:
+                raise Exception("VarInt too big")
+            if (read & 0x80) == 0:
+                break
+        return result
+        
         
     def putVarInt(self, value):
         return self.putUnsignedVarInt(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
     
     def putUnsignedVarInt(self, value):
-        stream = BinaryStream()
-        value &= 0xffffffff
-        i = 0
-        while i < 5:
-            if (value >> 7) != 0:
-                stream.putByte(value | 0x80)
-            else:
-                stream.putByte(value & 0x7f)
-                self.put(stream.buffer)
-                return
+        while True:
+            temp = (value & 0x7f)
             value >>= 7
-            i += 1
-        self.put(stream.buffer)
+            if value != 0:
+                temp |= 0x80
+            self.putByte(temp)
+            if value == 0:
+                break
         
     def getVarLong(self):
         raw = self.getUnsignedVarLong()
@@ -212,31 +211,33 @@ class BinaryStream:
         return temp
     
     def getUnsignedVarLong(self):
-        value = 0
-        i = 0
-        while i <= 63:
+        numRead = 0
+        result = 0
+        while True:
             if self.feof():
                 raise Exception("No bytes left in the buffer")
-            b = self.getByte()
-            value |= ((b & 0x7f) << i)
-            if (b & 0x80) == 0:
-                return value
-            i += 7
-        raise Exception("VarInt did not terminate after 10 bytes!")
+            read = self.getByte()
+            value = (read & 0x7f)
+            result |= (value << (7 * numRead))
+            numRead += 1
+            if numRead > 10:
+                raise Exception("VarLong too big")
+            if (read & 0x80) == 0:
+                break
+        return result
         
     def putVarLong(self, value):
         return self.putUnsignedVarLong(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
     
     def putUnsignedVarLong(self, value):
-        i = 0
-        while i < 10:
-            if (value >> 7) != 0:
-                self.putByte(value | 0x80)
-            else:
-                self.putByte(value & 0x7f)
-                break
+        while True:
+            temp = (value & 0x7f)
             value >>= 7
-            i += 1
+            if value != 0:
+                temp |= 0x80
+            self.putByte(temp)
+            if value == 0:
+                break
         
     def feof(self):
         return len(self.buffer) <= self.offset or self.offset < 0
