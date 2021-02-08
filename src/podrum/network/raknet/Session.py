@@ -179,7 +179,8 @@ class Session:
                 lostPacket = self.recoveryQueue[sequenceNumber]
                 lostPacket.sequenceNumber = self.sendSequenceNumber
                 self.sendSequenceNumber += 1
-                self.resendQueue.append(lostPacket)
+                lostPacket.sendTime = time.time()
+                self.sendPacket(lostPacket)
                 del self.recoveryQueue[sequenceNumber]
                 
     def handleFrameSetPacket(self, packet):
