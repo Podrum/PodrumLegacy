@@ -36,7 +36,7 @@ class Frame:
         flags = stream.getByte()
         frame.reliability = (flags & 224) >> 5
         frame.isFragmented = (flags & 0x10) > 0
-        length = stream.getShort() >> 3
+        length = stream.getUnsignedShort() >> 3
         if length == 0:
             raise Exception("Got empty frame!")
         if Reliability.isReliable(frame.reliability):
@@ -48,7 +48,7 @@ class Frame:
             frame.orderChannel = stream.getByte()
         if frame.isFragmented:
             frame.fragmentSize = stream.getInt()
-            frame.fragmentId = stream.getShort()
+            frame.fragmentId = stream.getUnsignedShort()
             frame.fragmentIndex = stream.getInt()
         frame.body = stream.get(length)
         return frame
@@ -59,7 +59,7 @@ class Frame:
         if self.isFragmented:
             flags |= 0x10
         stream.putByte(flags)
-        stream.putShort(len(self.body) << 3)
+        stream.putUnsignedShort(len(self.body) << 3)
         if Reliability.isReliable(self.reliability):
             stream.putUnsignedLTriad(self.reliableIndex)
         if Reliability.isSequenced(self.reliability):
@@ -69,7 +69,7 @@ class Frame:
             stream.putByte(self.orderChannel)
         if self.isFragmented:
             stream.putInt(self.fragmentSize)
-            stream.putShort(self.fragmentId)
+            stream.putUnsignedShort(self.fragmentId)
             stream.putInt(self.fragmentIndex)
         stream.put(self.body)
         return stream
