@@ -23,7 +23,7 @@ class AcknowledgePacket(Packet):
     
     def decodePayload(self):
         self.sequenceNumbers = []
-        recordCount = self.getShort()
+        recordCount = self.getUnsignedShort()
         for i in range(0, recordCount):
             isSingle = self.getBool()
             if not isSingle:
@@ -67,5 +67,5 @@ class AcknowledgePacket(Packet):
                 stream.putUnsignedLTriad(start)
                 stream.putUnsignedLTriad(end)
             recordCount += 1
-        self.putShort(recordCount)
+        self.putUnsignedShort(recordCount)
         self.put(stream.buffer)
