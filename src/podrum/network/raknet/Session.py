@@ -39,23 +39,18 @@ class Session:
     isActive = False
     state = RakNet.state["Connecting"]
     channelIndex = [0] * 32
-    reliableIndex = 0
     fragmentId = 0
     sendSequenceNumber = 0
     lastSequenceNumber = -1
+    sendReliableIndex = 0
+    lastReliableIndex = 0
     packetToSend = []
     ackQueue = []
     nackQueue = []
     recoveryQueue = {}
     frameQueue = FrameSetPacket()
     fragmentedPackets = {}
-    windowStart = -1
-    windowEnd = 2048
-    receivedWindow = []
-    reliableWindowStart = 0
-    reliableWindowEnd = 2048
-    reliableWindow = {}
-    lastReliableIndex = -1
+    receivedSequenceNumbers = []
 
     def __init__(self, server, address, mtuSize):
         self.server = server
@@ -97,11 +92,6 @@ class Session:
                 del self.recoveryQueue[sequenceNumber]
             else:
                 break
-        for index, sequenceNumber in enumerate(self.receivedWindow):
-            if sequenceNumber < self.windowStart:
-                del self.receivedWindow[index]
-            else:
-                break
         self.sendFrameQueue()
         
     def disconnect(self, reason = "unknown"):
@@ -137,8 +127,8 @@ class Session:
             
     def addFrameToQueue(self, frame, flags = RakNet.priority["Queue"]):
         if Reliability.isReliable(frame.reliability):
-            frame.reliableIndex = self.reliableIndex
-            self.reliableIndex += 1
+            frame.reliableIndex = self.sendReliableIndex
+            self.sendReliableIndex += 1
             if frame.reliability == Reliability.reliableOrdered:
                 frame.orderedIndex = self.channelIndex[frame.orderChannel]
                 self.channelIndex[frame.orderChannel] += 1
@@ -146,25 +136,22 @@ class Session:
             buffers = []
             for i in range(0, len(packet.buffer), self.mtuSize):
                 buffers.append(packet.buffer[i:i + self.mtuSize])
-            self.fragmentId += 1
-            fragmentId = self.fragmentId % 65536
-            for count, buffer in enumerate(buffers):
+            for index, buffer in enumerate(buffers):
                 newFrame = Frame()
-                newFrame.fragmentId = splitID
+                newFrame.fragmentId = self.fragmentId
                 newFrame.isFragmented = True
                 newFrame.fragmentSize = len(buffers)
                 newFrame.reliability = frame.reliability
-                newFrame.fragmentIndex = count
+                newFrame.fragmentIndex = index
                 newFrame.body = buffer
-                if count > 0:
-                    newFrame.reliableIndex = self.reliableIndex
-                    self.reliableIndex += 1
-                else:
-                    newFrame.reliableIndex = frame.reliableIndex
-                if newFrame.reliability == Reliability.reliableOrdered == 3:
+                if index != 0:
+                    newFrame.reliableIndex = self.sendReliableIndex
+                    self.sendReliableIndex += 1
+                if newFrame.reliability == Reliability.reliableOrdered:
                     newFrame.orderChannel = frame.orderChannel
                     newFrame.orderedIndex = frame.orderedIndex
-                self.addToQueue(newFrame, flags | RakNet.priority["Heap"])
+                self.addToQueue(newFrame, flags)
+            self.fragmentId += 1
         else:
             self.addToQueue(frame, flags)
 
@@ -184,53 +171,29 @@ class Session:
                 del self.recoveryQueue[sequenceNumber]
                 
     def handleFrameSetPacket(self, packet):
-        if packet.sequenceNumber < self.windowStart:
+        if packet.sequenceNumber in self.receivedSequenceNumbers:
             return
-        if packet.sequenceNumber > self.windowEnd:
-            return
-        if packet.sequenceNumber in self.receivedWindow:
-            return
-        difference = packet.sequenceNumber - self.lastSequenceNumber
         if packet.sequenceNumber in self.nackQueue:
             self.nackQueue.remove(packet.sequenceNumber)
         self.ackQueue.append(packet.sequenceNumber)
-        self.receivedWindow.append(packet.sequenceNumber)
+        self.receivedSequenceNumbers.append(packet.sequenceNumber)
+        difference = packet.sequenceNumber - self.lastSequenceNumber
         if difference != 1:
             for i in range(self.lastSequenceNumber + 1, packet.sequenceNumber):
-                if i not in self.receivedWindow:
+                if i not in self.receivedSequenceNumbers:
                     self.nackQueue.append(i)
-        if difference >= 1:
-            self.lastSequenceNumber = packet.sequenceNumber
-            self.windowStart += difference
-            self.windowEnd += difference
+        self.lastSequenceNumber = packet.sequenceNumber
         for frame in packet.frames:
             self.handleFrame(frame)
             
     def handleFrame(self, frame):
-        if frame.reliableIndex is None:
+        if not Reliability.isReliable(frame.reliability):
             self.handlePacket(frame)
         else:
-            if frame.reliableIndex < self.reliableWindowStart:
-                return
-            if frame.reliableIndex > self.reliableWindowEnd:
-                return
-            if frame.reliableIndex - self.lastReliableIndex == 1:
-                self.lastReliableIndex += 1
-                self.reliableWindowStart += 1
-                self.reliableWindowEnd += 1
+            holeCount = this.lastReliableIndex - packet.reliableIndex
+            if holeCount == 0:
                 self.handlePacket(frame)
-                if len(self.reliableWindow) > 0:
-                    self.reliableWindow = dict(sorted(self.reliableWindow.items()))
-                    for index, reliableFrame in self.reliableWindow.items():
-                        if index - self.lastReliableIndex != 1:
-                            break
-                        self.lastReliableIndex += 1
-                        self.reliableWindowStart += 1
-                        self.reliableWindowEnd += 1
-                        self.handlePacket(reliableFrame)
-                        del self.reliableWindow[index]
-            else:
-                self.reliableWindow[frame.reliableIndex] = frame
+                self.lastReliableIndex += 1
                 
     def handleFrameFragment(self, frame):
         if frame.fragmentId not in self.fragmentedPackets:
