@@ -190,7 +190,7 @@ class Session:
         if not Reliability.isReliable(frame.reliability):
             self.handlePacket(frame)
         else:
-            holeCount = self.lastReliableIndex - packet.reliableIndex
+            holeCount = self.lastReliableIndex - frame.reliableIndex
             if holeCount == 0:
                 self.handlePacket(frame)
                 self.lastReliableIndex += 1
