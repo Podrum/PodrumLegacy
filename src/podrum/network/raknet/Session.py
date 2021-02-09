@@ -43,7 +43,7 @@ class Session:
     fragmentId = 0
     sendSequenceNumber = 0
     lastSequenceNumber = -1
-    resendQueue = []
+    packetToSend = []
     ackQueue = []
     nackQueue = []
     recoveryQueue = {}
@@ -78,22 +78,22 @@ class Session:
             newPacket.sequenceNumbers = self.nackQueue
             self.sendPacket(newPacket)
             self.nackQueue = []
-        if len(self.resendQueue) > 0:
+        if len(self.packetToSend) > 0:
             limit = 16
-            for index, packet in enumerate(self.resendQueue):
+            for index, packet in enumerate(self.packetToSend):
                 packet.sendTime = timestamp
                 packet.encode()
                 self.recoveryQueue[packet.sequenceNumber] = packet
-                del self.resendQueue[index]
+                del self.packetToSend[index]
                 self.sendPacket(packet)
                 limit -= 1
                 if limit <= 0:
                     break
-            if len(self.resendQueue) > 2048:
-                self.resendQueue = []
+            if len(self.packetToSend) > 2048:
+                self.packetToSend = []
         for sequenceNumber, packet in dict(self.recoveryQueue).items():
             if packet.sendTime < time.time() - 8:
-                self.resendQueue.append(packet)
+                self.packetToSend.append(packet)
                 del self.recoveryQueue[sequenceNumber]
             else:
                 break
