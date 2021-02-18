@@ -36,7 +36,6 @@ from podrum.network.raknet.RakNet import RakNet
 from podrum.network.raknet.Session import Session
 from podrum.network.raknet.Socket import Socket
 from threading import Thread
-from time import sleep
 from time import time
 
 class Server(Thread):
@@ -130,4 +129,3 @@ class Server(Thread):
                     self.interface.onRaw(stream, address)
             for token in dict(self.sessions):
                 self.sessions[token].sendFrameQueue()
-            sleep(1 / RakNet.tps)
