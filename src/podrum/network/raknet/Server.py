@@ -129,5 +129,5 @@ class Server(Thread):
                 else:
                     self.interface.onRaw(stream, address)
             for token in dict(self.sessions):
-                self.sessions[token].update(time())
+                self.sessions[token].sendFrameQueue()
             sleep(1 / RakNet.tps)
