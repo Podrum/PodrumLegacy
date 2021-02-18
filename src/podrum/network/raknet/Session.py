@@ -220,4 +220,4 @@ class Session:
                 self.server.interface.onFrame(frame, self.address)
                 
     def close(self):
-        self.addFrameToQueue(Frame.fromStream(BinaryStream(b"\x00\x00\x08\x15")), RakNet.priority["Heap"])
+        self.addToQueue(Frame.fromStream(BinaryStream(b"\x15")), RakNet.priority["Heap"])
