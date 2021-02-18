@@ -35,18 +35,13 @@ class Session:
     server = None
     address = None
     mtuSize = None
-    lastUpdate = None
-    isActive = False
     state = RakNet.state["Connecting"]
     channelIndex = [0] * 32
     fragmentId = 0
     sendSequenceNumber = 0
-    lastSequenceNumber = -1
+    receivedSequenceNumber = 0
     sendReliableIndex = 0
-    lastReliableIndex = 0
-    packetToSend = []
-    ackQueue = []
-    nackQueue = []
+    receivedReliableIndex = 0
     recoveryQueue = {}
     frameQueue = FrameSetPacket()
     fragmentedPackets = {}
@@ -56,43 +51,16 @@ class Session:
         self.server = server
         self.address = address
         self.mtuSize = mtuSize
-        self.lastUpdate = time.time()
         
-    def update(self, timestamp):
-        if not self.isActive and self.lastUpdate + 10 < timestamp:
-            self.disconnect("timeout")
-            return
-        self.isActive = False
-        if len(self.ackQueue) > 0:
-            newPacket = Ack()
-            newPacket.sequenceNumbers = self.ackQueue
-            self.sendPacket(newPacket)
-            self.ackQueue = []
-        if len(self.nackQueue) > 0:
-            newPacket = Nack()
-            newPacket.sequenceNumbers = self.nackQueue
-            self.sendPacket(newPacket)
-            self.nackQueue = []
-        if len(self.packetToSend) > 0:
-            limit = 16
-            for index, packet in enumerate(self.packetToSend):
-                packet.sendTime = timestamp
-                packet.encode()
-                self.recoveryQueue[packet.sequenceNumber] = packet
-                del self.packetToSend[index]
-                self.sendPacket(packet)
-                limit -= 1
-                if limit <= 0:
-                    break
-            if len(self.packetToSend) > 2048:
-                self.packetToSend = []
-        for sequenceNumber, packet in dict(self.recoveryQueue).items():
-            if packet.sendTime < time.time() - 8:
-                self.packetToSend.append(packet)
-                del self.recoveryQueue[sequenceNumber]
-            else:
-                break
-        self.sendFrameQueue()
+    def sendAck(self, sequenceNumber):
+        packet = Ack()
+        packet.sequenceNumbers = [sequenceNumber]
+        self.sendPacket(packet)
+        
+    def sendNack(self, sequenceNumbers):
+        packet = Nack()
+        packet.sequenceNumbers = sequenceNumbers
+        self.sendPacket(packet)
         
     def disconnect(self, reason = "unknown"):
         self.server.removeSession(self.address, reason)
@@ -106,19 +74,16 @@ class Session:
             self.frameQueue.sequenceNumber = self.sendSequenceNumber
             self.sendSequenceNumber += 1
             self.sendPacket(self.frameQueue)
-            self.frameQueue.sendTime = time.time()
             self.recoveryQueue[self.frameQueue.sequenceNumber] = self.frameQueue
             self.frameQueue = FrameSetPacket()
             
-    def addToQueue(self, frame, flags = RakNet.priority["Queue"]):
-        priority = flags & 0b1
+    def addToQueue(self, frame, priority = RakNet.priority["Queue"]):
         if priority == RakNet.priority["Heap"]:
             packet = FrameSetPacket()
             packet.sequenceNumber = self.sendSequenceNumber
             self.sendSequenceNumber += 1
             packet.frames.append(frame)
             self.sendPacket(packet)
-            packet.sendTime = time.time()
             self.recoveryQueue[packet.sequenceNumber] = packet
         else:
             if self.frameQueue.getLength() + frame.getFrameLength() > self.mtuSize:
@@ -163,26 +128,27 @@ class Session:
     def handleNack(self, packet):
         for sequenceNumber in packet.sequenceNumbers:
             if sequenceNumber in self.recoveryQueue:
-                lostPacket = self.recoveryQueue[sequenceNumber]
-                lostPacket.sequenceNumber = self.sendSequenceNumber
+                packet = self.recoveryQueue[sequenceNumber]
+                packet.sequenceNumber = self.sendSequenceNumber
                 self.sendSequenceNumber += 1
-                lostPacket.sendTime = time.time()
                 self.sendPacket(lostPacket)
                 del self.recoveryQueue[sequenceNumber]
                 
     def handleFrameSetPacket(self, packet):
         if packet.sequenceNumber in self.receivedSequenceNumbers:
             return
-        if packet.sequenceNumber in self.nackQueue:
-            self.nackQueue.remove(packet.sequenceNumber)
-        self.ackQueue.append(packet.sequenceNumber)
+        self.sendAck(packet.sequenceNumber)
         self.receivedSequenceNumbers.append(packet.sequenceNumber)
-        difference = packet.sequenceNumber - self.lastSequenceNumber
-        if difference != 1:
-            for i in range(self.lastSequenceNumber + 1, packet.sequenceNumber):
-                if i not in self.receivedSequenceNumbers:
-                    self.nackQueue.append(i)
-        self.lastSequenceNumber = packet.sequenceNumber
+        holeCount = self.receivedSequenceNumber - packet.sequenceNumber
+        if holeCount == 0:
+            self.receivedSequenceNumber += 1
+        else:
+            sequenceNumbers = []
+            for sequenceNumber in range(self.receivedSequenceNumber + 1, holeCount):
+                if sequenceNumber not in self.receivedSequenceNumbers:
+                    sequenceNumbers.append(sequenceNumber)
+            self.sendNack(sequenceNumbers)
+            self.receivedSequenceNumber = packet.sequenceNumber
         for frame in packet.frames:
             self.handleFrame(frame)
             
@@ -190,10 +156,10 @@ class Session:
         if not Reliability.isReliable(frame.reliability):
             self.handlePacket(frame)
         else:
-            holeCount = self.lastReliableIndex - frame.reliableIndex
+            holeCount = self.receivedReliableIndex - frame.reliableIndex
             if holeCount == 0:
                 self.handlePacket(frame)
-                self.lastReliableIndex += 1
+                self.receivedReliableIndex += 1
                 
     def handleFrameFragment(self, frame):
         if frame.fragmentId not in self.fragmentedPackets:
@@ -249,7 +215,7 @@ class Session:
                     newFrame = Frame()
                     newFrame.reliability = 0
                     newFrame.body = newPacket.buffer
-                    self.addToQueue(newFrame)
+                    self.addToQueue(newFrame, RakNet.priority["Heap"])
             elif self.state == RakNet.state["Connected"]:
                 self.server.interface.onFrame(frame, self.address)
                 
