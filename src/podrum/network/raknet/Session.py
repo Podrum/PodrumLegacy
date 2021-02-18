@@ -139,16 +139,14 @@ class Session:
             return
         self.sendAck(packet.sequenceNumber)
         self.receivedSequenceNumbers.append(packet.sequenceNumber)
-        holeCount = self.receivedSequenceNumber - packet.sequenceNumber
-        if holeCount == 0:
-            self.receivedSequenceNumber += 1
-        else:
+        holeCount = packet.sequenceNumber - self.receivedSequenceNumber
+        if holeCount > 0:
             sequenceNumbers = []
             for sequenceNumber in range(self.receivedSequenceNumber + 1, holeCount):
                 if sequenceNumber not in self.receivedSequenceNumbers:
                     sequenceNumbers.append(sequenceNumber)
             self.sendNack(sequenceNumbers)
-            self.receivedSequenceNumber = packet.sequenceNumber
+        self.receivedSequenceNumber = packet.sequenceNumber
         for frame in packet.frames:
             self.handleFrame(frame)
             
