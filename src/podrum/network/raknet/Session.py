@@ -52,6 +52,9 @@ class Session:
         self.address = address
         self.mtuSize = mtuSize
         
+    def disconnect(self, reason = "unknown"):
+        self.server.removeSession(self.address, reason)
+        
     def sendAck(self, sequenceNumber):
         packet = Ack()
         packet.sequenceNumbers = [sequenceNumber]
@@ -61,9 +64,6 @@ class Session:
         packet = Nack()
         packet.sequenceNumbers = sequenceNumbers
         self.sendPacket(packet)
-        
-    def disconnect(self, reason = "unknown"):
-        self.server.removeSession(self.address, reason)
         
     def sendPacket(self, packet):
         packet.encode()
@@ -131,7 +131,7 @@ class Session:
                 packet = self.recoveryQueue[sequenceNumber]
                 packet.sequenceNumber = self.sendSequenceNumber
                 self.sendSequenceNumber += 1
-                self.sendPacket(lostPacket)
+                self.sendPacket(packet)
                 del self.recoveryQueue[sequenceNumber]
                 
     def handleFrameSetPacket(self, packet):
