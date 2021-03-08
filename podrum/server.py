@@ -78,6 +78,7 @@ class server:
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
 
     def stop(self) -> None:
+        self.raknet_handler.stop_handler()
         self.command_handler.stop_handler()
         self.plugin_manager.unload_all()
 
