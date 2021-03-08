@@ -32,16 +32,13 @@ Still under active development, but yet it has few advantages:
 ## Running:
 Linux and MacOS (Unix systems):
 ```sh
-python3 -m venv /venv
-./venv/Scripts/activate.sh
-pip3 install -r requirements.txt
-python3 -O src/__main__.py
+python3 podrum
 ```
 Or you can use Powershell.
 
 Windows:
-```powershell
-.\start.ps1
+```batch
+python podrum
 ```
 
 **Not joinable yet**
