@@ -236,6 +236,50 @@ class protocol_buffer:
         else:
             return
         self.write(struct.pack(byte_order + "d", value))
+        
+    def read_var_int(self) -> int:
+        value: int = 0
+        result: int = 0
+        while True:
+            char: int = self.read_uchar()
+            result |= ((char & 0x7f) << (7 * value))
+            value += 1
+            if value > 5:
+                raise Exception("VarInt is too big")
+            if (char & 0x80) == 0:
+                return result
+            
+    def write_var_int(self, value: int) -> None:
+        while True:
+            temp: int = value & 0x7f
+            value >>= 7
+            if value != 0:
+                temp |= 0x80
+            self.write_uchar(temp)
+            if value == 0:
+                break
+            
+    def read_var_long(self) -> int:
+        value: int = 0
+        result: int = 0
+        while True:
+            char: int = self.read_uchar()
+            result |= ((char & 0x7f) << (7 * value))
+            value += 1
+            if num_read > 10:
+                raise Exception("VarLong is too big")
+            if (char & 0x80) == 0:
+                return result
+            
+    def write_var_long(self, value: int) -> None:
+        while True:
+            temp: int = value & 0x7f
+            value >>= 7
+            if value != 0:
+                temp |= 0x80
+            self.write_uchar(temp)
+            if value == 0:
+                break
 
     def read_raknet_string(self) -> str:
         length: int = self.read_ushort("big")
