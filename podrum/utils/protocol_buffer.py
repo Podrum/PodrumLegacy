@@ -335,6 +335,24 @@ class protocol_buffer:
         self.write_float(value.x)
         self.write_float(value.y)
         self.write_float(value.z)
+        
+    def read_mcbe_player_location(self) -> object:
+        value = context()
+        value.x = self.read_float()
+        value.y = self.read_float()
+        value.z = self.read_float()
+        value.pitch = self.read_uchar() / 0.71
+        value.head_yaw = self.read_uchar() / 0.71
+        value.yaw = self.read_uchar() / 0.71
+        return value
+        
+    def write_mcbe_player_location(self, value: object) -> None:
+        self.write_float(value.x)
+        self.write_float(value.y)
+        self.write_float(value.z)
+        self.write_uchar(int(value.pitch * 0.71))
+        self.write_uchar(int(value.head_yaw * 0.71))
+        self.write_uchar(int(value.yaw * 0.71))
 
     def read_raknet_string(self) -> str:
         length: int = self.read_ushort("big")
