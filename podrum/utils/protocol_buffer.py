@@ -336,6 +336,18 @@ class protocol_buffer:
         self.write_float(value.y)
         self.write_float(value.z)
         
+    def read_mcbe_block_coordinates(self) -> object:
+        value = context()
+        value.x = self.read_signed_var_int()
+        value.y = self.read_var_int()
+        value.z = self.read_signed_var_int()
+        return value
+        
+    def write_mcbe_block_coordinates(self, value: object) -> None:
+        self.read_signed_var_int(value.x)
+        self.read_var_int(value.y)
+        self.read_signed_var_int(value.z)
+        
     def read_mcbe_player_location(self) -> object:
         value = context()
         value.x = self.read_float()
