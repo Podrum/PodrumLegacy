@@ -68,6 +68,7 @@ class raknet_handler(Thread):
         self.name: str = "MCPE;Dedicated Server;390;1.14.60;0;10;13253860892328930865;Bedrock level;Survival;1;19132;19133;" # name
         self.connections: dict = {}
         self.server.event_manager.events["game_packet"] = []
+        self.server.event_manager.events["raknet_disconnect"] = []
 
     def create_connection(self, address, mtu_size) -> None:
         self.connections[address.token]: object = context()
