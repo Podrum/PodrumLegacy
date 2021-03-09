@@ -30,7 +30,6 @@
 ################################################################################
 
 from utils.protocol_buffer import protocol_buffer
-from utils.jwt import jwt
 
 class login_status_packet(protocol_buffer):
     def read_data(self) -> None:
