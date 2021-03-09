@@ -265,7 +265,7 @@ class protocol_buffer:
         return temp
     
     def write_signed_var_int(self, value: int) -> None:
-        pass
+        write_signed_var_int(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
             
     def read_var_long(self) -> int:
         value: int = 0
@@ -288,6 +288,14 @@ class protocol_buffer:
             self.write_uchar(temp)
             if value == 0:
                 break
+                
+    def read_signed_var_long(self) -> int:
+        raw: int = self.read_var_long()
+        temp: int = -(raw >> 1) - 1 if (raw & 1) else raw >> 1
+        return temp
+    
+    def write_signed_var_long(self, value: int) -> None:
+        write_signed_var_long(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
 
     def read_raknet_string(self) -> str:
         length: int = self.read_ushort("big")
