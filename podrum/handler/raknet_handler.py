@@ -336,7 +336,7 @@ class raknet_handler(Thread):
         connection: object = self.connections[address.token]
         if len(connection.ack_queue) > 0:
             packet: object = acknowledgement()
-            packet.packet_id: int = raknet_packet_ids.ack
+            packet.packet_id: int = raknet_packet_ids.nack
             packet.sequence_numbers: list = connection.nack_queue
             packet.write_data()
             self.socket.send(packet.data, address)
