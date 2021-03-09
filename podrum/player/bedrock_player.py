@@ -29,6 +29,9 @@
 #                                                                              #
 ################################################################################
 
+from constant.mcbe_packet_ids import mcbe_packet_ids
+from constant.raknet_packet_ids import raknet_packet_ids
+from packet.mcbe.play_status_packet import play_status_packet
 from packet.raknet.game_packet import game_packet
 from packet.raknet.frame import frame
 from utils.protocol_buffer import protocol_buffer
@@ -40,18 +43,27 @@ class bedrock_player:
         self.server = server
         
     def handle_packet(self, data):
-        pass
+        if data[0] == mcbe_packet_ids.login_packet:
+            self.send_play_status(0)
+    
+    def send_play_status(self, status):
+        packet: object = play_status_packet()
+        packet.packet_id: int = mcbe_packet_ids.play_status_packet
+        packet.status: int = status
+        packet.write_data()
+        self.send_packet(packet.data)
     
     def send_packet(self, data):
         buffer: object = protocol_buffer()
         buffer.write_mcbe_byte_array(data)
-        new_packet = game_packet()
-        compress = zlib.compressobj(self.compressionLevel, zlib.DEFLATED, -zlib.MAX_WBITS)
-        compressed_data = compress.compress(buffer.data)
+        new_packet: object = game_packet()
+        new_packet.packet_id: int = raknet_packet_ids.game_packet
+        compress: object = zlib.compressobj(self.compressionLevel, zlib.DEFLATED, -zlib.MAX_WBITS)
+        compressed_data: bytes = compress.compress(buffer.data)
         compressed_data += compress.flush()
-        new_packet.body = compressed_data
+        new_packet.body: bytes = compressed_data
         new_packet.write_data()
-        send_packet = frame()
-        send_packet.reliability = 0
-        send_packet.body = new_packet.buffer
+        send_packet: object = frame()
+        send_packet.reliability: int = 0
+        send_packet.body: bytes = new_packet.buffer
         self.server.raknet_handler.add_to_queue(send_packet, self.address, False)
