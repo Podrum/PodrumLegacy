@@ -44,7 +44,7 @@ class bedrock_player:
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
-            self.send_play_status(0)
+            self.send_play_status(7)
     
     def send_play_status(self, status):
         packet: object = play_status_packet()
