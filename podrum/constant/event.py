@@ -43,7 +43,7 @@ class event:
             
     @staticmethod
     def on_new_incoming_connection(address, server):
-        server.players[address.token] = bedrock_player()
+        server.players[address.token] = bedrock_player(address, server)
         server.logger.info(f"{address.token} connected.")
                    
     @staticmethod
