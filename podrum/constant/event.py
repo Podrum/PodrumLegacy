@@ -34,7 +34,7 @@ import zlib
 
 class event:
     @staticmethod
-    def on_game_packet(server, data, address) -> None:
+    def on_game_packet(data, address, server) -> None:
         buffer: object = protocol_buffer(zlib.decompress(data, -zlib.MAX_WBITS, 1024 * 1024 * 8))
         while not buffer.pos_exceeded():
             packet: bytes = buffer.read_mcbe_byte_array()
