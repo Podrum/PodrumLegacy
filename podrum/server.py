@@ -49,6 +49,7 @@ class server:
         self.raknet_handler: object = raknet_handler(self, ".".join(["0"] * 4), 19132, "")
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
+        self.players: dict = {}
         self.start()
 
     def register_vanilla_commands(self) -> None:
