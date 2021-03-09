@@ -296,6 +296,22 @@ class protocol_buffer:
     
     def write_signed_var_long(self, value: int) -> None:
         write_signed_var_long(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
+        
+    def read_mcbe_string(self) -> str:
+        length: int = self.read_var_int()
+        return self.read(length).decode()
+    
+    def write_mcbe_string(self, value: str) -> None:
+        self.write_var_int(len(value))
+        self.write(value.encode())
+        
+    def read_mcbe_byte_array(self) -> bytes:
+        length: int = self.read_var_int()
+        return self.read(length)
+    
+    def write_mcbe_byte_array(self, value: bytes) -> None:
+        self.write_var_int(len(value))
+        self.write(value)
 
     def read_raknet_string(self) -> str:
         length: int = self.read_ushort("big")
