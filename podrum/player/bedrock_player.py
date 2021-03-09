@@ -58,7 +58,7 @@ class bedrock_player:
         buffer.write_mcbe_byte_array(data)
         new_packet: object = game_packet()
         new_packet.packet_id: int = raknet_packet_ids.game_packet
-        compress: object = zlib.compressobj(self.compressionLevel, zlib.DEFLATED, -zlib.MAX_WBITS)
+        compress: object = zlib.compressobj(7, zlib.DEFLATED, -zlib.MAX_WBITS)
         compressed_data: bytes = compress.compress(buffer.data)
         compressed_data += compress.flush()
         new_packet.body: bytes = compressed_data
