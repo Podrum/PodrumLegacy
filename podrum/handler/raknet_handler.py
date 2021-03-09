@@ -37,6 +37,7 @@ from packet.raknet.connection_request import connection_request
 from packet.raknet.connection_request_accepted import connection_request_accepted
 from packet.raknet.frame import frame
 from packet.raknet.frame_set import frame_set
+from packet.raknet.game_packet import game_packet
 from packet.raknet.incompatible_protocol_version import incompatible_protocol_version
 from packet.raknet.new_incoming_connection import new_incoming_connection
 from packet.raknet.offline_ping import offline_ping
@@ -66,6 +67,7 @@ class raknet_handler(Thread):
         self.guid: int = random.randint(0, sys.maxsize)
         self.name: str = "MCPE;Dedicated Server;390;1.14.60;0;10;13253860892328930865;Bedrock level;Survival;1;19132;19133;" # name
         self.connections: dict = {}
+        self.server.event_manager.events["game_packet"] = []
 
     def create_connection(self, address, mtu_size) -> None:
         self.connections[address.token]: object = context()
@@ -227,6 +229,11 @@ class raknet_handler(Thread):
         frame_to_send.reliability: int = 0
         frame_to_send.body: bytes = new_packet.data
         self.add_to_queue(frame_to_send, address, False)
+        
+    def handle_game_packet(self, data, address):
+        packet: object = game_packet(data)
+        packet.read_data()
+        self.server.event_manager.dispatch("game_packet", address)
 
     def handle_fragmented_frame(self, packet: object, address: object) -> None:
         connection: object = self.connections[address.token]
@@ -255,6 +262,8 @@ class raknet_handler(Thread):
                     self.handle_new_incoming_connection(packet.body, address)
             elif packet.body[0] == raknet_packet_ids.online_ping:
                 self.handle_online_ping(packet.body, address)
+            elif packet.body[0] == raknet_packet_ids.game_packet:
+                self.handle_game_packet(packet.body, address)
 
     def send_queue(self, address: object) -> None:
         connection: object = self.connections[address.token]
