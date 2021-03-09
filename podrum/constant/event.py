@@ -41,6 +41,7 @@ class event:
             while not buffer.pos_exceeded():
                 packet: bytes = buffer.read_mcbe_byte_array()
                 print(hex(packet[0]))
+                server.players[address.token].handle_packet(data)
             
     @staticmethod
     def on_new_incoming_connection(address, server):
