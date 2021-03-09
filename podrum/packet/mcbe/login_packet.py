@@ -30,13 +30,18 @@
 ################################################################################
 
 from utils.protocol_buffer import protocol_buffer
+from utils.jwt import jwt
 
 class login_packet(protocol_buffer):
     def read_data(self):
         self.packet_id = self.read_uchar()
         self.protocol_version = self.read_uint("big")
-        self.chain_data = None
-        self.skin_data = None
+        self.chain_data = []
+        buffer = protocol_buffer(self.read_mcbe_byte_array())
+        raw_chain_data = json.loads(buffer.read(buffer.read_int("little")))
+        for chain in raw_chain_data["chain"]:
+            self.chain_data.append(jwt.decode(chain))
+        self.skin_data = jwt.decode(buffer.read(buffer.read_int("little")))
         
     def write_data(self):
         self.write_uchar(self.packet_id)
