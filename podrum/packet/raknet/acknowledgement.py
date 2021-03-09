@@ -38,9 +38,12 @@ class acknowledgement(protocol_buffer):
         count: int = self.read_ushort("big")
         for i in range(0, count):
             single: bool = self.read_bool()
-            if not single: 
-                self.sequence_numbers.append(self.read_utriad("little"))
-                self.sequence_numbers.append(self.read_utriad("little"))
+            if not single:
+                index = self.read_utriad("little")
+                end_index = self.read_utriad("little")
+                while index <= end_index:
+                    self.sequence_numbers.append(index)
+                    index += 1
             else:
                 self.sequence_numbers.append(self.read_utriad("little"))
         
