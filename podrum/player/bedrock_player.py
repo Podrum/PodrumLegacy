@@ -65,5 +65,5 @@ class bedrock_player:
         new_packet.write_data()
         send_packet: object = frame()
         send_packet.reliability: int = 0
-        send_packet.body: bytes = new_packet.buffer
+        send_packet.body: bytes = new_packet.data
         self.server.raknet_handler.add_to_queue(send_packet, self.address, False)
