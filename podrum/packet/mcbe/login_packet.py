@@ -29,21 +29,29 @@
 #                                                                              #
 ################################################################################
 
+from constant.misc import misc
 from utils.protocol_buffer import protocol_buffer
 from utils.jwt import jwt
 
 class login_packet(protocol_buffer):
-    def read_data(self):
-        self.packet_id = self.read_uchar()
-        self.protocol_version = self.read_uint("big")
-        self.chain_data = []
-        buffer = protocol_buffer(self.read_mcbe_byte_array())
-        raw_chain_data = json.loads(buffer.read(buffer.read_int("little")))
+    def read_data(self) -> None:
+        self.packet_id: int = self.read_uchar()
+        self.protocol_version: int = self.read_uint("big")
+        self.chain_data: list = []
+        buffer: object = protocol_buffer(self.read_mcbe_byte_array())
+        raw_chain_data: dict = json.loads(buffer.read(buffer.read_uint("little")))
         for chain in raw_chain_data["chain"]:
             self.chain_data.append(jwt.decode(chain))
-        self.skin_data = jwt.decode(buffer.read(buffer.read_int("little")))
+        self.skin_data: dict = jwt.decode(buffer.read(buffer.read_uint("little")))
         
-    def write_data(self):
+    def write_data(self) -> None:
         self.write_uchar(self.packet_id)
-        # Write chain_data
-        # Write skin_data
+        self.write_uint(self.protocol_version, "big")
+        buffer: object = protocol_buffer(self.read_mcbe_byte_array())
+        raw_chain_data: dict = {"chain": []}
+        for chain in self.chain_data:
+            raw_chain_data["chain"].append(jwt.encode({"alg": "HS256", "typ": "JWT"}, chain, misc.mojang_public_key))
+        encoded_chain_data = json.dumps(raw_chain_data).encode()
+        buffer.write_uint(len(encoded_chain_data), "little")
+        buffer.write(encoded_chain_data)
+        buffer.write(jwt.encode({"alg": "HS256", "typ": "JWT"}, self.skin_data, misc.mojang_public_key).encode())
