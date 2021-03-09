@@ -266,6 +266,8 @@ class raknet_handler(Thread):
                 self.handle_online_ping(packet.body, address)
             elif packet.body[0] == raknet_packet_ids.game_packet:
                 self.handle_game_packet(packet.body, address)
+            elif packet.body[0] == raknet_packet_ids.disconnect:
+                self.disconnect(address)
 
     def send_queue(self, address: object) -> None:
         connection: object = self.connections[address.token]
@@ -357,6 +359,12 @@ class raknet_handler(Thread):
             self.handle_open_connection_request_1(data, address)
         elif data[0] == raknet_packet_ids.open_connection_request_2:
             self.handle_open_connection_request_2(data, address)
+            
+    def disconnect(self, address):
+        packet = frame()
+        frame.body = b"\x13"
+        self.add_to_queue(frame, address)
+        del self.connections[address.token]
 
     def start_handler(self) -> None:
         self.stopped: bool = False
