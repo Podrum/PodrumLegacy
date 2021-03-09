@@ -67,9 +67,6 @@ class raknet_handler(Thread):
         self.guid: int = random.randint(0, sys.maxsize)
         self.name: str = "MCPE;Dedicated Server;390;1.14.60;0;10;13253860892328930865;Bedrock level;Survival;1;19132;19133;" # name
         self.connections: dict = {}
-        self.server.event_manager.events["game_packet"]: list = []
-        self.server.event_manager.events["raknet_disconnect"]: list = []
-        self.server.event_manager.events["new_incoming_connection"]: list = []
 
     def create_connection(self, address, mtu_size) -> None:
         self.connections[address.token]: object = context()
@@ -365,6 +362,7 @@ class raknet_handler(Thread):
         frame.body = b"\x13"
         self.add_to_queue(frame, address)
         del self.connections[address.token]
+        self.server.event_manager.dispatch("raknet_disconnect", address)
 
     def start_handler(self) -> None:
         self.stopped: bool = False
@@ -380,3 +378,4 @@ class raknet_handler(Thread):
             for connection in dict(self.connections).values():
                 self.send_ack_queue(connection.address)
                 self.send_nack_queue(connection.address)
+                self.send_queue(connection.address)
