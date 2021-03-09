@@ -251,14 +251,17 @@ class protocol_buffer:
                 return result
             
     def write_var_int(self, value: int) -> None:
-        while True:
-            temp: int = value & 0x7f
+        data: bytes = b""
+        value &= 0xffffffff
+        for i in range(0, 5):
+            if (value >> 7) != 0:
+                data += bytes([value | 0x80])
+            else:
+                data += bytes([value & 0x7f])
+                self.write(data)
+                return
             value >>= 7
-            if value != 0:
-                temp |= 0x80
-            self.write_uchar(temp)
-            if value == 0:
-                break
+        self.write(data)
                 
     def read_signed_var_int(self) -> int:
         raw: int = self.read_var_int()
@@ -281,14 +284,14 @@ class protocol_buffer:
                 return result
             
     def write_var_long(self, value: int) -> None:
-        while True:
-            temp: int = value & 0x7f
-            value >>= 7
-            if value != 0:
-                temp |= 0x80
-            self.write_uchar(temp)
-            if value == 0:
+        for i in range(0, 10):
+            if (value >> 7) != 0:
+                self.write_uchar(value | 0x80)
+            else:
+                self.write_uchar(value & 0x7f)
+                self.write(data)
                 break
+            value >>= 7
                 
     def read_signed_var_long(self) -> int:
         raw: int = self.read_var_long()
