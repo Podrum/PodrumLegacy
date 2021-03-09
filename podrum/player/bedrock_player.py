@@ -29,6 +29,11 @@
 #                                                                              #
 ################################################################################
 
+from packet.raknet.game_packet import game_packet
+from packet.raknet.frame import frame
+from utils.protocol_buffer import protocol_buffer
+import zlib
+
 class bedrock_player:
     def __init__(self, address, server):
         self.address = address
@@ -36,3 +41,17 @@ class bedrock_player:
         
     def handle_packet(self, data):
         pass
+    
+    def send_packet(self, data):
+        buffer: object = protocol_buffer()
+        buffer.write_mcbe_byte_array(data)
+        new_packet = game_packet()
+        compress = zlib.compressobj(self.compressionLevel, zlib.DEFLATED, -zlib.MAX_WBITS)
+        compressed_data = compress.compress(buffer.data)
+        compressed_data += compress.flush()
+        new_packet.body = compressed_data
+        new_packet.write_data()
+        send_packet = frame()
+        send_packet.reliability = 0
+        send_packet.body = new_packet.buffer
+        self.server.raknet_handler.add_to_queue(send_packet, self.address)
