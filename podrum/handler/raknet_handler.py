@@ -361,7 +361,7 @@ class raknet_handler(Thread):
         packet = frame()
         packet.reliability = 0
         packet.body = b"\x13"
-        self.add_to_queue(frame, address)
+        self.add_to_queue(packet, address)
         del self.connections[address.token]
         self.server.event_manager.dispatch("raknet_disconnect", address)
 
