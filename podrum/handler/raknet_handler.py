@@ -69,6 +69,7 @@ class raknet_handler(Thread):
         self.connections: dict = {}
         self.server.event_manager.events["game_packet"]: list = []
         self.server.event_manager.events["raknet_disconnect"]: list = []
+        self.server.event_manager.events["new_incoming_connection"]: list = []
 
     def create_connection(self, address, mtu_size) -> None:
         self.connections[address.token]: object = context()
@@ -217,6 +218,7 @@ class raknet_handler(Thread):
         packet.read_data()
         if packet.server_address.port == self.port:
             connection.connected: bool = True
+            self.server.event_manager.dispatch("new_incoming_connection", address)
 
     def handle_online_ping(self, data, address):
         packet: object = online_ping(data)
@@ -255,7 +257,6 @@ class raknet_handler(Thread):
         if packet.fragmented:
             self.handle_fragmented_frame(packet, address)
         else:
-            # print(hex(packet.body[0]))
             if not connection.connected:
                 if packet.body[0] == raknet_packet_ids.connection_request:
                     self.handle_connection_request(packet.body, address)
