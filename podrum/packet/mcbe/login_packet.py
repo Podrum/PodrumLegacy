@@ -51,7 +51,7 @@ class login_packet(protocol_buffer):
         raw_chain_data: dict = {"chain": []}
         for chain in self.chain_data:
             raw_chain_data["chain"].append(jwt.encode({"alg": "HS256", "typ": "JWT"}, chain, misc.mojang_public_key))
-        encoded_chain_data = json.dumps(raw_chain_data).encode()
+        encoded_chain_data: bytes = json.dumps(raw_chain_data).encode()
         buffer.write_uint(len(encoded_chain_data), "little")
         buffer.write(encoded_chain_data)
         buffer.write(jwt.encode({"alg": "HS256", "typ": "JWT"}, self.skin_data, misc.mojang_public_key).encode())
