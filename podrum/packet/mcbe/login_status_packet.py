@@ -33,10 +33,10 @@ from utils.protocol_buffer import protocol_buffer
 from utils.jwt import jwt
 
 class login_status_packet(protocol_buffer):
-    def read_data(self):
-        self.packet_id = self.read_uchar()
-        self.status = self.read_uint("big")
+    def read_data(self) -> None:
+        self.packet_id: int = self.read_uchar()
+        self.status: int = self.read_uint("big")
         
-    def write_data(self):
+    def write_data(self) -> None:
         self.write_uchar(self.packet_id)
         self.write_uint(self.status, "big")
