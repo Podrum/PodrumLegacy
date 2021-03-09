@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from utils.context import context
 from utils.raknet_address import raknet_address
 import socket
 import struct
@@ -312,6 +313,28 @@ class protocol_buffer:
     def write_mcbe_byte_array(self, value: bytes) -> None:
         self.write_var_int(len(value))
         self.write(value)
+        
+    def read_mcbe_vector_2(self) -> object:
+        value = context()
+        value.x = self.read_float()
+        value.y = self.read_float()
+        return value
+        
+    def write_mcbe_vector_2(self, value: object) -> None:
+        self.write_float(value.x)
+        self.write_float(value.y)
+        
+    def read_mcbe_vector_3(self) -> object:
+        value = context()
+        value.x = self.read_float()
+        value.y = self.read_float()
+        value.z = self.read_float()
+        return value
+        
+    def write_mcbe_vector_3(self, value: object) -> None:
+        self.write_float(value.x)
+        self.write_float(value.y)
+        self.write_float(value.z)
 
     def read_raknet_string(self) -> str:
         length: int = self.read_ushort("big")
