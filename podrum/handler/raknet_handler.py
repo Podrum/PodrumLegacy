@@ -234,7 +234,7 @@ class raknet_handler(Thread):
     def handle_game_packet(self, data, address):
         packet: object = game_packet(data)
         packet.read_data()
-        self.server.event_manager.dispatch("game_packet", address)
+        self.server.event_manager.dispatch("game_packet", packet.body, address)
 
     def handle_fragmented_frame(self, packet: object, address: object) -> None:
         connection: object = self.connections[address.token]
