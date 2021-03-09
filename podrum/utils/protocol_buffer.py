@@ -315,9 +315,9 @@ class protocol_buffer:
         self.write(value)
         
     def read_mcbe_vector_2(self) -> object:
-        value = context()
-        value.x = self.read_float()
-        value.y = self.read_float()
+        value: object = context()
+        value.x: int = self.read_float()
+        value.y: int = self.read_float()
         return value
         
     def write_mcbe_vector_2(self, value: object) -> None:
@@ -325,10 +325,10 @@ class protocol_buffer:
         self.write_float(value.y)
         
     def read_mcbe_vector_3(self) -> object:
-        value = context()
-        value.x = self.read_float()
-        value.y = self.read_float()
-        value.z = self.read_float()
+        value: object = context()
+        value.x: int = self.read_float()
+        value.y: int = self.read_float()
+        value.z: int = self.read_float()
         return value
         
     def write_mcbe_vector_3(self, value: object) -> None:
@@ -337,10 +337,10 @@ class protocol_buffer:
         self.write_float(value.z)
         
     def read_mcbe_block_coordinates(self) -> object:
-        value = context()
-        value.x = self.read_signed_var_int()
-        value.y = self.read_var_int()
-        value.z = self.read_signed_var_int()
+        value: object = context()
+        value.x: int = self.read_signed_var_int()
+        value.y: int = self.read_var_int()
+        value.z: int = self.read_signed_var_int()
         return value
         
     def write_mcbe_block_coordinates(self, value: object) -> None:
@@ -349,13 +349,13 @@ class protocol_buffer:
         self.read_signed_var_int(value.z)
         
     def read_mcbe_player_location(self) -> object:
-        value = context()
-        value.x = self.read_float()
-        value.y = self.read_float()
-        value.z = self.read_float()
-        value.pitch = self.read_uchar() / 0.71
-        value.head_yaw = self.read_uchar() / 0.71
-        value.yaw = self.read_uchar() / 0.71
+        value: object = context()
+        value.x: int = self.read_float()
+        value.y: int = self.read_float()
+        value.z: int = self.read_float()
+        value.pitch: float = self.read_uchar() / 0.71
+        value.head_yaw: float = self.read_uchar() / 0.71
+        value.yaw: float = self.read_uchar() / 0.71
         return value
         
     def write_mcbe_player_location(self, value: object) -> None:
