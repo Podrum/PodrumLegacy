@@ -44,9 +44,9 @@ class event:
     @staticmethod
     def on_new_incoming_connection(address, server):
         server.players[address.token] = bedrock_player()
-        server.logger.info(f"{address.token} connected.)
+        server.logger.info(f"{address.token} connected.")
                    
     @staticmethod
     def on_raknet_disconnect(address, server):
         del server.players[address.token]
-        server.logger.info(f"{address.token} disconnected.)
+        server.logger.info(f"{address.token} disconnected.")
