@@ -31,7 +31,7 @@
 
 from utils.protocol_buffer import protocol_buffer
 
-class login_status_packet(protocol_buffer):
+class play_status_packet(protocol_buffer):
     def read_data(self) -> None:
         self.packet_id: int = self.read_uchar()
         self.status: int = self.read_uint("big")
