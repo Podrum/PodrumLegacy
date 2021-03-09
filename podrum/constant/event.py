@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from player.bedrock_player import bedrock_player
 from utils.protocol_buffer import protocol_buffer
 import zlib
 
@@ -39,3 +40,13 @@ class event:
         while not buffer.pos_exceeded():
             packet: bytes = buffer.read_mcbe_byte_array()
             print(packet[0])
+            
+    @staticmethod
+    def on_new_incoming_connection(address, server):
+        server.players[address.token] = bedrock_player()
+        server.logger.info(f"{address.token} connected.)
+                   
+    @staticmethod
+    def on_raknet_disconnect(address, server):
+        del server.players[address.token]
+        server.logger.info(f"{address.token} disconnected.)
