@@ -33,3 +33,6 @@ class bedrock_player:
     def __init__(self, address, server):
         self.address = address
         self.server = server
+        
+    def handle_packet(self, data):
+        pass
