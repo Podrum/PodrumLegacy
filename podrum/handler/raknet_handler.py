@@ -359,6 +359,7 @@ class raknet_handler(Thread):
             
     def disconnect(self, address):
         packet = frame()
+        frame.reliability = 0
         frame.body = b"\x13"
         self.add_to_queue(frame, address)
         del self.connections[address.token]
