@@ -45,8 +45,8 @@ class server:
     def __init__(self) -> None:
         self.command_manager: object = command_manager(self)
         self.command_handler: object = command_handler(self)
-        self.raknet_handler: object = raknet_handler(self, ".".join(["0"] * 4), 19132, "")
         self.event_manager: object = event_manager(self)
+        self.raknet_handler: object = raknet_handler(self, ".".join(["0"] * 4), 19132, "")
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
         self.start()
@@ -74,6 +74,7 @@ class server:
         print(misc.logo)
         self.plugin_manager.load_all(misc.plugin_dir)
         self.register_vanilla_commands()
+        self.register_events()
         self.command_handler.start_handler()
         self.raknet_handler.start_handler()
         finish_time: float = time.time()
