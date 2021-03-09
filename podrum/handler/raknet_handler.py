@@ -255,7 +255,7 @@ class raknet_handler(Thread):
         if packet.fragmented:
             self.handle_fragmented_frame(packet, address)
         else:
-            print(hex(packet.body[0]))
+            # print(hex(packet.body[0]))
             if not connection.connected:
                 if packet.body[0] == raknet_packet_ids.connection_request:
                     self.handle_connection_request(packet.body, address)
