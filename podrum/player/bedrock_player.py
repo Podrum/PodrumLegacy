@@ -30,4 +30,6 @@
 ################################################################################
 
 class bedrock_player:
-    pass
+    def __init__(self, address, server):
+        self.address = address
+        self.server = server
