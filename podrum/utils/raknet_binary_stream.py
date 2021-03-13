@@ -44,11 +44,11 @@ class raknet_binary_stream(binary_stream):
             port: int = self.read_unsigned_short_be()
             return raknet_address(host, port, version)
         if version == 6:
-            self.read_unsigned_short_le()
+            self.read_unsigned_short_le() # Domain
             port: int = self.read_unsigned_short_be()
-            self.read_unsigned_int_be()
+            self.read_unsigned_int_be() # Test out IPV4 (Family)
             host: str = socket.inet_ntop(socket.AF_INET6, self.read(16))
-            self.read_unsigned_int_be()
+            self.read_unsigned_int_be() # Test out IPV6 (Family)
             return raknet_address(host, port, version)
       
     def write_address(self, address: raknet_address) -> None:
@@ -60,3 +60,8 @@ class raknet_binary_stream(binary_stream):
             self.write_unsigned_short_be(address.port)
         elif address.version == 6:
             self.write_unsigned_byte(address.version)
+            self.write_unsigned_short_le(socket.AF_INET6) # Domain
+            self.write_unsigned_short_be(address.port)
+            self.write_unsigned_int_be(0) # Test out IPV4 (Family)
+            self.write_unsigned_short_le(socket.inet_pton(socket.AF_INET6, address.host))
+            self.write_unsigned_int_be(0) # Test out IPV6 (Family)
