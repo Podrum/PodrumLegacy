@@ -54,7 +54,7 @@ class bedrock_player:
     
     def send_packet(self, data):
         new_packet: object = game_packet()
-        new_packet.packet_id: int = raknet_packet_ids.game_packet
+        new_packet.packet_id: int = 0xfe
         new_packet.write_packet_data(data)
         new_packet.write_data()
         send_packet: object = frame()
