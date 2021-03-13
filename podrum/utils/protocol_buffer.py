@@ -240,15 +240,12 @@ class protocol_buffer:
         
     def read_var_int(self) -> int:
         value: int = 0
-        result: int = 0
-        while True:
-            char: int = self.read_uchar()
-            result |= ((char & 0x7f) << (7 * value))
-            value += 1
-            if value > 5:
-                raise Exception("VarInt is too big")
-            if (char & 0x80) == 0:
-                return result
+        for i in range(0, 35, 7):
+            number: int = self.read_uchar()
+            value |= ((number & 0x7f) << i)
+            if (number & 0x80) == 0:
+                return value
+        raise Exception("VarInt is too big")
             
     def write_var_int(self, value: int) -> None:
         data: bytes = b""
@@ -271,15 +268,12 @@ class protocol_buffer:
             
     def read_var_long(self) -> int:
         value: int = 0
-        result: int = 0
-        while True:
-            char: int = self.read_uchar()
-            result |= ((char & 0x7f) << (7 * value))
-            value += 1
-            if num_read > 10:
-                raise Exception("VarLong is too big")
-            if (char & 0x80) == 0:
-                return result
+        for i in range(0, 70, 7):
+            number: int = self.read_uchar()
+            value |= ((number & 0x7f) << i)
+            if (number & 0x80) == 0:
+                return value
+        raise Exception("VarLong is too big")
             
     def write_var_long(self, value: int) -> None:
         for i in range(0, 10):
@@ -287,7 +281,6 @@ class protocol_buffer:
                 self.write_uchar(value | 0x80)
             else:
                 self.write_uchar(value & 0x7f)
-                self.write(data)
                 break
             value >>= 7
                 
