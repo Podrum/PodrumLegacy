@@ -50,11 +50,11 @@ class game_packet(protocol_buffer):
         if hasattr(self, "body")
             self.body += buffer.data
         else:
-            self.body = buffer.data
+            self.body: bytes = buffer.data
             
     def read_packets_data(self):
         buffer: object = protocol_buffer(self.body)
-        packets_data = []
+        packets_data: list = []
         while not self.pos_exceeded():
             packets_data.append(buffer.read_mcbe_byte_array())
         return packets_data
