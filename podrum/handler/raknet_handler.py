@@ -37,7 +37,6 @@ from packet.raknet.connection_request import connection_request
 from packet.raknet.connection_request_accepted import connection_request_accepted
 from packet.raknet.frame import frame
 from packet.raknet.frame_set import frame_set
-from packet.raknet.game_packet import game_packet
 from packet.raknet.incompatible_protocol_version import incompatible_protocol_version
 from packet.raknet.new_incoming_connection import new_incoming_connection
 from packet.raknet.offline_ping import offline_ping
