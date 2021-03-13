@@ -55,6 +55,6 @@ class game_packet(protocol_buffer):
     def read_packets_data(self):
         buffer: object = protocol_buffer(self.body)
         packets_data: list = []
-        while not self.pos_exceeded():
+        while not buffer.pos_exceeded():
             packets_data.append(buffer.read_mcbe_byte_array())
         return packets_data
