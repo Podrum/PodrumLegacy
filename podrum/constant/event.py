@@ -39,12 +39,12 @@ class event:
     def on_packet_data(data, address, server) -> None:
         if address.token in server.players:
             if data[0] == 0xfe:
-                packet = game_packet()
+                packet = game_packet(data)
                 packet.read_data()
                 packets = packet.read_packets_data()
-                for packet in packets:
-                    print(hex(packet[0]))
-                    server.players[address.token].handle_packet(packet)
+                for batch in packets:
+                    print(hex(batch[0]))
+                    server.players[address.token].handle_packet(batch)
             
     @staticmethod
     def on_new_incoming_connection(address, server):
