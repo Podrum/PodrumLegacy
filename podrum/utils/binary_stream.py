@@ -43,6 +43,12 @@ class binary_stream:
     def write(self, data: bytes) -> None:
         self.data += data
         
+    def read_remaining(self) -> bytes:
+        return self.read(len(self.data) - self.pos)
+    
+    def feos(self):
+        return bool(len(self.data) <= self.pos)
+        
     def read_byte(self) -> int:
         return binary_converter.read_byte(self.read(1))
     
