@@ -29,12 +29,27 @@
 #                                                                              #
 ################################################################################
 
-from constant.raknet_address import raknet_address
 from utils.binary_stream import binary_stream
+from utils.raknet_address import raknet_address
 
 class raknet_binary_stream(binary_stream):
     def read_address(self) -> raknet_address:
-        pass
+        version: int = self.read_unsigned_byte()
+        if version == 4:
+            host_parts = []
+            for i in range(0, 4):
+                host_parts.append(str(~self.read_unsigned_byte() & 0xff))
+            host = ".".join(host_parts)
+            port = self.read_unsigned_short()
+            return raknet_address(host, port, version)
+        if version == 6:
+            return
       
     def write_address(self, address: raknet_address) -> None:
-        pass
+        if address.version == 4:
+            self.write_unsigned_byte(address.version)
+            host_parts = address.host.split(".")
+            for part in host_parts:
+                self.write_unsigned_byte(~int(part) & 0xff)
+        elif address.version == 6:
+            self.write_unsigned_byte(address.version)
