@@ -303,7 +303,7 @@ class raknet_handler(Thread):
                     new_packet.ordered_frame_index: int = packet.ordered_frame_index
                     new_packet.order_channel: int = packet.order_channel
                 if is_imediate:
-                    connection.queue.frames: list = [new_packet]
+                    connection.queue.frames.append(packet)
                     self.send_queue(address)
                 else:
                     frame_size: int = new_packet.get_size()
@@ -313,7 +313,7 @@ class raknet_handler(Thread):
                     connection.queue.frames.append(new_packet)
         else:
             if is_imediate:
-                connection.queue.frames: list = [packet]
+                connection.queue.frames.append(packet)
                 self.send_queue(address)
             else:
                 frame_size: int = packet.get_size()
