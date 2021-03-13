@@ -266,7 +266,7 @@ class protocol_buffer:
         return temp
     
     def write_signed_var_int(self, value: int) -> None:
-        write_var_int(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
+        write_var_int(2 * value if value >= 0 else ((-2) * value) - 1)
             
     def read_var_long(self) -> int:
         value: int = 0
@@ -294,7 +294,7 @@ class protocol_buffer:
         return temp
     
     def write_signed_var_long(self, value: int) -> None:
-        write_signed_var_long(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
+        write_signed_var_long(2 * value if value >= 0 else ((-2) * value) - 1)
         
     def read_mcbe_string(self) -> str:
         length: int = self.read_var_int()
