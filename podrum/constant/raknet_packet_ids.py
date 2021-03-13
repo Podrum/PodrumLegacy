@@ -62,11 +62,3 @@ class raknet_packet_ids:
     frame_set_f: int = 0x8f
     nack: int = 0xa0
     ack: int = 0xc0
-    game_packet: int = 0xfe
-    
-    
-    
-    
-    
-    
-    
