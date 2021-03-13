@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from packet.mcbe.game_packet import game_packet
 from player.bedrock_player import bedrock_player
 from utils.protocol_buffer import protocol_buffer
 import zlib
@@ -37,11 +38,13 @@ class event:
     @staticmethod
     def on_packet_data(data, address, server) -> None:
         if address.token in server.players:
-            buffer: object = protocol_buffer(zlib.decompress(data, -zlib.MAX_WBITS, 1024 * 1024 * 8))
-            while not buffer.pos_exceeded():
-                packet: bytes = buffer.read_mcbe_byte_array()
-                print(hex(packet[0]))
-                server.players[address.token].handle_packet(packet)
+            if data[0] == 0xfe:
+                packet = game_packet()
+                packet.read_data()
+                packets = packet.get_packets_data()
+                for packet in packets:
+                    print(hex(packet[0]))
+                    server.players[address.token].handle_packet(packet)
             
     @staticmethod
     def on_new_incoming_connection(address, server):
