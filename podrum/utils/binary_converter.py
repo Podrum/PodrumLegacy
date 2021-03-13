@@ -38,7 +38,7 @@ class binary_converter:
     
     @staticmethod
     def write_byte(value: int) -> bytes:
-        return struct.unpack("b", value)
+        return struct.pack("b", value)
     
     @staticmethod
     def read_unsigned_byte(data: bytes) -> int:
@@ -46,7 +46,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_byte(value: int) -> bytes:
-        return struct.unpack("B", value)
+        return struct.pack("B", value)
     
     @staticmethod
     def read_short_be(data: bytes) -> int:
@@ -54,7 +54,7 @@ class binary_converter:
     
     @staticmethod
     def write_short_be(value: int) -> bytes:
-        return struct.unpack(">h", value)
+        return struct.pack(">h", value)
     
     @staticmethod
     def read_unsigned_short_be(data: bytes) -> int:
@@ -62,7 +62,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_short_be(value: int) -> bytes:
-        return struct.unpack(">H", value)
+        return struct.pack(">H", value)
     
     @staticmethod
     def read_short_le(data: bytes) -> int:
@@ -70,7 +70,7 @@ class binary_converter:
     
     @staticmethod
     def write_short_le(value: int) -> bytes:
-        return struct.unpack("<h", value)
+        return struct.pack("<h", value)
     
     @staticmethod
     def read_unsigned_short_le(data: bytes) -> int:
@@ -78,7 +78,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_short_le(value: int) -> bytes:
-        return struct.unpack("<H", value)
+        return struct.pack("<H", value)
     
     @staticmethod
     def read_triad_be(data: bytes) -> int:
@@ -86,7 +86,7 @@ class binary_converter:
     
     @staticmethod
     def write_triad_be(value: int) -> bytes:
-        return struct.unpack(">i", value)[1:4]
+        return struct.pack(">i", value)[1:4]
     
     @staticmethod
     def read_unsigned_triad_be(data: bytes) -> int:
@@ -94,7 +94,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_triad_be(value: int) -> bytes:
-        return struct.unpack(">I", value)[1:4]
+        return struct.pack(">I", value)[1:4]
     
     @staticmethod
     def read_triad_le(data: bytes) -> int:
@@ -102,7 +102,7 @@ class binary_converter:
     
     @staticmethod
     def write_triad_le(value: int) -> bytes:
-        return struct.unpack("<i", value)[:3]
+        return struct.pack("<i", value)[:3]
     
     @staticmethod
     def read_unsigned_triad_le(data: bytes) -> int:
@@ -110,7 +110,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_triad_le(value: int) -> bytes:
-        return struct.unpack("<I", value)[:3]
+        return struct.pack("<I", value)[:3]
     
     @staticmethod
     def read_int_be(data: bytes) -> int:
@@ -118,7 +118,7 @@ class binary_converter:
     
     @staticmethod
     def write_int_be(value: int) -> bytes:
-        return struct.unpack(">i", value)
+        return struct.pack(">i", value)
     
     @staticmethod
     def read_unsigned_int_be(data: bytes) -> int:
@@ -126,7 +126,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_int_be(value: int) -> bytes:
-        return struct.unpack(">I", value)
+        return struct.pack(">I", value)
     
     @staticmethod
     def read_int_le(data: bytes) -> int:
@@ -134,7 +134,7 @@ class binary_converter:
     
     @staticmethod
     def write_int_le(value: int) -> bytes:
-        return struct.unpack("<i", value)
+        return struct.pack("<i", value)
     
     @staticmethod
     def read_unsigned_int_le(data: bytes) -> int:
@@ -142,7 +142,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_int_le(value: int) -> bytes:
-        return struct.unpack("<I", value)
+        return struct.pack("<I", value)
     
     @staticmethod
     def read_long_be(data: bytes) -> int:
@@ -150,7 +150,7 @@ class binary_converter:
     
     @staticmethod
     def write_long_be(value: int) -> bytes:
-        return struct.unpack(">q", value)
+        return struct.pack(">q", value)
     
     @staticmethod
     def read_unsigned_long_be(data: bytes) -> int:
@@ -158,7 +158,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_long_be(value: int) -> bytes:
-        return struct.unpack(">Q", value)
+        return struct.pack(">Q", value)
     
     @staticmethod
     def read_long_le(data: bytes) -> int:
@@ -166,7 +166,7 @@ class binary_converter:
     
     @staticmethod
     def write_long_le(value: int) -> bytes:
-        return struct.unpack("<q", value)
+        return struct.pack("<q", value)
     
     @staticmethod
     def read_unsigned_long_le(data: bytes) -> int:
@@ -174,7 +174,7 @@ class binary_converter:
     
     @staticmethod
     def write_unsigned_long_le(value: int) -> bytes:
-        return struct.unpack("<Q", value)
+        return struct.pack("<Q", value)
     
     @staticmethod
     def read_float_be(data: bytes) -> int:
@@ -182,7 +182,7 @@ class binary_converter:
     
     @staticmethod
     def write_float_be(value: int) -> bytes:
-        return struct.unpack(">f", value)
+        return struct.pack(">f", value)
     
     @staticmethod
     def read_float_le(data: bytes) -> int:
@@ -190,7 +190,7 @@ class binary_converter:
     
     @staticmethod
     def write_float_le(value: int) -> bytes:
-        return struct.unpack("<f", value)
+        return struct.pack("<f", value)
 
     @staticmethod
     def read_double_be(data: bytes) -> int:
@@ -198,7 +198,7 @@ class binary_converter:
     
     @staticmethod
     def write_double_be(value: int) -> bytes:
-        return struct.unpack(">d", value)
+        return struct.pack(">d", value)
     
     @staticmethod
     def read_double_le(data: bytes) -> int:
@@ -206,4 +206,4 @@ class binary_converter:
     
     @staticmethod
     def write_double_le(value: int) -> bytes:
-        return struct.unpack("<d", value)
+        return struct.pack("<d", value)
