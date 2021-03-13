@@ -30,9 +30,8 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
-from constant.raknet_packet_ids import raknet_packet_ids
+from packet.mcbe.game_packet import game_packet
 from packet.mcbe.play_status_packet import play_status_packet
-from packet.raknet.game_packet import game_packet
 from packet.raknet.frame import frame
 from utils.protocol_buffer import protocol_buffer
 import zlib
@@ -54,14 +53,9 @@ class bedrock_player:
         self.send_packet(packet.data)
     
     def send_packet(self, data):
-        buffer: object = protocol_buffer()
-        buffer.write_mcbe_byte_array(data)
         new_packet: object = game_packet()
         new_packet.packet_id: int = raknet_packet_ids.game_packet
-        compress: object = zlib.compressobj(0, zlib.DEFLATED, -zlib.MAX_WBITS)
-        compressed_data: bytes = compress.compress(buffer.data)
-        compressed_data += compress.flush()
-        new_packet.body: bytes = compressed_data
+        new_packet.write_packet_data(data)
         new_packet.write_data()
         send_packet: object = frame()
         send_packet.reliability: int = 0
