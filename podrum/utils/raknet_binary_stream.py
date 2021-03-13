@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+import socket
 from utils.binary_stream import binary_stream
 from utils.raknet_address import raknet_address
 
@@ -36,21 +37,26 @@ class raknet_binary_stream(binary_stream):
     def read_address(self) -> raknet_address:
         version: int = self.read_unsigned_byte()
         if version == 4:
-            host_parts = []
+            host_parts: list = []
             for i in range(0, 4):
                 host_parts.append(str(~self.read_unsigned_byte() & 0xff))
-            host = ".".join(host_parts)
-            port = self.read_unsigned_short()
+            host: str = ".".join(host_parts)
+            port: int = self.read_unsigned_short_be()
             return raknet_address(host, port, version)
         if version == 6:
-            return
+            self.read_unsigned_short_le()
+            port: int = self.read_unsigned_short_be()
+            self.read_unsigned_int_be()
+            host: str = socket.inet_ntop(socket.AF_INET6, self.read(16))
+            self.read_unsigned_int_be()
+            return raknet_address(host, port, version)
       
     def write_address(self, address: raknet_address) -> None:
         if address.version == 4:
             self.write_unsigned_byte(address.version)
-            host_parts = address.host.split(".")
+            host_parts: list = address.host.split(".")
             for part in host_parts:
                 self.write_unsigned_byte(~int(part) & 0xff)
-            self.write_unsigned_short(address.port)
+            self.write_unsigned_short_be(address.port)
         elif address.version == 6:
             self.write_unsigned_byte(address.version)
