@@ -46,7 +46,7 @@ class binary_stream:
     def read_remaining(self) -> bytes:
         return self.read(len(self.data) - self.pos)
     
-    def feos(self):
+    def feos(self) -> bool:
         return bool(len(self.data) <= self.pos)
         
     def read_byte(self) -> int:
