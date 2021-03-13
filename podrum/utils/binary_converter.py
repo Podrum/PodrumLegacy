@@ -29,5 +29,53 @@
 #                                                                              #
 ################################################################################
 
+import struct
+
 class binary_converter:
-    pass
+    @staticmethod
+    def read_byte(data: bytes) -> int:
+        return struct.unpack("b", data)[0]
+    
+    @staticmethod
+    def write_byte(value: int) -> bytes:
+        return struct.unpack("b", value)
+    
+    @staticmethod
+    def read_unsigned_byte(data: bytes) -> int:
+        return struct.unpack("B", data)[0]
+    
+    @staticmethod
+    def write_unsigned_byte(value: int) -> bytes:
+        return struct.unpack("B", value)
+    
+    @staticmethod
+    def read_short_be(data: bytes) -> int:
+        return struct.unpack(">h", data)[0]
+    
+    @staticmethod
+    def write_short_be(value: int) -> bytes:
+        return struct.unpack(">h", value)
+    
+    @staticmethod
+    def read_unsigned_short_be(data: bytes) -> int:
+        return struct.unpack(">H", data)[0]
+    
+    @staticmethod
+    def write_unsigned_short_be(value: int) -> bytes:
+        return struct.unpack(">H", value)
+    
+    @staticmethod
+    def read_short_le(data: bytes) -> int:
+        return struct.unpack("<h", data)[0]
+    
+    @staticmethod
+    def write_short_le(value: int) -> bytes:
+        return struct.unpack("<h", value)
+    
+    @staticmethod
+    def read_unsigned_short_le(data: bytes) -> int:
+        return struct.unpack("<H", data)[0]
+    
+    @staticmethod
+    def write_unsigned_short_le(value: int) -> bytes:
+        return struct.unpack("<H", value)
