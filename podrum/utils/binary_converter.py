@@ -81,6 +81,38 @@ class binary_converter:
         return struct.unpack("<H", value)
     
     @staticmethod
+    def read_triad_be(data: bytes) -> int:
+        return struct.unpack(">i", b"\x00" + data)[0]
+    
+    @staticmethod
+    def write_triad_be(value: int) -> bytes:
+        return struct.unpack(">i", value)[1:4]
+    
+    @staticmethod
+    def read_unsigned_triad_be(data: bytes) -> int:
+        return struct.unpack(">I", b"\x00" + data)[0]
+    
+    @staticmethod
+    def write_unsigned_triad_be(value: int) -> bytes:
+        return struct.unpack(">I", value)[1:4]
+    
+    @staticmethod
+    def read_triad_le(data: bytes) -> int:
+        return struct.unpack("<i", data + b"\x00")[0]
+    
+    @staticmethod
+    def write_triad_le(value: int) -> bytes:
+        return struct.unpack("<i", value)[:3]
+    
+    @staticmethod
+    def read_unsigned_triad_le(data: bytes) -> int:
+        return struct.unpack("<I", data + b"\x00")[0]
+    
+    @staticmethod
+    def write_unsigned_triad_le(value: int) -> bytes:
+        return struct.unpack("<I", value)[:3]
+    
+    @staticmethod
     def read_int_be(data: bytes) -> int:
         return struct.unpack(">i", data)[0]
     
