@@ -102,3 +102,27 @@ class binary_stream:
     
     def write_unsigned_triad_le(self, value: int) -> None:
         self.write(binary_converter.write_unsigned_triad_le(value))
+        
+    def read_int_be(self) -> int:
+        return binary_converter.read_int_be(self.read(4))
+    
+    def write_int_be(self, value: int) -> None:
+        self.write(binary_converter.write_int_be(value))
+        
+    def read_unsigned_int_be(self) -> int:
+        return binary_converter.read_unsigned_int_be(self.read(4))
+    
+    def write_unsigned_int_be(self, value: int) -> None:
+        self.write(binary_converter.write_unsigned_int_be(value))
+        
+    def read_int_le(self) -> int:
+        return binary_converter.read_int_le(self.read(4))
+    
+    def write_int_le(self, value: int) -> None:
+        self.write(binary_converter.write_int_le(value))
+        
+    def read_unsigned_int_le(self) -> int:
+        return binary_converter.read_unsigned_int_le(self.read(4))
+    
+    def write_unsigned_int_le(self, value: int) -> None:
+        self.write(binary_converter.write_unsigned_int_le(value))
