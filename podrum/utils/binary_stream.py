@@ -150,3 +150,27 @@ class binary_stream:
     
     def write_unsigned_long_le(self, value: int) -> None:
         self.write(binary_converter.write_unsigned_long_le(value))
+        
+    def read_float_be(self) -> int:
+        return binary_converter.read_float_be(self.read(4))
+    
+    def write_float_be(self, value: int) -> None:
+        self.write(binary_converter.write_float_be(value))
+        
+    def read_float_le(self) -> int:
+        return binary_converter.read_float_le(self.read(4))
+    
+    def write_float_le(self, value: int) -> None:
+        self.write(binary_converter.write_float_le(value))
+        
+    def read_double_be(self) -> int:
+        return binary_converter.read_double_be(self.read(8))
+    
+    def write_double_be(self, value: int) -> None:
+        self.write(binary_converter.write_double_be(value))
+        
+    def read_double_le(self) -> int:
+        return binary_converter.read_double_le(self.read(8))
+    
+    def write_double_le(self, value: int) -> None:
+        self.write(binary_converter.write_double_le(value))
