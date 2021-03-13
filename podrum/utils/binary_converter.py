@@ -175,3 +175,35 @@ class binary_converter:
     @staticmethod
     def write_unsigned_long_le(value: int) -> bytes:
         return struct.unpack("<Q", value)
+    
+    @staticmethod
+    def read_float_be(data: bytes) -> int:
+        return struct.unpack(">f", data)[0]
+    
+    @staticmethod
+    def write_float_be(value: int) -> bytes:
+        return struct.unpack(">f", value)
+    
+    @staticmethod
+    def read_float_le(data: bytes) -> int:
+        return struct.unpack("<f", data)[0]
+    
+    @staticmethod
+    def write_float_le(value: int) -> bytes:
+        return struct.unpack("<f", value)
+
+    @staticmethod
+    def read_double_be(data: bytes) -> int:
+        return struct.unpack(">d", data)[0]
+    
+    @staticmethod
+    def write_double_be(value: int) -> bytes:
+        return struct.unpack(">d", value)
+    
+    @staticmethod
+    def read_double_le(data: bytes) -> int:
+        return struct.unpack("<d", data)[0]
+    
+    @staticmethod
+    def write_double_le(value: int) -> bytes:
+        return struct.unpack("<d", value)
