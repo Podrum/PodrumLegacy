@@ -229,11 +229,6 @@ class raknet_handler(Thread):
         frame_to_send.reliability: int = 0
         frame_to_send.body: bytes = new_packet.data
         self.add_to_queue(frame_to_send, address, False)
-        
-    def handle_game_packet(self, data, address):
-        packet: object = game_packet(data)
-        packet.read_data()
-        self.server.event_manager.dispatch("game_packet", packet.body, address)
 
     def handle_fragmented_frame(self, packet: object, address: object) -> None:
         connection: object = self.connections[address.token]
@@ -261,10 +256,10 @@ class raknet_handler(Thread):
                     self.handle_new_incoming_connection(packet.body, address)
             elif packet.body[0] == raknet_packet_ids.online_ping:
                 self.handle_online_ping(packet.body, address)
-            elif packet.body[0] == raknet_packet_ids.game_packet:
-                self.handle_game_packet(packet.body, address)
             elif packet.body[0] == raknet_packet_ids.disconnect:
                 self.disconnect(address)
+            else:
+                self.server.event_manager.dispatch("packet_data", packet.body, address)
 
     def send_queue(self, address: object) -> None:
         connection: object = self.connections[address.token]
