@@ -33,9 +33,9 @@ from utils.protocol_buffer import protocol_buffer
 
 class play_status_packet(protocol_buffer):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_var_int()
         self.status: int = self.read_uint("big")
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
+        self.write_var_int(self.packet_id)
         self.write_uint(self.status, "big")
