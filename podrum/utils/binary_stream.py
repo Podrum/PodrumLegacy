@@ -61,6 +61,12 @@ class binary_stream:
     def write_unsigned_byte(self, value: int) -> None:
         self.write(binary_converter.write_unsigned_byte(value))
         
+    def read_bool(self) -> bool:
+        return binary_converter.read_bool(self.read(1))
+    
+    def write_bool(self, value: bool) -> None:
+        self.write(binary_converter.write_bool(value))
+        
     def read_short_be(self) -> int:
         return binary_converter.read_short_be(self.read(2))
     
