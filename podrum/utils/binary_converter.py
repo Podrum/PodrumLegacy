@@ -111,3 +111,35 @@ class binary_converter:
     @staticmethod
     def write_unsigned_int_le(value: int) -> bytes:
         return struct.unpack("<I", value)
+    
+    @staticmethod
+    def read_long_be(data: bytes) -> int:
+        return struct.unpack(">q", data)[0]
+    
+    @staticmethod
+    def write_long_be(value: int) -> bytes:
+        return struct.unpack(">q", value)
+    
+    @staticmethod
+    def read_unsigned_long_be(data: bytes) -> int:
+        return struct.unpack(">Q", data)[0]
+    
+    @staticmethod
+    def write_unsigned_long_be(value: int) -> bytes:
+        return struct.unpack(">Q", value)
+    
+    @staticmethod
+    def read_long_le(data: bytes) -> int:
+        return struct.unpack("<q", data)[0]
+    
+    @staticmethod
+    def write_long_le(value: int) -> bytes:
+        return struct.unpack("<q", value)
+    
+    @staticmethod
+    def read_unsigned_long_le(data: bytes) -> int:
+        return struct.unpack("<Q", data)[0]
+    
+    @staticmethod
+    def write_unsigned_long_le(value: int) -> bytes:
+        return struct.unpack("<Q", value)
