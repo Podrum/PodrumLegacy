@@ -65,3 +65,10 @@ class raknet_binary_stream(binary_stream):
             self.write_unsigned_int_be(0) # Test out IPV4 (Family)
             self.write(socket.inet_pton(socket.AF_INET6, address.host))
             self.write_unsigned_int_be(0) # Test out IPV6 (Family)
+            
+    def read_string(self) -> str:
+        return self.read(self.read_unsigned_short_be()).decode()
+    
+    def write_string(self, value: str) -> None:
+        self.write_unsigned_short_be(len(value))
+        self.write(value.encode())
