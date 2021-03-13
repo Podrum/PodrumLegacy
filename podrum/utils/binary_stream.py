@@ -42,3 +42,15 @@ class binary_stream:
       
     def write(self, data: bytes) -> None:
         self.data += data
+        
+    def read_byte(self) -> int:
+        return binary_converter.read_byte(self.read(1))
+    
+    def write_byte(self, value: int) -> None:
+        self.write(binary_converter.write_byte(value))
+        
+    def read_unsigned_byte(self) -> int:
+        return binary_converter.read_unsigned_byte(self.read(1))
+    
+    def write_unsigned_byte(self, value: int) -> None:
+        self.write(binary_converter.write_unsigned_byte(value))
