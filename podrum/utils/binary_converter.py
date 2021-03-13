@@ -79,3 +79,35 @@ class binary_converter:
     @staticmethod
     def write_unsigned_short_le(value: int) -> bytes:
         return struct.unpack("<H", value)
+    
+    @staticmethod
+    def read_int_be(data: bytes) -> int:
+        return struct.unpack(">i", data)[0]
+    
+    @staticmethod
+    def write_int_be(value: int) -> bytes:
+        return struct.unpack(">i", value)
+    
+    @staticmethod
+    def read_unsigned_int_be(data: bytes) -> int:
+        return struct.unpack(">I", data)[0]
+    
+    @staticmethod
+    def write_unsigned_int_be(value: int) -> bytes:
+        return struct.unpack(">I", value)
+    
+    @staticmethod
+    def read_int_le(data: bytes) -> int:
+        return struct.unpack("<i", data)[0]
+    
+    @staticmethod
+    def write_int_le(value: int) -> bytes:
+        return struct.unpack("<i", value)
+    
+    @staticmethod
+    def read_unsigned_int_le(data: bytes) -> int:
+        return struct.unpack("<I", data)[0]
+    
+    @staticmethod
+    def write_unsigned_int_le(value: int) -> bytes:
+        return struct.unpack("<I", value)
