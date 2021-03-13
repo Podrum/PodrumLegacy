@@ -63,5 +63,5 @@ class raknet_binary_stream(binary_stream):
             self.write_unsigned_short_le(socket.AF_INET6) # Domain
             self.write_unsigned_short_be(address.port)
             self.write_unsigned_int_be(0) # Test out IPV4 (Family)
-            self.write_unsigned_short_le(socket.inet_pton(socket.AF_INET6, address.host))
+            self.write(socket.inet_pton(socket.AF_INET6, address.host))
             self.write_unsigned_int_be(0) # Test out IPV6 (Family)
