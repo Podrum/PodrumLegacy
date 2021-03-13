@@ -54,3 +54,27 @@ class binary_stream:
     
     def write_unsigned_byte(self, value: int) -> None:
         self.write(binary_converter.write_unsigned_byte(value))
+        
+    def read_short_be(self) -> int:
+        return binary_converter.read_short_be(self.read(1))
+    
+    def write_short_be(self, value: int) -> None:
+        self.write(binary_converter.write_short_be(value))
+        
+    def read_unsigned_short_be(self) -> int:
+        return binary_converter.read_unsigned_short_be(self.read(1))
+    
+    def write_unsigned_short_be(self, value: int) -> None:
+        self.write(binary_converter.write_unsigned_short_be(value))
+        
+    def read_short_le(self) -> int:
+        return binary_converter.read_short_le(self.read(1))
+    
+    def write_short_le(self, value: int) -> None:
+        self.write(binary_converter.write_short_le(value))
+        
+    def read_unsigned_short_le(self) -> int:
+        return binary_converter.read_unsigned_short_le(self.read(1))
+    
+    def write_unsigned_short_le(self, value: int) -> None:
+        self.write(binary_converter.write_unsigned_short_le(value))
