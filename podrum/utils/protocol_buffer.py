@@ -255,13 +255,11 @@ class protocol_buffer:
         value &= 0xffffffff
         for i in range(0, 5):
             if (value >> 7) != 0:
-                data += bytes([value | 0x80])
+                write_uchar(value | 0x80)
             else:
-                data += bytes([value & 0x7f])
-                self.write(data)
-                return
+                write_uchar(value & 0x7f)
+                break
             value >>= 7
-        self.write(data)
                 
     def read_signed_var_int(self) -> int:
         raw: int = self.read_var_int()
