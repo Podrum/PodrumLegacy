@@ -64,12 +64,12 @@ class acknowledgement(protocol_buffer):
                     if start_index == end_index:
                         temp_buffer.write_bool(True)
                         temp_buffer.write_utriad(start_index, "little")
-                        start_index: int = end_index = current_index
+                        start_index = end_index = current_index
                     else:
                         temp_buffer.write_bool(False)
                         temp_buffer.write_utriad(start_index, "little")
                         temp_buffer.write_utriad(end_index, "little")
-                        start_index: int = end_index = current_index
+                        start_index = end_index = current_index
                     count += 1
             if start_index == end_index:
                 temp_buffer.write_bool(True)
