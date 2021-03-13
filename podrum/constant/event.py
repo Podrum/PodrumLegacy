@@ -35,7 +35,7 @@ import zlib
 
 class event:
     @staticmethod
-    def on_game_packet(data, address, server) -> None:
+    def on_packet_data(data, address, server) -> None:
         if address.token in server.players:
             buffer: object = protocol_buffer(zlib.decompress(data, -zlib.MAX_WBITS, 1024 * 1024 * 8))
             while not buffer.pos_exceeded():
