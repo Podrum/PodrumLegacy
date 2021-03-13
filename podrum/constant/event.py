@@ -41,7 +41,7 @@ class event:
             if data[0] == 0xfe:
                 packet = game_packet()
                 packet.read_data()
-                packets = packet.get_packets_data()
+                packets = packet.read_packets_data()
                 for packet in packets:
                     print(hex(packet[0]))
                     server.players[address.token].handle_packet(packet)
