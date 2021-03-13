@@ -51,5 +51,6 @@ class raknet_binary_stream(binary_stream):
             host_parts = address.host.split(".")
             for part in host_parts:
                 self.write_unsigned_byte(~int(part) & 0xff)
+            self.write_unsigned_short(address.port)
         elif address.version == 6:
             self.write_unsigned_byte(address.version)
