@@ -39,8 +39,8 @@ class acknowledgement(protocol_buffer):
         for i in range(0, count):
             single: bool = self.read_bool()
             if not single:
-                index = self.read_utriad("little")
-                end_index = self.read_utriad("little")
+                index: int = self.read_utriad("little")
+                end_index: int = self.read_utriad("little")
                 while index <= end_index:
                     self.sequence_numbers.append(index)
                     index += 1
@@ -53,23 +53,23 @@ class acknowledgement(protocol_buffer):
         temp_buffer: object = protocol_buffer()
         count: int = 0
         if len(self.sequence_numbers) > 0:
-            start_index = self.sequence_numbers[0]
-            end_index = self.sequence_numbers[0]
+            start_index: int = self.sequence_numbers[0]
+            end_index: int = self.sequence_numbers[0]
             for pointer in range(1, len(self.sequence_numbers)):
-                current_index = self.sequence_numbers[pointer]
-                diff = current_index - end_index
+                current_index: int = self.sequence_numbers[pointer]
+                diff: int = current_index - end_index
                 if diff == 1:
-                    end_index = current_index
+                    end_index: int = current_index
                 elif diff > 1:
                     if start_index == end_index:
                         temp_buffer.write_bool(True)
                         temp_buffer.write_utriad(start_index, "little")
-                        start_index = end_index = current_index
+                        start_index: int = end_index = current_index
                     else:
                         temp_buffer.write_bool(False)
                         temp_buffer.write_utriad(start_index, "little")
                         temp_buffer.write_utriad(end_index, "little")
-                        start_index = end_index = current_index
+                        start_index: int = end_index = current_index
                     count += 1
             if start_index == end_index:
                 temp_buffer.write_bool(True)
