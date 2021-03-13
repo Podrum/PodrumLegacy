@@ -241,6 +241,8 @@ class protocol_buffer:
     def read_var_int(self) -> int:
         value: int = 0
         for i in range(0, 35, 7):
+            if pos_exceeded():
+                raise Exception("Data position exceeded")
             number: int = self.read_uchar()
             value |= ((number & 0x7f) << i)
             if (number & 0x80) == 0:
@@ -269,6 +271,8 @@ class protocol_buffer:
     def read_var_long(self) -> int:
         value: int = 0
         for i in range(0, 70, 7):
+            if pos_exceeded():
+                raise Exception("Data position exceeded")
             number: int = self.read_uchar()
             value |= ((number & 0x7f) << i)
             if (number & 0x80) == 0:
