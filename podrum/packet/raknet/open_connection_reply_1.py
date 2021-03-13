@@ -29,19 +29,19 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class open_connection_reply_1(protocol_buffer):
+class open_connection_reply_1(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_unsigned_byte()
         self.magic: bytes = self.read(16)
-        self.server_guid: int = self.read_ulong("big")
+        self.server_guid: int = self.read_unsigned_long_be()
         self.use_security: bool = self.read_bool()
-        self.mtu_size: int = self.read_ushort("big")
+        self.mtu_size: int = self.read_unsigned_short_be()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
+        self.write_unsigned_byte(self.packet_id)
         self.write(self.magic)
-        self.write_ulong(self.server_guid, "big")
+        self.write_unsigned_long_be(self.server_guid)
         self.write_bool(self.use_security)
-        self.write_ushort(self.mtu_size, "big")
+        self.write_unsigned_short_be(self.mtu_size)
