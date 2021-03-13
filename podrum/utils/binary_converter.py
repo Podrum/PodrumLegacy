@@ -49,6 +49,14 @@ class binary_converter:
         return struct.pack("B", value)
     
     @staticmethod
+    def read_bool(data: bytes) -> bool:
+        return struct.unpack("?", data)[0]
+    
+    @staticmethod
+    def write_bool(value: bool) -> bytes:
+        return struct.pack("?", value)
+    
+    @staticmethod
     def read_short_be(data: bytes) -> int:
         return struct.unpack(">h", data)[0]
     
