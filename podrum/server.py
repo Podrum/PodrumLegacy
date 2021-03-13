@@ -61,7 +61,7 @@ class server:
         self.command_manager.register(vanilla_commands.plugins, "Plugins Command")
         
     def register_events(self) -> None:
-        self.event_manager.register("game_packet", event.on_game_packet)
+        self.event_manager.register("packet_data", event.on_packet_data)
         self.event_manager.register("new_incoming_connection", event.on_new_incoming_connection)
         self.event_manager.register("raknet_disconnect", event.on_raknet_disconnect)
 
