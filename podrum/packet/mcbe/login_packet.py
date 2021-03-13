@@ -35,7 +35,7 @@ from utils.jwt import jwt
 
 class login_packet(protocol_buffer):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_var_int()
         self.protocol_version: int = self.read_uint("big")
         self.chain_data: list = []
         buffer: object = protocol_buffer(self.read_mcbe_byte_array())
@@ -45,7 +45,7 @@ class login_packet(protocol_buffer):
         self.skin_data: dict = jwt.decode(buffer.read(buffer.read_uint("little")))
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
+        self.write_var_int(self.packet_id)
         self.write_uint(self.protocol_version, "big")
         buffer: object = protocol_buffer(self.read_mcbe_byte_array())
         raw_chain_data: dict = {"chain": []}
