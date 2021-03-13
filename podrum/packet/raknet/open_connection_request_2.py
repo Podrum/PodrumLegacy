@@ -29,19 +29,19 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class open_connection_request_2(protocol_buffer):
+class open_connection_request_2(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_unsigned_byte()
         self.magic: bytes = self.read(16)
-        self.server_address: object = self.read_raknet_address()
-        self.mtu_size: int = self.read_ushort("big")
-        self.client_guid: int = self.read_ulong("big")
+        self.server_address: object = self.read_address()
+        self.mtu_size: int = self.read_unsigned_short_be()
+        self.client_guid: int = self.read_unsigned_long_be()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
+        self.write_unsigned_byte(self.packet_id)
         self.write(self.magic)
-        self.write_raknet_address(self.server_address)
-        self.write_ushort(self.mtu_size, "big")
-        self.write_ulong(self.client_guid, "big")
+        self.write_address(self.server_address)
+        self.write_unsigned_short_be(self.mtu_size)
+        self.write_unsigned_long_be(self.client_guid)
