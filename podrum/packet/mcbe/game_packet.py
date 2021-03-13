@@ -47,7 +47,7 @@ class game_packet(protocol_buffer):
     def write_packet_data(self, data):
         buffer: object = protocol_buffer()
         buffer.write_mcbe_byte_array(data)
-        if hasattr(self, "body")
+        if hasattr(self, "body"):
             self.body += buffer.data
         else:
             self.body: bytes = buffer.data
