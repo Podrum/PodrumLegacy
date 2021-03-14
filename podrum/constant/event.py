@@ -31,7 +31,6 @@
 
 from packet.mcbe.game_packet import game_packet
 from player.bedrock_player import bedrock_player
-from utils.protocol_buffer import protocol_buffer
 import zlib
 
 class event:
