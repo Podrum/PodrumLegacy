@@ -37,7 +37,7 @@ class mcbe_binary_stream(binary_stream):
     def read_var_int(self) -> int:
         value: int = 0
         for i in range(0, 35, 7):
-            if self.pos_exceeded():
+            if self.feos():
                 raise Exception("Data position exceeded")
             number: int = self.read_unsigned_byte()
             value |= ((number & 0x7f) << i)
@@ -67,7 +67,7 @@ class mcbe_binary_stream(binary_stream):
     def read_var_long(self) -> int:
         value: int = 0
         for i in range(0, 70, 7):
-            if self.pos_exceeded():
+            if self.feos():
                 raise Exception("Data position exceeded")
             number: int = self.read_unsigned_byte()
             value |= ((number & 0x7f) << i)
