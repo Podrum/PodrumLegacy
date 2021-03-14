@@ -29,10 +29,10 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 from utils.raknet_reliability import raknet_reliability
 
-class frame(protocol_buffer):
+class frame(raknet_binary_stream):
     def __init__(self, data = b"", pos = 0):
         super().__init__(data, pos)
         self.fragmented: bool = False
