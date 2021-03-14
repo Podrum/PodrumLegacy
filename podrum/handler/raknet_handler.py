@@ -269,6 +269,7 @@ class raknet_handler(Thread):
             connection.queue.write_data()
             self.socket.send(connection.queue.data, address.host, address.port)
             connection.queue.frames: list = []
+            connection.queue.data = b""
                 
     def add_to_queue(self, packet: object, address: object, is_imediate: bool = True) -> None:
         connection: object = self.connections[address.token]
@@ -297,7 +298,7 @@ class raknet_handler(Thread):
                     new_packet.ordered_frame_index: int = packet.ordered_frame_index
                     new_packet.order_channel: int = packet.order_channel
                 if is_imediate:
-                    connection.queue.frames.append(packet)
+                    connection.queue.frames.append(new_packet)
                     self.send_queue(address)
                 else:
                     frame_size: int = new_packet.get_size()
