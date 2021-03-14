@@ -50,7 +50,7 @@ class acknowledgement(raknet_binary_stream):
     def write_data(self) -> None:
         self.write_unsigned_byte(self.packet_id)
         self.sequence_numbers.sort()
-        temp_buffer: object = protocol_buffer()
+        temp_buffer: object = raknet_binary_stream()
         count: int = 0
         if len(self.sequence_numbers) > 0:
             start_index: int = self.sequence_numbers[0]
