@@ -37,22 +37,22 @@ from utils.protocol_buffer import protocol_buffer
 import zlib
 
 class bedrock_player:
-    def __init__(self, address, server):
+    def __init__(self, address: str, server: object) -> None:
         self.address = address
         self.server = server
         
-    def handle_packet(self, data):
+    def handle_packet(self, data: list) -> None:
         if data[0] == mcbe_packet_ids.login_packet:
             self.send_play_status(7)
     
-    def send_play_status(self, status):
+    def send_play_status(self, status) -> None:
         packet: object = play_status_packet()
         packet.packet_id: int = mcbe_packet_ids.play_status_packet
         packet.status: int = status
         packet.write_data()
         self.send_packet(packet.data)
     
-    def send_packet(self, data):
+    def send_packet(self, data) -> None:
         new_packet: object = game_packet()
         new_packet.packet_id: int = 0xfe
         new_packet.write_packet_data(data)
