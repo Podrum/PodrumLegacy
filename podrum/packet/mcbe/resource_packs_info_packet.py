@@ -29,7 +29,9 @@
 #                                                                              #
 ################################################################################
 
-class resource_packs_info_packet:
+from utils.mcbe_binary_stream import mcbe_binary_stream
+
+class resource_packs_info_packet(mcbe_binary_stream):
     def read_data(self):
         self.packet_id: int = self.read_var_int()
         self.forced_to_accept: bool = self.read_bool()
