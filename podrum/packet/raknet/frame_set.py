@@ -40,7 +40,7 @@ class frame_set(raknet_binary_stream):
     def read_data(self) -> None:
         self.packet_id: int = self.read_unsigned_byte()
         self.sequence_number: int = self.read_unsigned_triad_le()
-        while not self.pos_exceeded():
+        while not self.feos():
             frame_to_append: object = frame(self.data[self.pos:])
             frame_to_append.read_data()
             self.frames.append(frame_to_append)
@@ -48,7 +48,7 @@ class frame_set(raknet_binary_stream):
         
     def write_data(self) -> None:
         self.write_unsigned_byte(self.packet_id)
-        self.write_unsigned_triad_le(self.sequence_number, "little")
+        self.write_unsigned_triad_le(self.sequence_number)
         for frame_to_write in self.frames:
             frame_to_write.write_data()
             self.write(frame_to_write.data)
