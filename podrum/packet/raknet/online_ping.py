@@ -29,13 +29,13 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class online_ping(protocol_buffer): 
+class online_ping(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
-        self.client_timestamp: int = self.read_ulong("big")
+        self.packet_id: int = self.read_unsigned_byte()
+        self.client_timestamp: int = self.read_unsigned_long()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
-        self.write_ulong(self.client_timestamp, "big")
+        self.write_unsigned_byte(self.packet_id)
+        self.write_unsigned_long(self.client_timestamp)
