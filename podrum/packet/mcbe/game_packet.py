@@ -29,32 +29,32 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.mcbe_binary_stream import mcbe_binary_stream
 import zlib
 
-class game_packet(protocol_buffer):
+class game_packet(mcbe_binary_stream):
     def read_data(self):
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_unsigned_byte()
         self.body: bytes = zlib.decompress(self.read_remaining(), -zlib.MAX_WBITS, 1024 * 1024 * 8)
         
     def write_data(self):
-        self.write_uchar(self.packet_id)
+        self.write_unsigned_byte(self.packet_id)
         compress: object = zlib.compressobj(1, zlib.DEFLATED, -zlib.MAX_WBITS)
         compressed_data: bytes = compress.compress(self.body)
         compressed_data += compress.flush()
         self.write(compressed_data)
   
     def write_packet_data(self, data):
-        buffer: object = protocol_buffer()
-        buffer.write_mcbe_byte_array(data)
+        buffer: object = mcbe_binary_stream()
+        buffer.write_byte_array(data)
         if hasattr(self, "body"):
             self.body += buffer.data
         else:
             self.body: bytes = buffer.data
             
     def read_packets_data(self):
-        buffer: object = protocol_buffer(self.body)
+        buffer: object = mcbe_binary_stream(self.body)
         packets_data: list = []
         while not buffer.pos_exceeded():
-            packets_data.append(buffer.read_mcbe_byte_array())
+            packets_data.append(buffer.read_byte_array())
         return packets_data
