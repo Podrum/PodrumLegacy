@@ -55,6 +55,6 @@ class game_packet(mcbe_binary_stream):
     def read_packets_data(self):
         buffer: object = mcbe_binary_stream(self.body)
         packets_data: list = []
-        while not buffer.pos_exceeded():
+        while not buffer.feos():
             packets_data.append(buffer.read_byte_array())
         return packets_data
