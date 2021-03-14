@@ -33,7 +33,6 @@ from constant.mcbe_packet_ids import mcbe_packet_ids
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.play_status_packet import play_status_packet
 from packet.raknet.frame import frame
-from utils.protocol_buffer import protocol_buffer
 import zlib
 
 class bedrock_player:
