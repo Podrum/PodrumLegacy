@@ -29,22 +29,22 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class new_incoming_connection(protocol_buffer):
+class new_incoming_connection(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
-        self.server_address: object = self.read_raknet_address()
+        self.packet_id: int = self.read_unsigned_byte()
+        self.server_address: object = self.read_address()
         self.system_addresses: list = []
         for i in range(0, 20):
-            self.system_addresses.append(self.read_raknet_address())
-        self.request_timestamp: int = self.read_ulong("big")
-        self.accepted_timestamp: int = self.read_ulong("big")
+            self.system_addresses.append(self.read_address())
+        self.request_timestamp: int = self.read_unsigned_long_be()
+        self.accepted_timestamp: int = self.read_unsigned_long_be()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
-        self.write_raknet_address(self.server_address)
+        self.write_unsigned_byte(self.packet_id)
+        self.write_address(self.server_address)
         for address in self.system_addresses:
-            self.write_raknet_address(address)
-        self.write_ulong(self.request_timestamp, "big")
-        self.write_ulong(self.accepted_timestamp, "big")
+            self.write_address(address)
+        self.write_unsigned_long_be(self.request_timestamp)
+        self.write_unsigned_long_be(self.accepted_timestamp)
