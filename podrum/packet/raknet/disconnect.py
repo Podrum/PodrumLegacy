@@ -29,11 +29,11 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class disconnect(protocol_buffer):
+class disconnect(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_unsigned_byte()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
+        self.write_unsigned_byte(self.packet_id)
