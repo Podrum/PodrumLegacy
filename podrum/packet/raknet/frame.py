@@ -38,37 +38,37 @@ class frame(protocol_buffer):
         self.fragmented: bool = False
     
     def read_data(self) -> None:
-        flags: int = self.read_uchar()
+        flags: int = self.read_unsigned_byte()
         self.reliability: int = (flags & 0xf4) >> 5
         self.fragmented: bool = (flags & 0x10) > 0
-        body_length: int = self.read_ushort("big") >> 3
+        body_length: int = self.read_unsigned_short_be() >> 3
         if raknet_reliability.reliable(self.reliability):
-            self.reliable_frame_index: int = self.read_utriad("little")
+            self.reliable_frame_index: int = self.read_unsigned_triad_le()
         if raknet_reliability.sequenced(self.reliability):
-            self.sequenced_frame_index: int = self.read_utriad("little")
+            self.sequenced_frame_index: int = self.read_unsigned_triad_le()
         if raknet_reliability.ordered(self.reliability):
-            self.ordered_frame_index: int = self.read_utriad("little")
-            self.order_channel: int = self.read_uchar()
+            self.ordered_frame_index: int = self.read_unsigned_triad_le()
+            self.order_channel: int = self.read_unsigned_byte()
         if self.fragmented:
-            self.compound_size: int = self.read_uint("big")
-            self.compound_id: int = self.read_ushort("big")
-            self.index: int = self.read_uint("big")
+            self.compound_size: int = self.read_unsigned_int_be()
+            self.compound_id: int = self.read_unsigned_short_be()
+            self.index: int = self.read_unsigned_int_be()
         self.body: bytes = self.read(body_length)
     
     def write_data(self) -> None:
-        self.write_uchar(self.reliability | 0x10 if self.fragmented else self.reliability)
-        self.write_ushort(len(self.body) << 3, "big")
+        self.write_unsigned_byte(self.reliability | 0x10 if self.fragmented else self.reliability)
+        self.write_unsigned_short_be(len(self.body) << 3)
         if raknet_reliability.reliable(self.reliability):
-            self.write_utriad(self.reliable_frame_index, "little")
+            self.write_unsigned_triad_le(self.reliable_frame_index)
         if raknet_reliability.sequenced(self.reliability):
-            self.write_utriad(self.sequenced_frame_index, "little")
+            self.write_unsigned_triad_le(self.sequenced_frame_index)
         if raknet_reliability.ordered(self.reliability):
-            self.write_utriad(self.ordered_frame_index, "little")
-            self.write_uchar(self.order_channel)
+            self.write_unsigned_triad_le(self.ordered_frame_index)
+            self.write_unsigned_byte(self.order_channel)
         if self.fragmented:
-            self.write_uint(self.compound_size, "big")
-            self.write_ushort(self.compound_id, "big")
-            self.write_uint(self.index, "big")
+            self.write_unsigned_int_be(self.compound_size)
+            self.write_unsigned_short_be(self.compound_id)
+            self.write_unsigned_int_be(self.index)
         self.write(self.body)
         
     def get_size(self) -> int:
