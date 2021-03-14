@@ -42,4 +42,4 @@ class incompatible_protocol_version(raknet_binary_stream):
         self.write_unsigned_byte(self.packet_id)
         self.write_unsigned_byte(self.protocol_version)
         self.write(self.magic)
-        self.write_unsigned_long_be(self.server_guid, "big")
+        self.write_unsigned_long_be(self.server_guid)
