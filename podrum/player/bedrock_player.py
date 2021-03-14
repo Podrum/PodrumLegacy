@@ -32,6 +32,7 @@
 from constant.mcbe_packet_ids import mcbe_packet_ids
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.play_status_packet import play_status_packet
+from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
 from packet.raknet.frame import frame
 import zlib
 
@@ -42,7 +43,13 @@ class bedrock_player:
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
-            self.send_play_status(7)
+            self.send_play_status(0)
+            packet: object = resource_packs_info_packet()
+            packet.packet_id: int = mcbe_packet_ids.resource_packs_info_packet
+            packet.forced_to_accept: bool = False
+            packet.scripting_enabled: bool = False
+            packet.write_data()
+            self.send_packet(packet.data)
     
     def send_play_status(self, status):
         packet: object = play_status_packet()
