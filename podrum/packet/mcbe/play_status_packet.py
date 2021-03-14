@@ -29,13 +29,13 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.mcbe_binary_stream import mcbe_binary_stream
 
-class play_status_packet(protocol_buffer):
+class play_status_packet(mcbe_binary_stream):
     def read_data(self) -> None:
         self.packet_id: int = self.read_var_int()
-        self.status: int = self.read_uint("big")
+        self.status: int = self.read_unsigned_int_be()
         
     def write_data(self) -> None:
         self.write_var_int(self.packet_id)
-        self.write_uint(self.status, "big")
+        self.write_unsigned_int_be(self.status)
