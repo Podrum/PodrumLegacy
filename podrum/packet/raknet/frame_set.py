@@ -30,16 +30,16 @@
 ################################################################################
 
 from packet.raknet.frame import frame
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class frame_set(protocol_buffer):
+class frame_set(raknet_binary_stream):
     def __init__(self, data = b"", pos = 0):
         super().__init__(data, pos)
         self.frames: list = []
     
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
-        self.sequence_number: int = self.read_utriad("little")
+        self.packet_id: int = self.read_unsigned_byte()
+        self.sequence_number: int = self.read_unsigned_triad_le()
         while not self.pos_exceeded():
             frame_to_append: object = frame(self.data[self.pos:])
             frame_to_append.read_data()
@@ -47,8 +47,8 @@ class frame_set(protocol_buffer):
             self.pos += frame_to_append.get_size()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
-        self.write_utriad(self.sequence_number, "little")
+        self.write_unsigned_byte(self.packet_id)
+        self.write_unsigned_triad_le(self.sequence_number, "little")
         for frame_to_write in self.frames:
             frame_to_write.write_data()
             self.write(frame_to_write.data)
