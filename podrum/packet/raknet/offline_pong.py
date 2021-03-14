@@ -30,19 +30,19 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class offline_pong(protocol_buffer):
+class offline_pong(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
-        self.client_timestamp: int = self.read_ulong("big")
-        self.server_guid: int = self.read_ulong("big")
+        self.packet_id: int = self.read_unsigned_byte()
+        self.client_timestamp: int = self.read_unsigned_long_be()
+        self.server_guid: int = self.read_unsigned_long_be()
         self.magic: bytes = self.read(16)
-        self.server_name = self.read_raknet_string()
+        self.server_name = self.read_string()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
-        self.write_ulong(self.client_timestamp, "big")
-        self.write_ulong(self.server_guid, "big")
+        self.write_unsigned_byte(self.packet_id)
+        self.write_unsigned_long_be(self.client_timestamp)
+        self.write_unsigned_long_be(self.server_guid)
         self.write(self.magic)
-        self.write_raknet_string(self.server_name)
+        self.write_string(self.server_name)
