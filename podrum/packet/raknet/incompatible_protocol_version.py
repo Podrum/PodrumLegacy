@@ -29,17 +29,17 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class incompatible_protocol_version(protocol_buffer):
+class incompatible_protocol_version(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
-        self.protocol_version: int = self.read_uchar()
+        self.packet_id: int = self.read_unsigned_byte()
+        self.protocol_version: int = self.read_unsigned_byte()
         self.magic: bytes = self.read(16)
-        self.server_guid: int = self.read_ulong("big")
+        self.server_guid: int = self.read_unsigned_long_be()
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
-        self.write_uchar(self.protocol_version)
+        self.write_unsigned_byte(self.packet_id)
+        self.write_unsigned_byte(self.protocol_version)
         self.write(self.magic)
-        self.write_ulong(self.server_guid, "big")
+        self.write_unsigned_long_be(self.server_guid, "big")
