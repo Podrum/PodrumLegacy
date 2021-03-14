@@ -29,18 +29,18 @@
 #                                                                              #
 ################################################################################
 
-from utils.protocol_buffer import protocol_buffer
+from utils.raknet_binary_stream import raknet_binary_stream
 
-class acknowledgement(protocol_buffer):
+class acknowledgement(raknet_binary_stream):
     def read_data(self) -> None:
-        self.packet_id: int = self.read_uchar()
+        self.packet_id: int = self.read_unsigned_byte()
         self.sequence_numbers: list = []
-        count: int = self.read_ushort("big")
+        count: int = self.read_unsigned_short_be()
         for i in range(0, count):
             single: bool = self.read_bool()
             if not single:
-                index: int = self.read_utriad("little")
-                end_index: int = self.read_utriad("little")
+                index: int = self.read_unsigned_triad_le("little")
+                end_index: int = self.read_unsigned_triad_le("little")
                 while index <= end_index:
                     self.sequence_numbers.append(index)
                     index += 1
@@ -48,7 +48,7 @@ class acknowledgement(protocol_buffer):
                 self.sequence_numbers.append(self.read_utriad("little"))
         
     def write_data(self) -> None:
-        self.write_uchar(self.packet_id)
+        self.write_unsigned_byte(self.packet_id)
         self.sequence_numbers.sort()
         temp_buffer: object = protocol_buffer()
         count: int = 0
@@ -63,21 +63,21 @@ class acknowledgement(protocol_buffer):
                 elif diff > 1:
                     if start_index == end_index:
                         temp_buffer.write_bool(True)
-                        temp_buffer.write_utriad(start_index, "little")
+                        temp_buffer.write_unsigned_triad_le(start_index)
                         start_index = end_index = current_index
                     else:
                         temp_buffer.write_bool(False)
-                        temp_buffer.write_utriad(start_index, "little")
-                        temp_buffer.write_utriad(end_index, "little")
+                        temp_buffer.write_unsigned_triad_le(start_index)
+                        temp_buffer.write_unsigned_triad_le(end_index)
                         start_index = end_index = current_index
                     count += 1
             if start_index == end_index:
                 temp_buffer.write_bool(True)
-                temp_buffer.write_utriad(start_index, "little")
+                temp_buffer.write_unsigned_triad_le(start_index)
             else:
                 temp_buffer.write_bool(False)
-                temp_buffer.write_utriad(start_index, "little")
-                temp_buffer.write_utriad(end_index, "little")
+                temp_buffer.write_unsigned_triad_le(start_index)
+                temp_buffer.write_unsigned_triad_le(end_index)
             count += 1
-            self.write_ushort(count, "big")
+            self.write_unsigned_short_be(count)
             self.write(temp_buffer.data)
