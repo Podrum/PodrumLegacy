@@ -69,4 +69,15 @@ class resource_packs_info_packet(mcbe_binary_stream):
         self.write_var_int(self.packet_id)
         self.write_bool(self.forced_to_accept)
         self.write_bool(self.scripting_enabled)
-        self.write(b"\x00\x00\x00\x00") # I dont need this yet
+        if not getattr(self, "behavior_packs_info"):
+            self.write_unsigned_short_le(0)
+        else:
+            self.write_unsigned_short_le(len(self.behavior_packs_info))
+            for pack in self.behavior_packs_info:
+                self.write_string(pack.id)
+                self.write_string(pack.version)
+                self.write_unsigned_long_le(pack.size)
+                self.write_string(pack.encryption_key)
+                self.write_string(pack.subpack_name)
+                self.write_string(pack.content_identity)
+                self.write_bool(pack.has_scripts)
