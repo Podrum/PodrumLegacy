@@ -49,6 +49,21 @@ class resource_packs_info_packet(mcbe_binary_stream):
             behavior_pack_info.subpack_name: str = self.read_string()
             behavior_pack_info.content_identity: str = self.read_string()
             behavior_pack_info.has_scripts: bool = self.read_bool()
+            self.behavior_packs_info.append(behavior_pack_info)
+        resource_packs_count: int = self.read_unsigned_short_le()
+        for i in range(0, resource_packs_count):
+            if not getattr(self, resource_packs_info):
+                self.resource_packs_info = []
+            resource_pack_info = context()
+            resource_pack_info.id: str = self.read_string()
+            resource_pack_info.version: str = self.read_string()
+            resource_pack_info.size: int = self.read_unsigned_long_le()
+            resource_pack_info.encryption_key: str = self.read_string()
+            resource_pack_info.subpack_name: str = self.read_string()
+            resource_pack_info.content_identity: str = self.read_string()
+            self.read_bool() # Unknown
+            resource_pack_info.rtx: bool = self.read_bool()
+            self.resource_packs_info.append(resource_pack_info)
           
     def write_data(self):
         self.write_var_int(self.packet_id)
