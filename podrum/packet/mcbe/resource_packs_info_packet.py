@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from utils.context import context
 from utils.mcbe_binary_stream import mcbe_binary_stream
 
 class resource_packs_info_packet(mcbe_binary_stream):
@@ -36,9 +37,18 @@ class resource_packs_info_packet(mcbe_binary_stream):
         self.packet_id: int = self.read_var_int()
         self.forced_to_accept: bool = self.read_bool()
         self.scripting_enabled: bool = self.read_bool()
-        resource_packs_count: int = self.read_unsigned_short_le()
-        for i in range(0, resource_packs_count):
-            pass # I dont need this yet
+        behavior_packs_count: int = self.read_unsigned_short_le()
+        for i in range(0, behavior_packs_count):
+            if not getattr(self, behavior_packs_info):
+                self.behavior_packs_info = []
+            behavior_pack_info = context()
+            behavior_pack_info.id: str = self.read_string()
+            behavior_pack_info.version: str = self.read_string()
+            behavior_pack_info.size: int = self.read_unsigned_long_le()
+            behavior_pack_info.encryption_key: str = self.read_string()
+            behavior_pack_info.subpack_name: str = self.read_string()
+            behavior_pack_info.content_identity: str = self.read_string()
+            behavior_pack_info.has_scripts: bool = self.read_bool()
           
     def write_data(self):
         self.write_var_int(self.packet_id)
