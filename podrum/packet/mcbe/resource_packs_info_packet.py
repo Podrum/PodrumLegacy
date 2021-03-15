@@ -39,7 +39,7 @@ class resource_packs_info_packet(mcbe_binary_stream):
         self.scripting_enabled: bool = self.read_bool()
         behavior_packs_count: int = self.read_unsigned_short_le()
         for i in range(0, behavior_packs_count):
-            if not getattr(self, behavior_packs_info):
+            if not hasattr(self, behavior_packs_info):
                 self.behavior_packs_info = []
             behavior_pack_info = context()
             behavior_pack_info.id: str = self.read_string()
@@ -52,7 +52,7 @@ class resource_packs_info_packet(mcbe_binary_stream):
             self.behavior_packs_info.append(behavior_pack_info)
         resource_packs_count: int = self.read_unsigned_short_le()
         for i in range(0, resource_packs_count):
-            if not getattr(self, resource_packs_info):
+            if not hasattr(self, resource_packs_info):
                 self.resource_packs_info = []
             resource_pack_info = context()
             resource_pack_info.id: str = self.read_string()
@@ -69,7 +69,7 @@ class resource_packs_info_packet(mcbe_binary_stream):
         self.write_var_int(self.packet_id)
         self.write_bool(self.forced_to_accept)
         self.write_bool(self.scripting_enabled)
-        if not getattr(self, "behavior_packs_info"):
+        if not hasattr(self, "behavior_packs_info"):
             self.write_unsigned_short_le(0)
         else:
             self.write_unsigned_short_le(len(self.behavior_packs_info))
@@ -81,7 +81,7 @@ class resource_packs_info_packet(mcbe_binary_stream):
                 self.write_string(pack.subpack_name)
                 self.write_string(pack.content_identity)
                 self.write_bool(pack.has_scripts)
-        if not getattr(self, "resource_packs_info"):
+        if not hasattr(self, "resource_packs_info"):
             self.write_unsigned_short_le(0)
         else:
             self.write_unsigned_short_le(len(self.resource_packs_info))
