@@ -61,7 +61,7 @@ class resource_packs_info_packet(mcbe_binary_stream):
             resource_pack_info.encryption_key: str = self.read_string()
             resource_pack_info.subpack_name: str = self.read_string()
             resource_pack_info.content_identity: str = self.read_string()
-            self.read_bool() # Unknown
+            behavior_pack_info.has_scripts: bool = self.read_bool()
             resource_pack_info.rtx: bool = self.read_bool()
             self.resource_packs_info.append(resource_pack_info)
           
