@@ -29,11 +29,16 @@
 #                                                                              #
 ################################################################################
 
+from constant.mcbe_packet_ids import mcbe_packet_ids
 from utils.mcbe_binary_stream import mcbe_binary_stream
 
 class play_status_packet(mcbe_binary_stream):
+    def __init__(self, data: bytes = b"", pos: int = 0) -> None:
+        super().__init__(data, pos)
+        self.packet_id: int = mcbe_packet_ids.play_status_packet
+
     def read_data(self) -> None:
-        self.packet_id: int = self.read_var_int()
+        self.read_var_int() # packet_id
         self.status: int = self.read_unsigned_int_be()
         
     def write_data(self) -> None:

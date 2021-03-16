@@ -46,7 +46,11 @@ class item_manager:
 
     def serialize_items(self) -> bytes:
         buffer: object = mcbe_binary_stream()
-        for item_name, item_id in dict(self.items).items():
-            buffer.write_string(item_name)
-            buffer.write_unsigned_short_le(item_id)
+        if len(self.items) > 0:
+            for item_name, item_id in dict(self.items).items():
+                buffer.write_string(item_name)
+                buffer.write_unsigned_short_le(item_id)
+                buffer.write_bool(False)
+        else:
+            buffer.write_string("")
         return buffer.data

@@ -29,12 +29,17 @@
 #                                                                              #
 ################################################################################
 
+from constant.mcbe_packet_ids import mcbe_packet_ids
 from utils.context import context
 from utils.mcbe_binary_stream import mcbe_binary_stream
 
 class resource_packs_info_packet(mcbe_binary_stream):
+    def __init__(self, data: bytes = b"", pos: int = 0) -> None:
+        super().__init__(data, pos)
+        self.packet_id: int = mcbe_packet_ids.resource_packs_info_packet
+
     def read_data(self):
-        self.packet_id: int = self.read_var_int()
+        self.read_var_int() # packet_id
         self.forced_to_accept: bool = self.read_bool()
         self.scripting_enabled: bool = self.read_bool()
         behavior_packs_count: int = self.read_unsigned_short_le()

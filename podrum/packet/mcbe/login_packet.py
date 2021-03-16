@@ -29,20 +29,39 @@
 #                                                                              #
 ################################################################################
 
+from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.misc import misc
 from utils.mcbe_binary_stream import mcbe_binary_stream
+import json
 from utils.jwt import jwt
 
 class login_packet(mcbe_binary_stream):
+    def __init__(self, data: bytes = b"", pos: int = 0) -> None:
+        super().__init__(data, pos)
+        self.packet_id: int = mcbe_packet_ids.login_packet
+
     def read_data(self) -> None:
-        self.packet_id: int = self.read_var_int()
+        self.read_var_int() # packet_id
         self.protocol_version: int = self.read_unsigned_int_be()
         self.chain_data: list = []
         buffer: object = mcbe_binary_stream(self.read_byte_array())
-        raw_chain_data: dict = json.loads(buffer.read(buffer.read_unsigned_int_le()))
+        raw_chain_data: dict = json.loads(buffer.read(buffer.read_unsigned_int_le()).decode())
         for chain in raw_chain_data["chain"]:
             self.chain_data.append(jwt.decode(chain))
-        self.skin_data: dict = jwt.decode(buffer.read(buffer.read_unsigned_int_le()))
+        self.skin_data: dict = jwt.decode(buffer.read(buffer.read_unsigned_int_le()).decode())
         
     def write_data(self) -> None:
-        pass
+        self.write_var_int(self.packet_id)
+        self.write_unsigned_int_be(self.protocol_version)
+        raw_chain_data: dict = {"chain": []}
+        for chain in self.chain_data:
+            jwt_data: str = jwt.encode({"alg": "HS256", "typ": "JWT"}, chain, misc.mojang_public_key)
+            raw_chain_data["chain"].append(jwt_data)
+        temp_stream = mcbe_binary_stream()
+        json_data: str = json.dumps(raw_chain_data)
+        temp_stream.write_unsigned_int_le(len(json_data))
+        temp_stream.write(json_data.encode())
+        self.write_byte_array(temp_stream.data)
+        jwt_data: str = jwt.encode({"alg": "HS256", "typ": "JWT"}, self.skin_data, misc.mojang_public_key)
+        self.write_unsigned_int_le(len(jwt_data))
+        self.write(jwt_data.encode())

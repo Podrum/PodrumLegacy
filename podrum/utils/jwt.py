@@ -34,12 +34,12 @@ import hashlib
 import hmac
 import json
 
-class jtw:
+class jwt:
     @staticmethod
     def decode(token: str) -> dict:
         header, payload, verifySigniture = token.split(".")
         payload += "=="
-        json_data: str = base64.b64decode(payload.replace("-_", "+/")).decode()
+        json_data: str = base64.b64decode(payload.replace("-_", "+/").encode())
         return json.loads(json_data)
   
     @staticmethod

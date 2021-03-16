@@ -116,7 +116,7 @@ class raknet_handler(Thread):
         packet: object = open_connection_request_1(data)
         packet.read_data()
         if packet.magic == misc.raknet_magic:
-            if packet.protocol_version in version.raknet_protocol_versions:
+            if packet.protocol_version == version.raknet_protocol_version:
                 new_packet: object = open_connection_reply_1()
                 new_packet.packet_id: int = raknet_packet_ids.open_connection_reply_1
                 new_packet.magic: bytes = misc.raknet_magic
@@ -345,7 +345,7 @@ class raknet_handler(Thread):
                 self.handle_ack(data, address)
             elif data[0] == raknet_packet_ids.nack:
                 self.handle_nack(data, address)
-        elif data[0] == raknet_packet_ids.offline_ping or data[0] == raknet_packet_ids.offline_ping_open_connections:
+        elif data[0] == raknet_packet_ids.offline_ping:
             self.handle_offline_ping(data, address)
         elif data[0] == raknet_packet_ids.open_connection_request_1:
             self.handle_open_connection_request_1(data, address)

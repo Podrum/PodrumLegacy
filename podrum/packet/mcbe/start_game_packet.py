@@ -29,10 +29,15 @@
 #                                                                              #
 ################################################################################
 
+from constant.mcbe_packet_ids import mcbe_packet_ids
 from utils.context import context
 from utils.mcbe_binary_stream import mcbe_binary_stream
 
 class start_game_packet(mcbe_binary_stream):
+    def __init__(self, data: bytes = b"", pos: int = 0) -> None:
+        super().__init__(data, pos)
+        self.packet_id: int = mcbe_packet_ids.start_game_packet
+
     def read_data(self):
         pass
           

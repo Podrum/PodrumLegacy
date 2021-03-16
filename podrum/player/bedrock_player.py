@@ -30,7 +30,9 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
+from constant.version import version
 from packet.mcbe.game_packet import game_packet
+from packet.mcbe.login_packet import login_packet
 from packet.mcbe.play_status_packet import play_status_packet
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
@@ -41,24 +43,34 @@ class bedrock_player:
     def __init__(self, address, server):
         self.address = address
         self.server = server
+
+    def handle_login_packet(self, data: bytes):
+        packet: object = login_packet(data)
+        packet.read_data()
+        for chain in packet.chain_data:
+            if "identityPublicKey" in chain:
+                self.identity_public_key: str = chain["identityPublicKey"]
+            if "extraData" in chain:
+                self.xuid: str = chain["extraData"]["XUID"]
+                self.username: str = chain["extraData"]["displayName"]
+                self.identity: str = chain["extraData"]["identity"]
+        self.send_play_status(0)
+        packet: object = resource_packs_info_packet()
+        packet.forced_to_accept: bool = False
+        packet.scripting_enabled: bool = False
+        packet.write_data()
+        self.send_packet(packet.data)
+        self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
-            self.send_play_status(0)
-            packet: object = resource_packs_info_packet()
-            packet.packet_id: int = mcbe_packet_ids.resource_packs_info_packet
-            packet.forced_to_accept: bool = False
-            packet.scripting_enabled: bool = False
-            packet.write_data()
-            self.send_packet(packet.data)
+            self.handle_login_packet(data)
         elif data[0] == mcbe_packet_ids.resource_pack_client_response_packet:
-            print(data[1])
             if data[1] == 0:
                 packet: object = resource_pack_stack_packet()
-                packet.packet_id: int = mcbe_packet_ids.resource_pack_stack_packet
                 packet.forced_to_accept: bool = False
                 packet.experimental: bool = False
-                packet.game_version: str = "1.16.201"
+                packet.game_version: str = version.mcbe_version
                 packet.write_data()
                 self.send_packet(packet.data)
             elif data[1] == 3:
@@ -66,14 +78,12 @@ class bedrock_player:
     
     def send_play_status(self, status):
         packet: object = play_status_packet()
-        packet.packet_id: int = mcbe_packet_ids.play_status_packet
         packet.status: int = status
         packet.write_data()
         self.send_packet(packet.data)
     
     def send_packet(self, data):
         new_packet: object = game_packet()
-        new_packet.packet_id: int = 0xfe
         new_packet.write_packet_data(data)
         new_packet.write_data()
         send_packet: object = frame()

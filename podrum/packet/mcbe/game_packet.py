@@ -33,8 +33,12 @@ from utils.mcbe_binary_stream import mcbe_binary_stream
 import zlib
 
 class game_packet(mcbe_binary_stream):
+    def __init__(self, data: bytes = b"", pos: int = 0) -> None:
+        super().__init__(data, pos)
+        self.packet_id: int = 0xfe
+
     def read_data(self):
-        self.packet_id: int = self.read_unsigned_byte()
+        self.read_unsigned_byte() # packet_id
         self.body: bytes = zlib.decompress(self.read_remaining(), -zlib.MAX_WBITS, 1024 * 1024 * 8)
         
     def write_data(self):
