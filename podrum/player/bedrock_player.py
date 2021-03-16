@@ -34,6 +34,7 @@ from constant.version import version
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.login_packet import login_packet
 from packet.mcbe.play_status_packet import play_status_packet
+from packet.mcbe.resource_pack_client_response_packet import resource_pack_client_response_packet
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
 from packet.raknet.frame import frame
@@ -61,20 +62,25 @@ class bedrock_player:
         packet.write_data()
         self.send_packet(packet.data)
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
+
+    def handle_resource_pack_client_response_packet(self, data):
+        packet: object = resource_pack_client_response_packet(data)
+        packet.read_data()
+        if packet.status == 0:
+            packet: object = resource_pack_stack_packet()
+            packet.forced_to_accept: bool = False
+            packet.experimental: bool = False
+            packet.game_version: str = version.mcbe_version
+            packet.write_data()
+            self.send_packet(packet.data)
+        elif packet.status == 3:
+            pass # Start Game
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
             self.handle_login_packet(data)
         elif data[0] == mcbe_packet_ids.resource_pack_client_response_packet:
-            if data[1] == 0:
-                packet: object = resource_pack_stack_packet()
-                packet.forced_to_accept: bool = False
-                packet.experimental: bool = False
-                packet.game_version: str = version.mcbe_version
-                packet.write_data()
-                self.send_packet(packet.data)
-            elif data[1] == 3:
-                pass # Start Game
+            self.handle_resource_pack_client_response_packet(data)
     
     def send_play_status(self, status):
         packet: object = play_status_packet()
