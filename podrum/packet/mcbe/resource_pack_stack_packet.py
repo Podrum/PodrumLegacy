@@ -29,54 +29,52 @@
 #                                                                              #
 ################################################################################
 
-from constant.mcbe_packet_ids import mcbe_packet_ids
-from packet.mcbe.game_packet import game_packet
-from packet.mcbe.play_status_packet import play_status_packet
-from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
-from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
-from packet.raknet.frame import frame
-import zlib
+from utils.context import context
+from utils.mcbe_binary_stream import mcbe_binary_stream
 
-class bedrock_player:
-    def __init__(self, address, server):
-        self.address = address
-        self.server = server
-        
-    def handle_packet(self, data):
-        if data[0] == mcbe_packet_ids.login_packet:
-            self.send_play_status(0)
-            packet: object = resource_packs_info_packet()
-            packet.packet_id: int = mcbe_packet_ids.resource_packs_info_packet
-            packet.forced_to_accept: bool = False
-            packet.scripting_enabled: bool = False
-            packet.write_data()
-            self.send_packet(packet.data)
-        elif data[0] == mcbe_packet_ids.resource_pack_client_response_packet:
-            print(data[1])
-            if data[1] == 0:
-                packet: object = resource_pack_stack_packet()
-                packet.packet_id: int = mcbe_packet_ids.resource_pack_stack_packet
-                packet.forced_to_accept: bool = False
-                packet.experimental: bool = False
-                packet.game_version: str = "1.16.201"
-                packet.write_data()
-                self.send_packet(packet.data)
-            elif data[1] == 3:
-                pass # Start Game
-    
-    def send_play_status(self, status):
-        packet: object = play_status_packet()
-        packet.packet_id: int = mcbe_packet_ids.play_status_packet
-        packet.status: int = status
-        packet.write_data()
-        self.send_packet(packet.data)
-    
-    def send_packet(self, data):
-        new_packet: object = game_packet()
-        new_packet.packet_id: int = 0xfe
-        new_packet.write_packet_data(data)
-        new_packet.write_data()
-        send_packet: object = frame()
-        send_packet.reliability: int = 0
-        send_packet.body: bytes = new_packet.data
-        self.server.raknet_handler.add_to_queue(send_packet, self.address, False)
+class resource_pack_stack_packet(mcbe_binary_stream):
+    def read_data(self):
+        self.packet_id: int = self.read_var_int()
+        self.forced_to_accept: bool = self.read_bool()
+        behavior_packs_count: int = self.read_unsigned_short_le()
+        for i in range(0, behavior_packs_count):
+            if not hasattr(self, "behavior_pack_entries"):
+                self.behavior_pack_entries = []
+            behavior_pack_entry = context()
+            behavior_pack_entry.id: str = self.read_string()
+            behavior_pack_entry.version: str = self.read_string()
+            behavior_pack_entry.sub_name: str = self.read_string()
+            self.behavior_pack_entries.append(behavior_pack_entry)
+        resource_packs_count: int = self.read_unsigned_short_le()
+        for i in range(0, resource_packs_count):
+            if not hasattr(self, "resource_pack_entries"):
+                self.resource_pack_entries = []
+            resource_pack_entry = context()
+            resource_pack_entry.id: str = self.read_string()
+            resource_pack_entry.version: str = self.read_string()
+            resource_pack_entry.sub_name: str = self.read_string()
+            self.resource_pack_entries.append(resource_pack_entry)
+        self.experimental: bool = self.read_bool()
+        self.game_version: str = self.read_string()
+          
+    def write_data(self):
+        self.write_var_int(self.packet_id)
+        self.write_bool(self.forced_to_accept)
+        if not hasattr(self, "behavior_pack_entries"):
+            self.write_unsigned_short_le(0)
+        else:
+            self.write_unsigned_short_le(len(self.behavior_pack_entries))
+            for pack in self.behavior_pack_entries:
+                self.write_string(pack.id)
+                self.write_string(pack.version)
+                self.write_string(pack.sub_name)
+        if not hasattr(self, "resource_pack_entries"):
+            self.write_unsigned_short_le(0)
+        else:
+            self.write_unsigned_short_le(len(self.resource_pack_entries))
+            for pack in self.resource_pack_entries:
+                self.write_string(pack.id)
+                self.write_string(pack.version)
+                self.write_string(pack.sub_name)
+        self.write_bool(self.experimental)
+        self.write_string(self.game_version)

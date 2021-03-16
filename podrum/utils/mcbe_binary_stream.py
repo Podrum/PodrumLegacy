@@ -157,3 +157,31 @@ class mcbe_binary_stream(binary_stream):
         self.write_unsigned_byte(int(value.pitch * 0.71))
         self.write_unsigned_byte(int(value.head_yaw * 0.71))
         self.write_unsigned_byte(int(value.yaw * 0.71))
+
+    def read_game_rules(self) -> dict:
+        rules_count: int = self.read_var_int()
+        rules: dict = {}
+        for i in range(0, rules_count):
+            rule_name: str = self.read_string()
+            rule_type: int = self.read_var_int()
+            if rule_type == 1:
+                rules[rule_name]: bool = self.read_bool()
+            elif rule_type == 2:
+                rules[rule_name]: int = self.read_var_int()
+            elif rule_type == 3:
+                rules[rule_name]: float = self.read_float_le()
+        return rules
+
+    def write_game_rules(self, rules: dict) -> None:
+        rules_count: int = len(rules)
+        for rule_name, rule_value in rules.items():
+            self.write_string(rule_name)
+            if isinstance(rule_value, bool):
+                self.write_var_int(1)
+                self.write_bool(rule_value)
+            elif isinstance(rule_value, int):
+                self.write_var_int(2)
+                self.write_var_int(rule_value)
+            elif isinstance(rule_value, float):
+                self.write_var_int(3)
+                self.write_float_le(rule_value)

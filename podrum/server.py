@@ -36,6 +36,7 @@ from handler.command_handler import command_handler
 from handler.raknet_handler import raknet_handler
 from manager.command_manager import command_manager
 from manager.event_manager import event_manager
+from manager.item_manager import item_manager
 from manager.plugin_manager import plugin_manager
 import os
 import time
@@ -47,6 +48,7 @@ class server:
         self.command_handler: object = command_handler(self)
         self.event_manager: object = event_manager(self)
         self.raknet_handler: object = raknet_handler(self, ".".join(["0"] * 4), 19132, "")
+        self.item_manager: object = item_manager(self)
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
         self.players: dict = {}
