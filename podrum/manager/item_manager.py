@@ -42,7 +42,7 @@ class item_manager:
             self.items: dict = {}
         for i in mcbe_item_ids.__dict__.items():
             if isinstance(getattr(mcbe_item_ids, i[0]), int):
-                self.items[i[0]]: int = i[1]
+                self.items["minecraft:" + i[0]]: int = i[1]
 
     def serialize_items(self) -> bytes:
         buffer: object = mcbe_binary_stream()
