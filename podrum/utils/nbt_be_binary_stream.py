@@ -82,14 +82,14 @@ class nbt_be_binary_stream(binary_stream):
             
     def read_int_array_tag(self) -> list:
         byte_count: int = self.read_int_tag()
-        tag: list = []
+        value: list = []
         for i in range(0, byte_count):
-            tag.append(self.read_int_tag())
-        return tag
+            value.append(self.read_int_tag())
+        return value
       
     def write_int_array_tag(self, value: list) -> None:
         self.write_int_tag(len(value))
-        for item in vale:
+        for item in value:
             self.write_int_tag(item)
             
     def read_long_array_tag(self) -> list:
