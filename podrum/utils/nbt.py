@@ -36,6 +36,27 @@ from utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
 from utils.context import context
 
 class nbt:
-    def read_type(self, stream: object, tag_id):
+    @staticmethod
+    def read_type(stream: object, tag_id):
         if tag_id == nbt_tag_ids.byte_tag:
             return stream.read_byte_tag()
+        elif tag_id == nbt_tag_ids.short_tag:
+            return stream.read_short_tag()
+        elif tag_id == nbt_tag_ids.int_tag:
+            return stream.read_int_tag()
+        elif tag_id == nbt_tag_ids.long_tag:
+            return stream.read_long_tag()
+        elif tag_id == nbt_tag_ids.float_tag:
+            return stream.read_float_tag()
+        elif tag_id == nbt_tag_ids.double_tag:
+            return stream.read_double_tag()
+        elif tag_id == nbt_tag_ids.byte_array_tag:
+            return stream.read_byte_array_tag()
+        elif tag_id == nbt_tag_ids.string_tag:
+            return stream.read_string_tag()
+        elif tag_id == nbt_tag_ids.list_tag:
+            pass
+        elif tag_id == nbt_tag_ids.compound_tag:
+            pass
+        elif tag_id == nbt_tag_ids.int_array_tag:
+            return stream.read_int_array_tag()
