@@ -37,7 +37,7 @@ from utils.context import context
 
 class nbt:
     @staticmethod
-    def read_type(stream: object, tag_id: int):
+    def read_type(stream: object, tag_id: int) -> object:
         if tag_id == nbt_tag_ids.byte_tag:
             return stream.read_byte_tag()
         elif tag_id == nbt_tag_ids.short_tag:
@@ -57,6 +57,14 @@ class nbt:
         elif tag_id == nbt_tag_ids.list_tag:
             pass
         elif tag_id == nbt_tag_ids.compound_tag:
-            pass
+            tree = {}
+            while not stream.feos():
+                nbt_tag_id: int = stream.read_unsigned_byte()
+                if nbt_tag_id == nbt_tag_ids.end_tag:
+                    break
+                nbt_tag_name: str = stream.read_string_tag()
+                nbt_tag_value: object = nbt.read_type(stream, nbt_tag_id)
+                tree[nbt_tag_name] = {"id": nbt_tag_id, "value": nbt_tag_value}
+            return tree
         elif tag_id == nbt_tag_ids.int_array_tag:
             return stream.read_int_array_tag()
