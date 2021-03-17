@@ -108,5 +108,5 @@ class nbt_be_binary_stream(binary_stream):
         return self.read(self.read_unsigned_short_be()).decode()
       
     def write_string_tag(self, value: str) -> None:
-        self.writeunsigned_short_be(len(value))
+        self.write_unsigned_short_be(len(value))
         self.write(value.encode())
