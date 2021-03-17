@@ -37,7 +37,7 @@ from utils.context import context
 
 class nbt:
     @staticmethod
-    def read_type(stream: object, tag_id):
+    def read_type(stream: object, tag_id: int):
         if tag_id == nbt_tag_ids.byte_tag:
             return stream.read_byte_tag()
         elif tag_id == nbt_tag_ids.short_tag:
