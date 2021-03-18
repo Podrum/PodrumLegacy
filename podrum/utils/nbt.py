@@ -38,15 +38,15 @@ from utils.context import context
 class nbt:
     @staticmethod
     def read(data, endianess):
-        if stream_type.lower() == "big":
+        if endianess.lower() == "big":
             stream: object = nbt_be_binary_stream()
-        elif stream_type.lower() == "little":
+        elif endianess.lower() == "little":
             stream: object = nbt_be_binary_stream()
-        elif stream_type.lower() == "network_little":
+        elif endianess.lower() == "network_little":
             stream: object = nbt_be_binary_stream()
         else:
             raise Exception("Invalid stream type!")
-        return self.read_type(stream, nbt_tag_ids.compound_tag)
+        return nbt.read_type(stream, nbt_tag_ids.compound_tag)
     
     @staticmethod
     def read_type(stream: object, tag_id: int) -> object:
