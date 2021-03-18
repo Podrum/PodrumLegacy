@@ -37,6 +37,18 @@ from utils.context import context
 
 class nbt:
     @staticmethod
+    def read(data, endianess):
+        if stream_type.lower() == "big":
+            stream: object = nbt_be_binary_stream()
+        elif stream_type.lower() == "little":
+            stream: object = nbt_be_binary_stream()
+        elif stream_type.lower() == "network_little":
+            stream: object = nbt_be_binary_stream()
+        else:
+            raise Exception("Invalid stream type!")
+        return self.read_type(stream, nbt_tag_ids.compound_tag)
+    
+    @staticmethod
     def read_type(stream: object, tag_id: int) -> object:
         if tag_id == nbt_tag_ids.byte_tag:
             return stream.read_byte_tag()
@@ -60,6 +72,7 @@ class nbt:
             tag_value = []
             for i in range(0, list_size):
                 tag_value.append(self.read_type(list_type))
+            return tag_value
         elif tag_id == nbt_tag_ids.compound_tag:
             tree = {}
             while not stream.feos():
