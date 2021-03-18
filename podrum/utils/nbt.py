@@ -39,11 +39,11 @@ class nbt:
     @staticmethod
     def read(data, endianess):
         if endianess.lower() == "big":
-            stream: object = nbt_be_binary_stream()
+            stream: object = nbt_be_binary_stream(data)
         elif endianess.lower() == "little":
-            stream: object = nbt_le_binary_stream()
+            stream: object = nbt_le_binary_stream(data)
         elif endianess.lower() == "network_little":
-            stream: object = nbt_net_le_binary_stream()
+            stream: object = nbt_net_le_binary_stream(data)
         else:
             raise Exception("Invalid stream type!")
         return nbt.read_type(stream, nbt_tag_ids.compound_tag)
@@ -71,7 +71,7 @@ class nbt:
             list_size: int = stream.read_int_tag()
             tag_value = []
             for i in range(0, list_size):
-                tag_value.append(nbt.read_type(list_type))
+                tag_value.append(nbt.read_type(stream, list_type))
             return tag_value
         elif tag_id == nbt_tag_ids.compound_tag:
             tree = {}
