@@ -55,7 +55,11 @@ class nbt:
         elif tag_id == nbt_tag_ids.string_tag:
             return stream.read_string_tag()
         elif tag_id == nbt_tag_ids.list_tag:
-            pass
+            list_type: int = stream.read_unsigned_byte()
+            list_size: int = stream.read_int_tag()
+            tag_value = []
+            for i in range(0, list_size):
+                tag_value.append(self.read_type(list_type))
         elif tag_id == nbt_tag_ids.compound_tag:
             tree = {}
             while not stream.feos():
