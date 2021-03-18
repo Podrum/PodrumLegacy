@@ -72,7 +72,7 @@ class nbt:
             tag_value = []
             for i in range(0, list_size):
                 tag_value.append(nbt.read_type(stream, list_type))
-            return tag_value
+            return {"type": list_type, "value": tag_value}
         elif tag_id == nbt_tag_ids.compound_tag:
             tree = {}
             while not stream.feos():
