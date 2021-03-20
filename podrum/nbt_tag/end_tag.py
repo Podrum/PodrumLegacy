@@ -29,7 +29,12 @@
 #                                                                              #
 ################################################################################
 
+from constant.nbt_tag_ids import nbt_tag_ids
+
 class end_tag:
+    def __init__(self):
+        self.id: int = nbt_tag_ids.end_tag
+    
     def read(self, stream: object) -> None:
         pass # Just for safety
         
