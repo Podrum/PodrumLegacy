@@ -3,7 +3,7 @@
 
 
 <div align="center">
-    <a href="https://discord.gg/SGWCwd6"><img src="https://img.shields.io/discord/705730982338101280?style=flat-square"/></a>
+    <a href="https://discord.gg/ScSsnwQ4kW"><img src="https://img.shields.io/discord/821124503185653803?style=flat-square"/></a>
     <a href="https://www.codefactor.io/repository/github/podrum/podrum"><img src="https://www.codefactor.io/repository/github/podrum/podrum/badge?style=flat-square"/></>
 </div>
 <hr/>
