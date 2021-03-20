@@ -32,18 +32,17 @@
 from utils.nbt import nbt
 
 class list_tag:
-    def __init__(self, name = "", value = [], list_type: int):
+    def __init__(self, name: str = "", value: list = [], list_type: int = 1):
         self.name: str = name
         self.value: list = value
         self.list_type: int = list_type
         
     def read(self, stream: object) -> None:
-        self.list_type = stream.read_byte_tag()
-        list_size = stream.read_int_tag()
-        list_tag = [nbt.new_tag(list_type)] * list_size
+        self.list_type: int = stream.read_byte_tag()
+        list_size: int = stream.read_int_tag()
+        list_tag: list = [nbt.new_tag(list_type)] * list_size
         for item in list_tag:
             item.read(stream)
-        return list_tag
         
     def write(self, stream: object) -> None:
         stream.write_byte_tag(self.list_type)
