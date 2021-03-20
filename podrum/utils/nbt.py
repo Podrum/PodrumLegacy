@@ -33,6 +33,7 @@ from constant.nbt_tag_ids import nbt_tag_ids
 from nbt_tag.byte_array_tag import byte_array_tag
 from nbt_tag.byte_tag import byte_tag
 from nbt_tag.double_tag import double_tag
+from end_tag.double_tag import end_tag
 from nbt_tag.float_tag import float_tag
 from nbt_tag.int_array_tag import int_array_tag
 from nbt_tag.int_tag import int_tag
@@ -45,6 +46,8 @@ from nbt_tag.string_tag import string_tag
 class nbt:
     @staticmethod
     def new_tag(tag_id: int) -> object:
+        if tag_id == nbt_tag_ids.end_tag:
+            return end_tag()
         if tag_id == nbt_tag_ids.byte_tag:
             return byte_tag()
         if tag_id == nbt_tag_ids.short_tag:
