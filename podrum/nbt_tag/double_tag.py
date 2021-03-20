@@ -29,8 +29,11 @@
 #                                                                              #
 ################################################################################
 
+from constant.nbt_tag_ids import nbt_tag_ids
+
 class double_tag:
     def __init__(self, name: str = "", value: float = 0.0) -> None:
+        self.id: int = nbt_tag_ids.double_tag
         self.name: str = name
         self.value: float = value
         
