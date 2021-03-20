@@ -30,7 +30,7 @@
 ################################################################################
 
 class double_tag:
-    def __init__(self, name: str = "", value: float = 0.0):
+    def __init__(self, name: str = "", value: float = 0.0) -> None:
         self.name: str = name
         self.value: float = value
         
