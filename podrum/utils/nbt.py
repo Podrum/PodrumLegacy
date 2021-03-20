@@ -32,6 +32,7 @@
 from constant.nbt_tag_ids import nbt_tag_ids
 from nbt_tag.byte_array_tag import byte_array_tag
 from nbt_tag.byte_tag import byte_tag
+from nbt_tag.compound_tag import compound_tag
 from nbt_tag.double_tag import double_tag
 from nbt_tag.end_tag import end_tag
 from nbt_tag.float_tag import float_tag
@@ -67,7 +68,7 @@ class nbt:
         if tag_id == nbt_tag_ids.list_tag:
             return list_tag()
         if tag_id == nbt_tag_ids.compound_tag:
-            return
+            return compound_tag()
         if tag_id == nbt_tag_ids.int_array_tag:
             return int_array_tag()
         if tag_id == nbt_tag_ids.long_array_tag:
