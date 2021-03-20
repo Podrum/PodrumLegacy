@@ -30,6 +30,16 @@
 ################################################################################
 
 from constant.nbt_tag_ids import nbt_tag_ids
+from nbt_tag.byte_array_tag import byte_array_tag
+from nbt_tag.byte_tag import byte_tag
+from nbt_tag.double_tag import double_tag
+from nbt_tag.float_tag import float_tag
+from nbt_tag.int_array_tag import int_array_tag
+from nbt_tag.int_tag import int_tag
+from nbt_tag.long_array_tag import long_array_tag
+from nbt_tag.long_tag import long_tag
+from nbt_tag.short_tag import short_tag
+from nbt_tag.string_tag import string_tag
 from utils.nbt_be_binary_stream import nbt_be_binary_stream
 from utils.nbt_le_binary_stream import nbt_le_binary_stream
 from utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
