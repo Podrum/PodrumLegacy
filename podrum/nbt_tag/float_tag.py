@@ -30,7 +30,7 @@
 ################################################################################
 
 class float_tag:
-    def __init__(self, tag_name = "", tag_value = 0):
+    def __init__(self, tag_name = "", tag_value = 0.0):
         self.tag_name = tag_name
         self.tag_value = tag_value
         
