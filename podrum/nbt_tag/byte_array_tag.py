@@ -29,8 +29,11 @@
 #                                                                              #
 ################################################################################
 
+from constant.nbt_tag_ids import nbt_tag_ids
+
 class byte_array_tag:
     def __init__(self, name: str = "", value: list = []) -> None:
+        self.id: int = nbt_tag_ids.byte_array_tag
         self.name: str = name
         self.value: list = value
         
