@@ -46,6 +46,6 @@ class list_tag:
         
     def write(self, stream: object) -> None:
         stream.write_byte_tag(self.list_type)
-        stream.write_int_tag(self.value)
+        stream.write_int_tag(len(self.value))
         for item in self.value:
             item.write(stream)
