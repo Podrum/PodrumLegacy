@@ -33,7 +33,7 @@ from constant.nbt_tag_ids import nbt_tag_ids
 from nbt_tag.byte_array_tag import byte_array_tag
 from nbt_tag.byte_tag import byte_tag
 from nbt_tag.double_tag import double_tag
-from end_tag.double_tag import end_tag
+from end_tag.end_tag import end_tag
 from nbt_tag.float_tag import float_tag
 from nbt_tag.int_array_tag import int_array_tag
 from nbt_tag.int_tag import int_tag
