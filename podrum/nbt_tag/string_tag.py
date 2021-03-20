@@ -29,8 +29,11 @@
 #                                                                              #
 ################################################################################
 
+from constant.nbt_tag_ids import nbt_tag_ids
+
 class string_tag:
     def __init__(self, name: str = "", value: str = "") -> None:
+        self.id: int = nbt_tag_ids.string_tag
         self.name: str = name
         self.value: str = value
         
