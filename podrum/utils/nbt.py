@@ -47,7 +47,7 @@ from utils.context import context
 
 class nbt:
     @staticmethod
-    def new_tag(tag_id):
+    def new_tag(tag_id: int) -> object:
         if tag_id == nbt_tag_ids.byte_tag:
             return byte_tag()
         if tag_id == nbt_tag_ids.short_tag:
