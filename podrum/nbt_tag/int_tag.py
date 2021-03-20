@@ -30,12 +30,12 @@
 ################################################################################
 
 class int_tag:
-    def __init__(self, tag_name = "", tag_value = 0):
-        self.tag_name = tag_name
-        self.tag_value = tag_value
+    def __init__(self, name: str = "", value: int = 0):
+        self.name: str = name
+        self.value: int = value
         
     def read(self, stream: object) -> None:
-        self.value = stream.read_int_tag()
+        self.value: int = stream.read_int_tag()
         
     def write(self, stream: object) -> None:
         stream.write_int_tag(self.value)
