@@ -33,3 +33,9 @@ class byte_tag:
     def __init__(self, tag_name = "", tag_value = 0):
         self.tag_name = tag_name
         self.tag_value = tag_value
+        
+    def read(self, stream: object) -> None:
+        self.value = stream.read_byte_tag()
+        
+    def write(self, stream: object) -> None:
+        stream.write_byte_tag(self.value)
