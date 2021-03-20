@@ -29,10 +29,12 @@
 #                                                                              #
 ################################################################################
 
+from constant.nbt_tag_ids import nbt_tag_ids
 from utils.nbt import nbt
 
 class list_tag:
     def __init__(self, name: str = "", value: list = [], list_type: int = 1):
+        self.id: int = nbt_tag_ids.list_tag
         self.name: str = name
         self.value: list = value
         self.list_type: int = list_type
