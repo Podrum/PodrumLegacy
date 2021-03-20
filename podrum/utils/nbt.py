@@ -50,25 +50,25 @@ class nbt:
     def new_tag(tag_id):
         if tag_id == nbt_tag_ids.byte_tag:
             return byte_tag()
-        elif tag_id == nbt_tag_ids.short_tag:
+        if tag_id == nbt_tag_ids.short_tag:
             return short_tag()
-        elif tag_id == nbt_tag_ids.int_tag:
+        if tag_id == nbt_tag_ids.int_tag:
             return int_tag()
-        elif tag_id == nbt_tag_ids.long_tag:
+        if tag_id == nbt_tag_ids.long_tag:
             return long_tag()
-        elif tag_id == nbt_tag_ids.float_tag:
+        if tag_id == nbt_tag_ids.float_tag:
             return float_tag()
-        elif tag_id == nbt_tag_ids.double_tag:
+        if tag_id == nbt_tag_ids.double_tag:
             return double_tag()
-        elif tag_id == nbt_tag_ids.byte_array_tag:
+        if tag_id == nbt_tag_ids.byte_array_tag:
             return byte_array_tag()
-        elif tag_id == nbt_tag_ids.string_tag:
+        if tag_id == nbt_tag_ids.string_tag:
             return string_tag()
-        elif tag_id == nbt_tag_ids.list_tag:
-            pass
-        elif tag_id == nbt_tag_ids.compound_tag:
-            pass
-        elif tag_id == nbt_tag_ids.int_array_tag:
+        if tag_id == nbt_tag_ids.list_tag:
+            return
+        if tag_id == nbt_tag_ids.compound_tag:
+            return
+        if tag_id == nbt_tag_ids.int_array_tag:
             return int_array_tag()
-        elif tag_id == nbt_tag_ids.long_array_tag:
+        if tag_id == nbt_tag_ids.long_array_tag:
             return long_array_tag()
