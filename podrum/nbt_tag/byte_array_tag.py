@@ -30,12 +30,12 @@
 ################################################################################
 
 class byte_array_tag:
-    def __init__(self, name = "", value = []):
+    def __init__(self, name = "", value: list = []):
         self.name: str = name
         self.value: list = value
         
     def read(self, stream: object) -> None:
-        self.value = stream.read_byte_array_tag()
+        self.value: list = stream.read_byte_array_tag()
         
     def write(self, stream: object) -> None:
         stream.write_byte_array_tag(self.value)
