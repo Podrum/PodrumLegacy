@@ -30,9 +30,9 @@
 ################################################################################
 
 class byte_tag:
-    def __init__(self, tag_name = "", tag_value = 0):
-        self.tag_name = tag_name
-        self.tag_value = tag_value
+    def __init__(self, name = "", value = 0):
+        self.name = name
+        self.value = value
         
     def read(self, stream: object) -> None:
         self.value = stream.read_byte_tag()
