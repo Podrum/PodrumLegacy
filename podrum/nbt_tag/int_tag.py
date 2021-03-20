@@ -30,7 +30,7 @@
 ################################################################################
 
 class int_tag:
-    def __init__(self, name: str = "", value: int = 0):
+    def __init__(self, name: str = "", value: int = 0) -> None:
         self.name: str = name
         self.value: int = value
         
