@@ -30,7 +30,7 @@
 ################################################################################
 
 class byte_array_tag:
-    def __init__(self, name = "", value: list = []):
+    def __init__(self, name: str = "", value: list = []):
         self.name: str = name
         self.value: list = value
         
