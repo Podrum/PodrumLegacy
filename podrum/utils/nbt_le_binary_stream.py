@@ -77,7 +77,7 @@ class nbt_le_binary_stream(binary_stream):
       
     def write_byte_array_tag(self, value: list) -> None:
         self.write_int_tag(len(value))
-        for item in vale:
+        for item in value:
             self.write_byte_tag(item)
             
     def read_int_array_tag(self) -> list:
@@ -101,7 +101,7 @@ class nbt_le_binary_stream(binary_stream):
       
     def write_long_array_tag(self, value: list) -> None:
         self.write_int_tag(len(value))
-        for item in vale:
+        for item in value:
             self.write_long_tag(item)
             
     def read_string_tag(self) -> str:
