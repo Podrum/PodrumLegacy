@@ -30,12 +30,12 @@
 ################################################################################
 
 class string_tag:
-    def __init__(self, tag_name = "", tag_value = ""):
-        self.tag_name = tag_name
-        self.tag_value = tag_value
+    def __init__(self, name: str = "", value: str = "") -> None:
+        self.name: str = name
+        self.value: str = value
         
     def read(self, stream: object) -> None:
-        self.value = stream.read_string_tag()
+        self.value: str = stream.read_string_tag()
         
     def write(self, stream: object) -> None:
         stream.write_string_tag(self.value)
