@@ -29,11 +29,13 @@
 #                                                                              #
 ################################################################################
 
+from constant.nbt_tag_ids import nbt_tag_ids
 from nbt_tag.end_tag import end_tag
 from utils.nbt import nbt
 
 class compound_tag:
     def __init__(self, name: str = "", value: list = []):
+        self.id: int = nbt_tag_ids.compound_tag
         self.name: str = name
         self.value: list = value
         
@@ -52,7 +54,7 @@ class compound_tag:
         
     def write(self, stream: object) -> None:
         for tag in self.value:
-            stream.write_byte_tag(1) # Unfinished
+            stream.write_byte_tag(tag.id)
             stream.write_string_tag(tag.name)
             tag.write(stream)
         stream.write_byte_tag(0)
