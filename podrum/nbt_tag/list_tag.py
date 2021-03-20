@@ -39,10 +39,11 @@ class list_tag:
         
     def read(self, stream: object) -> None:
         self.list_type: int = stream.read_byte_tag()
-        list_size: int = stream.read_int_tag()
-        list_tag: list = [nbt.new_tag(list_type)] * list_size
-        for item in list_tag:
+        size: int = stream.read_int_tag()
+        result: list = [nbt.new_tag(self.list_type)] * size
+        for item in result:
             item.read(stream)
+        self.value: list = result
         
     def write(self, stream: object) -> None:
         stream.write_byte_tag(self.list_type)
