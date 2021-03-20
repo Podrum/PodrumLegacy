@@ -40,10 +40,6 @@ from nbt_tag.long_array_tag import long_array_tag
 from nbt_tag.long_tag import long_tag
 from nbt_tag.short_tag import short_tag
 from nbt_tag.string_tag import string_tag
-from utils.nbt_be_binary_stream import nbt_be_binary_stream
-from utils.nbt_le_binary_stream import nbt_le_binary_stream
-from utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
-from utils.context import context
 
 class nbt:
     @staticmethod
