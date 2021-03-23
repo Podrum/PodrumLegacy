@@ -58,3 +58,22 @@ class compound_tag:
             stream.write_string_tag(tag.name)
             tag.write(stream)
         stream.write_byte_tag(0)
+        
+    def get_tag(self, name: str) -> object:
+        for tag in self.value:
+            if name == tag.name:
+                return tag
+            
+    def has_tag(self, name: str) -> bool:
+        for tag in self.value:
+            if name == tag.name:
+                return True
+        return False
+         
+    def set_tag(self, tag: object) -> None:
+        if not self.has_tag(tag.name):
+            self.value.append(tag)
+        else:
+            for i, v in enumerate(self.value):
+                if tag.name == v.name:
+                    self.value[i] = tag
