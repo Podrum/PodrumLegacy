@@ -4,8 +4,8 @@
 
 <div align="center">
     <a href="https://discord.gg/ScSsnwQ4kW"><img src="https://img.shields.io/discord/821124503185653803?style=flat-square"/></a>
-    <a href="https://www.codefactor.io/repository/github/podrum/podrum"><img src="https://www.codefactor.io/repository/github/podrum/podrum/badge?style=flat-square"/></>
-    <a href="https://podrum.github.io/">Website</a>
+    <a href="https://www.codefactor.io/repository/github/podrum/podrum"><img src="https://www.codefactor.io/repository/github/podrum/podrum/badge?style=flat-square"/></a>
+    <a href="https://podrum.github.io/"><img src="https://img.shields.io/badge/Web-site-orange?style=flat-square"/></a>
 </div>
 <hr/>
 
