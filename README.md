@@ -33,12 +33,14 @@ Still under active development, but yet it has few advantages:
 ## Running:
 Linux and MacOS (Unix systems):
 ```sh
+pip3 install ./requirements.txt
 python3 podrum
 ```
 Or you can use Powershell.
 
 Windows:
 ```batch
+pip install ./requirements.txt
 python podrum
 ```
 
