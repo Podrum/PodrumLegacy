@@ -30,24 +30,21 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
-from utils.context import context
-from utils.mcbe_binary_stream import mcbe_binary_stream
+from packet.mcbe.packet import packet
 
-class resource_pack_client_response_packet(mcbe_binary_stream):
+class resource_pack_client_response_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = mcbe_packet_ids.resource_pack_client_response_packet
 
-    def read_data(self):
-        self.read_var_int() # packet_id
+    def decode_payload(self):
         self.status: int = self.read_unsigned_byte()
         pack_ids_count: int = self.read_unsigned_short_le()
         for i in range(0, pack_ids_count):
             self.pack_ids.append(self.read_string())
 
           
-    def write_data(self):
-        self.write_var_int(self.packet_id)
+    def encode_payload(self):
         self.write_unsigned_byte(self.status)
         self.write_unsigned_short_le(len(self.pack_ids))
         for pack_id in self.pack_ids:

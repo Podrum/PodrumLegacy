@@ -29,27 +29,71 @@
 #                                                                              #
 ################################################################################
 
+from constant.version import version
 from packet.mcbe.game_packet import game_packet
 from player.bedrock_player import bedrock_player
+from rak_net.server import server as rak_net_server
+from threading import Thread
 
-class event:
-    @staticmethod
-    def on_packet_data(data, address, server) -> None:
-        if address.token in server.players:
-            if data[0] == 0xfe:
-                packet = game_packet(data)
-                packet.read_data()
-                packets = packet.read_packets_data()
+class rak_net_interface(Thread):
+    def __init__(self, server: object) -> None:
+        super().__init__()
+        self.server: object = server
+        self.rak_net_server = rak_net_server("", server.hostname, server.port)
+        self.rak_net_server.interface: object = self
+        self.set_status("Podrum Server", 0, 100)
+
+    def get_count(self) -> int:
+        name: str = self.rak_net_server.name.split(";")
+        return int(name[4])
+
+    def get_max_count(self) -> int:
+        name: str = self.rak_net_server.name.split(";")
+        return int(name[5])
+
+    def get_motd(self) -> str:
+        name: str = self.rak_net_server.name.split(";")
+        return name[1]
+
+    def set_status(self, motd: str, count: int, max_count: int) -> None:
+        self.rak_net_server.name: str = f"MCPE;{motd};{version.mcbe_protocol_version};{version.mcbe_version};{count};{max_count};0;"
+
+    def set_motd(self, motd: str) -> None:
+        self.set_status(motd, self.get_count(), self.get_max_count())
+
+    def set_count(self, count: int) -> None:
+        self.set_status(self.get_motd(), count, self.get_max_count())
+
+    def set_max_count(self, max_count: int) -> None:
+        self.set_status(self.get_motd(), self.get_count(), max_count)
+
+    def on_frame(self, packet: object, connection: object) -> None:
+        if connection.address.token in self.server.players:
+            if packet.body[0] == 0xfe:
+                new_packet: object = game_packet(packet.body)
+                new_packet.decode()
+                packets: list = new_packet.read_packets_data()
                 for batch in packets:
                     print(hex(batch[0]))
-                    server.players[address.token].handle_packet(batch)
+                    self.server.players[connection.address.token].handle_packet(batch)
             
-    @staticmethod
-    def on_new_incoming_connection(address, server):
-        server.players[address.token] = bedrock_player(address, server)
-        server.logger.info(f"{address.token} connected.")
+    def on_new_incoming_connection(self, connection: object) -> None:
+        self.server.players[connection.address.token] = bedrock_player(connection, self.server)
+        self.set_count(self.get_count() + 1)
+        self.server.logger.info(f"{connection.address.token} connected.")
                    
-    @staticmethod
-    def on_raknet_disconnect(address, server):
-        del server.players[address.token]
-        server.logger.info(f"{address.token} disconnected.")
+    def on_disconnect(self, connection: object) -> None:
+        del self.server.players[connection.address.token]
+        self.set_count(self.get_count() - 1)
+        self.server.logger.info(f"{connection.address.token} disconnected.")
+
+    def startup(self) -> None:
+        self.stopped: bool = False
+        self.start()
+
+    def stop(self) -> None:
+        self.stopped: bool = True
+
+    def run(self):
+        while not self.stopped:
+            self.rak_net_server.handle()

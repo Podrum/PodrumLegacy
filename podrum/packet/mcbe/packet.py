@@ -29,69 +29,25 @@
 #                                                                              #
 ################################################################################
 
-import socket
-from utils.binary_stream import binary_stream
-from utils.context import context
+from binary_utils.binary_stream import binary_stream
 
-class mcbe_binary_stream(binary_stream):
-    def read_var_int(self) -> int:
-        value: int = 0
-        for i in range(0, 35, 7):
-            if self.feos():
-                raise Exception("Data position exceeded")
-            number: int = self.read_unsigned_byte()
-            value |= ((number & 0x7f) << i)
-            if (number & 0x80) == 0:
-                return value
-        raise Exception("VarInt is too big")
-            
-    def write_var_int(self, value: int) -> None:
-        data: bytes = b""
-        value &= 0xffffffff
-        for i in range(0, 5):
-            if (value >> 7) != 0:
-                self.write_unsigned_byte(value | 0x80)
-            else:
-                self.write_unsigned_byte(value & 0x7f)
-                break
-            value >>= 7
-                
-    def read_signed_var_int(self) -> int:
-        raw: int = self.read_var_int()
-        temp: int = -(raw >> 1) - 1 if (raw & 1) else raw >> 1
-        return temp
-    
-    def write_signed_var_int(self, value: int) -> None:
-        write_var_int(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
-            
-    def read_var_long(self) -> int:
-        value: int = 0
-        for i in range(0, 70, 7):
-            if self.feos():
-                raise Exception("Data position exceeded")
-            number: int = self.read_unsigned_byte()
-            value |= ((number & 0x7f) << i)
-            if (number & 0x80) == 0:
-                return value
-        raise Exception("VarLong is too big")
-            
-    def write_var_long(self, value: int) -> None:
-        for i in range(0, 10):
-            if (value >> 7) != 0:
-                self.write_unsigned_byte(value | 0x80)
-            else:
-                self.write_unsigned_byte(value & 0x7f)
-                break
-            value >>= 7
-                
-    def read_signed_var_long(self) -> int:
-        raw: int = self.read_var_long()
-        temp: int = -(raw >> 1) - 1 if (raw & 1) else raw >> 1
-        return temp
-    
-    def write_signed_var_long(self, value: int) -> None:
-        write_signed_var_long(value << 1 if value >= 0 else (-value - 1) << 1 | 1)
-  
+class packet(binary_stream):
+    def decode_header(self) -> None:
+        self.read_var_int()
+      
+    def decode(self) -> None:
+        self.decode_header()
+        if hasattr(self, "decode_payload"):
+            self.decode_payload()
+        
+    def encode_header(self) -> None:
+        self.write_var_int(self.packet_id)
+      
+    def encode(self) -> None:
+        self.encode_header()
+        if hasattr(self, "encode_payload"):
+            self.encode_payload()
+
     def read_string(self) -> str:
         return self.read(self.read_var_int()).decode()
     
@@ -106,57 +62,57 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(value))
         self.write(value)
         
-    def read_vector_2(self) -> object:
-        value: object = context()
-        value.x: int = self.read_float()
-        value.y: int = self.read_float()
+    def read_vector_2(self) -> dict:
+        value: dict = {}
+        value["x"]: int = self.read_float()
+        value["y"]: int = self.read_float()
         return value
         
-    def write_vector_2(self, value: object) -> None:
-        self.write_float(value.x)
-        self.write_float(value.y)
+    def write_vector_2(self, value: dict) -> None:
+        self.write_float(value["x"])
+        self.write_float(value["y"])
         
-    def read_vector_3(self) -> object:
-        value: object = context()
-        value.x: int = self.read_float()
-        value.y: int = self.read_float()
-        value.z: int = self.read_float()
+    def read_vector_3(self) -> dict:
+        value: dict = {}
+        value["x"]: int = self.read_float()
+        value["y"]: int = self.read_float()
+        value["z"]: int = self.read_float()
         return value
         
-    def write_vector_3(self, value: object) -> None:
-        self.write_float(value.x)
-        self.write_float(value.y)
-        self.write_float(value.z)
+    def write_vector_3(self, value: dict) -> None:
+        self.write_float(value["x"])
+        self.write_float(value["y"])
+        self.write_float(value["z"])
         
-    def read_block_coordinates(self) -> object:
-        value: object = context()
-        value.x: int = self.read_signed_var_int()
-        value.y: int = self.read_var_int()
-        value.z: int = self.read_signed_var_int()
+    def read_block_coordinates(self) -> dict:
+        value: dict = {}
+        value["x"]: int = self.read_signed_var_int()
+        value["y"]: int = self.read_var_int()
+        value["z"]: int = self.read_signed_var_int()
         return value
         
-    def write_block_coordinates(self, value: object) -> None:
-        self.read_signed_var_int(value.x)
-        self.read_var_int(value.y)
-        self.read_signed_var_int(value.z)
+    def write_block_coordinates(self, value: dict) -> None:
+        self.read_signed_var_int(value["x"])
+        self.read_var_int(value["y"])
+        self.read_signed_var_int(value["z"])
         
-    def read_player_location(self) -> object:
-        value: object = context()
-        value.x: int = self.read_float()
-        value.y: int = self.read_float()
-        value.z: int = self.read_float()
-        value.pitch: float = self.read_unsigned_byte() / 0.71
-        value.head_yaw: float = self.read_unsigned_byte() / 0.71
-        value.yaw: float = self.read_unsigned_byte() / 0.71
+    def read_player_location(self) -> dict:
+        value: dict = {}
+        value["x"]: int = self.read_float()
+        value["y"]: int = self.read_float()
+        value["z"]: int = self.read_float()
+        value["pitch"]: float = self.read_unsigned_byte() / 0.71
+        value["head_yaw"]: float = self.read_unsigned_byte() / 0.71
+        value["yaw"]: float = self.read_unsigned_byte() / 0.71
         return value
         
-    def write_player_location(self, value: object) -> None:
-        self.write_float(value.x)
-        self.write_float(value.y)
-        self.write_float(value.z)
-        self.write_unsigned_byte(int(value.pitch * 0.71))
-        self.write_unsigned_byte(int(value.head_yaw * 0.71))
-        self.write_unsigned_byte(int(value.yaw * 0.71))
+    def write_player_location(self, value: dict) -> None:
+        self.write_float(value["x"])
+        self.write_float(value["y"])
+        self.write_float(value["z"])
+        self.write_unsigned_byte(int(value["pitch"] * 0.71))
+        self.write_unsigned_byte(int(value["head_yaw"] * 0.71))
+        self.write_unsigned_byte(int(value["yaw"] * 0.71))
 
     def read_game_rules(self) -> dict:
         rules_count: int = self.read_var_int()

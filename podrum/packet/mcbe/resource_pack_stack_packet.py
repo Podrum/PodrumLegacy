@@ -30,56 +30,53 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
-from utils.context import context
-from utils.mcbe_binary_stream import mcbe_binary_stream
+from packet.mcbe.packet import packet
 
-class resource_pack_stack_packet(mcbe_binary_stream):
+class resource_pack_stack_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = mcbe_packet_ids.resource_pack_stack_packet
 
-    def read_data(self):
-        self.read_var_int() # packet_id
+    def decode_payload(self):
         self.forced_to_accept: bool = self.read_bool()
         behavior_packs_count: int = self.read_unsigned_short_le()
         for i in range(0, behavior_packs_count):
             if not hasattr(self, "behavior_pack_entries"):
                 self.behavior_pack_entries = []
-            behavior_pack_entry = context()
-            behavior_pack_entry.id: str = self.read_string()
-            behavior_pack_entry.version: str = self.read_string()
-            behavior_pack_entry.sub_name: str = self.read_string()
+            behavior_pack_entry: dict = {}
+            behavior_pack_entry["id"]: str = self.read_string()
+            behavior_pack_entry["version"]: str = self.read_string()
+            behavior_pack_entry["sub_name"]: str = self.read_string()
             self.behavior_pack_entries.append(behavior_pack_entry)
         resource_packs_count: int = self.read_unsigned_short_le()
         for i in range(0, resource_packs_count):
             if not hasattr(self, "resource_pack_entries"):
                 self.resource_pack_entries = []
-            resource_pack_entry = context()
-            resource_pack_entry.id: str = self.read_string()
-            resource_pack_entry.version: str = self.read_string()
-            resource_pack_entry.sub_name: str = self.read_string()
+            resource_pack_entry: dict = {}
+            resource_pack_entry["id"]: str = self.read_string()
+            resource_pack_entry["version"]: str = self.read_string()
+            resource_pack_entry["sub_name"]: str = self.read_string()
             self.resource_pack_entries.append(resource_pack_entry)
         self.experimental: bool = self.read_bool()
         self.game_version: str = self.read_string()
           
-    def write_data(self):
-        self.write_var_int(self.packet_id)
+    def encode_payload(self):
         self.write_bool(self.forced_to_accept)
         if not hasattr(self, "behavior_pack_entries"):
             self.write_unsigned_short_le(0)
         else:
             self.write_unsigned_short_le(len(self.behavior_pack_entries))
             for pack in self.behavior_pack_entries:
-                self.write_string(pack.id)
-                self.write_string(pack.version)
-                self.write_string(pack.sub_name)
+                self.write_string(pack["id"])
+                self.write_string(pack["version"])
+                self.write_string(pack["sub_name"])
         if not hasattr(self, "resource_pack_entries"):
             self.write_unsigned_short_le(0)
         else:
             self.write_unsigned_short_le(len(self.resource_pack_entries))
             for pack in self.resource_pack_entries:
-                self.write_string(pack.id)
-                self.write_string(pack.version)
-                self.write_string(pack.sub_name)
+                self.write_string(pack["id"])
+                self.write_string(pack["version"])
+                self.write_string(pack["sub_name"])
         self.write_bool(self.experimental)
         self.write_string(self.game_version)

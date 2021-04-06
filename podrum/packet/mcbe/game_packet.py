@@ -29,36 +29,36 @@
 #                                                                              #
 ################################################################################
 
-from utils.mcbe_binary_stream import mcbe_binary_stream
+from binary_utils.binary_stream import binary_stream
+from rak_net.protocol.packet import packet
 import zlib
 
-class game_packet(mcbe_binary_stream):
+class game_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = 0xfe
 
-    def read_data(self):
-        self.read_unsigned_byte() # packet_id
+    def decode_payload(self):
         self.body: bytes = zlib.decompress(self.read_remaining(), -zlib.MAX_WBITS, 1024 * 1024 * 8)
         
-    def write_data(self):
-        self.write_unsigned_byte(self.packet_id)
+    def encode_payload(self):
         compress: object = zlib.compressobj(1, zlib.DEFLATED, -zlib.MAX_WBITS)
         compressed_data: bytes = compress.compress(self.body)
         compressed_data += compress.flush()
         self.write(compressed_data)
   
     def write_packet_data(self, data):
-        buffer: object = mcbe_binary_stream()
-        buffer.write_byte_array(data)
+        buffer: object = binary_stream()
+        buffer.write_var_int(len(data))
+        buffer.write(data)
         if hasattr(self, "body"):
             self.body += buffer.data
         else:
             self.body: bytes = buffer.data
             
     def read_packets_data(self):
-        buffer: object = mcbe_binary_stream(self.body)
+        buffer: object = binary_stream(self.body)
         packets_data: list = []
         while not buffer.feos():
-            packets_data.append(buffer.read_byte_array())
+            packets_data.append(buffer.read(buffer.read_var_int()))
         return packets_data

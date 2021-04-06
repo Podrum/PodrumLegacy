@@ -30,17 +30,15 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
-from utils.mcbe_binary_stream import mcbe_binary_stream
+from packet.mcbe.packet import packet
 
-class play_status_packet(mcbe_binary_stream):
+class play_status_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = mcbe_packet_ids.play_status_packet
 
-    def read_data(self) -> None:
-        self.read_var_int() # packet_id
+    def decode_payload(self) -> None:
         self.status: int = self.read_unsigned_int_be()
         
-    def write_data(self) -> None:
-        self.write_var_int(self.packet_id)
+    def encode_payload(self) -> None:
         self.write_unsigned_int_be(self.status)

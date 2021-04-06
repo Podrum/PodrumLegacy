@@ -29,8 +29,8 @@
 #                                                                              #
 ################################################################################
 
+from binary_utils.binary_stream import binary_stream
 from constant.mcbe_item_ids import mcbe_item_ids
-from utils.mcbe_binary_stream import mcbe_binary_stream
 
 class item_manager:
     def __init__(self, server: object) -> None:
@@ -45,7 +45,7 @@ class item_manager:
                 self.items["minecraft:" + i[0]]: int = i[1]
 
     def serialize_items(self) -> bytes:
-        buffer: object = mcbe_binary_stream()
+        buffer: object = binary_stream()
         if len(self.items) > 0:
             for item_name, item_id in dict(self.items).items():
                 buffer.write_string(item_name)

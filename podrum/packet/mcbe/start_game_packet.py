@@ -30,18 +30,17 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
-from utils.context import context
-from utils.mcbe_binary_stream import mcbe_binary_stream
+from packet.mcbe.packet import packet
 
-class start_game_packet(mcbe_binary_stream):
+class start_game_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = mcbe_packet_ids.start_game_packet
 
-    def read_data(self):
+    def decode_payload(self):
         pass
           
-    def write_data(self):
+    def encode_payload(self):
         self.write_signed_var_long(self.entity_id)
         self.write_var_long(self.entity_runtime_id)
         self.write_signed_var_int(self.player_gamemode)

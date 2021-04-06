@@ -37,17 +37,17 @@ from packet.mcbe.play_status_packet import play_status_packet
 from packet.mcbe.resource_pack_client_response_packet import resource_pack_client_response_packet
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
-from packet.raknet.frame import frame
+from rak_net.protocol.frame import frame
 import zlib
 
 class bedrock_player:
-    def __init__(self, address, server):
-        self.address = address
+    def __init__(self, connection, server):
+        self.connection = connection
         self.server = server
 
     def handle_login_packet(self, data: bytes):
         packet: object = login_packet(data)
-        packet.read_data()
+        packet.decode()
         for chain in packet.chain_data:
             if "identityPublicKey" in chain:
                 self.identity_public_key: str = chain["identityPublicKey"]
@@ -59,19 +59,19 @@ class bedrock_player:
         packet: object = resource_packs_info_packet()
         packet.forced_to_accept: bool = False
         packet.scripting_enabled: bool = False
-        packet.write_data()
+        packet.encode()
         self.send_packet(packet.data)
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
 
     def handle_resource_pack_client_response_packet(self, data):
         packet: object = resource_pack_client_response_packet(data)
-        packet.read_data()
+        packet.decode()
         if packet.status == 0:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
             packet.experimental: bool = False
             packet.game_version: str = version.mcbe_version
-            packet.write_data()
+            packet.encode()
             self.send_packet(packet.data)
         elif packet.status == 3:
             pass # Start Game
@@ -85,14 +85,14 @@ class bedrock_player:
     def send_play_status(self, status):
         packet: object = play_status_packet()
         packet.status: int = status
-        packet.write_data()
+        packet.encode()
         self.send_packet(packet.data)
     
     def send_packet(self, data):
         new_packet: object = game_packet()
         new_packet.write_packet_data(data)
-        new_packet.write_data()
+        new_packet.encode()
         send_packet: object = frame()
         send_packet.reliability: int = 0
         send_packet.body: bytes = new_packet.data
-        self.server.raknet_handler.add_to_queue(send_packet, self.address, False)
+        self.connection.add_to_queue(send_packet, False)

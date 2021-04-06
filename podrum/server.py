@@ -29,11 +29,10 @@
 #                                                                              #
 ################################################################################
 
-from constant.event import event
 from constant.misc import misc
 from constant.vanilla_commands import vanilla_commands
 from handler.command_handler import command_handler
-from handler.raknet_handler import raknet_handler
+from interface.rak_net_interface import rak_net_interface
 from manager.command_manager import command_manager
 from manager.event_manager import event_manager
 from manager.item_manager import item_manager
@@ -44,10 +43,12 @@ from utils.logger import logger
 
 class server:
     def __init__(self) -> None:
+        self.hostname: str = ".".join(["0", "0", "0", "0"])
+        self.port: int = 19132
         self.command_manager: object = command_manager(self)
         self.command_handler: object = command_handler(self)
         self.event_manager: object = event_manager(self)
-        self.raknet_handler: object = raknet_handler(self, ".".join(["0"] * 4), 19132, "")
+        self.rak_net_interface: object = rak_net_interface(self)
         self.item_manager: object = item_manager(self)
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
@@ -63,9 +64,7 @@ class server:
         self.command_manager.register(vanilla_commands.plugins, "Plugins Command")
         
     def register_events(self) -> None:
-        self.event_manager.register("packet_data", event.on_packet_data)
-        self.event_manager.register("new_incoming_connection", event.on_new_incoming_connection)
-        self.event_manager.register("raknet_disconnect", event.on_raknet_disconnect)
+        pass
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -81,13 +80,13 @@ class server:
         self.register_vanilla_commands()
         self.register_events()
         self.command_handler.start_handler()
-        self.raknet_handler.start_handler()
+        self.rak_net_interface.startup()
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
 
     def stop(self) -> None:
-        self.raknet_handler.stop_handler()
+        self.rak_net_interface.stop()
         self.command_handler.stop_handler()
         self.plugin_manager.unload_all()
 
