@@ -78,13 +78,13 @@ class rak_net_interface(Thread):
                     self.server.players[connection.address.token].handle_packet(batch)
             
     def on_new_incoming_connection(self, connection: object) -> None:
-        self.server.players[connection.address.token] = bedrock_player(connection, self.server)
-        self.set_count(self.get_count() + 1)
+        self.server.players[connection.address.token]: object = bedrock_player(connection, self.server)
+        self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} connected.")
                    
     def on_disconnect(self, connection: object) -> None:
         del self.server.players[connection.address.token]
-        self.set_count(self.get_count() - 1)
+        self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} disconnected.")
 
     def startup(self) -> None:
