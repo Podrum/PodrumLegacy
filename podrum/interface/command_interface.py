@@ -31,7 +31,7 @@
 
 from threading import Thread
 
-class command_handler(Thread):
+class command_interface(Thread):
     def __init__(self, server: object) -> None:
         super().__init__()
         self.server: object = server
