@@ -31,7 +31,7 @@
 
 from constant.misc import misc
 from constant.vanilla_commands import vanilla_commands
-from handler.command_handler import command_handler
+from handler.command_interface import command_interface
 from interface.rak_net_interface import rak_net_interface
 from manager.command_manager import command_manager
 from manager.event_manager import event_manager
@@ -46,7 +46,7 @@ class server:
         self.hostname: str = ".".join(["0", "0", "0", "0"])
         self.port: int = 19132
         self.command_manager: object = command_manager(self)
-        self.command_handler: object = command_handler(self)
+        self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
         self.rak_net_interface: object = rak_net_interface(self)
         self.item_manager: object = item_manager(self)
@@ -79,7 +79,7 @@ class server:
         self.plugin_manager.load_all(misc.plugin_dir)
         self.register_vanilla_commands()
         self.register_events()
-        self.command_handler.start_handler()
+        self.command_interface.start_interface()
         self.rak_net_interface.start_interface()
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
@@ -87,7 +87,7 @@ class server:
 
     def stop(self) -> None:
         self.rak_net_interface.stop_interface()
-        self.command_handler.stop_handler()
+        self.command_interface.stop_interface()
         self.plugin_manager.unload_all()
 
     def send_message(self, message: str) -> None:
