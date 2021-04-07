@@ -87,11 +87,11 @@ class rak_net_interface(Thread):
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} disconnected.")
 
-    def startup(self) -> None:
+    def start_interface(self) -> None:
         self.stopped: bool = False
         self.start()
 
-    def stop(self) -> None:
+    def stop_interface(self) -> None:
         self.stopped: bool = True
 
     def run(self):
