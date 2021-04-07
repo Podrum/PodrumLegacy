@@ -80,13 +80,13 @@ class server:
         self.register_vanilla_commands()
         self.register_events()
         self.command_handler.start_handler()
-        self.rak_net_interface.startup()
+        self.rak_net_interface.start_interface()
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
 
     def stop(self) -> None:
-        self.rak_net_interface.stop()
+        self.rak_net_interface.stop_interface()
         self.command_handler.stop_handler()
         self.plugin_manager.unload_all()
 
