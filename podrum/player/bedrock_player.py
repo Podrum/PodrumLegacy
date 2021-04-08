@@ -74,7 +74,14 @@ class bedrock_player:
             packet.encode()
             self.send_packet(packet.data)
         elif packet.status == 3:
-            pass # Start Game
+            packet: object = resource_pack_stack_packet()
+            packet.forced_to_accept: bool = False
+            packet.experimental: bool = False
+            packet.game_version: str = version.mcbe_version
+            packet.encode()
+            self.send_packet(packet.data)
+        elif packet.status == 4:
+            self.server.logger.success(f"{self.username} has all packs.")
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
