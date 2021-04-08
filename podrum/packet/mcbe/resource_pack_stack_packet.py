@@ -58,7 +58,7 @@ class resource_pack_stack_packet(packet):
             resource_pack_entry["sub_name"]: str = self.read_string()
             self.resource_pack_entries.append(resource_pack_entry)
         self.game_version: str = self.read_string()
-        self.experiments_count: int = self.read_var_int()
+        self.expirement_count: int = self.read_var_int()
         self.experimental: bool = self.read_bool()
         self.pos += 4
           
@@ -81,6 +81,6 @@ class resource_pack_stack_packet(packet):
                 self.write_string(pack["version"])
                 self.write_string(pack["sub_name"])
         self.write_string(self.game_version)
-        self.write_var_int(self.experiments_count)
+        self.write_var_int(self.expirement_count)
         self.write_bool(self.experimental)
         self.write_int_le(0)
