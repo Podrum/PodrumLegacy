@@ -69,15 +69,17 @@ class bedrock_player:
         if packet.status == 0:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
-            packet.experimental: bool = False
             packet.game_version: str = version.mcbe_version
+            packet.expirement_count: int = 0
+            packet.experimental: bool = False
             packet.encode()
             self.send_packet(packet.data)
         elif packet.status == 3:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
-            packet.experimental: bool = False
             packet.game_version: str = version.mcbe_version
+            packet.expirement_count: int = 0
+            packet.experimental: bool = False
             packet.encode()
             self.send_packet(packet.data)
         elif packet.status == 4:
