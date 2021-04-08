@@ -57,8 +57,8 @@ class resource_pack_stack_packet(packet):
             resource_pack_entry["version"]: str = self.read_string()
             resource_pack_entry["sub_name"]: str = self.read_string()
             self.resource_pack_entries.append(resource_pack_entry)
-        self.game_version: str = self.read_string()
         self.experimental: bool = self.read_bool()
+        self.game_version: str = self.read_string()
           
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
@@ -78,5 +78,5 @@ class resource_pack_stack_packet(packet):
                 self.write_string(pack["id"])
                 self.write_string(pack["version"])
                 self.write_string(pack["sub_name"])
-        self.write_string(self.game_version)
         self.write_bool(self.experimental)
+        self.write_string(self.game_version)
