@@ -92,6 +92,5 @@ class start_game_packet(packet):
         self.write_bool(self.is_server_side_movement_enabled)
         self.write_bool(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
-        self.write_var_int(0) # Block Palette?
         self.write(self.serialized_item_table)
         self.write_string(self.multiplayer_correction_id)
