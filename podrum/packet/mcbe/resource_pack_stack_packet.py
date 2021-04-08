@@ -39,7 +39,7 @@ class resource_pack_stack_packet(packet):
 
     def decode_payload(self):
         self.forced_to_accept: bool = self.read_bool()
-        behavior_packs_count: int = self.read_unsigned_short_le()
+        behavior_packs_count: int = self.read_var_int()
         for i in range(0, behavior_packs_count):
             if not hasattr(self, "behavior_pack_entries"):
                 self.behavior_pack_entries = []
@@ -48,7 +48,7 @@ class resource_pack_stack_packet(packet):
             behavior_pack_entry["version"]: str = self.read_string()
             behavior_pack_entry["sub_name"]: str = self.read_string()
             self.behavior_pack_entries.append(behavior_pack_entry)
-        resource_packs_count: int = self.read_unsigned_short_le()
+        resource_packs_count: int = self.read_var_int()
         for i in range(0, resource_packs_count):
             if not hasattr(self, "resource_pack_entries"):
                 self.resource_pack_entries = []
@@ -57,26 +57,30 @@ class resource_pack_stack_packet(packet):
             resource_pack_entry["version"]: str = self.read_string()
             resource_pack_entry["sub_name"]: str = self.read_string()
             self.resource_pack_entries.append(resource_pack_entry)
-        self.experimental: bool = self.read_bool()
         self.game_version: str = self.read_string()
+        self.experiments_count: int = self.read_var_int()
+        self.experimental: bool = self.read_bool()
+        self.pos += 4
           
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
         if not hasattr(self, "behavior_pack_entries"):
-            self.write_unsigned_short_le(0)
+            self.write_var_int(0)
         else:
-            self.write_unsigned_short_le(len(self.behavior_pack_entries))
+            self.write_var_int(len(self.behavior_pack_entries))
             for pack in self.behavior_pack_entries:
                 self.write_string(pack["id"])
                 self.write_string(pack["version"])
                 self.write_string(pack["sub_name"])
         if not hasattr(self, "resource_pack_entries"):
-            self.write_unsigned_short_le(0)
+            self.write_var_int(0)
         else:
-            self.write_unsigned_short_le(len(self.resource_pack_entries))
+            self.write_var_int(len(self.resource_pack_entries))
             for pack in self.resource_pack_entries:
                 self.write_string(pack["id"])
                 self.write_string(pack["version"])
                 self.write_string(pack["sub_name"])
-        self.write_bool(self.experimental)
         self.write_string(self.game_version)
+        self.write_var_int(self.experiments_count)
+        self.write_bool(self.experimental)
+        self.write_int_le(0)
