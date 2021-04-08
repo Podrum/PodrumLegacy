@@ -31,7 +31,7 @@
 
 from constant.misc import misc
 from constant.vanilla_commands import vanilla_commands
-from handler.command_interface import command_interface
+from interface.command_interface import command_interface
 from interface.rak_net_interface import rak_net_interface
 from manager.command_manager import command_manager
 from manager.event_manager import event_manager
