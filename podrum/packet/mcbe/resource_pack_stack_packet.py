@@ -60,7 +60,7 @@ class resource_pack_stack_packet(packet):
         self.game_version: str = self.read_string()
         self.expirement_count: int = self.read_var_int()
         self.experimental: bool = self.read_bool()
-        self.pos += 4
+        self.pos += 3
           
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
@@ -83,4 +83,6 @@ class resource_pack_stack_packet(packet):
         self.write_string(self.game_version)
         self.write_var_int(self.expirement_count)
         self.write_bool(self.experimental)
-        self.write_int_le(0)
+        self.write_unsigned_byte(0)
+        self.write_unsigned_byte(0)
+        self.write_unsigned_byte(0)
