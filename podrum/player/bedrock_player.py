@@ -37,6 +37,7 @@ from packet.mcbe.play_status_packet import play_status_packet
 from packet.mcbe.resource_pack_client_response_packet import resource_pack_client_response_packet
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
+from packet.mcbe.start_game_packet import start_game_packet
 from rak_net.protocol.frame import frame
 import zlib
 
@@ -44,6 +45,66 @@ class bedrock_player:
     def __init__(self, connection, server):
         self.connection = connection
         self.server = server
+        
+    def send_start_game(self):
+        packet: object = start_game_packet()
+        packet.entity_id: int = 0
+        packet.entity_runtime_id: int = 0
+        packet.player_gamemode: int = 1
+        packet.spawn: dict = {"x": 0, "y": 80, "z": 0}
+        packet.rotation: dict = {"x": 0, "y": 0}
+        packet.seed: int = -1
+        packet.spawn_biome_type: int = 0
+        packet.custom_biome_name: str = ""
+        packet.dimension: int = 0
+        packet.generator: int = 0
+        packet.world_gamemode: int = 0
+        packet.difficulty: int = 0
+        packet.world_spawn: dict = {"x": 0, "y": 80, "z": 0}
+        packet.has_achivements_disabled: bool = True
+        packet.day_cycle_stop_time: int = 0
+        packet.edu_offer: int = 0
+        packet.has_education_features_enabled: bool = False
+        packet.education_production_id: int = 0
+        packet.rain_level: float = 0.0
+        packet.lighting_level: float = 1000.0
+        packet.has_confirmed_platform_locked_content: bool = False
+        packet.is_multiplayer: bool = True
+        packet.broadcast_to_lan: bool = True
+        packet.xbox_live_broadcast_mode: int = 4
+        packet.platform_broadcast_mode: int = 4
+        packet.enable_commands: bool = True
+        packet.are_texture_packs_required: bool = False
+        packet.game_rules: list = []
+        packet.experiments: int = 0
+        packet.has_used_experiments: bool = False
+        packet.bonus_chest: bool = False
+        packet.map_enabled: bool = False
+        packet.permission_level: int = 0
+        packet.server_chunk_tick_range: int = 0
+        packet.has_locked_behavior_pack: bool = False
+        packet.has_locked_resource_pack: bool = False
+        packet.is_from_locked_world_template: bool = False
+        packet.use_msa_gametags_only: bool = False
+        packet.is_from_world_template: bool = False
+        packet.is_world_template_option_locked: bool = False
+        packet.only_v_1_villagers: bool = False
+        packet.game_version: string = version.mcbe_version
+        packet.limited_world_width: int = 0
+        packet.limited_world_height: int = 0
+        packet.is_nether_type: bool = False
+        packet.is_force_experimental_gameplay: bool = False
+        packet.level_id: str = ""
+        packet.world_name: str = ""
+        packet.premium_world_template: str = ""
+        packet.is_trial: bool = False
+        packet.is_server_side_movement_enabled: bool = False
+        packet.current_tick: int = 0
+        packet.enchantment_seed: int = 0
+        packet.multiplayer_correction_id: str = ""
+        packet.new_inventory: bool = False
+        packet.encode()
+        self.send_packet(packet.data)
 
     def handle_login_packet(self, data: bytes):
         packet: object = login_packet(data)
@@ -84,6 +145,7 @@ class bedrock_player:
             self.send_packet(packet.data)
         elif packet.status == 4:
             self.server.logger.success(f"{self.username} has all packs.")
+            send_start_game()
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
