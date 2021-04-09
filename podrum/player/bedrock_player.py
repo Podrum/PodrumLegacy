@@ -62,7 +62,7 @@ class bedrock_player:
         packet.difficulty: int = 0
         packet.world_spawn: dict = {"x": 0, "y": 80, "z": 0}
         packet.has_achivements_disabled: bool = True
-        packet.day_cycle_stop_time: int = 0
+        packet.time: int = 0
         packet.edu_offer: int = 0
         packet.has_education_features_enabled: bool = False
         packet.education_production_id: str = ""
