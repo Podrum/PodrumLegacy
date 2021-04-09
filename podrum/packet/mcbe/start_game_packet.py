@@ -67,8 +67,8 @@ class start_game_packet(packet):
         self.write_bool(self.has_confirmed_platform_locked_content)
         self.write_bool(self.is_multiplayer)
         self.write_bool(self.broadcast_to_lan)
-        self.write_signed_var_int(self.xbox_live_broadcast_mode)
-        self.write_signed_var_int(self.platform_broadcast_mode)
+        self.write_var_int(self.xbox_live_broadcast_mode)
+        self.write_var_int(self.platform_broadcast_mode)
         self.write_bool(self.enable_commands)
         self.write_bool(self.are_texture_packs_required)
         self.write_game_rules(self.game_rules)
@@ -97,12 +97,13 @@ class start_game_packet(packet):
         self.write_string(self.premium_world_template)
         self.write_bool(self.is_trial)
         # > Player Movement Settings {
-        self.write_signed_var_int(0)
-        self.write_signed_var_int(0)
+        self.write_signed_var_int(0) # Movement Type
+        self.write_signed_var_int(0) # Movement Rewind History Size
+        self.write_bool(False) # Enable New Block Break System
         # < }
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # Block Pallet
-        self.write_var_int(0) # self.write(self.serialized_item_table)
+        self.write_var_int(0) # Item Pallet self.write(self.serialized_item_table)
         self.write_string(self.multiplayer_correction_id)
         self.write_byte(self.new_inventory)
