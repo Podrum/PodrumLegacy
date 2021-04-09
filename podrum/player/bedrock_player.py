@@ -65,7 +65,7 @@ class bedrock_player:
         packet.day_cycle_stop_time: int = 0
         packet.edu_offer: int = 0
         packet.has_education_features_enabled: bool = False
-        packet.education_production_id: int = ""
+        packet.education_production_id: str = ""
         packet.rain_level: float = 0
         packet.lighting_level: float = 0
         packet.has_confirmed_platform_locked_content: bool = False
