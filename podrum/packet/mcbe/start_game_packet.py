@@ -103,7 +103,7 @@ class start_game_packet(packet):
         # < }
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
-        self.write_var_int(0)
+        self.write_var_int(0) # Block Pallet
         self.write_var_int(0) # self.write(self.serialized_item_table)
         self.write_string(self.multiplayer_correction_id)
         self.write_byte(self.new_inventory)
