@@ -65,9 +65,9 @@ class bedrock_player:
         packet.day_cycle_stop_time: int = 0
         packet.edu_offer: int = 0
         packet.has_education_features_enabled: bool = False
-        packet.education_production_id: int = 0
-        packet.rain_level: float = 0.0
-        packet.lighting_level: float = 1000.0
+        packet.education_production_id: int = ""
+        packet.rain_level: float = 0
+        packet.lighting_level: float = 0
         packet.has_confirmed_platform_locked_content: bool = False
         packet.is_multiplayer: bool = True
         packet.broadcast_to_lan: bool = True
@@ -75,7 +75,7 @@ class bedrock_player:
         packet.platform_broadcast_mode: int = 4
         packet.enable_commands: bool = True
         packet.are_texture_packs_required: bool = False
-        packet.game_rules: list = []
+        packet.game_rules: list = {}
         packet.experiments: int = 0
         packet.has_used_experiments: bool = False
         packet.bonus_chest: bool = False
@@ -87,18 +87,17 @@ class bedrock_player:
         packet.is_from_locked_world_template: bool = False
         packet.use_msa_gametags_only: bool = False
         packet.is_from_world_template: bool = False
-        packet.is_world_template_option_locked: bool = False
+        packet.is_world_template_option_locked: bool = True
         packet.only_v_1_villagers: bool = False
         packet.game_version: string = version.mcbe_version
-        packet.limited_world_width: int = 0
-        packet.limited_world_height: int = 0
+        packet.limited_world_width: int = 16
+        packet.limited_world_height: int = 16
         packet.is_nether_type: bool = False
         packet.is_force_experimental_gameplay: bool = False
-        packet.level_id: str = ""
+        packet.level_id: str = "3138ee93-4a4a-479b-8dca-65ca5399e075"
         packet.world_name: str = ""
         packet.premium_world_template: str = ""
         packet.is_trial: bool = False
-        packet.is_server_side_movement_enabled: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
         packet.multiplayer_correction_id: str = ""
@@ -145,7 +144,7 @@ class bedrock_player:
             self.send_packet(packet.data)
         elif packet.status == 4:
             self.server.logger.success(f"{self.username} has all packs.")
-            send_start_game()
+            self.send_start_game()
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
@@ -166,4 +165,4 @@ class bedrock_player:
         send_packet: object = frame()
         send_packet.reliability: int = 0
         send_packet.body: bytes = new_packet.data
-        self.connection.add_to_queue(send_packet, False)
+        self.connection.add_to_queue(send_packet)

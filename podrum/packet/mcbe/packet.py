@@ -64,25 +64,25 @@ class packet(binary_stream):
         
     def read_vector_2(self) -> dict:
         value: dict = {}
-        value["x"]: int = self.read_float()
-        value["y"]: int = self.read_float()
+        value["x"]: int = self.read_float_le()
+        value["y"]: int = self.read_float_le()
         return value
         
     def write_vector_2(self, value: dict) -> None:
-        self.write_float(value["x"])
-        self.write_float(value["y"])
+        self.write_float_le(value["x"])
+        self.write_float_le(value["y"])
         
     def read_vector_3(self) -> dict:
         value: dict = {}
-        value["x"]: int = self.read_float()
-        value["y"]: int = self.read_float()
-        value["z"]: int = self.read_float()
+        value["x"]: int = self.read_float_le()
+        value["y"]: int = self.read_float_le()
+        value["z"]: int = self.read_float_le()
         return value
         
     def write_vector_3(self, value: dict) -> None:
-        self.write_float(value["x"])
-        self.write_float(value["y"])
-        self.write_float(value["z"])
+        self.write_float_le(value["x"])
+        self.write_float_le(value["y"])
+        self.write_float_le(value["z"])
         
     def read_block_coordinates(self) -> dict:
         value: dict = {}
@@ -92,24 +92,24 @@ class packet(binary_stream):
         return value
         
     def write_block_coordinates(self, value: dict) -> None:
-        self.read_signed_var_int(value["x"])
-        self.read_var_int(value["y"])
-        self.read_signed_var_int(value["z"])
+        self.write_signed_var_int(value["x"])
+        self.write_var_int(value["y"])
+        self.write_signed_var_int(value["z"])
         
     def read_player_location(self) -> dict:
         value: dict = {}
-        value["x"]: int = self.read_float()
-        value["y"]: int = self.read_float()
-        value["z"]: int = self.read_float()
+        value["x"]: int = self.read_float_le()
+        value["y"]: int = self.read_float_le()
+        value["z"]: int = self.read_float_le()
         value["pitch"]: float = self.read_unsigned_byte() / 0.71
         value["head_yaw"]: float = self.read_unsigned_byte() / 0.71
         value["yaw"]: float = self.read_unsigned_byte() / 0.71
         return value
         
     def write_player_location(self, value: dict) -> None:
-        self.write_float(value["x"])
-        self.write_float(value["y"])
-        self.write_float(value["z"])
+        self.write_float_le(value["x"])
+        self.write_float_le(value["y"])
+        self.write_float_le(value["z"])
         self.write_unsigned_byte(int(value["pitch"] * 0.71))
         self.write_unsigned_byte(int(value["head_yaw"] * 0.71))
         self.write_unsigned_byte(int(value["yaw"] * 0.71))
