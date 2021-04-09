@@ -98,6 +98,7 @@ class start_game_packet(packet):
         self.write_bool(self.is_trial)
         # > Player Movement Settings {
         self.write_signed_var_int(0)
+        self.write_signed_var_int(0)
         # < }
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
