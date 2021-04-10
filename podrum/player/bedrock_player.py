@@ -38,6 +38,7 @@ from packet.mcbe.resource_pack_client_response_packet import resource_pack_clien
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
 from packet.mcbe.start_game_packet import start_game_packet
+from packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
 from rak_net.protocol.frame import frame
 import zlib
 
