@@ -152,7 +152,7 @@ class bedrock_player:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
             
-    def handle_packet_violation_warning_packet(self, data):
+    def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
         packet.decode()
         if packet.type == 0:
