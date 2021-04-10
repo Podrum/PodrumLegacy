@@ -31,6 +31,7 @@
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.version import version
+from mcbe_data.get import get as get_mcbe_data
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.login_packet import login_packet
 from packet.mcbe.play_status_packet import play_status_packet
@@ -104,6 +105,7 @@ class bedrock_player:
         packet.enable_new_block_break_system: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
+        packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.multiplayer_correction_id: str = ""
         packet.new_inventory: bool = False
         packet.encode()
