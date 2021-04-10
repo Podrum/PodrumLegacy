@@ -162,9 +162,9 @@ class bedrock_player:
                 error_message += f"Final Warning{temp}"
             elif packet.severity == 2:
                 error_message += f"Terminating connectinon{temp}"
-            print(error_message)
+            self.server.logger.error(error_message)
             if len(packet.message) > 0:
-                print(packet.message)
+                self.server.logger.error(packet.message)
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
