@@ -48,11 +48,9 @@ class start_game_packet(packet):
         self.write_vector_2(self.rotation)
         # Level Settings
         self.write_signed_var_int(self.seed)
-        # > Spawn Settings {
         self.write_unsigned_short_le(self.spawn_biome_type)
         self.write_string(self.custom_biome_name)
         self.write_signed_var_int(self.dimension)
-        # < }
         self.write_signed_var_int(self.generator)
         self.write_signed_var_int(self.world_gamemode)
         self.write_signed_var_int(self.difficulty)
@@ -72,10 +70,8 @@ class start_game_packet(packet):
         self.write_bool(self.enable_commands)
         self.write_bool(self.are_texture_packs_required)
         self.write_game_rules(self.game_rules)
-        # > Experiments {
         self.write_int_le(self.experiments)
         self.write_bool(self.has_used_experiments)
-        # < }
         self.write_bool(self.bonus_chest)
         self.write_bool(self.map_enabled)
         self.write_signed_var_int(self.permission_level)
@@ -96,14 +92,12 @@ class start_game_packet(packet):
         self.write_string(self.world_name)
         self.write_string(self.premium_world_template)
         self.write_bool(self.is_trial)
-        # > Player Movement Settings {
         self.write_signed_var_int(self.movement_type)
         self.write_signed_var_int(self.movement_rewind_history_size)
         self.write_bool(self.enable_new_block_break_system)
-        # < }
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # Block Pallet
         self.write_var_int(0) # Item Pallet self.write(self.serialized_item_table)
         self.write_string(self.multiplayer_correction_id)
-        self.write_byte(self.new_inventory)
+        self.write_bool(self.new_inventory)
