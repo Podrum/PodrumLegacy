@@ -99,6 +99,10 @@ class start_game_packet(packet):
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # Block Pallet
-        self.write_var_int(0) # Item Pallet self.write(self.serialized_item_table)
+        self.write_var_int(len(self.item_table))
+        for string_id, numeric_id in items(self.item_table):
+            self.write_string(string_id)
+            self.write_unsigned_short_le(numeric_id)
+            self.write_bool(False)
         self.write_string(self.multiplayer_correction_id)
         self.write_bool(self.new_inventory)
