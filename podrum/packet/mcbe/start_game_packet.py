@@ -100,7 +100,7 @@ class start_game_packet(packet):
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # Block Pallet
         self.write_var_int(len(self.item_table))
-        for string_id, numeric_id in items(self.item_table):
+        for string_id, numeric_id in self.item_table.items():
             self.write_string(string_id)
             self.write_short_le(numeric_id)
             self.write_bool(False)
