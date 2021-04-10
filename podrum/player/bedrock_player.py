@@ -94,10 +94,13 @@ class bedrock_player:
         packet.limited_world_height: int = 16
         packet.is_nether_type: bool = False
         packet.is_force_experimental_gameplay: bool = False
-        packet.level_id: str = "3138ee93-4a4a-479b-8dca-65ca5399e075"
+        packet.level_id: str = ""
         packet.world_name: str = ""
         packet.premium_world_template: str = ""
         packet.is_trial: bool = False
+        packet.movement_type: int = 0
+        packet.movement_rewind_history_size: int = 0
+        packet.enable_new_block_break_system: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
         packet.multiplayer_correction_id: str = ""
