@@ -35,7 +35,6 @@ from interface.command_interface import command_interface
 from interface.rak_net_interface import rak_net_interface
 from manager.command_manager import command_manager
 from manager.event_manager import event_manager
-from manager.item_manager import item_manager
 from manager.plugin_manager import plugin_manager
 import os
 import time
@@ -49,7 +48,6 @@ class server:
         self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
         self.rak_net_interface: object = rak_net_interface(self)
-        self.item_manager: object = item_manager(self)
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
         self.players: dict = {}
