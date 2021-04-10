@@ -148,12 +148,30 @@ class bedrock_player:
         elif packet.status == 4:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
+            
+    def handle_packet_violation_warning_packet(self, data):
+        packet: object = packet_violation_warning_packet(data)
+        packet.decode()
+        if packet.type == 0:
+            error_message: str = ""
+            temp: str = f", due to malformed packet ({hex(packet.violated_packet_id)})"
+            if packet.severity == 0:
+                error_message += f"Warning{temp}"
+            elif packet.severity == 1:
+                error_message += f"Final Warning{temp}"
+            elif packet.severity == 2:
+                error_message += f"Terminating connectinon{temp}"
+            print(error_message)
+            if len(packet.message) > 0:
+                print(packet.message)
         
     def handle_packet(self, data):
         if data[0] == mcbe_packet_ids.login_packet:
             self.handle_login_packet(data)
         elif data[0] == mcbe_packet_ids.resource_pack_client_response_packet:
             self.handle_resource_pack_client_response_packet(data)
+        elif data[0] == mcbe_packet_ids.packet_violation_warning_packet:
+            self.handle_packet_violation_warning_packet(data)
     
     def send_play_status(self, status):
         packet: object = play_status_packet()
