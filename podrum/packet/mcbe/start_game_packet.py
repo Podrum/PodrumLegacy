@@ -46,7 +46,7 @@ class start_game_packet(packet):
         self.write_signed_var_int(self.player_gamemode)
         self.write_vector_3(self.spawn)
         self.write_vector_2(self.rotation)
-        # Level Settings
+        #ifndef LEVEL_SETTINGS
         self.write_signed_var_int(self.seed)
         self.write_unsigned_short_le(self.spawn_biome_type)
         self.write_string(self.custom_biome_name)
@@ -84,6 +84,7 @@ class start_game_packet(packet):
         self.write_bool(self.is_world_template_option_locked)
         self.write_bool(self.only_v_1_villagers)
         self.write_string(self.game_version)
+        #endif LEVEL_SETTINGS
         self.write_int_le(self.limited_world_width)
         self.write_int_le(self.limited_world_height)
         self.write_bool(self.is_nether_type)
