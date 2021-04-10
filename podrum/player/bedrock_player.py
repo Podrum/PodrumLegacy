@@ -53,7 +53,7 @@ class bedrock_player:
         packet.player_gamemode: int = 1
         packet.spawn: dict = {"x": 0, "y": 80, "z": 0}
         packet.rotation: dict = {"x": 0, "y": 0}
-        packet.seed: int = -1
+        packet.seed: int = 0
         packet.spawn_biome_type: int = 0
         packet.custom_biome_name: str = ""
         packet.dimension: int = 0
