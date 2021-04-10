@@ -97,9 +97,9 @@ class start_game_packet(packet):
         self.write_string(self.premium_world_template)
         self.write_bool(self.is_trial)
         # > Player Movement Settings {
-        self.write_signed_var_int(0) # Movement Type
-        self.write_signed_var_int(0) # Movement Rewind History Size
-        self.write_bool(False) # Enable New Block Break System
+        self.write_signed_var_int(self.movement_type)
+        self.write_signed_var_int(self.movement_rewind_history_size)
+        self.write_bool(self.enable_new_block_break_system)
         # < }
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
