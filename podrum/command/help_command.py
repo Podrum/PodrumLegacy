@@ -29,8 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from constant.version import version
-
 class help_command:
     def __init__(self) -> None:
         self.name: str = "help"
