@@ -48,7 +48,7 @@ class bedrock_player:
         self.connection = connection
         self.server = server
         
-    def send_start_game(self):
+    def send_start_game(self) -> None:
         packet: object = start_game_packet()
         packet.entity_id: int = 0
         packet.entity_runtime_id: int = 0
@@ -110,8 +110,13 @@ class bedrock_player:
         packet.new_inventory: bool = False
         packet.encode()
         self.send_packet(packet.data)
+        
+    def send_item_component_packet(self) -> None:
+        packet: object = item_component_packet()
+        packet.encode()
+        self.send_packet(packet.data)
 
-    def handle_login_packet(self, data: bytes):
+    def handle_login_packet(self, data: bytes) -> None:
         packet: object = login_packet(data)
         packet.decode()
         for chain in packet.chain_data:
@@ -129,7 +134,7 @@ class bedrock_player:
         self.send_packet(packet.data)
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
 
-    def handle_resource_pack_client_response_packet(self, data):
+    def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
         packet: object = resource_pack_client_response_packet(data)
         packet.decode()
         if packet.status == 0:
@@ -151,6 +156,7 @@ class bedrock_player:
         elif packet.status == 4:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
+            self.send_item_component_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
