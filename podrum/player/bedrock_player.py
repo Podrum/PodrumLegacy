@@ -33,6 +33,7 @@ from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.version import version
 from mcbe_data.get import get as get_mcbe_data
 from packet.mcbe.game_packet import game_packet
+from packet.mcbe.creative_content_packet import creative_content_packet
 from packet.mcbe.item_component_packet import item_component_packet
 from packet.mcbe.login_packet import login_packet
 from packet.mcbe.play_status_packet import play_status_packet
@@ -163,6 +164,7 @@ class bedrock_player:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
             self.send_item_component_packet()
+            self.send_creative_content_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
