@@ -41,9 +41,10 @@ class command_manager:
         for command in self.commands:
             if command.name == name:
                 return True
-            for alias in command.aliases:
-                if alias == name:
-                    return True
+            if hasattr(command, "aliases"):
+                for alias in command.aliases:
+                    if alias == name:
+                        return True
         return False
 
     def execute(self, name: str, args: list, sender: object) -> None:
@@ -51,7 +52,8 @@ class command_manager:
             if command.name == name:
                 command.execute(args, sender, self.server)
                 break
-            for alias in command.aliases:
-                if alias == name:
-                    command.execute(args, sender, self.server)
-                    break
+            if hasattr(command, "aliases"):
+                for alias in command.aliases:
+                    if alias == name:
+                        command.execute(args, sender, self.server)
+                        break
