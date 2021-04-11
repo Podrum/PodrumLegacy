@@ -116,6 +116,11 @@ class bedrock_player:
         packet: object = item_component_packet()
         packet.encode()
         self.send_packet(packet.data)
+        
+    def send_creative_content_packet(self) -> None:
+        packet: object = creative_content_packet()
+        packet.encode()
+        self.send_packet(packet.data)
 
     def handle_login_packet(self, data: bytes) -> None:
         packet: object = login_packet(data)
