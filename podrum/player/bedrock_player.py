@@ -61,13 +61,13 @@ class bedrock_player:
         packet.rotation: dict = {"x": 0, "y": 0}
         packet.seed: int = 0
         packet.spawn_biome_type: int = 0
-        packet.custom_biome_name: str = ""
+        packet.custom_biome_name: str = "plains"
         packet.dimension: int = 0
         packet.generator: int = 1
         packet.world_gamemode: int = 1
         packet.difficulty: int = 0
         packet.world_spawn: dict = {"x": 0, "y": 80, "z": 0}
-        packet.has_achivements_disabled: bool = True
+        packet.has_achivements_disabled: bool = False
         packet.time: int = 0
         packet.edu_offer: int = 0
         packet.has_education_features_enabled: bool = False
@@ -86,7 +86,7 @@ class bedrock_player:
         packet.has_used_experiments: bool = False
         packet.bonus_chest: bool = False
         packet.map_enabled: bool = False
-        packet.permission_level: int = 0
+        packet.permission_level: int = 1
         packet.server_chunk_tick_range: int = 0
         packet.has_locked_behavior_pack: bool = False
         packet.has_locked_resource_pack: bool = False
@@ -96,8 +96,8 @@ class bedrock_player:
         packet.is_world_template_option_locked: bool = True
         packet.only_v_1_villagers: bool = False
         packet.game_version: string = version.mcbe_version
-        packet.limited_world_width: int = 16
-        packet.limited_world_height: int = 16
+        packet.limited_world_width: int = 0
+        packet.limited_world_height: int = 0
         packet.is_nether_type: bool = False
         packet.is_force_experimental_gameplay: bool = False
         packet.level_id: str = ""
