@@ -42,7 +42,7 @@ class command_interface(Thread):
             command_name: str = raw_command[0]
             command_args: list = raw_command[1:]
             commands: dict = self.server.command_manager.commands
-            if command_name in commands:
+            if self.server.command_manager.has_command(command_name):
                 self.server.command_manager.execute(command_name, command_args, self.server)
             else:
                 self.server.logger.error("Invalid command!")
