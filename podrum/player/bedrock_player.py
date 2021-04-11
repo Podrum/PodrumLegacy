@@ -168,7 +168,7 @@ class bedrock_player:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
             packet.game_version: str = version.mcbe_version
-            packet.expirement_count: int = 0
+            packet.experiment_count: int = 0
             packet.experimental: bool = False
             packet.encode()
             self.send_packet(packet.data)
