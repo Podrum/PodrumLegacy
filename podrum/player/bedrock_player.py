@@ -170,8 +170,8 @@ class bedrock_player:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
             self.send_item_component_packet()
-            self.send_creative_content_packet()
             self.send_biome_definitions_list_packet()
+            self.send_creative_content_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
