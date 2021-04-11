@@ -48,7 +48,7 @@ class start_game_packet(packet):
         self.write_vector_2(self.rotation)
         #ifndef LEVEL_SETTINGS
         self.write_signed_var_int(self.seed)
-        self.write_unsigned_short_le(self.spawn_biome_type)
+        self.write_short_le(self.spawn_biome_type)
         self.write_string(self.custom_biome_name)
         self.write_signed_var_int(self.dimension)
         self.write_signed_var_int(self.generator)
@@ -65,8 +65,8 @@ class start_game_packet(packet):
         self.write_bool(self.has_confirmed_platform_locked_content)
         self.write_bool(self.is_multiplayer)
         self.write_bool(self.broadcast_to_lan)
-        self.write_var_int(self.xbox_live_broadcast_mode)
-        self.write_var_int(self.platform_broadcast_mode)
+        self.write_signed_var_int(self.xbox_live_broadcast_mode)
+        self.write_signed_var_int(self.platform_broadcast_mode)
         self.write_bool(self.enable_commands)
         self.write_bool(self.are_texture_packs_required)
         self.write_game_rules(self.game_rules)
@@ -93,16 +93,16 @@ class start_game_packet(packet):
         self.write_string(self.world_name)
         self.write_string(self.premium_world_template)
         self.write_bool(self.is_trial)
-        self.write_signed_var_int(self.movement_type)
+        self.write_var_int(self.movement_type)
         self.write_signed_var_int(self.movement_rewind_history_size)
         self.write_bool(self.enable_new_block_break_system)
         self.write_unsigned_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # Block Pallet
-        self.write_var_int(len(self.item_table))
-        for string_id, numeric_id in self.item_table.items():
-            self.write_string(string_id)
-            self.write_short_le(numeric_id)
-            self.write_bool(False)
+        self.write_var_int(0) # Item Pallet
+        #for string_id, numeric_id in self.item_table.items():
+            #self.write_string(string_id)
+            #self.write_short_le(numeric_id)
+            #self.write_bool(False)
         self.write_string(self.multiplayer_correction_id)
         self.write_bool(self.new_inventory)
