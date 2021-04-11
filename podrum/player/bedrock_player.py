@@ -179,7 +179,7 @@ class bedrock_player:
             self.send_biome_definitions_list_packet()
             self.send_available_entity_identifiers_packet()
             self.send_creative_content_packet()
-            self.send_play_status(4)
+            self.send_play_status(3)
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
