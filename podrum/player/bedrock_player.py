@@ -32,6 +32,7 @@
 from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.version import version
 from mcbe_data.get import get as get_mcbe_data
+from packet.mcbe.biome_definitions_list_packet import biome_definitions_list_packet
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.creative_content_packet import creative_content_packet
 from packet.mcbe.item_component_packet import item_component_packet
@@ -122,6 +123,11 @@ class bedrock_player:
         packet: object = creative_content_packet()
         packet.encode()
         self.send_packet(packet.data)
+             
+    def send_biome_definitions_list_packet(self) -> None:
+        packet: object = biome_definitions_list_packet()
+        packet.encode()
+        self.send_packet(packet.data)
 
     def handle_login_packet(self, data: bytes) -> None:
         packet: object = login_packet(data)
@@ -165,6 +171,7 @@ class bedrock_player:
             self.send_start_game()
             self.send_item_component_packet()
             self.send_creative_content_packet()
+            self.send_biome_definitions_list_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
@@ -203,4 +210,4 @@ class bedrock_player:
         send_packet: object = frame()
         send_packet.reliability: int = 0
         send_packet.body: bytes = new_packet.data
-        self.connection.add_to_queue(send_packet)
+        self.connection.add_to_queue(send_packet, False)
