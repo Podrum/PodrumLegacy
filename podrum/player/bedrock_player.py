@@ -109,7 +109,7 @@ class bedrock_player:
         packet.enable_new_block_break_system: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
-        packet.item_table: dict = {"minecraft:grass": -12}#get_mcbe_data.get_item_table()
+        packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.multiplayer_correction_id: str = ""
         packet.new_inventory: bool = False
         packet.encode()
