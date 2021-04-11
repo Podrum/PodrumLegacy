@@ -29,8 +29,13 @@
 #                                                                              #
 ################################################################################
 
+from command.help_command import help_command
+from command.plugins_command import plugins_command
+from command.reload_command import reload_command
+from command.say_command import say_command
+from command.stop_command import stop_command
+from command.version_command import version_command
 from constant.misc import misc
-from constant.vanilla_commands import vanilla_commands
 from interface.command_interface import command_interface
 from interface.rak_net_interface import rak_net_interface
 from manager.command_manager import command_manager
@@ -54,12 +59,12 @@ class server:
         self.start()
 
     def register_vanilla_commands(self) -> None:
-        self.command_manager.register(vanilla_commands.say, "Say Command")
-        self.command_manager.register(vanilla_commands.stop, "Stop Command")
-        self.command_manager.register(vanilla_commands.help, "Help Command")
-        self.command_manager.register(vanilla_commands.version, "Version Command")
-        self.command_manager.register(vanilla_commands.reload, "Reload Command")
-        self.command_manager.register(vanilla_commands.plugins, "Plugins Command")
+        self.command_manager.register(help_command())
+        self.command_manager.register(plugins_command())
+        self.command_manager.register(reload_command())
+        self.command_manager.register(say_command())
+        self.command_manager.register(stop_command())
+        self.command_manager.register(version_command())
         
     def register_events(self) -> None:
         pass
