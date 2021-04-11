@@ -54,8 +54,8 @@ class bedrock_player:
         
     def send_start_game(self) -> None:
         packet: object = start_game_packet()
-        packet.entity_id: int = 0
-        packet.entity_runtime_id: int = 0
+        packet.entity_id: int = 12
+        packet.entity_runtime_id: int = 12
         packet.player_gamemode: int = 1
         packet.spawn: dict = {"x": 0, "y": 80, "z": 0}
         packet.rotation: dict = {"x": 0, "y": 0}
@@ -63,8 +63,8 @@ class bedrock_player:
         packet.spawn_biome_type: int = 0
         packet.custom_biome_name: str = ""
         packet.dimension: int = 0
-        packet.generator: int = 0
-        packet.world_gamemode: int = 0
+        packet.generator: int = 1
+        packet.world_gamemode: int = 1
         packet.difficulty: int = 0
         packet.world_spawn: dict = {"x": 0, "y": 80, "z": 0}
         packet.has_achivements_disabled: bool = True
@@ -109,7 +109,7 @@ class bedrock_player:
         packet.enable_new_block_break_system: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
-        packet.item_table: dict = get_mcbe_data.get_item_table()
+        packet.item_table: dict = {"minecraft:grass", -12}#get_mcbe_data.get_item_table()
         packet.multiplayer_correction_id: str = ""
         packet.new_inventory: bool = False
         packet.encode()
