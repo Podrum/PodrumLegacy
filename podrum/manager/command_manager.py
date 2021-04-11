@@ -32,11 +32,26 @@
 class command_manager:
     def __init__(self, server: object) -> None:
         self.server: object = server
-        self.commands: dict = {}
+        self.commands: list = []
 
-    def register(self, command: object, description: str) -> None:
-        self.commands[command.__name__]: dict = {"description": description, "command": command}
+    def register(self, command: object) -> None:
+        self.commands.append(command)
+        
+    def has_command(self, name: str) -> bool:
+        for command in self.commands:
+            if command.name == name:
+                return True
+            for alias in command.aliases:
+                if alias == name:
+                    return True
+        return False
 
-    def execute(self, command_name: str, command_args: list, sender: object) -> None:
-        if command_name in self.commands:
-            self.commands[command_name]["command"](command_args, sender, self.server)
+    def execute(self, name: str, args: list, sender: object) -> None:
+        for command in self.commands:
+            if command.name == name:
+                command.execute(args, sender, self.server)
+                break
+            for alias in command.aliases:
+                if alias == name:
+                    command.execute(args, sender, self.server)
+                    break
