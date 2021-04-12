@@ -42,7 +42,7 @@ class resource_pack_stack_packet(packet):
         behavior_packs_count: int = self.read_var_int()
         for i in range(0, behavior_packs_count):
             if not hasattr(self, "behavior_pack_entries"):
-                self.behavior_pack_entries = []
+                self.behavior_pack_entries: list = []
             behavior_pack_entry: dict = {}
             behavior_pack_entry["id"]: str = self.read_string()
             behavior_pack_entry["version"]: str = self.read_string()
@@ -51,7 +51,7 @@ class resource_pack_stack_packet(packet):
         resource_packs_count: int = self.read_var_int()
         for i in range(0, resource_packs_count):
             if not hasattr(self, "resource_pack_entries"):
-                self.resource_pack_entries = []
+                self.resource_pack_entries: list = []
             resource_pack_entry: dict = {}
             resource_pack_entry["id"]: str = self.read_string()
             resource_pack_entry["version"]: str = self.read_string()
