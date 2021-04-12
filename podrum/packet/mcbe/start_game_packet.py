@@ -192,13 +192,12 @@ class start_game_packet(packet):
 
         self.write_signed_var_int(0) # enchantment seed
 
-        self.write_var_int(0) # block pallet
-        self.write_var_int(0) # item pallete
-
-        #for string_id, numeric_id in self.item_table.items():
-        #    self.write_string(string_id)
-        #    self.write_short_le(numeric_id)
-        #    self.write_bool(False)
+        self.write_var_int(0) # block states length
+        self.write_var_int(len(self.item_table)) # item table length
+        for string_id, numeric_id in self.item_table.items():
+            self.write_string(string_id)
+            self.write_short_le(numeric_id)
+            self.write_bool(False)
 
         self.write_string('')
         self.write_bool(False)
