@@ -54,8 +54,8 @@ class bedrock_player:
         
     def send_start_game(self) -> None:
         packet: object = start_game_packet()
-        packet.entity_id: int = 12
-        packet.entity_runtime_id: int = 12
+        packet.entity_id: int = 1
+        packet.entity_runtime_id: int = 1
         packet.player_gamemode: int = 1
         packet.spawn: dict = {"x": 0, "y": 80, "z": 0}
         packet.rotation: dict = {"x": 0, "y": 0}
@@ -101,7 +101,7 @@ class bedrock_player:
         packet.is_nether_type: bool = False
         packet.is_force_experimental_gameplay: bool = False
         packet.level_id: str = ""
-        packet.world_name: str = ""
+        packet.world_name: str = "test"
         packet.premium_world_template: str = ""
         packet.is_trial: bool = False
         packet.movement_type: int = 0
