@@ -111,8 +111,10 @@ class bedrock_player:
         packet.movement_rewind_size: int = 0
         packet.server_authoritative_block_braking: bool = False
         packet.current_tick: int = 0
-        packet
+        packet.enchantment_seed: int = 0
         packet.item_table: dict = get_mcbe_data.get_item_table()
+        packet.multiplayer_correlation_id: str = ""
+        packet.server_authoritative_inventories: bool = False
         packet.encode()
         self.send_packet(packet.data)
         
