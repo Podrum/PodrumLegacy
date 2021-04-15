@@ -39,41 +39,33 @@ class start_game_packet(packet):
 
     def decode_payload(self):
         pass
-          
-    def encode_payload(self):
-        self.write_signed_var_long(self.entity_id)
-        self.write_var_long(self.entity_runtime_id)
-        self.write_signed_var_int(self.player_gamemode)
-        self.write_vector_3(self.spawn)
         
     def encode_payload(self):
         self.write_signed_var_long(self.entity_id)
         self.write_var_long(self.entity_runtime_id)
-        self.write_signed_var_int(0) # game mode
-        # vector 3
-        self.write_float_le(0)
-        self.write_float_le(4)
-        self.write_float_le(0)
-        self.write_float_le(0) # pitch
-        self.write_float_le(0) # yaw
-        self.write_signed_var_int(0) #  seed
-        self.write_short_le(0) # default biome type
-        self.write_string('plains') # biome name
-        self.write_signed_var_int(0) # dimension
-        self.write_signed_var_int(2) # generator
-        self.write_signed_var_int(0) # world gamemode
-        self.write_signed_var_int(0) # difficulty
-        # world spawn vector 3
-        self.write_signed_var_int(0)
-        self.write_var_int(4)
-        self.write_signed_var_int(0)
-        self.write_byte(1) # achievement disabled
-        self.write_signed_var_int(0) # day cycle / time
-        self.write_signed_var_int(0) # edu edition offer
-        self.write_byte(0) # edu features
-        self.write_string('') # edu product id
-        self.write_float_le(0) # rain lvl
-        self.write_float_le(0) # lightning lvl
+        self.write_signed_var_int(self.player_gamemode)
+        self.write_float_le(self.spawn_x)
+        self.write_float_le(self.spawn_y)
+        self.write_float_le(self.spawn_z)
+        self.write_float_le(self.pitch)
+        self.write_float_le(self.yaw)
+        self.write_signed_var_int(self.seed)
+        self.write_short_le(self.spawn_biome_type)
+        self.write_string(self.custom_biome_name)
+        self.write_signed_var_int(self.dimension)
+        self.write_signed_var_int(self.generator)
+        self.write_signed_var_int(self.world_gamemode)
+        self.write_signed_var_int(self.difficulty)
+        self.write_signed_var_int(self.world_spawn_x)
+        self.write_var_int(self.world_spawn_y)
+        self.write_signed_var_int(self.world_spawn_z)
+        self.write_byte(self.disable_achivements)
+        self.write_signed_var_int(self.time)
+        self.write_signed_var_int(self.edu_offer)
+        self.write_byte(self.edu_features)
+        self.write_string(self.edu_product_id)
+        self.write_float_le(self.rain_level)
+        self.write_float_le(self.lightning_level)
         self.write_byte(0) # confirmed platform locked
         self.write_byte(1) # multi player game
         self.write_byte(1) # broadcast to lan
