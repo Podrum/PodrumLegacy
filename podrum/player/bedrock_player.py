@@ -62,6 +62,16 @@ class bedrock_player:
         packet.spawn_z: int = 0
         packet.pitch: int = 0
         packet.yaw: int = 0
+        packet.seed: 0
+        packet.spawn_biome_type: int = 0
+        packet.custom_biome_name: str = "plains"
+        packet.dimension: int = 0
+        packet.generator: int = 2
+        packet.world_gamemode: int = 1
+        packet.world_spawn_x: int = 0
+        packet.world_spawn_x: int = 4
+        packet.world_spawn_z: int = 0
+        packet.time: int = 0
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
