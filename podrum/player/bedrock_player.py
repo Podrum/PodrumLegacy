@@ -98,6 +98,20 @@ class bedrock_player:
         packet.from_world_template: bool = False
         packet.world_template_option_locked: bool = True
         packet.only_old_villagers: bool = False
+        packet.game_version: str = version.mcbe_version
+        packet.limited_world_width: int = 0
+        packet.limited_world_jeight: int = 0
+        packet.new_nether: bool = False
+        packet.experimental_gamplay: bool = False
+        packet.level_id: str = ""
+        packet.world_name: str = "Podrum"
+        packet.premium_world_template_id: str = ""
+        packet.trial: bool = False
+        packet.movement_type: int = 0
+        packet.movement_rewind_size: int = 0
+        packet.server_authoritative_block_braking: bool = False
+        packet.current_tick: int = 0
+        packet
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
