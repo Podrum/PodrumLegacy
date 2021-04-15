@@ -101,7 +101,7 @@ class bedrock_player:
         packet.only_old_villagers: bool = False
         packet.game_version: str = version.mcbe_version
         packet.limited_world_width: int = 0
-        packet.limited_world_jeight: int = 0
+        packet.limited_world_height: int = 0
         packet.new_nether: bool = False
         packet.experimental_gamplay: bool = False
         packet.level_id: str = ""
