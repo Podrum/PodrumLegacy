@@ -70,7 +70,7 @@ class bedrock_player:
         packet.world_gamemode: int = 1
         packet.difficulty: int = 0
         packet.world_spawn_x: int = 0
-        packet.world_spawn_x: int = 4
+        packet.world_spawn_y: int = 4
         packet.world_spawn_z: int = 0
         packet.disable_achivements: bool = False
         packet.time: int = 0
