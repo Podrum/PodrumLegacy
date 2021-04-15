@@ -88,8 +88,10 @@ class bedrock_player:
         packet.experiments: int = 0
         packet.has_used_experiments: bool = False
         packet.bonus_chest: bool = False
-        packet
-        packet
+        packet.start_map: bool = False
+        packet.permission_level: int = 1
+        packet.chunk_tick_range: int = 0
+        packet.locked_behavior_pack: bool = False
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
