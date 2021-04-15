@@ -62,7 +62,7 @@ class bedrock_player:
         packet.spawn_z: float = 0
         packet.pitch: int = 0
         packet.yaw: int = 0
-        packet.seed: 0
+        packet.seed: int = 0
         packet.spawn_biome_type: int = 0
         packet.custom_biome_name: str = "plains"
         packet.dimension: int = 0
