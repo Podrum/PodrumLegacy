@@ -31,7 +31,7 @@ Still under active development, but yet it has few advantages:
  - Can I contribute?
  > Sure.
  - What version of python should I use?
- > Any python version above python 3 would work but we recommend to use the latest one.
+ > Any python version above python 3.5 would work but we recommend to use the latest one.
 
 ## Running:
 Linux and MacOS (Unix systems):
