@@ -78,6 +78,18 @@ class bedrock_player:
         packet.edu_product_id: str = ""
         packet.rain_level: float = 0
         packet.lightning_level: float = 0
+        packet.confirmed_platform_locked: bool = False
+        packet.multiplayer_game: bool = True
+        packet.lan_broadcasting: bool = True
+        packet.xbox_live_broadcast_mode: int = 4
+        packet.platform_broadcast_mode: int = 4
+        packet.enable_commands: bool = True
+        packet.require_texture_pack: bool = False
+        packet.experiments: int = 0
+        packet.has_used_experiments: bool = False
+        packet.bonus_chest: bool = False
+        packet
+        packet
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
