@@ -71,7 +71,10 @@ class bedrock_player:
         packet.world_spawn_x: int = 0
         packet.world_spawn_x: int = 4
         packet.world_spawn_z: int = 0
+        packet.disable_achivements: bool = False
         packet.time: int = 0
+        packet.edu_offer: int = 0
+        packet.edu_features: bool = False
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
