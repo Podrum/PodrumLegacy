@@ -24,12 +24,14 @@ Still under active development, but yet it has few advantages:
  - [x] Networking
  - [x] Commands
  - [x] MOTD
- - [x] Joinable
+ - [x] Joinable (1.16.210)
  - [ ] Mobs 
 
 # FAQ:
  - Can I contribute?
  > Sure.
+ - What version of python should I use?
+ > Any python version above python 3 would work but we recommend to use the latest one.
 
 ## Running:
 Linux and MacOS (Unix systems):
