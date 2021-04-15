@@ -66,20 +66,20 @@ class start_game_packet(packet):
         self.write_string(self.edu_product_id)
         self.write_float_le(self.rain_level)
         self.write_float_le(self.lightning_level)
-        self.write_byte(0) # confirmed platform locked
-        self.write_byte(1) # multi player game
-        self.write_byte(1) # broadcast to lan
-        self.write_signed_var_int(4) # xbl broadcast mode
-        self.write_signed_var_int(4) # platform broadcast mode
-        self.write_byte(1) # commands enabled
-        self.write_byte(0) # texture required
+        self.write_byte(self.confirmed_platform_locked)
+        self.write_byte(self.multiplayer_game)
+        self.write_byte(self.lan_broadcasting)
+        self.write_signed_var_int(self.xbl_broadcast_mode)
+        self.write_signed_var_int(self.platform_broadcast_mode)
+        self.write_byte(self.enable_commands)
+        self.write_byte(self.require_texture_pack)
         self.write_var_int(0) # game rules length
-        self.write_int_le(0) # experiments
-        self.write_byte(0) # has used experiments?
-        self.write_byte(0) # bonus chest
-        self.write_byte(0) # start with chest
-        self.write_signed_var_int(1) # player perms
-        self.write_int_le(4) # chunk tick range
+        self.write_int_le(self.experiments)
+        self.write_byte(self.has_used_experiments)
+        self.write_byte(self.bonus_chest)
+        self.write_byte(self.start_map)
+        self.write_signed_var_int(self.permission_level)
+        self.write_int_le(self.chunk_tick_range)
         self.write_byte(0) # locked behavior
         self.write_byte(0) # locked texture
         self.write_byte(0) # from locked template
