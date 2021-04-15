@@ -57,9 +57,9 @@ class bedrock_player:
         packet.entity_id: int = 1
         packet.entity_runtime_id: int = 1
         packet.player_gamemode: int = 1
-        packet.spawn_x: int = 0
-        packet.spawn_y: int = 4
-        packet.spawn_z: int = 0
+        packet.spawn_x: float = 0
+        packet.spawn_y: float = 4
+        packet.spawn_z: float = 0
         packet.pitch: int = 0
         packet.yaw: int = 0
         packet.seed: 0
@@ -75,6 +75,9 @@ class bedrock_player:
         packet.time: int = 0
         packet.edu_offer: int = 0
         packet.edu_features: bool = False
+        packet.edu_product_id: str = ""
+        packet.rain_level: float = 0
+        packet.lightning_level: float = 0
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
