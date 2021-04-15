@@ -80,32 +80,32 @@ class start_game_packet(packet):
         self.write_byte(self.start_map)
         self.write_signed_var_int(self.permission_level)
         self.write_int_le(self.chunk_tick_range)
-        self.write_byte(0) # locked behavior
-        self.write_byte(0) # locked texture
-        self.write_byte(0) # from locked template
-        self.write_byte(0) # msa gamer tags only
-        self.write_byte(0) # from world template
-        self.write_byte(0) # world template option locked
-        self.write_byte(1) # only spawn v1 villagers
-        self.write_string('1.16.210') # vanilla version
-        self.write_int_le(0) # limited world height
-        self.write_int_le(0) # limited world length
-        self.write_bool(False) # has new nether
-        self.write_bool(False) # experimental gameplay
-        self.write_string('') # random level uuid
-        self.write_string('test') # world name
-        self.write_string('') # template content identity
-        self.write_byte(0) # is trial
-        self.write_var_int(0) # movement type
-        self.write_signed_var_int(0) # movement rewind history size
-        self.write_byte(0) # new block break system
-        self.write_long_le(0) # level time
-        self.write_signed_var_int(0) # enchantment seed
+        self.write_byte(self.locked_behavior_pack)
+        self.write_byte(self.locked_texture_pack)
+        self.write_byte(self.from_locked_template)
+        self.write_byte(self.only_msa_gamer_tags)
+        self.write_byte(self.from_world_template)
+        self.write_byte(self.world_template_option_locked)
+        self.write_byte(self.only_old_villagers)
+        self.write_string(self.game_version)
+        self.write_int_le(self.limited_world_width)
+        self.write_int_le(self.limited_world_height)
+        self.write_bool(self.new_nether)
+        self.write_bool(self.experimental_gamplay)
+        self.write_string(self.level_id)
+        self.write_string(self.world_name)
+        self.write_string(self.premium_world_template_id)
+        self.write_byte(self.trial)
+        self.write_var_int(self.movement_type)
+        self.write_signed_var_int(self.movement_rewind_size)
+        self.write_byte(self.server_authoritative_block_braking)
+        self.write_long_le(self.current_tick)
+        self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # block states length
         self.write_var_int(len(self.item_table)) # item table length
         for string_id, numeric_id in self.item_table.items():
             self.write_string(string_id)
             self.write_short_le(numeric_id)
             self.write_bool(False)
-        self.write_string('')
-        self.write_bool(False)
+        self.write_string(self.multiplayer_correlation_id)
+        self.write_bool(self.server_authoritative_inventories)
