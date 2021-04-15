@@ -92,6 +92,12 @@ class bedrock_player:
         packet.permission_level: int = 1
         packet.chunk_tick_range: int = 0
         packet.locked_behavior_pack: bool = False
+        packet.locked_texture_pack: bool = False
+        packet.from_locked_template: bool = False
+        packet.only_msa_gamer_tags: bool = False
+        packet.from_world_template: bool = False
+        packet.world_template_option_locked: bool = True
+        packet.only_old_villagers: bool = False
         packet.item_table: dict = get_mcbe_data.get_item_table()
         packet.encode()
         self.send_packet(packet.data)
