@@ -31,8 +31,8 @@
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.version import version
-from math.vector_2 import vector_2
-from math.vector_3 import vector_3
+from utils.math.vector_2 import vector_2
+from utils.math.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
 from packet.mcbe.available_entity_identifiers_packet import available_entity_identifiers_packet
 from packet.mcbe.biome_definition_list_packet import biome_definition_list_packet
