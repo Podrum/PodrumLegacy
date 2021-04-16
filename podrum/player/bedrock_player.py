@@ -31,6 +31,8 @@
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.version import version
+from math.vector_2 import vector_2
+from math.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
 from packet.mcbe.available_entity_identifiers_packet import available_entity_identifiers_packet
 from packet.mcbe.biome_definition_list_packet import biome_definition_list_packet
@@ -57,11 +59,8 @@ class bedrock_player:
         packet.entity_id: int = 1
         packet.entity_runtime_id: int = 1
         packet.player_gamemode: int = 1
-        packet.spawn_x: float = 0
-        packet.spawn_y: float = 4
-        packet.spawn_z: float = 0
-        packet.pitch: int = 0
-        packet.yaw: int = 0
+        packet.spawn: object = vector_3(0, 4.0, 0)
+        packet.rotation: object = vector_2(0, 0)
         packet.seed: int = 0
         packet.spawn_biome_type: int = 0
         packet.custom_biome_name: str = "plains"
@@ -69,9 +68,7 @@ class bedrock_player:
         packet.generator: int = 2
         packet.world_gamemode: int = 1
         packet.difficulty: int = 0
-        packet.world_spawn_x: int = 0
-        packet.world_spawn_y: int = 4
-        packet.world_spawn_z: int = 0
+        packet.world_spawn: object = vector_3(0, 4.0, 0)
         packet.disable_achivements: bool = False
         packet.time: int = 0
         packet.edu_offer: int = 0
