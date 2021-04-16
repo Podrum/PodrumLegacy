@@ -34,5 +34,5 @@ class version:
     podrum_api_version: str = "0.0.1"
     podrum_codename: str = "Platinum"
     podrum_license: str = "MIT"
-    mcbe_version: str = "1.16.210"
-    mcbe_protocol_version: int = 428
+    mcbe_version: str = "1.16.220"
+    mcbe_protocol_version: int = 431
