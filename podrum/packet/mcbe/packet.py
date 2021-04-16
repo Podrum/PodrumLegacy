@@ -30,6 +30,8 @@
 ################################################################################
 
 from binary_utils.binary_stream import binary_stream
+from math.vector_2 import vector_2
+from math.vector_3 import vector_3
 
 class packet(binary_stream):
     def decode_header(self) -> None:
