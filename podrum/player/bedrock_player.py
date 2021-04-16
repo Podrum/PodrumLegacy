@@ -86,6 +86,7 @@ class bedrock_player:
         packet.platform_broadcast_mode: int = 4
         packet.enable_commands: bool = True
         packet.require_texture_pack: bool = False
+        packet.game_rules: dict = {}
         packet.experiments: int = 0
         packet.has_used_experiments: bool = False
         packet.bonus_chest: bool = False
