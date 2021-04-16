@@ -108,7 +108,7 @@ class bedrock_player:
         packet.trial: bool = False
         packet.movement_type: int = 0
         packet.movement_rewind_size: int = 0
-        packet.server_authoritative_block_braking: bool = False
+        packet.server_authoritative_block_breaking: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
         packet.item_table: dict = get_mcbe_data.get_item_table()
