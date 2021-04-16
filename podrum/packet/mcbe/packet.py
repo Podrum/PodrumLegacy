@@ -129,7 +129,7 @@ class packet(binary_stream):
         return rules
 
     def write_game_rules(self, rules: dict) -> None:
-        rules_count: int = len(rules)
+        self.write_var_int(len(rules))
         for rule_name, rule_value in rules.items():
             self.write_string(rule_name)
             if isinstance(rule_value, bool):
