@@ -93,7 +93,7 @@ class start_game_packet(packet):
         self.write_bool(self.trial)
         self.write_var_int(self.movement_type)
         self.write_signed_var_int(self.movement_rewind_size)
-        self.write_bool(self.server_authoritative_block_braking)
+        self.write_bool(self.server_authoritative_block_breaking)
         self.write_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # block states length
