@@ -65,26 +65,26 @@ class packet(binary_stream):
         self.write(value)
         
     def read_vector_2(self) -> dict:
-        value: dict = {}
-        value["x"]: int = self.read_float_le()
-        value["y"]: int = self.read_float_le()
+        value: object = vector_2()
+        value.x: float = self.read_float_le()
+        value.y: float = self.read_float_le()
         return value
         
-    def write_vector_2(self, value: dict) -> None:
-        self.write_float_le(value["x"])
-        self.write_float_le(value["y"])
+    def write_vector_2(self, value: object) -> None:
+        self.write_float_le(value.x)
+        self.write_float_le(value.y)
         
     def read_vector_3(self) -> dict:
-        value: dict = {}
-        value["x"]: int = self.read_float_le()
-        value["y"]: int = self.read_float_le()
-        value["z"]: int = self.read_float_le()
+        value: object = vector_3()
+        value.x: float = self.read_float_le()
+        value.y: float = self.read_float_le()
+        value.z: float = self.read_float_le()
         return value
         
-    def write_vector_3(self, value: dict) -> None:
-        self.write_float_le(value["x"])
-        self.write_float_le(value["y"])
-        self.write_float_le(value["z"])
+    def write_vector_3(self, value: object) -> None:
+        self.write_float_le(value.x)
+        self.write_float_le(value.y)
+        self.write_float_le(value.z)
         
     def read_block_coordinates(self) -> dict:
         value: dict = {}
