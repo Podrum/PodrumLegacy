@@ -64,7 +64,7 @@ class packet(binary_stream):
         self.write_var_int(len(value))
         self.write(value)
         
-    def read_vector_2(self) -> dict:
+    def read_vector_2(self) -> object:
         value: object = vector_2()
         value.x: float = self.read_float_le()
         value.y: float = self.read_float_le()
@@ -74,7 +74,7 @@ class packet(binary_stream):
         self.write_float_le(value.x)
         self.write_float_le(value.y)
         
-    def read_vector_3(self) -> dict:
+    def read_vector_3(self) -> object:
         value: object = vector_3()
         value.x: float = self.read_float_le()
         value.y: float = self.read_float_le()
@@ -86,17 +86,17 @@ class packet(binary_stream):
         self.write_float_le(value.y)
         self.write_float_le(value.z)
         
-    def read_block_coordinates(self) -> dict:
-        value: dict = {}
-        value["x"]: int = self.read_signed_var_int()
-        value["y"]: int = self.read_var_int()
-        value["z"]: int = self.read_signed_var_int()
+    def read_block_coordinates(self) -> object:
+        value: object = vector_3()
+        value.x: float = float(self.read_signed_var_int())
+        value.y: float = float(self.read_var_int())
+        value.z: float = float(self.read_signed_var_int())
         return value
         
-    def write_block_coordinates(self, value: dict) -> None:
-        self.write_signed_var_int(value["x"])
-        self.write_var_int(value["y"])
-        self.write_signed_var_int(value["z"])
+    def write_block_coordinates(self, value: object) -> None:
+        self.write_signed_var_int(int(value.x))
+        self.write_var_int(int(value.y))
+        self.write_signed_var_int(int(value.z))
         
     def read_player_location(self) -> dict:
         value: dict = {}
