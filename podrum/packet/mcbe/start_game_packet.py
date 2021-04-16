@@ -73,7 +73,7 @@ class start_game_packet(packet):
         self.write_signed_var_int(self.platform_broadcast_mode)
         self.write_bool(self.enable_commands)
         self.write_bool(self.require_texture_pack)
-        self.write_var_int(0) # game rules length
+        self.write_game_rules(self.game_rules)
         self.write_int_le(self.experiments)
         self.write_bool(self.has_used_experiments)
         self.write_bool(self.bonus_chest)
