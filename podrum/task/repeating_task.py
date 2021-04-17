@@ -33,12 +33,13 @@ from threading import Thread
 from time import sleep
 
 class repeating_task(Thread):
-    def __init__(self, task_object: object, args: list = [], interval: int = 0) -> None:
+    def __init__(self, task_object: object, args: list = [], interval: int = 0, interval_before: bool = False) -> None:
         super().__init__()
         self.setDaemon(True)
         self.__task_object: object = task_object
         self.__args: list = args
         self.__interval: int = interval
+        self.__interval_before: bool = interval_before
 
     def start(self) -> None:
         self.__is_running: bool = True
@@ -49,5 +50,8 @@ class repeating_task(Thread):
 
     def run(self) -> None:
         while self.__is_running:
+            if self.__interval_before:
+                sleep(self.__interval)
             self.__task_object(*self.__args)
-            sleep(self.__interval)
+            if not self.__interval_before:
+                sleep(self.__interval)
