@@ -74,7 +74,7 @@ class rak_net_interface(Thread):
                 new_packet.decode()
                 packets: list = new_packet.read_packets_data()
                 for batch in packets:
-                    print(hex(batch[0]))
+                    print(f'[Packet]: {hex(batch[0])}')
                     self.server.players[connection.address.token].handle_packet(batch)
             
     def on_new_incoming_connection(self, connection: object) -> None:
