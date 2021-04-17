@@ -32,6 +32,8 @@ Still under active development, but yet it has few advantages:
  > Sure.
  - What version of python should I use?
  > Any python version above python 3.5 would work but we recommend to use the latest one.
+ - Is this free?
+ > Yes it is.
 
 ## Running:
 Linux and MacOS (Unix systems):
