@@ -47,7 +47,7 @@ class repeating_task(Thread):
     def stop(self) -> None:
         self.__is_running: bool = False
 
-    def run(self):
+    def run(self) -> None:
         while self.__is_running:
             self.__task_object(*self.__args)
             sleep(self.__interval)
