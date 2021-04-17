@@ -35,6 +35,7 @@ from time import sleep
 class repeating_task(Thread):
     def __init__(self, task_object: object, args: list = [], interval: int = 0) -> None:
         super().__init__()
+        self.setDaemon(True)
         self.__task_object: object = task_object
         self.__args: list = args
         self.__interval: int = interval
