@@ -34,6 +34,14 @@ Still under active development, but yet it has few advantages:
  > Any python version above python 3.5 would work but we recommend to use the latest one.
  - Is this free?
  > Yes it is.
+ - Is this for Minecraft Java or Bedrock?
+ > It's for both.
+ - Can I use this yet?
+ > We wouldn't recommend to use this for serious project yet.
+ - Does it support plugins?
+ > Yes, it does, you can write them in python (and maybe some other languages with some tricks).
+ - I have a question that doesn't figure here, where can I ask it?
+ > On our [discord](https://discord.gg/ScSsnwQ4kW).
 
 ## Running:
 Linux and MacOS (Unix systems):
