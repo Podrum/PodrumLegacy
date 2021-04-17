@@ -39,7 +39,7 @@ class rak_net_interface(Thread):
     def __init__(self, server: object) -> None:
         super().__init__()
         self.server: object = server
-        self.rak_net_server = rak_net_server("", server.hostname, server.port)
+        self.rak_net_server = rak_net_server(server.hostname, server.port)
         self.rak_net_server.interface: object = self
         self.set_status("Podrum Server", 0, 100)
 
