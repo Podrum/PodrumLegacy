@@ -29,8 +29,6 @@
 #                                                                              #
 ################################################################################
 
-import os
-
 class misc:
     logo: str =  """
          ____           _                      
@@ -39,6 +37,5 @@ class misc:
         |  __/ (_) | (_| | |  | |_| | | | | | |
         |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
     """
-    plugin_dir: str = os.getcwd() + "/plugins"
     raknet_magic: bytes = b"\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78"
     mojang_public_key: str = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V"
