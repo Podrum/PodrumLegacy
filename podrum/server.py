@@ -90,7 +90,13 @@ class server:
     def start(self) -> None:
         start_time: float = time.time()
         print(misc.logo)
-        self.plugin_manager.load_all(misc.plugin_dir)
+        plugins_path: str = os.path.join(os.getcwd(), "plugins")
+        if not os.path.isfile(plugins_path) or not os.path.isdir(plugins_path):
+            os.mkdir(plugins_path)
+        self.plugin_manager.load_all(plugins_path)
+        worlds_path: str = os.path.join(os.getcwd(), "worlds")
+        if not os.path.isfile(worlds_path) or not os.path.isdir(worlds_path):
+            os.mkdir(worlds_path)
         self.register_vanilla_commands()
         self.register_events()
         self.command_interface.start_interface()
