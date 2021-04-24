@@ -48,8 +48,7 @@ from utils.logger import logger
 
 class server:
     def __init__(self) -> None:
-        self.hostname: str = ".".join(["0", "0", "0", "0"])
-        self.port: int = 19132
+        self.setup_config()
         self.command_manager: object = command_manager(self)
         self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
