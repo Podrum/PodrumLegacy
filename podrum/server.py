@@ -81,7 +81,7 @@ class server:
         self.config: object = config(path)
         if self.config.data == {}:
             self.config.data["ip_address"]: dict = {}
-            self.config.data["ip_address"]["hostname"]: str = "0.0.0.0"
+            self.config.data["ip_address"]["hostname"]: str = ".".join(["0"] * 4)
             self.config.data["ip_address"]["port"]: int = 19132
             self.config.data["motd"]: str = "Podrum Server"
             self.config.data["max_players"]: int = 20
