@@ -35,11 +35,11 @@ class config:
     def __init__(self, path: str) -> None:
         self.path: str = os.path.abspath(path)
         self.data: dict = {}
-        if not os.path.isfile(path):
-            self.save()
         basename: str = os.path.basename(self.file.name)
         extension: str = basename.rsplit(".")[1].lower()
         self.extension: str = extension
+        if not os.path.isfile(path):
+            self.save()
         if extension == "json":
             self.data: dict = json.load(open(path, "rt"))
             
