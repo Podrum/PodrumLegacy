@@ -46,4 +46,4 @@ class config:
             
     def save(self) -> None:
         if self.extension == "json":
-            json.dump(self.data, open(self.path, "wt"))
+            json.dump(self.data, open(self.path, "wt"), indent = 4)
