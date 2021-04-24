@@ -35,7 +35,7 @@ class config:
     def __init__(self, path: str) -> None:
         self.path: str = os.path.abspath(path)
         self.data: dict = {}
-        basename: str = os.path.basename(self.file.name)
+        basename: str = os.path.basename(self.path)
         extension: str = basename.rsplit(".")[1].lower()
         self.extension: str = extension
         if not os.path.isfile(path):
