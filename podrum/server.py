@@ -79,13 +79,17 @@ class server:
     def setup_config(self) -> None:
         path: str = os.path.join(os.getcwd(), "server.json")
         self.config: object = config(path)
-        if self.config.data == {}:
+        if "ip_address" not in self.config.data:
             self.config.data["ip_address"]: dict = {}
+        if "hostname" not in self.config.data["ip_address"]:
             self.config.data["ip_address"]["hostname"]: str = ".".join(["0"] * 4)
+        if "port" not in self.config.data["ip_address"]:
             self.config.data["ip_address"]["port"]: int = 19132
+        if "motd" not in self.config.data:
             self.config.data["motd"]: str = "Podrum Server"
+        if "max_players" not in self.config.data:
             self.config.data["max_players"]: int = 20
-            self.config.save()      
+        self.config.save()      
 
     def start(self) -> None:
         start_time: float = time.time()
