@@ -43,6 +43,7 @@ from manager.event_manager import event_manager
 from manager.plugin_manager import plugin_manager
 import os
 import time
+from utils.config import config
 from utils.logger import logger
 
 class server:
@@ -75,6 +76,16 @@ class server:
         
     def get_root_path(self):
         return os.path.abspath(os.path.dirname(__file__))
+    
+    def setup_config(self) -> None:
+        path: str = os.path.join(os.getcwd(), "server.json")
+        self.config: object = config(path)
+        if self.config.data == {}:
+            self.config.data["ip_address"]["hostname"]: str = "0.0.0.0"
+            self.config.data["ip_address"]["port"]: int = 19132
+            self.config.data["motd"]: str = "Podrum Server"
+            self.config.data["max_players"]: int = 20
+            self.config.save()      
 
     def start(self) -> None:
         start_time: float = time.time()
