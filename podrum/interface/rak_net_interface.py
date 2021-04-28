@@ -39,7 +39,7 @@ class rak_net_interface(Thread):
     def __init__(self, server: object) -> None:
         super().__init__()
         self.server: object = server
-        self.rak_net_server: object = rak_net_server(server.config.data["ip_address"]["hostname"], server.config.data["ip_address"]["port"])
+        self.rak_net_server: object = rak_net_server(server.config.data["motd"],server.config.data["ip_address"]["hostname"], server.config.data["ip_address"]["port"])
         self.rak_net_server.interface: object = self
         self.set_status(server.config.data["motd"], 0, server.config.data["max_players"])
 
