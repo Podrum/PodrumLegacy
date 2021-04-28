@@ -56,6 +56,7 @@ class server:
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
         self.players: dict = {}
+        self.current_entity_id: int = 1
         self.start()
 
     def register_vanilla_commands(self) -> None:
