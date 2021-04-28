@@ -79,6 +79,8 @@ class rak_net_interface(Thread):
             
     def on_new_incoming_connection(self, connection: object) -> None:
         self.server.players[connection.address.token]: object = bedrock_player(connection, self.server)
+        self.server.players[connection.address.token].entity_id: int = self.server.current_entity_id
+        self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} connected.")
                    
