@@ -56,8 +56,8 @@ class bedrock_player:
         
     def send_start_game(self) -> None:
         packet: object = start_game_packet()
-        packet.entity_id: int = 1
-        packet.entity_runtime_id: int = 1
+        packet.entity_id: int = self.entity_id
+        packet.entity_runtime_id: int = self.entity_id
         packet.player_gamemode: int = 1
         packet.spawn: object = vector_3(0, 4.0, 0)
         packet.rotation: object = vector_2(0, 0)
