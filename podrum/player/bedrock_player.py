@@ -30,6 +30,8 @@
 ################################################################################
 
 from constant.mcbe_packet_ids import mcbe_packet_ids
+from constant.mcbe_type.login_status_type import login_status_type
+from constant.mcbe_type.resource_pack_client_response_type import resource_pack_client_response_type
 from constant.version import version
 from utils.math.vector_2 import vector_2
 from utils.math.vector_3 import vector_3
@@ -147,7 +149,7 @@ class bedrock_player:
                 self.xuid: str = chain["extraData"]["XUID"]
                 self.username: str = chain["extraData"]["displayName"]
                 self.identity: str = chain["extraData"]["identity"]
-        self.send_play_status(0)
+        self.send_play_status(login_status_type.success)
         packet: object = resource_packs_info_packet()
         packet.forced_to_accept: bool = False
         packet.scripting_enabled: bool = False
@@ -158,7 +160,7 @@ class bedrock_player:
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
         packet: object = resource_pack_client_response_packet(data)
         packet.decode()
-        if packet.status == 0:
+        if packet.status == resource_pack_client_response_type.none:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
             packet.game_version: str = version.mcbe_version
@@ -166,7 +168,7 @@ class bedrock_player:
             packet.experimental: bool = False
             packet.encode()
             self.send_packet(packet.data)
-        elif packet.status == 3:
+        elif packet.status == resource_pack_client_response_type.has_all_packs:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
             packet.game_version: str = version.mcbe_version
@@ -174,14 +176,14 @@ class bedrock_player:
             packet.experimental: bool = False
             packet.encode()
             self.send_packet(packet.data)
-        elif packet.status == 4:
+        elif packet.status == resource_pack_client_response_type.completed:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
             self.send_item_component_packet()
             self.send_biome_definition_list_packet()
             self.send_available_entity_identifiers_packet()
             self.send_creative_content_packet()
-            self.send_play_status(3)
+            self.send_play_status(login_status_type.spawn)
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
