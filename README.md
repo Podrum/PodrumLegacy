@@ -30,8 +30,8 @@ It's still under active development, but yet it has few advantages:
 # FAQ:
  - Can I contribute?
  > Sure.
- - What version of python should I use?
- > Any python version above python 3.5 should work, but we recommend you use the latest one.
+ - What version of Python should I use?
+ > Any python version above Python 3.5 should work, but we recommend you use the latest one.
  - Is this free?
  > Yes it is.
  - Is this for Minecraft Java or Bedrock?
