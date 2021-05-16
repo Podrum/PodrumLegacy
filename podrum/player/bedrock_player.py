@@ -38,14 +38,17 @@ from utils.math.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
 from packet.mcbe.available_entity_identifiers_packet import available_entity_identifiers_packet
 from packet.mcbe.biome_definition_list_packet import biome_definition_list_packet
+from packet.chunk_radius_updated_packet import chunk_radius_updated_packet
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.creative_content_packet import creative_content_packet
 from packet.mcbe.item_component_packet import item_component_packet
+from packet.level_chunk_packet import level_chunk_packet
 from packet.mcbe.login_packet import login_packet
 from packet.mcbe.play_status_packet import play_status_packet
 from packet.mcbe.resource_pack_client_response_packet import resource_pack_client_response_packet
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
+from packet.request_chunk_radius_packet import request_chunk_radius_packet
 from packet.mcbe.start_game_packet import start_game_packet
 from packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
 from rak_net.protocol.frame import frame
@@ -200,22 +203,32 @@ class bedrock_player:
             self.server.logger.error(error_message)
             if len(packet.message) > 0:
                 self.server.logger.error(packet.message)
+                
+    def handle_request_chunk_radius_packet(self, data: bytes) -> None:
+        packet: object = request_chunk_radius_packet(data)
+        packet.decode()
+        new_packet: object = chunk_radius_updated_packet()
+        new_packet.chunk_radius: int = packet.chunk_radius
+        new_packet.encode()
+        self.send_packet(new_packet.data)
         
-    def handle_packet(self, data):
+    def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_packet_ids.login_packet:
             self.handle_login_packet(data)
         elif data[0] == mcbe_packet_ids.resource_pack_client_response_packet:
             self.handle_resource_pack_client_response_packet(data)
         elif data[0] == mcbe_packet_ids.packet_violation_warning_packet:
             self.handle_packet_violation_warning_packet(data)
+        elif data[0] == mcbe_packet_ids.request_chunk_radius_packet:
+            self.handle_request_chunk_radius_packet(data)
     
-    def send_play_status(self, status):
+    def send_play_status(self, status: int) -> None:
         packet: object = play_status_packet()
         packet.status: int = status
         packet.encode()
         self.send_packet(packet.data)
     
-    def send_packet(self, data):
+    def send_packet(self, data: bytes) -> None:
         new_packet: object = game_packet()
         new_packet.write_packet_data(data)
         new_packet.encode()
