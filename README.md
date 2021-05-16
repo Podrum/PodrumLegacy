@@ -11,13 +11,13 @@
 
 # Podrum
 Is a Minecraft Bedrock Edition server software written in Python.
-Still under active development, but yet it has few advantages:
+It's still under active development, but yet it has few advantages:
 
-**1.** Easy to use.
+**1.** Easy to use,
 
-**2.** Written in Python which make plugins easier to write.
+**2.** Written in Python which makes plugins easier to write,
 
-**3.** Work with both Java and Bedrock
+**3.** Work with both Java and Bedrock.
 
 ## Features:
  - [ ] World Generation
@@ -30,17 +30,17 @@ Still under active development, but yet it has few advantages:
 # FAQ:
  - Can I contribute?
  > Sure.
- - What version of python should I use?
- > Any python version above python 3.5 would work but we recommend to use the latest one.
+ - What version of Python should I use?
+ > Any python version above Python 3.5 should work, but we recommend you use the latest one.
  - Is this free?
  > Yes it is.
  - Is this for Minecraft Java or Bedrock?
  > It's for both.
  - Can I use this yet?
- > We wouldn't recommend to use this for serious project yet.
+ > We wouldn't recommend using this for a serious project yet.
  - Does it support plugins?
- > Yes, it does, you can write them in python (and maybe some other languages with some tricks).
- - I have a question that doesn't figure here, where can I ask it?
+ > Yes, it does, you can write them in Python (and maybe some other languages with some tricks).
+ - I have a question that isn't answered here, where can I ask it?
  > On our [discord](https://discord.gg/ScSsnwQ4kW).
 
 ## Running:
