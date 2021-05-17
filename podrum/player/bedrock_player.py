@@ -184,11 +184,10 @@ class bedrock_player:
         elif packet.status == resource_pack_client_response_type.completed:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
-            self.send_item_component_packet()
-            self.send_biome_definition_list_packet()
-            self.send_available_entity_identifiers_packet()
             self.send_creative_content_packet()
-            self.send_play_status(login_status_type.spawn)
+            self.send_biome_definition_list_packet()
+            #self.send_item_component_packet()
+            #self.send_available_entity_identifiers_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
