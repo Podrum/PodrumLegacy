@@ -38,20 +38,21 @@ from utils.math.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
 from packet.mcbe.available_entity_identifiers_packet import available_entity_identifiers_packet
 from packet.mcbe.biome_definition_list_packet import biome_definition_list_packet
-from packet.chunk_radius_updated_packet import chunk_radius_updated_packet
+from packet.mcbe.chunk_radius_updated_packet import chunk_radius_updated_packet
 from packet.mcbe.game_packet import game_packet
 from packet.mcbe.creative_content_packet import creative_content_packet
 from packet.mcbe.item_component_packet import item_component_packet
-from packet.level_chunk_packet import level_chunk_packet
+from packet.mcbe.level_chunk_packet import level_chunk_packet
 from packet.mcbe.login_packet import login_packet
 from packet.mcbe.play_status_packet import play_status_packet
 from packet.mcbe.resource_pack_client_response_packet import resource_pack_client_response_packet
 from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
 from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
-from packet.request_chunk_radius_packet import request_chunk_radius_packet
+from packet.mcbe.request_chunk_radius_packet import request_chunk_radius_packet
 from packet.mcbe.start_game_packet import start_game_packet
 from packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
 from rak_net.protocol.frame import frame
+from world.mcbe_chunk.chunk import chunk
 import zlib
 
 class bedrock_player:
@@ -158,6 +159,7 @@ class bedrock_player:
         packet.scripting_enabled: bool = False
         packet.encode()
         self.send_packet(packet.data)
+        self.spawned: bool = False
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
 
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
@@ -211,6 +213,26 @@ class bedrock_player:
         new_packet.chunk_radius: int = packet.chunk_radius
         new_packet.encode()
         self.send_packet(new_packet.data)
+        distance: int = packet.chunk_radius
+        for chunk_x in range(-distance, distance + 1):
+            for chunk_z in range(-distance, distance + 1):
+                send_chunk: object = chunk(chunk_x, chunk_z)
+                for x in range(0, 16):
+                    for z in range(0, 16):
+                        y: int = 0
+                        send_chunk.set_block_id(x, y, z, 7)
+                        y += 1
+                        send_chunk.set_block_id(x, y, z, 3)
+                        y += 1
+                        send_chunk.set_block_id(x, y, z, 3)
+                        y += 1
+                        send_chunk.set_block_id(x, y, z, 2)
+                        y += 1
+                send_chunk.recalculate_height_map()
+                self.send_chunk(send_chunk)
+        if not self.spawned:
+            self.send_play_status(login_status_type.spawn)
+            self.spawned: bool = True
         
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_packet_ids.login_packet:
@@ -222,6 +244,16 @@ class bedrock_player:
         elif data[0] == mcbe_packet_ids.request_chunk_radius_packet:
             self.handle_request_chunk_radius_packet(data)
     
+    def send_chunk(self, send_chunk: object) -> None:
+        packet: object = level_chunk_packet()
+        packet.chunk_x: int = send_chunk.x
+        packet.chunk_z: int = send_chunk.z
+        packet.sub_chunk_count: int = send_chunk.get_sub_chunk_send_count()
+        packet.cache_enabled: bool = False
+        packet.chunk_data: bytes = send_chunk.encode()
+        packet.encode()
+        self.send_packet(packet.data)
+
     def send_play_status(self, status: int) -> None:
         packet: object = play_status_packet()
         packet.status: int = status
