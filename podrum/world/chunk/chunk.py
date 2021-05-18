@@ -1,5 +1,5 @@
-from world.mcbe_chunk.empty_sub_chunk import empty_sub_chunk
-from world.mcbe_chunk.sub_chunk import sub_chunk
+from world.chunk.empty_sub_chunk import empty_sub_chunk
+from world.chunk.sub_chunk import sub_chunk
 
 class chunk:
     def __init__(self, x: int, z: int, sub_chunks: dict = {}, entities: dict = {}, tiles: list = [], biomes: list = [], height_map: list = []) -> None:
