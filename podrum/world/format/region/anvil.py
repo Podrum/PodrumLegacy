@@ -140,9 +140,13 @@ class anvil:
         ])
         tag.write(stream)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], stream.data)
+                                        
+    def get_option(self, name: str) -> object:
+        stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
+        
     
     def create_options_file(self) -> None:
-        stream: object = nbt_be_binary_stream(chunk)
+        stream: object = nbt_be_binary_stream()
         tag: object = compound_tag("", [
             compound_tag("Data", [
                 byte_tag("hardcore", 0),
