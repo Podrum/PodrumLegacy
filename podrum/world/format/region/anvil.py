@@ -108,7 +108,7 @@ class anvil:
     def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
-        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.format}"
+        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.format}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
@@ -154,7 +154,8 @@ class anvil:
         tag.read(stream)
         data_tag: bytes = tag.get_tag("Data")
         if data_tag.has_tag(name):
-            option_tag: object = data_tag.get_tag(name).value = value
+            option_tag: object = data_tag.get_tag(name)
+            option_tag.value = value
             data_tag.set_tag(option_tag)
             tag.set_tag(data_tag)
             stream.buffer: bytes = b""
