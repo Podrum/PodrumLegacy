@@ -44,7 +44,7 @@ import os
 from podrum.world.chunk.chunk import chunk
 from podrum.world.chunk.empty_sub_chunk import empty_sub_chunk
 from podrum.world.chunk.sub_chunk import sub_chunk
-from podrum.world.format.region.region import region
+from podrum.world.format.anvil.region import region
 from podrum.utils.chunk_utils import chunk_utils
 import random
 import sys
