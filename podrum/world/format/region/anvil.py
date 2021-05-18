@@ -148,7 +148,7 @@ class anvil:
         tag.read(stream)
         return tag.get_tag("Data").get_tag(name).value
                                         
-    def set_option(self, name: str, value: object) -> object:
+    def set_option(self, name: str, value: object) -> None:
         stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
         tag = compound_tag()
         tag.read(stream)
@@ -170,19 +170,22 @@ class anvil:
                 byte_tag("hardcore", 0),
                 byte_tag("MapFeatures", 0),
                 byte_tag("raining", 0),
+                byte_tag("Difficulty", 0),
+                byte_tag("initialized", 1),
                 byte_tag("thundering", 0),
                 int_tag("GameType", 0),
-                int_tag("generatorVersion", 0),
+                int_tag("generatorVersion", 1),
                 int_tag("rainTime", 0),
-                int_tag("SpawnX", 0),
-                int_tag("SpawnY", 0),
-                int_tag("SpawnZ", 0),
+                int_tag("SpawnX", 256),
+                int_tag("SpawnY", 70),
+                int_tag("SpawnZ", 256),
                 int_tag("thunderTime", 0),
                 int_tag("version", 19133),
-                long_tag("LastPlayed", int(time.time())),
+                long_tag("LastPlayed", int(time.time() * 1000)),
                 long_tag("RandomSeed", random.randint(0, sys.maxsize)),
                 long_tag("SizeOnDisk", 0),
                 long_tag("Time", 0),
+                compound_tag("GameRules", []),
                 string_tag("generatorName", "flat"),
                 string_tag("LevelName", "world")
             ])
