@@ -144,7 +144,24 @@ class anvil:
                                         
     def get_option(self, name: str) -> object:
         stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
-        
+        tag = compound_tag()
+        tag.read(stream)
+        return tag.get_tag("Data").get_tag(name).value
+                                        
+    def set_option(self, name: str, value: object) -> object:
+        stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
+        tag = compound_tag()
+        tag.read(stream)
+        data_tag: bytes = tag.get_tag("Data")
+        if data_tag.has_tag(name):
+            option_tag: object = data_tag.get_tag(name).value = value
+            data_tag.set_tag(option_tag)
+            tag.set_tag(data_tag)
+            stream.buffer: bytes = b""
+            stream.pos: int = 0
+            tag.write(stream)
+            file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
+            file.write(stream.data)
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
