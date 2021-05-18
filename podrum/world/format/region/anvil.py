@@ -31,8 +31,11 @@
 
 import math
 from nbt_utils.tag.byte_tag import byte_tag
+from nbt_utils.tag.byte_array_tag import byte_array_tag
 from nbt_utils.tag.compound_tag import compound_tag
 from nbt_utils.tag.int_tag import int_tag
+from nbt_utils.tag.int_array_tag import int_array_tag
+from nbt_utils.tag.list_tag import list_tag
 from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
@@ -96,7 +99,46 @@ class anvil:
             biomes,
             level_tag.get_tag("HeightMap").value
         )
+        result.is_light_populated: int = level_tag.get_tag("LightPopulated").value > 0
+        result.is_terrain_populated: int = level_tag.get_tag("TerrainPopulated").value > 0
         return result
+                                        
+    def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
+        region_index: tuple = anvil.cr_index(x, z)
+        chunk_index: tuple = anvil.rc_index(x, z)
+        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.mca"
+        reg: object = region(region_path)
+        chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
+        stream: object = nbt_be_binary_stream(chunk_data)
+        sections_tag = list_tag("Sections")
+        for y, section in chunk_in.sub_chunks.items():
+            section_tag = compound_tag("", [
+                byte_tag("Y", y),
+                byte_array_tag("Blocks", chunk_utils.reorder_byte_array(section.ids)),
+                byte_array_tag("Data", chunk_utils.reorder_byte_array(section.data)),
+                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(section.sky_light)),
+                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(section.block_light))
+            ])
+            sections_tag.value.append(section_tag)
+        tag: object = compound_tag("", [
+            compound_tag("Level", [
+                byte_array_tag("Biomes", chunk_in.biomes),
+                list_tag("TileEntities", chunk_in.tiles),
+                int_tag("xPos", chunk_in.x),
+                int_tag("zPos", chunk_in.z),
+                int_array_tag("HeightMap", chunk_in.height_map),
+                byte_tag("V", 1),
+                long_tag("LastUpdate", 0),
+                long_tag("InhabitedTime", 0),
+                byte_tag("LightPopulated", chunk_in.is_light_populated),
+                byte_tag("TerrainPopulated", chunk_in.is_terrain_populated),
+                list_tag("Entities", chunk_in.entities),
+                sections_tag
+            ]),
+            int_tag("DataVersion", 1343)
+        ])
+        tag.write(stream)
+        reg.set_chunk_data(chunk_index[0], chunk_index[1], stream.data)
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream(chunk)
