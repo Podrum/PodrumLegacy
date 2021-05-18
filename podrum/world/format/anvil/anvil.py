@@ -41,14 +41,14 @@ from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 import os
-from podrum.world.chunk.chunk import chunk
-from podrum.world.chunk.empty_sub_chunk import empty_sub_chunk
-from podrum.world.chunk.sub_chunk import sub_chunk
-from podrum.world.format.anvil.region import region
-from podrum.utils.chunk_utils import chunk_utils
 import random
 import sys
 import time
+from utils.chunk_utils import chunk_utils
+from world.chunk.chunk import chunk
+from world.chunk.empty_sub_chunk import empty_sub_chunk
+from world.chunk.sub_chunk import sub_chunk
+from world.format.anvil.region import region
 
 class anvil:
     def __init__(self, world_dir: str, format: str = "mca") -> None:
