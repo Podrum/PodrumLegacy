@@ -1,4 +1,4 @@
-from world.mcbe_chunk.sub_chunk import sub_chunk
+from world.chunk.sub_chunk import sub_chunk
 
 class empty_sub_chunk(sub_chunk):
     def set_block_id(self, x: int, y: int, z: int, block_id: int) -> None:
