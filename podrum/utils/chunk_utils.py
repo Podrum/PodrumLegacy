@@ -1,10 +1,10 @@
 class chunk_utils:
     @staticmethod
-    def reorder_byte_arrY(array: list) -> list:
+    def reorder_byte_array(array: list) -> list:
         result: list = [0] * 4096
         if array != result:
             i: int = 0
-            for x in rage(0, 16):
+            for x in range(0, 16):
                 z_m: int = x + 256
                 for z in range(x, z_m, 16):
                     y_m: int = z + 4096
