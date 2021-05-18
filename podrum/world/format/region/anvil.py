@@ -37,28 +37,38 @@ from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 import os
+from podrum.world.format.region.region import region
 import random
 import sys
 import time
 
 class anvil:
     def __init__(self, world_dir: str) -> None:
-        real_path: str = os.path.abspath(world_dir)
-        if not os.path.isdir(real_path):
-            os.mkdir(real_path)
-        options_path: str = os.path.join(real_path, "level.dat")
-        if not isfile(options_path):
-            self.create_options_file(options_path)
+        self.world_dir: str = os.path.abspath(world_dir)
+        if not os.path.isdir(self.world_dir):
+            os.mkdir(self.world_dir)
+        if not isfile(os.path.join(self.world_dir, "level.dat")):
+            self.create_options_file()
+        region_dir: str = os.path.join(self.world_dir, "region")
+        if not os.path.isdir(region_dir):
+            os.mkdir(region_dir)
         
     @staticmethod
-    def chunk_region_location(x: int, z: int) -> tuple:
+    def cr_index(x: int, z: int) -> tuple:
         return math.ceil(x / 32), math.ceil(z / 32)
     
     @staticmethod
-    def coords_to_index(x: int, z: int) -> tuple:
+    def rc_index(x: int, z: int) -> tuple:
         return abs(abs(self.x << 5) - abs(x)), abs(abs(self.z << 5) - abs(y))
     
-    def create_options_file(self, path: str) -> None:
+    def get_chunk(self, x: int, z: int) -> object:
+        region_index: tuple = anvil.cr_index(x, z)
+        chunk_index: tuple = anvil.rc_index(x, z)
+        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.mca"
+        reg: object = region(region_path)
+        chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
+    
+    def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream(chunk)
         tag: object = compound_tag("", [
             compound_tag("Data", [
@@ -83,5 +93,5 @@ class anvil:
             ])
         ])
         tag.write(stream)
-        file: object = open(path, "wb")
+        file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
         file.write(stream.data)
