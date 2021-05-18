@@ -52,7 +52,7 @@ from packet.mcbe.request_chunk_radius_packet import request_chunk_radius_packet
 from packet.mcbe.start_game_packet import start_game_packet
 from packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
 from rak_net.protocol.frame import frame
-from world.mcbe_chunk.chunk import chunk
+from world.chunk.chunk import chunk
 import zlib
 
 class bedrock_player:
