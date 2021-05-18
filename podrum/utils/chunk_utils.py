@@ -1,4 +1,4 @@
-class chunk_uils
+class chunk_utils:
     @staticmethod
     def reorder_byte_arrY(array: list) -> list:
         result: list = [0] * 4096
@@ -13,6 +13,7 @@ class chunk_uils
                         i += 1
             return result
         
+    @staticmethod
     def reorder_nibble_array(array: list, common_value: int = 0) -> list:
         result: list = [common_value] * 2048
         if array != result:
@@ -31,3 +32,10 @@ class chunk_uils
                         i += 1
                 i += 128
             return result
+
+    @staticmethod
+    def convert_biome_colors(array: list) -> list:
+        result: list = [0] * 256
+        for color in array:
+            result.append((color >> 24) & 0xff)
+        return result
