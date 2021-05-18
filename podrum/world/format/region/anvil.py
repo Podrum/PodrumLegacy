@@ -30,6 +30,7 @@
 ################################################################################
 
 import math
+from nbt_utils.constant.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
 from nbt_utils.tag.compound_tag import compound_tag
@@ -110,7 +111,7 @@ class anvil:
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
-        sections_tag = list_tag("Sections")
+        sections_tag = list_tag("Sections", [], tag_ids.compound_tag)
         for y, section in chunk_in.sub_chunks.items():
             section_tag = compound_tag("", [
                 byte_tag("Y", y),
@@ -123,7 +124,7 @@ class anvil:
         tag: object = compound_tag("", [
             compound_tag("Level", [
                 byte_array_tag("Biomes", chunk_in.biomes),
-                list_tag("TileEntities", chunk_in.tiles),
+                list_tag("TileEntities", chunk_in.tiles, tag_ids.compound_tag),
                 int_tag("xPos", chunk_in.x),
                 int_tag("zPos", chunk_in.z),
                 int_array_tag("HeightMap", chunk_in.height_map),
@@ -132,7 +133,7 @@ class anvil:
                 long_tag("InhabitedTime", 0),
                 byte_tag("LightPopulated", chunk_in.is_light_populated),
                 byte_tag("TerrainPopulated", chunk_in.is_terrain_populated),
-                list_tag("Entities", chunk_in.entities),
+                list_tag("Entities", chunk_in.entities, tag_ids.compound_tag),
                 sections_tag
             ]),
             int_tag("DataVersion", 1343)
