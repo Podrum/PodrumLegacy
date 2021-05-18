@@ -41,6 +41,7 @@ from podrum.world.chunk.chunk import chunk
 from podrum.world.chunk.empty_sub_chunk import empty_sub_chunk
 from podrum.world.chunk.sub_chunk import sub_chunk
 from podrum.world.format.region.region import region
+from podrum.utils.chunk_utils import chunk_utils
 import random
 import sys
 import time
@@ -72,19 +73,30 @@ class anvil:
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
         tag: object = compound_tag()
-        tag.read(stream)
-        comment = """root_tag: object = root_tag.get_tag("")
-        level_tag: object = root_tag.get_tag("Level")
-        self.x: int = level_tag.get_tag("xPos").value
-        self.z: int = level_tag.get_tag("zPos").value
-        self.biomes: list = level_tag.get_tag("Biomes").value
-        self.height_map: list = level_tag.get_tag("HeightMap").value
-        self.terrain_populated: bool = level_tag.get_tag("TerrainPopulated").value > 0
-        self.light_populated: bool = level_tag.get_tag("LightPopulated").value > 0
-        self.last_update: int = level_tag.get_tag("LastUpdate").value
-        self.inhabited_time: int = level_tag.get_tag("InhabitedTime").value
-        self.tile_entities: list = level_tag.get_tag("TileEntities").value
-        self.entities: list = level_tag.get_tag("Entities").value"""
+        tag.read(stream)chunk_utils
+        level_tag: object = root_tag.get_tag("").get_tag("Level")
+        sub_chunks: dict = {}
+        for section_tag in level_tag.get_tag("Sections").value:
+            sub_chunks[section_tag.get_tag("Y").value] = sub_chunk(
+                chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value),
+                chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value),
+                chunk_utils.reorder_nibble_array(section_tag.get_tag("SkyLight").value),
+                chunk_utils.reorder_nibble_array(section_tag.get_tag("BlockLight").value)
+            )
+        if level_tag.has_tag("BiomeColors"): # Just a check for pmmp worlds
+            biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
+        else:
+            biomes: list = level_tag.get_tag("Biomes").value    
+        result: object = chunk(
+            level_tag.get_tag("xPos").value,
+            level_tag.get_tag("zPos").value,
+            sub_chunks,
+            level_tag.get_tag("Entities").value,
+            level_tag.get_tag("TileEntities").value,
+            biomes,
+            level_tag.get_tag("HeightMap").value
+        )
+        return result
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream(chunk)
