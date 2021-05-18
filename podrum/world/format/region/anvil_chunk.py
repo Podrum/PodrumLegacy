@@ -59,4 +59,4 @@ class anvil_chunk:
         self.last_update: int = level_tag.get_tag("LastUpdate").value
         self.inhabited_time: int = level_tag.get_tag("InhabitedTime").value
         self.tile_entities: list = level_tag.get_tag("TileEntities").value
-        
+        self.entities: list = level_tag.get_tag("Entities").value
