@@ -115,10 +115,10 @@ class anvil:
         for y, section in chunk_in.sub_chunks.items():
             section_tag = compound_tag("", [
                 byte_tag("Y", y),
-                byte_array_tag("Blocks", chunk_utils.reorder_byte_array(section.ids)),
-                byte_array_tag("Data", chunk_utils.reorder_byte_array(section.data)),
-                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(section.sky_light)),
-                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(section.block_light))
+                byte_array_tag("Blocks", chunk_utils.reorder_byte_array(section.ids) if reg.format == "mca" else (section.ids if format == "mcapm")),
+                byte_array_tag("Data", chunk_utils.reorder_byte_array(section.data) else (section.data if format == "mcapm")),
+                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(section.sky_light) else (section.sky_light if format == "mcapm")),
+                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(section.block_light) else (section.block_light if format == "mcapm"))
             ])
             sections_tag.value.append(section_tag)
         tag: object = compound_tag("", [
