@@ -138,7 +138,7 @@ class anvil:
             int_tag("DataVersion", 1343)
         ])
         tag.write(stream)
-        reg.set_chunk_data(chunk_index[0], chunk_index[1], stream.data)
+        reg.put_chunk_data(chunk_index[0], chunk_index[1], stream.data)
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream(chunk)
