@@ -50,8 +50,13 @@ class anvil:
         if not isfile(options_path):
             self.create_options_file(options_path)
         
-    def chunk_region_location(self, x: int, z: int) -> tuple:
+    @staticmethod
+    def chunk_region_location(x: int, z: int) -> tuple:
         return math.ceil(x / 32), math.ceil(z / 32)
+    
+    @staticmethod
+    def coords_to_index(x: int, z: int) -> tuple:
+        return abs(abs(self.x << 5) - abs(x)), abs(abs(self.z << 5) - abs(y))
     
     def create_options_file(self, path: str) -> None:
         stream: object = nbt_be_binary_stream(chunk)
