@@ -29,7 +29,6 @@
 #                                                                              #
 ################################################################################
 
-import math
 from nbt_utils.constant.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
@@ -56,7 +55,7 @@ class anvil:
         self.world_dir: str = os.path.abspath(world_dir)
         if not os.path.isdir(self.world_dir):
             os.mkdir(self.world_dir)
-        if not isfile(os.path.join(self.world_dir, "level.dat")):
+        if not os.path.isfile(os.path.join(self.world_dir, "level.dat")):
             self.create_options_file()
         region_dir: str = os.path.join(self.world_dir, "region")
         if not os.path.isdir(region_dir):
@@ -64,22 +63,24 @@ class anvil:
         
     @staticmethod
     def cr_index(x: int, z: int) -> tuple:
-        return math.ceil(x / 32), math.ceil(z / 32)
+        return x >> 5, z >> 5
     
     @staticmethod
-    def rc_index(x: int, z: int) -> tuple:
-        return abs(abs(self.x << 5) - abs(x)), abs(abs(self.z << 5) - abs(y))
+    def rc_index(x: int, z: int, rx: int, rz: int) -> tuple:
+        return abs(abs(rx << 5) - abs(x)), abs(abs(rz << 5) - abs(z))
     
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
-        chunk_index: tuple = anvil.rc_index(x, z)
+        chunk_index: tuple = anvil.rc_index(x, z, region_index[0], region_index[1])
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.format}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
         tag: object = compound_tag()
         tag.read(stream)
-        level_tag: object = root_tag.get_tag("").get_tag("Level")
+        if not tag.has_tag(""):
+            return chunk(x, z)
+        level_tag: object = tag.get_tag("").get_tag("Level")
         sub_chunks: dict = {}
         for section_tag in level_tag.get_tag("Sections").value:
             sub_chunks[section_tag.get_tag("Y").value] = sub_chunk(
