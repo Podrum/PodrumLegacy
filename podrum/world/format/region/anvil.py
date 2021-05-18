@@ -82,10 +82,10 @@ class anvil:
         sub_chunks: dict = {}
         for section_tag in level_tag.get_tag("Sections").value:
             sub_chunks[section_tag.get_tag("Y").value] = sub_chunk(
-                chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value),
-                chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value),
-                chunk_utils.reorder_nibble_array(section_tag.get_tag("SkyLight").value),
-                chunk_utils.reorder_nibble_array(section_tag.get_tag("BlockLight").value)
+                chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value) if reg.format == "mca" else (section_tag.get_tag("Blocks").value if format == "mcapm"),
+                chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value) if reg.format == "mca" else (section_tag.get_tag("Data").value if format == "mcapm"),
+                chunk_utils.reorder_nibble_array(section_tag.get_tag("SkyLight").value) if reg.format == "mca" else (section_tag.get_tag("SkyLight").value if format == "mcapm"),
+                chunk_utils.reorder_nibble_array(section_tag.get_tag("BlockLight").value) if reg.format == "mca" else (section_tag.get_tag("BlockLight").value if format == "mcapm")
             )
         if level_tag.has_tag("BiomeColors"): # Just a check for pmmp worlds
             biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
@@ -116,9 +116,9 @@ class anvil:
             section_tag = compound_tag("", [
                 byte_tag("Y", y),
                 byte_array_tag("Blocks", chunk_utils.reorder_byte_array(section.ids) if reg.format == "mca" else (section.ids if format == "mcapm")),
-                byte_array_tag("Data", chunk_utils.reorder_byte_array(section.data) else (section.data if format == "mcapm")),
-                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(section.sky_light) else (section.sky_light if format == "mcapm")),
-                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(section.block_light) else (section.block_light if format == "mcapm"))
+                byte_array_tag("Data", chunk_utils.reorder_byte_array(section.data) if reg.format == "mca" else (section.data if format == "mcapm")),
+                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(section.sky_light) if reg.format == "mca" else (section.sky_light if format == "mcapm")),
+                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(section.block_light) if reg.format == "mca" else (section.block_light if format == "mcapm"))
             ])
             sections_tag.value.append(section_tag)
         tag: object = compound_tag("", [
