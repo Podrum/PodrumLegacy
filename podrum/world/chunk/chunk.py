@@ -2,13 +2,13 @@ from world.chunk.empty_sub_chunk import empty_sub_chunk
 from world.chunk.sub_chunk import sub_chunk
 
 class chunk:
-    def __init__(self, x: int, z: int, sub_chunks: dict = {}, entities: dict = {}, tiles: list = [], biomes: list = [], height_map: list = []) -> None:
+    def __init__(self, x: int, z: int, sub_chunks: dict = {}, entities: list = [], tiles: list = [], biomes: list = [], height_map: list = []) -> None:
         self.x: int = x
         self.z: int = z
         self.has_changed: bool = False
         self.height: int = 16
         self.sub_chunks: dict = {}
-        self.entities: dict = entities
+        self.entities: list = entities
         self.tiles: list = tiles
         for y in range(0, self.height):
             if y in self.sub_chunks:
