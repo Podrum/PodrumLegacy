@@ -46,14 +46,14 @@ class anvil:
         real_path: str = os.path.abspath(world_dir)
         if not os.path.isdir(real_path):
             os.mkdir(real_path)
-        level_options_path: str = os.path.join(real_path, "level.dat")
-        if not isfile(level_options_path):
-            self.create_level_options_file(level_options_path)
+        options_path: str = os.path.join(real_path, "level.dat")
+        if not isfile(options_path):
+            self.create_level_options_file(options_path)
         
     def chunk_region_location(self, x: int, z: int) -> tuple:
         return math.ceil(x / 32), math.ceil(z / 32)
     
-    def create_level_options_file(self, path: str) -> None:
+    def create_options_file(self, path: str) -> None:
         stream: object = nbt_be_binary_stream(chunk)
         tag: object = compound_tag("", [
             compound_tag("Data", [
