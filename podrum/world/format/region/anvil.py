@@ -70,6 +70,21 @@ class anvil:
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.mca"
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
+        stream: object = nbt_be_binary_stream(chunk_data)
+        tag: object = compound_tag()
+        tag.read(stream)
+        comment = """root_tag: object = root_tag.get_tag("")
+        level_tag: object = root_tag.get_tag("Level")
+        self.x: int = level_tag.get_tag("xPos").value
+        self.z: int = level_tag.get_tag("zPos").value
+        self.biomes: list = level_tag.get_tag("Biomes").value
+        self.height_map: list = level_tag.get_tag("HeightMap").value
+        self.terrain_populated: bool = level_tag.get_tag("TerrainPopulated").value > 0
+        self.light_populated: bool = level_tag.get_tag("LightPopulated").value > 0
+        self.last_update: int = level_tag.get_tag("LastUpdate").value
+        self.inhabited_time: int = level_tag.get_tag("InhabitedTime").value
+        self.tile_entities: list = level_tag.get_tag("TileEntities").value
+        self.entities: list = level_tag.get_tag("Entities").value"""
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream(chunk)
