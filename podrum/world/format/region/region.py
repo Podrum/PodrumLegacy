@@ -50,10 +50,6 @@ class region:
     @staticmethod
     def get_location(x: int, z: int) -> int:
         return 4 * ((x & 31) + (z & 31) * 32)
-    
-    @staticmethod
-    def coords_to_index(x: int, z: int) -> tuple:
-        return abs(abs(self.x << 5) - abs(x)), abs(abs(self.z << 5) - abs(y))
 
     def get_chunk_data(self, x: int, z: int) -> bytes:
         file: object = open(self.path, "rb")
