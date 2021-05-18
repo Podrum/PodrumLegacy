@@ -73,7 +73,7 @@ class anvil:
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
         tag: object = compound_tag()
-        tag.read(stream)chunk_utils
+        tag.read(stream)
         level_tag: object = root_tag.get_tag("").get_tag("Level")
         sub_chunks: dict = {}
         for section_tag in level_tag.get_tag("Sections").value:
