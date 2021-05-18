@@ -48,7 +48,7 @@ class anvil:
             os.mkdir(real_path)
         options_path: str = os.path.join(real_path, "level.dat")
         if not isfile(options_path):
-            self.create_level_options_file(options_path)
+            self.create_options_file(options_path)
         
     def chunk_region_location(self, x: int, z: int) -> tuple:
         return math.ceil(x / 32), math.ceil(z / 32)
