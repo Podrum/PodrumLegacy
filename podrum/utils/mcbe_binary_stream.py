@@ -204,3 +204,12 @@ class mcbe_binary_stream(binary_stream):
     def write_blob(self, value: dict) -> None:
         self.write_unsigned_long_le(value["hash"])
         self.write_byte_array(value["payload"])
+
+    def read_block_palette(self) -> list:
+        block_palette: list = []
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            entry: dict = {
+                "name": self.read_string()
+            }
+            block_palette.append(entry)
