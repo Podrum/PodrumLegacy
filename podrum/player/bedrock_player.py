@@ -209,10 +209,10 @@ class bedrock_player:
         packet: object = request_chunk_radius_packet(data)
         packet.decode()
         new_packet: object = chunk_radius_updated_packet()
-        new_packet.chunk_radius: int = packet.chunk_radius
+        new_packet.chunk_radius: int = 1
         new_packet.encode()
         self.send_packet(new_packet.data)
-        distance: int = packet.chunk_radius
+        distance: int = 1
         for chunk_x in range(-distance, distance + 1):
             for chunk_z in range(-distance, distance + 1):
                 send_chunk: object = chunk(chunk_x, chunk_z)
