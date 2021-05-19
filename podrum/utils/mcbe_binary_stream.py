@@ -74,11 +74,11 @@ class mcbe_binary_stream(binary_stream):
             self.write_string(behavior_pack_info["content_identity"])
             self.write_bool(behavior_pack_info["has_scripts"])
             
-    def read_resource_pack_infos(self) -> list:
-        resource_pack_infos: list = []
+    def read_texture_pack_infos(self) -> list:
+        texture_pack_infos: list = []
         length: int = self.read_short_le()
         for i in range(0, length):
-            resource_pack_infos.append({
+            texture_pack_infos.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
                 "size": self.read_unsigned_long_le(),
@@ -90,17 +90,17 @@ class mcbe_binary_stream(binary_stream):
             })
         return resource_pack_infos
             
-    def write_resource_pack_infos(self, value: list) -> None:
+    def write_texture_pack_infos(self, value: list) -> None:
         self.write_short_le(len(value))
-        for resource_pack_info in value:
-            self.write_string(resource_pack_info["uuid"])
-            self.write_string(resource_pack_info["version"])
-            self.write_unsigned_long_le(resource_pack_info["size"])
-            self.write_string(resource_pack_info["content_key"])
-            self.write_string(resource_pack_info["sub_pack_name"])
-            self.write_string(resource_pack_info["content_identity"])
-            self.write_bool(resource_pack_info["has_scripts"])
-            self.write_bool(resource_pack_info["rtx_enabled"])
+        for texture_pack_info in value:
+            self.write_string(texture_pack_info["uuid"])
+            self.write_string(texture_pack_info["version"])
+            self.write_unsigned_long_le(texture_pack_info["size"])
+            self.write_string(texture_pack_info["content_key"])
+            self.write_string(texture_pack_info["sub_pack_name"])
+            self.write_string(texture_pack_info["content_identity"])
+            self.write_bool(texture_pack_info["has_scripts"])
+            self.write_bool(texture_pack_info["rtx_enabled"])
             
     def read_resource_pack_id_versions(self) -> list:
         resource_pack_id_versions: list = []
@@ -205,11 +205,20 @@ class mcbe_binary_stream(binary_stream):
         self.write_unsigned_long_le(value["hash"])
         self.write_byte_array(value["payload"])
 
-    def read_block_palette(self) -> list:
-        block_palette: list = []
+    def read_item_states(self) -> list:
+        item_states: list = []
         length: int = self.read_var_int()
         for i in range(0, length):
-            entry: dict = {
-                "name": self.read_string()
-            }
-            block_palette.append(entry)
+            item_states.append({
+                "name": self.read_string(),
+                "runtime_id": self.read_short_le(),
+                "component_based": self.read_bool()
+            })
+        return item_states
+
+    def write_item_states(self, value: list) -> None:
+        self.write_var_int(len(value))
+        for item_state in value:
+            self.write_string(item_state["name"])
+            self.write_short_le(item_state["runtime_id"])
+            self.write_bool(item_state["component_based"])
