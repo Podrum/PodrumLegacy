@@ -50,8 +50,8 @@ from world.chunk.sub_chunk import sub_chunk
 from world.format.anvil.region import region
 
 class anvil:
-    def __init__(self, world_dir: str, format: str = "mca") -> None:
-        self.format: str = format
+    def __init__(self, world_dir: str) -> None:
+        self.format: str = "mca"
         self.world_dir: str = os.path.abspath(world_dir)
         if not os.path.isdir(self.world_dir):
             os.mkdir(self.world_dir)
@@ -69,6 +69,15 @@ class anvil:
     def rc_index(x: int, z: int, rx: int, rz: int) -> tuple:
         return abs(abs(rx << 5) - abs(x)), abs(abs(rz << 5) - abs(z))
     
+    @staticmethod
+    def section_to_sub_chunk(section_tag: object) -> object:
+        return sub_chunk(
+            chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value),
+            chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value),
+            chunk_utils.reorder_nibble_array(section_tag.get_tag("SkyLight").value),
+            chunk_utils.reorder_nibble_array(section_tag.get_tag("BlockLight").value)
+        )
+    
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z, region_index[0], region_index[1])
@@ -83,12 +92,7 @@ class anvil:
         level_tag: object = tag.get_tag("").get_tag("Level")
         sub_chunks: dict = {}
         for section_tag in level_tag.get_tag("Sections").value:
-            sub_chunks[section_tag.get_tag("Y").value] = sub_chunk(
-                chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value) if reg.format == "mca" else section_tag.get_tag("Blocks").value,
-                chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value) if reg.format == "mca" else section_tag.get_tag("Data").value,
-                chunk_utils.reorder_nibble_array(section_tag.get_tag("SkyLight").value) if reg.format == "mca" else section_tag.get_tag("SkyLight").value,
-                chunk_utils.reorder_nibble_array(section_tag.get_tag("BlockLight").value) if reg.format == "mca" else section_tag.get_tag("BlockLight").value
-            )
+            sub_chunks[section_tag.get_tag("Y").value] = anvil.section_to_sub_chunk(section_tag)
         if level_tag.has_tag("BiomeColors"): # Just a check for pmmp worlds
             biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
         else:
@@ -105,6 +109,15 @@ class anvil:
         result.is_light_populated: int = level_tag.get_tag("LightPopulated").value > 0
         result.is_terrain_populated: int = level_tag.get_tag("TerrainPopulated").value > 0
         return result
+    
+    @staticmethod
+    def sub_chunk_to_section(sub_chunk: object) -> object:
+        return compound_tag("", [
+                byte_array_tag("Blocks", chunk_utils.reorder_byte_array(sub_chunk.ids)),
+                byte_array_tag("Data", chunk_utils.reorder_byte_array(sub_chunk.data),
+                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(sub_chunk.sky_light)),
+                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(sub_chunk.block_light))
+        ])
                                         
     def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(x, z)
@@ -114,14 +127,9 @@ class anvil:
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
         sections_tag = list_tag("Sections", [], tag_ids.compound_tag)
-        for y, section in chunk_in.sub_chunks.items():
-            section_tag = compound_tag("", [
-                byte_tag("Y", y),
-                byte_array_tag("Blocks", chunk_utils.reorder_byte_array(section.ids) if reg.format == "mca" else section.ids),
-                byte_array_tag("Data", chunk_utils.reorder_byte_array(section.data) if reg.format == "mca" else section.data),
-                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(section.sky_light) if reg.format == "mca" else section.sky_light),
-                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(section.block_light) if reg.format == "mca" else section.block_light)
-            ])
+        for y, sub_chunk in chunk_in.sub_chunks.items():
+            section_tag = anvil.sub_chunk_to_section(sub_chunk)
+            section_tag.set_tag(byte_tag("Y", y))
             sections_tag.value.append(section_tag)
         tag: object = compound_tag("", [
             compound_tag("Level", [
