@@ -50,8 +50,10 @@ from world.chunk.sub_chunk import sub_chunk
 from world.format.anvil.region import region
 
 class anvil:
+    region_file_extension: str = "mca"
+    format_name: str = "anvil"
+    
     def __init__(self, world_dir: str) -> None:
-        self.format: str = "mca"
         self.world_dir: str = os.path.abspath(world_dir)
         if not os.path.isdir(self.world_dir):
             os.mkdir(self.world_dir)
@@ -81,7 +83,7 @@ class anvil:
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z, region_index[0], region_index[1])
-        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.format}")
+        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
@@ -122,7 +124,7 @@ class anvil:
     def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
-        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.format}")
+        region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
