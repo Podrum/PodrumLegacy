@@ -116,7 +116,7 @@ class anvil:
     def sub_chunk_to_section(sub_chunk: object) -> object:
         return compound_tag("", [
                 byte_array_tag("Blocks", chunk_utils.reorder_byte_array(sub_chunk.ids)),
-                byte_array_tag("Data", chunk_utils.reorder_byte_array(sub_chunk.data),
+                byte_array_tag("Data", chunk_utils.reorder_byte_array(sub_chunk.data)),
                 byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(sub_chunk.sky_light)),
                 byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(sub_chunk.block_light))
         ])
