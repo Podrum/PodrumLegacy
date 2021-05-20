@@ -27,6 +27,20 @@ It's still under active development, but yet it has few advantages:
  - [x] Joinable (1.16.220)
  - [ ] Mobs 
 
+## Running:
+Linux and MacOS (Unix systems):
+```sh
+pip3 install -r ./requirements.txt
+python3 podrum
+```
+Or you can use Powershell.
+
+Windows:
+```batch
+pip install -r ./requirements.txt
+python podrum
+```
+
 # FAQ:
  - Can I contribute?
  > Sure.
@@ -42,17 +56,3 @@ It's still under active development, but yet it has few advantages:
  > Yes, it does, you can write them in Python (and maybe some other languages with some tricks).
  - I have a question that isn't answered here, where can I ask it?
  > On our [discord](https://discord.gg/ScSsnwQ4kW).
-
-## Running:
-Linux and MacOS (Unix systems):
-```sh
-pip3 install -r ./requirements.txt
-python3 podrum
-```
-Or you can use Powershell.
-
-Windows:
-```batch
-pip install -r ./requirements.txt
-python podrum
-```
