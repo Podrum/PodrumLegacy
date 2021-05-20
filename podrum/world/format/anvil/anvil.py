@@ -133,7 +133,8 @@ class anvil:
             section_tag = anvil.sub_chunk_to_section(sub_chunk)
             section_tag.set_tag(byte_tag("Y", y))
             sections_tag.value.append(section_tag)
-        tag: object = compound_tag("", [
+        tag: object = compound_tag()
+        tag.set_tag(compound_tag("", [
             compound_tag("Level", [
                 byte_array_tag("Biomes", chunk_in.biomes),
                 list_tag("TileEntities", chunk_in.tiles, tag_ids.compound_tag),
@@ -149,7 +150,7 @@ class anvil:
                 sections_tag
             ]),
             int_tag("DataVersion", 1343)
-        ])
+        ]))
         tag.write(stream)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], stream.data)
                                         
@@ -163,7 +164,7 @@ class anvil:
         stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
         tag = compound_tag()
         tag.read(stream)
-        data_tag: bytes = tag.get_tag("Data")
+        data_tag: bytes = tag.get_tag("").get_tag("Data")
         if data_tag.has_tag(name):
             option_tag: object = data_tag.get_tag(name)
             option_tag.value = value
@@ -177,7 +178,8 @@ class anvil:
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
-        tag: object = compound_tag("", [
+        tag: object = compound_tag()
+        tag.set_tag(compound_tag("", [
             compound_tag("Data", [
                 byte_tag("hardcore", 0),
                 byte_tag("MapFeatures", 0),
@@ -201,7 +203,7 @@ class anvil:
                 string_tag("generatorName", "flat"),
                 string_tag("LevelName", "world")
             ])
-        ])
+        ]))
         tag.write(stream)
         file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
         file.write(stream.data)
