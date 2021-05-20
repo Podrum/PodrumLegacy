@@ -32,6 +32,8 @@
 from binary_utils.binary_stream import binary_stream
 from utils.math.vector_2 import vector_2
 from utils.math.vector_3 import vector_3
+from nbt_utils.tag.compound_tag import compound_tag
+from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
 
 class mcbe_binary_stream(binary_stream):
     def read_string(self) -> str:
