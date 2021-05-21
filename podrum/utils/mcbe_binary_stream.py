@@ -56,6 +56,13 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(value))
         self.write(value)
         
+    def read_signed_byte_array(self) -> bytes:
+        return self.read(self.read_signed_var_int())
+    
+    def write_signed_byte_array(self, value: bytes) -> None:
+        self.write_signed_var_int(len(value))
+        self.write(value)
+        
     def read_short_array(self) -> bytes:
         return self.read(self.read_short_le())
     
