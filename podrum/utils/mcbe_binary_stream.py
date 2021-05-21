@@ -49,6 +49,13 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(value))
         self.write(value)
         
+    def read_short_array(self) -> bytes:
+        return self.read(self.read_short_le())
+    
+    def write_short_array(self, value: bytes) -> None:
+        self.write_short_le(len(value))
+        self.write(value)
+        
     def read_behavior_pack_infos(self) -> list:
         behavior_pack_infos: list = []
         length: int = self.read_short_le()
