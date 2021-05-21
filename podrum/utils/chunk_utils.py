@@ -26,7 +26,7 @@ class chunk_utils:
                         j80: int = (j | 0x80)
                         if array[j] != common_value and array[j80] != common_value:
                             i1: int = array[j]
-                            i2: int = array[j80];
+                            i2: int = array[j80]
                             result[i]: int = (i2 << 4) | (i1 & 0x0f)
                             result[i | 0x80]: int = (i1 >> 4) | (i2 & 0xf0)
                         i += 1
