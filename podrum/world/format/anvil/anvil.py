@@ -157,15 +157,13 @@ class anvil:
                                         
     def get_option(self, name: str) -> object:
         stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
-        tag = compound_tag()
-        tag.read(stream)
+        tag: object = stream.read_root_tag()
         return tag.get_tag("Data").get_tag(name).value
                                         
     def set_option(self, name: str, value: object) -> None:
         stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
-        tag = compound_tag()
-        tag.read(stream)
-        data_tag: bytes = tag.get_tag("").get_tag("Data")
+        tag: object = stream.read_root_tag()
+        data_tag: bytes = tag.get_tag("Data")
         if data_tag.has_tag(name):
             option_tag: object = data_tag.get_tag(name)
             option_tag.value = value
@@ -173,14 +171,13 @@ class anvil:
             tag.set_tag(data_tag)
             stream.buffer: bytes = b""
             stream.pos: int = 0
-            tag.write(stream)
+            stream.write_root_tag(tag)
             file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
             file.write(gzip.compress(stream.data))
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
-        tag: object = compound_tag()
-        tag.set_tag(compound_tag("", [
+        tag: object = compound_tag("", [
             compound_tag("Data", [
                 byte_tag("hardcore", 0),
                 byte_tag("MapFeatures", 0),
@@ -205,6 +202,6 @@ class anvil:
                 string_tag("LevelName", "world")
             ])
         ]))
-        tag.write(stream)
+        stream.write_root_tag(tag)
         file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
         file.write(gzip.compress(stream.data))
