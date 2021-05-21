@@ -234,3 +234,18 @@ class mcbe_binary_stream(binary_stream):
         stream: object = nbt_net_le_binary_stream()
         stream.write_root_tag(value)
         self.write(stream.data)
+
+    def read_block_properties(self) -> list:
+        block_properties: list = []
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            block_properties.append({
+                "name": self.read_string(),
+                "nbt": self.read_tag()
+            })
+            
+    def write_block_properties(self, value: list) -> None:
+        self.write_var_int(len(value))
+        for block_property in value:
+            self.write_string(block_property["name"])
+            self.write_tag(block_property["nbt"])
