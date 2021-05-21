@@ -1,4 +1,4 @@
 rak-net==1.6
 binary-utils==1.3
-nbt-utils==1.1
+nbt-utils==1.3
 mcbe-data==0.1
