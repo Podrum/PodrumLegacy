@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+import gzip
 from nbt_utils.constant.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
@@ -155,13 +156,13 @@ class anvil:
         reg.put_chunk_data(chunk_index[0], chunk_index[1], stream.data)
                                         
     def get_option(self, name: str) -> object:
-        stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
+        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
         tag = compound_tag()
         tag.read(stream)
         return tag.get_tag("Data").get_tag(name).value
                                         
     def set_option(self, name: str, value: object) -> None:
-        stream: object = nbt_be_binary_stream(open(os.path.join(self.world_dir, "level.dat"), "rb").read())
+        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
         tag = compound_tag()
         tag.read(stream)
         data_tag: bytes = tag.get_tag("").get_tag("Data")
@@ -174,7 +175,7 @@ class anvil:
             stream.pos: int = 0
             tag.write(stream)
             file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
-            file.write(stream.data)
+            file.write(gzip.compress(stream.data))
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
@@ -206,4 +207,4 @@ class anvil:
         ]))
         tag.write(stream)
         file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
-        file.write(stream.data)
+        file.write(gzip.compress(stream.data))
