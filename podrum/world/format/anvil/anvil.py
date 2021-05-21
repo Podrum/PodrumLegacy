@@ -88,11 +88,10 @@ class anvil:
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         stream: object = nbt_be_binary_stream(chunk_data)
-        tag: object = compound_tag()
-        tag.read(stream)
-        if not tag.has_tag(""):
+        tag: object = stream.read_root_tag()
+        if tag is None:
             return chunk(x, z)
-        level_tag: object = tag.get_tag("").get_tag("Level")
+        level_tag: object = tag.get_tag("Level")
         sub_chunks: dict = {}
         for section_tag in level_tag.get_tag("Sections").value:
             sub_chunks[section_tag.get_tag("Y").value] = anvil.section_to_sub_chunk(section_tag)
@@ -134,8 +133,7 @@ class anvil:
             section_tag = anvil.sub_chunk_to_section(sub_chunk)
             section_tag.set_tag(byte_tag("Y", y))
             sections_tag.value.append(section_tag)
-        tag: object = compound_tag()
-        tag.set_tag(compound_tag("", [
+        tag: object = compound_tag("", [
             compound_tag("Level", [
                 byte_array_tag("Biomes", chunk_in.biomes),
                 list_tag("TileEntities", chunk_in.tiles, tag_ids.compound_tag),
@@ -151,8 +149,8 @@ class anvil:
                 sections_tag
             ]),
             int_tag("DataVersion", 1343)
-        ]))
-        tag.write(stream)
+        ])
+        stream.write_root_tag(tag)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], stream.data)
                                         
     def get_option(self, name: str) -> object:
@@ -201,7 +199,7 @@ class anvil:
                 string_tag("generatorName", "flat"),
                 string_tag("LevelName", "world")
             ])
-        ]))
+        ])
         stream.write_root_tag(tag)
         file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
         file.write(gzip.compress(stream.data))
