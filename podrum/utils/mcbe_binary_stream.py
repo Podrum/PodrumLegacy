@@ -224,3 +224,14 @@ class mcbe_binary_stream(binary_stream):
             self.write_string(item_state["name"])
             self.write_short_le(item_state["runtime_id"])
             self.write_bool(item_state["component_based"])
+
+    def read_tag(self) -> object:
+        stream: object = nbt_net_le_binary_stream(self.data, self.pos)
+        tag: object = stream.read_root_tag()
+        stream.pos: int = pos
+        return tag
+    
+    def write_tag(self, value: object) -> None:
+        stream: object = nbt_net_le_binary_stream()
+        stream.write_root_tag(value)
+        self.write(stream.data)
