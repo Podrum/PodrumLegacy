@@ -70,7 +70,7 @@ class anvil:
     
     @staticmethod
     def rc_index(x: int, z: int) -> tuple:
-        return x - ((x >> 5) << 5), y - ((y >> 5) << 5)
+        return x - ((x >> 5) << 5), z - ((z >> 5) << 5)
     
     @staticmethod
     def section_to_sub_chunk(section_tag: object) -> object:
