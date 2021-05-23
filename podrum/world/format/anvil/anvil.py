@@ -69,8 +69,8 @@ class anvil:
         return x >> 5, z >> 5
     
     @staticmethod
-    def rc_index(x: int, z: int, rx: int, rz: int) -> tuple:
-        return abs(abs(rx << 5) - abs(x)), abs(abs(rz << 5) - abs(z))
+    def rc_index(x: int, z: int) -> tuple:
+        return x - ((x >> 5) << 5), y - ((y >> 5) << 5)
     
     @staticmethod
     def section_to_sub_chunk(section_tag: object) -> object:
@@ -83,7 +83,7 @@ class anvil:
     
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
-        chunk_index: tuple = anvil.rc_index(x, z, region_index[0], region_index[1])
+        chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
