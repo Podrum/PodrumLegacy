@@ -29,11 +29,11 @@
 #                                                                              #
 ################################################################################
 
-from constant.version import version
 import importlib
 import json
 import os
 import sys
+from version import version
 from zipfile import ZipFile
 
 class plugin_manager:
