@@ -32,6 +32,7 @@
 from binary_utils.binary_stream import binary_stream
 from utils.math.vector_2 import vector_2
 from utils.math.vector_3 import vector_3
+from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
 
 class mcbe_binary_stream(binary_stream):
@@ -245,14 +246,25 @@ class mcbe_binary_stream(binary_stream):
             self.write_short_le(item_state["runtime_id"])
             self.write_bool(item_state["component_based"])
 
-    def read_tag(self) -> object:
+    def read_net_le_tag(self) -> object:
         stream: object = nbt_net_le_binary_stream(self.data, self.pos)
         tag: object = stream.read_root_tag()
         stream.pos: int = pos
         return tag
     
-    def write_tag(self, value: object) -> None:
+    def write_net_le_tag(self, value: object) -> None:
         stream: object = nbt_net_le_binary_stream()
+        stream.write_root_tag(value)
+        self.write(stream.data)
+        
+    def read_le_tag(self) -> object:
+        stream: object = nbt_le_binary_stream(self.data, self.pos)
+        tag: object = stream.read_root_tag()
+        stream.pos: int = pos
+        return tag
+    
+    def write_le_tag(self, value: object) -> None:
+        stream: object = nbt_le_binary_stream()
         stream.write_root_tag(value)
         self.write(stream.data)
 
@@ -262,11 +274,27 @@ class mcbe_binary_stream(binary_stream):
         for i in range(0, length):
             block_properties.append({
                 "name": self.read_string(),
-                "nbt": self.read_tag()
+                "nbt": self.read_net_le_tag()
             })
             
     def write_block_properties(self, value: list) -> None:
         self.write_var_int(len(value))
         for block_property in value:
             self.write_string(block_property["name"])
-            self.write_tag(block_property["nbt"])
+            self.write_net_le_tag(block_property["nbt"])
+            
+    def read_item_extra_data_with_blocking_tick(self) -> dict:
+        result: dict = {}
+        result["has_nbt"]: bool = self.read_unsigned_short_le() > 0
+        if result["has_nbt"]:
+            result["version"]: int = self.read_unsigned_byte()
+            result["nbt"]: object = self.read_le_tag()
+        result["can_place_on"]: list = []
+        can_place_on_count: int = self.read_int_le()
+        for i in range(0, can_place_on_count):
+            result["can_place_on"].append(self.read_short_array())
+        result["can_destroy"]: list = []
+        can_destroy_count: int = self.read_int_le()
+        for i in range(0, can_destroy_count):
+            result["can_destroy"].append(self.read_short_array())
+        result["blocking_tick"]: int = self.read_long_le()
