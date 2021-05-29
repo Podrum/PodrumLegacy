@@ -37,7 +37,6 @@ from command.default.reload_command import reload_command
 from command.default.say_command import say_command
 from command.default.stop_command import stop_command
 from command.default.version_command import version_command
-from constant.misc import misc
 from event.event_manager import event_manager
 import os
 from plugin_manager import plugin_manager
@@ -94,7 +93,13 @@ class server:
 
     def start(self) -> None:
         start_time: float = time.time()
-        print(misc.logo)
+        print("""
+         ____           _                      
+        |  _ \ ___   __| |_ __ _   _ _ __ ___  
+        | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
+        |  __/ (_) | (_| | |  | |_| | | | | | |
+        |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+        """)
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
