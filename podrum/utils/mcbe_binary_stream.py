@@ -314,3 +314,33 @@ class mcbe_binary_stream(binary_stream):
         for item in value["can_destroy"]:
             self.write_short_array(item)
         self.write_long_le(value["blocking_tick"])
+        
+    def read_item_extra_data_without_blocking_tick(self) -> dict:
+        result: dict = {}
+        result["has_nbt"]: bool = self.read_unsigned_short_le() > 0
+        if result["has_nbt"]:
+            result["version"]: int = self.read_unsigned_byte()
+            result["nbt"]: object = self.read_le_tag()
+        result["can_place_on"]: list = []
+        can_place_on_count: int = self.read_int_le()
+        for i in range(0, can_place_on_count):
+            result["can_place_on"].append(self.read_short_array())
+        result["can_destroy"]: list = []
+        can_destroy_count: int = self.read_int_le()
+        for i in range(0, can_destroy_count):
+            result["can_destroy"].append(self.read_short_array())
+        return result
+    
+    def write_item_extra_data_without_blocking_tick(self, value: dict) -> None:
+        if value["has_nbt"]:
+            self.write_unsigned_short_le(65535)
+            self.write_unsigned_byte(value["version"])
+            self.write_le_tag(value["nbt"])
+        else:
+            self.write_unsigned_short_le(0)
+        self.write_int_le(len(value["can_place_on"]))
+        for item in value["can_place_on"]:
+            self.write_short_array(item)
+        self.write_int_le(len(value["can_destroy"]))
+        for item in value["can_destroy"]:
+            self.write_short_array(item)
