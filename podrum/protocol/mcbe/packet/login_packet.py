@@ -30,7 +30,6 @@
 ################################################################################
 
 from binary_utils.binary_stream import binary_stream
-from constant.misc import misc
 from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.mcbe_packet import mcbe_packet
 import json
@@ -61,6 +60,6 @@ class login_packet(mcbe_packet):
         temp_stream.write_unsigned_int_le(len(json_data))
         temp_stream.write(json_data.encode())
         self.write_byte_array(temp_stream.data)
-        jwt_data: str = jwt.encode({"alg": "HS256", "typ": "JWT"}, self.skin_data, misc.mojang_public_key)
+        jwt_data: str = jwt.encode({"alg": "HS256", "typ": "JWT"}, self.skin_data, mcbe_protocol_info.mojang_public_key)
         self.write_unsigned_int_le(len(jwt_data))
         self.write(jwt_data.encode())
