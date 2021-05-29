@@ -344,3 +344,16 @@ class mcbe_binary_stream(binary_stream):
         self.write_int_le(len(value["can_destroy"]))
         for item in value["can_destroy"]:
             self.write_short_array(item)
+            
+    def read_item_legacy(self) -> dict:
+        result: dict = {
+            "network_id": self.read_signed_var_int()
+        }
+        if result["network_id"] > 0:
+            result["count"]: int = self.read_long_le()
+            result["metadata"]: int = self.read_var_int()
+            if result["network_id"] == 355:
+                pass # Shield extra data
+            else:
+                pass # Other item extra data
+        
