@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-from constant.version import version
+from version import version
 
 class version_command:
     def __init__(self) -> None:
@@ -38,4 +38,4 @@ class version_command:
         self.aliases: list = ["ver"]
     
     def execute(self, args: list, sender: object, server: object) -> None:
-        sender.send_message(f"This server is running Podrum version {version.podrum_version} {version.podrum_codename} on API {version.podrum_api_version} for mcbe {version.mcbe_version} ({version.mcbe_protocol_version}). This version is licensed under the {version.podrum_license} license.")
+        sender.send_message(f"This server is running Podrum version {version.podrum_version} {version.podrum_codename} on API {version.podrum_api_version}. This version is licensed under the {version.podrum_license} license.")
