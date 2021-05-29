@@ -352,8 +352,10 @@ class mcbe_binary_stream(binary_stream):
         if result["network_id"] > 0:
             result["count"]: int = self.read_long_le()
             result["metadata"]: int = self.read_var_int()
-            if result["network_id"] == 355:
-                pass # Shield extra data
-            else:
-                pass # Other item extra data
-        
+            result["extra"]: list = []
+            extra_count: int = self.read_var_int()
+            for i in range(0, extra_count):
+                if result["network_id"] == 355:
+                    result["extra"].append(self.read_item_extra_data_with_blocking_tick())
+                else:
+                    result["extra"].append(self.read_item_extra_data_without_blocking_tick())
