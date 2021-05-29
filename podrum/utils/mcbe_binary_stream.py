@@ -455,3 +455,32 @@ class mcbe_binary_stream(binary_stream):
     def write_vector_2_float(self, value: dict) -> None:
         self.write_float_le(value["x"])
         self.write_float_le(value["z"])
+        
+    def read_metadata_dictionary(self) -> dict:
+        metadata_dictionary: dict = {}
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            metadata_key: int = self.read_var_int()
+            metadata_type: int = self.read_var_int()
+            if metadata_type == 0:
+                metadata_value: int = self.read_byte()
+            elif metadata_type == 1:
+                metadata_value: int = self.read_short_le()
+            elif metadata_type == 2:
+                metadata_value: int = self.read_signed_var_int()
+            elif metadata_type == 3:
+                metadata_value: int = self.read_float_le()
+            elif metadata_type == 4:
+                metadata_value: int = self.read_string()
+            elif metadata_type == 5:
+                metadata_value: int = self.read_net_le_tag()
+            elif metadata_type == 6:
+                metadata_value: int = self.read_vector_3_int()
+            elif metadata_type == 7:
+                metadata_value: int = self.read_signed_var_long()
+            elif metadata_type == 8:
+                metadata_value: int = self.read_vector_3_float()
+            else:
+                raise Exception("Invalid metadata type")
+            metadata_dictionary[metadata_key]: dict = {"type": metadata_type, "value": metadata_value}
+        return metadata_dictionary
