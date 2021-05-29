@@ -30,6 +30,8 @@
 ################################################################################
 
 class mcbe_protocol_info:
+    mcbe_version: str = "1.16.221"
+    mcbe_protocol_version: int = 431
     login_packet: int = 0x01
     play_status_packet: int = 0x02
     server_to_client_handshake_packet: int = 0x03
