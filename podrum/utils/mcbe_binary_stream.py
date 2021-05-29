@@ -374,3 +374,38 @@ class mcbe_binary_stream(binary_stream):
                     self.write_item_extra_data_with_blocking_tick(extra)
                 else:
                     self.write_item_extra_data_without_blocking_tick(extra)
+                    
+    def read_item(self) -> dict:
+        result: dict = {
+            "network_id": self.read_signed_var_int()
+        }
+        if result["network_id"] > 0:
+            result["count"]: int = self.read_long_le()
+            result["metadata"]: int = self.read_var_int()
+            result["has_stack_id"]: bool = self.read_bool()
+            if result["has_stack_id"]:
+                result["stack_id"]: int = self.read_signed_var_int()
+            result["block_runtime_id"]: int = self.read_signed_var_int()
+            result["extra"]: list = []
+            extra_count: int = self.read_var_int()
+            for i in range(0, extra_count):
+                if result["network_id"] == 355:
+                    result["extra"].append(self.read_item_extra_data_with_blocking_tick())
+                else:
+                    result["extra"].append(self.read_item_extra_data_without_blocking_tick())
+        return result
+                    
+    def write_item(self, value: dict) -> None:
+        self.write_signed_var_int(value["network_id"])
+        if value["network_id"] > 0:
+            self.write_long_le(value["count"])
+            self.write_var_int(value["metadata"])
+            if value["has_stack_id"]:
+                self.write_signed_var_int(value["stack_id"])
+            self.write_signed_var_int(value["block_runtime_id"])
+            self.write_var_int(len(value["extra"]))
+            for extra in value["extra"]:
+                if value["network_id"] == 355:
+                    self.write_item_extra_data_with_blocking_tick(extra)
+                else:
+                    self.write_item_extra_data_without_blocking_tick(extra)
