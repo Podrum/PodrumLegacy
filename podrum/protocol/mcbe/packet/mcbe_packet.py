@@ -33,7 +33,7 @@ from binary_utils.binary_stream import binary_stream
 from utils.math.vector_2 import vector_2
 from utils.math.vector_3 import vector_3
 
-class packet(binary_stream):
+class mcbe_packet(binary_stream):
     def decode_header(self) -> None:
         self.read_var_int()
       
