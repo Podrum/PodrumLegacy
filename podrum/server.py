@@ -29,15 +29,15 @@
 #                                                                              #
 ################################################################################
 
+from command.command_interface import command_interface
+from command.command_manager import command_manager
 from command.default.help_command import help_command
 from command.default.plugins_command import plugins_command
 from command.default.reload_command import reload_command
 from command.default.say_command import say_command
 from command.default.stop_command import stop_command
 from command.default.version_command import version_command
-from command.command_manager import command_manager
 from constant.misc import misc
-from interface.command_interface import command_interface
 from interface.rak_net_interface import rak_net_interface
 from manager.event_manager import event_manager
 from manager.plugin_manager import plugin_manager
