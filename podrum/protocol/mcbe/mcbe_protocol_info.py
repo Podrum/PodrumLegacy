@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-class mcbe_packet_ids:
+class mcbe_protocol_info:
     login_packet: int = 0x01
     play_status_packet: int = 0x02
     server_to_client_handshake_packet: int = 0x03
