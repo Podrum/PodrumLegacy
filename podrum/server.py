@@ -40,8 +40,8 @@ from command.default.version_command import version_command
 from constant.misc import misc
 from interface.rak_net_interface import rak_net_interface
 from manager.event_manager import event_manager
-from manager.plugin_manager import plugin_manager
 import os
+from plugin_manager import plugin_manager
 import time
 from utils.config import config
 from utils.logger import logger
