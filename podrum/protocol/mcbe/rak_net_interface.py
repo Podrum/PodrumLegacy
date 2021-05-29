@@ -31,7 +31,7 @@
 
 from constant.version import version
 from packet.mcbe.game_packet import game_packet
-from player.bedrock_player import bedrock_player
+from player.mcbe_player import mcbe_player
 from rak_net.server import server as rak_net_server
 from threading import Thread
 
@@ -78,7 +78,7 @@ class rak_net_interface(Thread):
                     self.server.players[connection.address.token].handle_packet(batch)
             
     def on_new_incoming_connection(self, connection: object) -> None:
-        self.server.players[connection.address.token]: object = bedrock_player(connection, self.server)
+        self.server.players[connection.address.token]: object = mcbe_player(connection, self.server)
         self.server.players[connection.address.token].entity_id: int = self.server.current_entity_id
         self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
