@@ -59,7 +59,7 @@ class server:
         self.current_entity_id: int = 1
         self.start()
 
-    def register_vanilla_commands(self) -> None:
+    def register_default_commands(self) -> None:
         self.command_manager.register(help_command())
         self.command_manager.register(plugins_command())
         self.command_manager.register(reload_command())
@@ -102,7 +102,7 @@ class server:
         worlds_path: str = os.path.join(os.getcwd(), "worlds")
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
-        self.register_vanilla_commands()
+        self.register_default_commands()
         self.register_events()
         self.command_interface.start_interface()
         self.rak_net_interface.start_interface()
