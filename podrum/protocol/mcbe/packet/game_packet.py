@@ -30,10 +30,10 @@
 ################################################################################
 
 from binary_utils.binary_stream import binary_stream
-from protocol.mcbe.packet.mcbe_packet import mcbe_packet
+from rak_net.protocol.packet import packet
 import zlib
 
-class game_packet(mcbe_packet):
+class game_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = 0xfe
