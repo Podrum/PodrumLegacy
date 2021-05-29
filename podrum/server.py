@@ -39,9 +39,9 @@ from command.default.stop_command import stop_command
 from command.default.version_command import version_command
 from constant.misc import misc
 from event.event_manager import event_manager
-from interface.rak_net_interface import rak_net_interface
 import os
 from plugin_manager import plugin_manager
+from protocol.mcbe.rak_net_interface import rak_net_interface
 import time
 from utils.config import config
 from utils.logger import logger
