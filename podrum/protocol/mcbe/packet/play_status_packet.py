@@ -29,13 +29,13 @@
 #                                                                              #
 ################################################################################
 
-from constant.mcbe_packet_ids import mcbe_packet_ids
-from packet.mcbe.packet import packet
+from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from protocol.mcbe.packet.mcbe_packet import mcbe_packet
 
-class play_status_packet(packet):
+class play_status_packet(mcbe_packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
-        self.packet_id: int = mcbe_packet_ids.play_status_packet
+        self.packet_id: int = mcbe_protocol_info.play_status_packet
 
     def decode_payload(self) -> None:
         self.status: int = self.read_unsigned_int_be()
