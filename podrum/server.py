@@ -38,8 +38,8 @@ from command.default.say_command import say_command
 from command.default.stop_command import stop_command
 from command.default.version_command import version_command
 from constant.misc import misc
+from event.event_manager import event_manager
 from interface.rak_net_interface import rak_net_interface
-from manager.event_manager import event_manager
 import os
 from plugin_manager import plugin_manager
 import time
