@@ -29,8 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from constant.mcbe_type.login_status_type import login_status_type
-from constant.mcbe_type.resource_pack_client_response_type import resource_pack_client_response_type
 from utils.math.vector_2 import vector_2
 from utils.math.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
@@ -50,6 +48,8 @@ from protocol.mcbe.packet.resource_packs_info_packet import resource_packs_info_
 from protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
 from protocol.mcbe.packet.start_game_packet import start_game_packet
 from protocol.mcbe.packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
+from protocol.mcbe.pe.login_status_type import login_status_type
+from protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
 from rak_net.protocol.frame import frame
 from world.chunk.chunk import chunk
 import zlib
