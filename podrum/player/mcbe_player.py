@@ -29,33 +29,32 @@
 #                                                                              #
 ################################################################################
 
-from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.mcbe_type.login_status_type import login_status_type
 from constant.mcbe_type.resource_pack_client_response_type import resource_pack_client_response_type
-from constant.version import version
 from utils.math.vector_2 import vector_2
 from utils.math.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
-from packet.mcbe.available_entity_identifiers_packet import available_entity_identifiers_packet
-from packet.mcbe.biome_definition_list_packet import biome_definition_list_packet
-from packet.mcbe.chunk_radius_updated_packet import chunk_radius_updated_packet
-from packet.mcbe.game_packet import game_packet
-from packet.mcbe.creative_content_packet import creative_content_packet
-from packet.mcbe.item_component_packet import item_component_packet
-from packet.mcbe.level_chunk_packet import level_chunk_packet
-from packet.mcbe.login_packet import login_packet
-from packet.mcbe.play_status_packet import play_status_packet
-from packet.mcbe.resource_pack_client_response_packet import resource_pack_client_response_packet
-from packet.mcbe.resource_pack_stack_packet import resource_pack_stack_packet
-from packet.mcbe.resource_packs_info_packet import resource_packs_info_packet
-from packet.mcbe.request_chunk_radius_packet import request_chunk_radius_packet
-from packet.mcbe.start_game_packet import start_game_packet
-from packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
+from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
+from protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
+from protocol.mcbe.packet.chunk_radius_updated_packet import chunk_radius_updated_packet
+from protocol.mcbe.packet.game_packet import game_packet
+from protocol.mcbe.packet.creative_content_packet import creative_content_packet
+from protocol.mcbe.packet.item_component_packet import item_component_packet
+from protocol.mcbe.packet.level_chunk_packet import level_chunk_packet
+from protocol.mcbe.packet.login_packet import login_packet
+from protocol.mcbe.packet.play_status_packet import play_status_packet
+from protocol.mcbe.packet.resource_pack_client_response_packet import resource_pack_client_response_packet
+from protocol.mcbe.packet.resource_pack_stack_packet import resource_pack_stack_packet
+from protocol.mcbe.packet.resource_packs_info_packet import resource_packs_info_packet
+from protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
+from protocol.mcbe.packet.start_game_packet import start_game_packet
+from protocol.mcbe.packet.mcbe.packet_violation_warning_packet import packet_violation_warning_packet
 from rak_net.protocol.frame import frame
 from world.chunk.chunk import chunk
 import zlib
 
-class bedrock_player:
+class mcbe_player:
     def __init__(self, connection, server):
         self.connection = connection
         self.server = server
@@ -103,7 +102,7 @@ class bedrock_player:
         packet.from_world_template: bool = False
         packet.world_template_option_locked: bool = True
         packet.only_old_villagers: bool = False
-        packet.game_version: str = version.mcbe_version
+        packet.game_version: str = mcbe_protocol_info.mcbe_version
         packet.limited_world_width: int = 0
         packet.limited_world_height: int = 0
         packet.new_nether: bool = False
@@ -168,7 +167,7 @@ class bedrock_player:
         if packet.status == resource_pack_client_response_type.none:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
-            packet.game_version: str = version.mcbe_version
+            packet.game_version: str = mcbe_protocol_info.mcbe_version
             packet.expirement_count: int = 0
             packet.experimental: bool = False
             packet.encode()
@@ -176,7 +175,7 @@ class bedrock_player:
         elif packet.status == resource_pack_client_response_type.has_all_packs:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
-            packet.game_version: str = version.mcbe_version
+            packet.game_version: str = mcbe_protocol_info.mcbe_version
             packet.experiment_count: int = 0
             packet.experimental: bool = False
             packet.encode()
@@ -234,13 +233,13 @@ class bedrock_player:
             self.spawned: bool = True
         
     def handle_packet(self, data: bytes) -> None:
-        if data[0] == mcbe_packet_ids.login_packet:
+        if data[0] == mcbe_protocol_info.login_packet:
             self.handle_login_packet(data)
-        elif data[0] == mcbe_packet_ids.resource_pack_client_response_packet:
+        elif data[0] == mcbe_protocol_info.resource_pack_client_response_packet:
             self.handle_resource_pack_client_response_packet(data)
-        elif data[0] == mcbe_packet_ids.packet_violation_warning_packet:
+        elif data[0] == mcbe_protocol_info.packet_violation_warning_packet:
             self.handle_packet_violation_warning_packet(data)
-        elif data[0] == mcbe_packet_ids.request_chunk_radius_packet:
+        elif data[0] == mcbe_protocol_info.request_chunk_radius_packet:
             self.handle_request_chunk_radius_packet(data)
     
     def send_chunk(self, send_chunk: object) -> None:
