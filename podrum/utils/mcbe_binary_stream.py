@@ -299,3 +299,18 @@ class mcbe_binary_stream(binary_stream):
             result["can_destroy"].append(self.read_short_array())
         result["blocking_tick"]: int = self.read_long_le()
         return result
+    
+    def write_item_extra_data_with_blocking_tick(self, value: dict) -> None:
+        if value["has_nbt"]:
+            self.write_unsigned_short_le(65535)
+            self.write_unsigned_byte(value["version"])
+            self.write_le_tag(value["nbt"])
+        else:
+            self.write_unsigned_short_le(0)
+        self.write_int_le(len(value["can_place_on"]))
+        for item in value["can_place_on"]:
+            self.write_short_array(item)
+        self.write_int_le(len(value["can_destroy"]))
+        for item in value["can_destroy"]:
+            self.write_short_array(item)
+        self.write_long_le(value["blocking_tick"])
