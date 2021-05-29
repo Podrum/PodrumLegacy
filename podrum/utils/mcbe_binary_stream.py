@@ -298,3 +298,4 @@ class mcbe_binary_stream(binary_stream):
         for i in range(0, can_destroy_count):
             result["can_destroy"].append(self.read_short_array())
         result["blocking_tick"]: int = self.read_long_le()
+        return result
