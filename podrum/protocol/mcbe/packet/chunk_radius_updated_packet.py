@@ -29,13 +29,13 @@
 #                                                                              #
 ################################################################################
 
-from constant.mcbe_packet_ids import mcbe_packet_ids
-from packet.mcbe.packet import packet
+from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from protocol.mcbe.packet.mcbe_packet import mcbe_packet
 
-class chunk_radius_updated_packet(packet):
+class chunk_radius_updated_packet(mcbe_packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
-        self.packet_id: int = mcbe_packet_ids.chunk_radius_updated_packet
+        self.packet_id: int = mcbe_protocol_info.chunk_radius_updated_packet
  
     def decode_payload(self) -> None:
         self.chunk_radius: int = self.read_signed_var_int()
