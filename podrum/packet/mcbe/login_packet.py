@@ -30,16 +30,16 @@
 ################################################################################
 
 from binary_utils.binary_stream import binary_stream
-from constant.mcbe_packet_ids import mcbe_packet_ids
 from constant.misc import misc
-from packet.mcbe.packet import packet
+from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from protocol.mcbe.packet.mcbe_packet import mcbe_packet
 import json
 from utils.jwt import jwt
 
-class login_packet(packet):
+class login_packet(mcbe_packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
-        self.packet_id: int = mcbe_packet_ids.login_packet
+        self.packet_id: int = mcbe_protocol_info.login_packet
 
     def decode_payload(self) -> None:
         self.protocol_version: int = self.read_unsigned_int_be()
