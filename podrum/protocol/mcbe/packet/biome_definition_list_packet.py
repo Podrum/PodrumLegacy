@@ -30,7 +30,7 @@
 ################################################################################
 
 import base64
-from protocol.mcbe.packet.mcbe_protocol_info import mcbe_protocol_info
+from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.mcbe_packet import mcbe_packet
 
 class biome_definition_list_packet(mcbe_packet):
