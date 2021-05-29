@@ -29,8 +29,8 @@
 #                                                                              #
 ################################################################################
 
-from constant.version import version
-from packet.mcbe.game_packet import game_packet
+from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from protocol.mcbe.packet.game_packet import game_packet
 from player.mcbe_player import mcbe_player
 from rak_net.server import server as rak_net_server
 from threading import Thread
@@ -56,7 +56,7 @@ class rak_net_interface(Thread):
         return name[1]
 
     def set_status(self, motd: str, count: int, max_count: int) -> None:
-        self.rak_net_server.name: str = f"MCPE;{motd};{version.mcbe_protocol_version};{version.mcbe_version};{count};{max_count};0;"
+        self.rak_net_server.name: str = f"MCPE;{motd};{mcbe_protocol_info.mcbe_protocol_version};{mcbe_protocol_info.mcbe_version};{count};{max_count};0;"
 
     def set_motd(self, motd: str) -> None:
         self.set_status(motd, self.get_count(), self.get_max_count())
