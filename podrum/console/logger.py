@@ -29,10 +29,10 @@
 #                                                                              #
 ################################################################################
 
+from console.text_format import text_format
 from datetime import datetime
 import inspect
 import sys
-from utils.text_format import text_format
 
 class logger:
     def __init__(self):
