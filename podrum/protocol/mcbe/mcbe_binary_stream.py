@@ -30,8 +30,8 @@
 ################################################################################
 
 from binary_utils.binary_stream import binary_stream
-from utils.math.vector_2 import vector_2
-from utils.math.vector_3 import vector_3
+from geometry.vector_2 import vector_2
+from geometry.vector_3 import vector_3
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
 
@@ -410,51 +410,51 @@ class mcbe_binary_stream(binary_stream):
                 else:
                     self.write_item_extra_data_without_blocking_tick(extra)
                     
-    def read_vector_3_int(self) -> dict:
-        return {
-            "x": self.read_signed_var_int(),
-            "y": self.read_signed_var_int(),
-            "z": self.read_signed_var_int()
-        }
+    def read_vector_3_int(self) -> object:
+        return vector_3(
+            self.read_signed_var_int(),
+            self.read_signed_var_int(),
+            self.read_signed_var_int()
+        )
     
-    def write_vector_3_int(self, value: dict) -> None:
-        self.write_signed_var_int(value["x"])
-        self.write_signed_var_int(value["y"])
-        self.write_signed_var_int(value["z"])
+    def write_vector_3_int(self, value: object) -> None:
+        self.write_signed_var_int(value.x)
+        self.write_signed_var_int(value.y)
+        self.write_signed_var_int(value.z)
         
-    def read_vector_3_unsigned_int(self) -> dict:
-        return {
-            "x": self.read_var_int(),
-            "y": self.read_var_int(),
-            "z": self.read_var_int()
-        }
+    def read_vector_3_unsigned_int(self) -> object:
+        return vector_3(
+            self.read_var_int(),
+            self.read_var_int(),
+            self.read_var_int()
+        )
     
-    def write_vector_3_unsigned_int(self, value: dict) -> None:
-        self.write_var_int(value["x"])
-        self.write_var_int(value["y"])
-        self.write_var_int(value["z"])
+    def write_vector_3_unsigned_int(self, value: object) -> None:
+        self.write_var_int(value.x)
+        self.write_var_int(value.y)
+        self.write_var_int(value.z)
         
-    def read_vector_3_float(self) -> dict:
-        return {
-            "x": self.read_float_le(),
-            "y": self.read_float_le(),
-            "z": self.read_float_le()
-        }
+    def read_vector_3_float(self) -> object:
+        return vector_3(
+            self.read_float_le(),
+            self.read_float_le(),
+            self.read_float_le()
+        )
     
-    def write_vector_3_float(self, value: dict) -> None:
-        self.write_float_le(value["x"])
-        self.write_float_le(value["y"])
-        self.write_float_le(value["z"])
+    def write_vector_3_float(self, value: object) -> None:
+        self.write_float_le(value.x)
+        self.write_float_le(value.y)
+        self.write_float_le(value.z)
         
-    def read_vector_2_float(self) -> dict:
-        return {
-            "x": self.read_float_le(),
-            "z": self.read_float_le()
-        }
+    def read_vector_2_float(self) -> object:
+        return vector_2(
+            self.read_float_le(),
+            self.read_float_le()
+        )
     
-    def write_vector_2_float(self, value: dict) -> None:
-        self.write_float_le(value["x"])
-        self.write_float_le(value["z"])
+    def write_vector_2_float(self, value: object) -> None:
+        self.write_float_le(value.x)
+        self.write_float_le(value.z)
         
     def read_metadata_dictionary(self) -> dict:
         metadata_dictionary: dict = {}
