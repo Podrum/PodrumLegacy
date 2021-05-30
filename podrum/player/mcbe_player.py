@@ -29,8 +29,8 @@
 #                                                                              #
 ################################################################################
 
-from utils.math.vector_2 import vector_2
-from utils.math.vector_3 import vector_3
+from geometry.vector_2 import vector_2
+from geometry.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
 from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
