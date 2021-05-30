@@ -30,6 +30,6 @@
 ################################################################################
 
 class gamerule_type:
-    boolean: int = 1
-    integer: int = 2
-    floating_number: int = 3
+    type_bool: int = 1
+    type_int: int = 2
+    type_float: int = 3
