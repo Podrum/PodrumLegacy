@@ -93,13 +93,7 @@ class server:
 
     def start(self) -> None:
         start_time: float = time.time()
-        print("""
-         ____           _                      
-        |  _ \ ___   __| |_ __ _   _ _ __ ___  
-        | |_) / _ \ / _` | '__| | | | '_ ` _ \ 
-        |  __/ (_) | (_| | |  | |_| | | | | | |
-        |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
-        """)
+        self.logger.info("Podrum is starting up...")
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
