@@ -30,6 +30,6 @@
 ################################################################################
 
 class vector_2:
-    def __init__(self, x: float, y: float) -> None:
+    def __init__(self, x: float, z: float) -> None:
         self.x: float = x
-        self.y: float = y
+        self.z: float = z
