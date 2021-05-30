@@ -37,13 +37,13 @@ from command.default.reload_command import reload_command
 from command.default.say_command import say_command
 from command.default.stop_command import stop_command
 from command.default.version_command import version_command
+from console.logger import logger
 from event.event_manager import event_manager
 import os
 from plugin_manager import plugin_manager
 from protocol.mcbe.rak_net_interface import rak_net_interface
 import time
 from utils.config import config
-from utils.logger import logger
 
 class server:
     def __init__(self) -> None:
