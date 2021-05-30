@@ -30,8 +30,8 @@
 ################################################################################
 
 from binary_utils.binary_stream import binary_stream
-from utils.math.vector_2 import vector_2
-from utils.math.vector_3 import vector_3
+from geometry.vector_2 import vector_2
+from geometry.vector_3 import vector_3
 
 class mcbe_packet(binary_stream):
     def decode_header(self) -> None:
@@ -67,12 +67,12 @@ class mcbe_packet(binary_stream):
     def read_vector_2(self) -> object:
         value: object = vector_2()
         value.x: float = self.read_float_le()
-        value.y: float = self.read_float_le()
+        value.z: float = self.read_float_le()
         return value
         
     def write_vector_2(self, value: object) -> None:
         self.write_float_le(value.x)
-        self.write_float_le(value.y)
+        self.write_float_le(value.z)
         
     def read_vector_3(self) -> object:
         value: object = vector_3()
