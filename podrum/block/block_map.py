@@ -51,7 +51,7 @@ class block_map:
     
     @staticmethod
     def unhash_legacy_id(hashed_legacy_id: int) -> tuple:
-        return hashed_legacy_id >> 4, 0x0f
+        return hashed_legacy_id >> 4, hashed_legacy_id & 0x0f
                 
     def register_block(self, block_id: int, meta: int, runtime_id: int) -> None:
         self.legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]: int = runtime_id
