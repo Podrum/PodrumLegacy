@@ -33,7 +33,7 @@ from block.block_ids import block_ids
 from block.block_states import block_states
 
 class block_map:
-    def __init__(self):
+    def __init__(self) -> None:
         self.legacy_to_runtime_ids: dict = {}
         self.runtime_to_legacy_ids: dict = {}
         old_name: str = ""
@@ -44,7 +44,21 @@ class block_map:
             self.register_block(block_ids[block["name"]], meta, runtime_id)
             meta += 1
             old_name: str = block["name"]
+                      
+    @staticmethod
+    def hash_legacy_id(block_id: int, meta: int) -> int:
+        return (block_id << 4) | meta
+    
+    @staticmethod
+    def unhash_legacy_id(hashed_legacy_id: int) -> tuple:
+        return hashed_legacy_id >> 4, 0x0f
                 
-    def register_block(self, block_id: int, meta: int, runtime_id: int):
-        self.legacy_to_runtime_ids[(block_id << 4) | meta]: int = runtime_id
-        self.runtime_to_legacy_ids[runtime_id]: int = (block_id << 4) | meta
+    def register_block(self, block_id: int, meta: int, runtime_id: int) -> None:
+        self.legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]: int = runtime_id
+        self.runtime_to_legacy_ids[runtime_id]: int = block_map.hash_legacy_id(block_id, meta)
+
+    def runtime_to_legacy_id(self, runtime_id: int) -> tuple:
+        return block_map.unhash_legacy_id(runtime_to_legacy_ids[runtime_id])
+    
+    def legacy_to_runtime_id(self, block_id: int, meta: int) -> int:
+        return legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]
