@@ -34,4 +34,14 @@ from block.block_states import block_states
 
 class block_map:
     def __init__(self):
+        old_name: str = ""
+        meta: int = 0
+        for runtime_id, block in enumerate(block_states):
+            if block["name"] != old_name:
+                meta: int = 0
+            self.register_block(block_ids[block["name"]], meta, runtime_id)
+            meta += 1
+            old_name: str = block["name"]
+                
+    def register_block(self, block_id: int, meta: int, runtime_id: int):
         pass
