@@ -36,14 +36,9 @@ class block_map:
     def __init__(self) -> None:
         self.legacy_to_runtime_ids: dict = {}
         self.runtime_to_legacy_ids: dict = {}
-        old_name: str = ""
-        meta: int = 0
-        for runtime_id, block in enumerate(block_states):
-            if block["name"] != old_name:
-                meta: int = 0
-            self.register_block(block_ids[block["name"]], meta, runtime_id)
-            meta += 1
-            old_name: str = block["name"]
+        for runtime_id, state in enumerate(block_states):
+            legacy_states: dict = state["LegacyStates"]
+            self.register_block(legacy_states[0]["id"], legacy_states[0]["val"], runtime_id)
                       
     @staticmethod
     def hash_legacy_id(block_id: int, meta: int) -> int:
