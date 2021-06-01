@@ -37,7 +37,7 @@ class block_map:
         self.legacy_to_runtime_ids: dict = {}
         self.runtime_to_legacy_ids: dict = {}
         for runtime_id, state in enumerate(block_states):
-            legacy_states: dict = state["LegacyStates"]
+            legacy_states: list = state["LegacyStates"]
             self.register_block(legacy_states[0]["id"], legacy_states[0]["val"], runtime_id)
                       
     @staticmethod
