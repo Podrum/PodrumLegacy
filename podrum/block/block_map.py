@@ -29,11 +29,9 @@
 #                                                                              #
 ################################################################################
 
+from block.block_ids import block_ids
 from block.block_states import block_states
 
 class block_map:
     def __init__(self):
-        self.runtime_ids
-        for block_state in block_states:
-            for legacy_state in block_state:
-                pass # Todo
+        pass
