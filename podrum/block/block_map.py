@@ -34,6 +34,8 @@ from block.block_states import block_states
 
 class block_map:
     def __init__(self):
+        self.legacy_to_runtime_ids: dict = {}
+        self.runtime_to_legacy_ids: dict = {}
         old_name: str = ""
         meta: int = 0
         for runtime_id, block in enumerate(block_states):
@@ -44,4 +46,5 @@ class block_map:
             old_name: str = block["name"]
                 
     def register_block(self, block_id: int, meta: int, runtime_id: int):
-        pass
+        self.legacy_to_runtime_ids[(block_id << 4) | meta]: int = runtime_id
+        self.runtime_to_legacy_ids[runtime_id]: int = (block_id << 4) | meta
