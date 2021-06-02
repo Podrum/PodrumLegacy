@@ -218,15 +218,14 @@ class mcbe_player:
                 for x in range(0, 16):
                     for z in range(0, 16):
                         y: int = 0
-                        send_chunk.set_block_id(x, y, z, 7)
+                        send_chunk.set_block(x, y, z, 7)
                         y += 1
-                        send_chunk.set_block_id(x, y, z, 3)
+                        send_chunk.set_block(x, y, z, 3)
                         y += 1
-                        send_chunk.set_block_id(x, y, z, 3)
+                        send_chunk.set_block(x, y, z, 3)
                         y += 1
-                        send_chunk.set_block_id(x, y, z, 2)
+                        send_chunk.set_block(x, y, z, 2)
                         y += 1
-                send_chunk.recalculate_height_map()
                 self.send_chunk(send_chunk)
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
@@ -248,7 +247,7 @@ class mcbe_player:
         packet.chunk_z: int = send_chunk.z
         packet.sub_chunk_count: int = send_chunk.get_sub_chunk_send_count()
         packet.cache_enabled: bool = False
-        packet.chunk_data: bytes = send_chunk.encode()
+        packet.chunk_data: bytes = send_chunk.network_serialize().data
         packet.encode()
         self.send_packet(packet.data)
 
