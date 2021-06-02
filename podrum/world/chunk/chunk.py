@@ -66,10 +66,10 @@ class chunk:
             return self.sub_chunks[index]
         
     def get_block(self, x: int, y: int, z: int, layer: int = 0) -> tuple:
-        return self.get_sub_chunk().get_block(x, y, z, layer)
+        return self.get_sub_chunk(y).get_block(x, y, z, layer)
     
     def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int = 0) -> None:
-        self.get_sub_chunk().set_block(x, y, z, block_id, meta, layer)
+        self.get_sub_chunk(y).set_block(x, y, z, block_id, meta, layer)
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
