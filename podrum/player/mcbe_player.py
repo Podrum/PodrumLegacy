@@ -89,7 +89,7 @@ class mcbe_player:
         packet.enable_commands: bool = True
         packet.require_texture_pack: bool = False
         packet.game_rules: dict = {}
-        packet.experiments: int = 0
+        packet.experiments: int = []
         packet.has_used_experiments: bool = False
         packet.bonus_chest: bool = False
         packet.start_map: bool = False
