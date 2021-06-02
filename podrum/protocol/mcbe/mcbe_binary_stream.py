@@ -512,3 +512,19 @@ class mcbe_binary_stream(binary_stream):
                 self.write_vector_3_float(metadata["value"])
             else:
                 raise Exception("Invalid metadata type")
+
+    def read_link(self) -> dict:
+        return {
+            "ridden_entity_id": self.read_signed_var_long(),
+            "rider_entity_id": self.read_signed_var_long(),
+            "type": self.read_byte(),
+            "immediate": self.read_bool(),
+            "rider_initiated": self.read_bool()
+        }
+    
+    def write_link(self, value: dict) -> None:
+        self.write_signed_var_long(value["ridden_entity_id"])
+        self.write_signed_var_long(value["rider_entity_id"])
+        self.write_byte(value["type"])
+        self.write_bool(value["immediate"])
+        self.write_bool(value["rider_initiated"])
