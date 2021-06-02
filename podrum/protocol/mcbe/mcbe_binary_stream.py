@@ -560,3 +560,15 @@ class mcbe_binary_stream(binary_stream):
             self.write_float_le(entity_attribute["min"])
             self.write_float_le(entity_attribute["value"])
             self.write_float_le(entity_attribute["max"])
+
+    def read_rotation(self) -> dict:
+        return {
+            "yaw": self.read_byte(),
+            "pitch": self.read_byte(),
+            "head_yaw": self.read_byte()
+        }
+    
+    def write_rotation(self, value: dict) -> None:
+        self.write_byte(value["yaw"])
+        self.write_byte(value["pitch"])
+        self.write_byte(value["head_yaw"])
