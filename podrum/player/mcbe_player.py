@@ -218,13 +218,13 @@ class mcbe_player:
                 for x in range(0, 16):
                     for z in range(0, 16):
                         y: int = 0
-                        send_chunk.set_block(x, y, z, 7)
+                        send_chunk.set_block(x, y, z, 7, 0)
                         y += 1
-                        send_chunk.set_block(x, y, z, 3)
+                        send_chunk.set_block(x, y, z, 3, 0)
                         y += 1
-                        send_chunk.set_block(x, y, z, 3)
+                        send_chunk.set_block(x, y, z, 3, 0)
                         y += 1
-                        send_chunk.set_block(x, y, z, 2)
+                        send_chunk.set_block(x, y, z, 2, 0)
                         y += 1
                 self.send_chunk(send_chunk)
         if not self.spawned:
