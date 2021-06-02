@@ -575,12 +575,12 @@ class mcbe_binary_stream(binary_stream):
 
     def read_block_coordinates(self) -> object:
         return vector_3(
-            self.read_signed_var_int(),
-            self.read_var_int(),
-            self.read_signed_var_int()
+            float(self.read_signed_var_int()),
+            float(self.read_var_int()),
+            float(self.read_signed_var_int())
         )
     
     def write_block_coordinates(self, value: object) -> None:
-        self.write_signed_var_int(value.x)
-        self.write_var_int(value.y)
-        self.write_signed_var_int(value.z)
+        self.write_signed_var_int(int(value.x))
+        self.write_var_int(int(value.y))
+        self.write_signed_var_int(int(value.z))
