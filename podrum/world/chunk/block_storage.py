@@ -39,7 +39,7 @@ class block_storage:
         if len(palette) > 0:
             self.palette: list = palette
         else:
-            self.palette: list = [block_storage.legacy_to_runtime_id(0, 0)]
+            self.palette: list = [block_storage.block_map.legacy_to_runtime_id(0, 0)]
         if len(blocks) == 4096:
             self.blocks: list = blocks
         else:
@@ -52,13 +52,13 @@ class block_storage:
     def get_block(self, x, y, z) -> tuple:
         palette_index: int = self.blocks[block_storage.get_index(x, y, x)]
         runtime_id: int = self.pallete[palette_index]
-        return block_storage.runtime_to_legacy_id(runtime_id)
+        return block_storage.block_map.runtime_to_legacy_id(runtime_id)
     
     def set_block(self, x, y, z, block: int, meta: int) -> None:
-        runtime_id: int = block_storage.legacy_to_runtime_id(block, meta)
+        runtime_id: int = block_storage.block_map.legacy_to_runtime_id(block, meta)
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
-        self.blocks[block_storage.get_index(x, y, x)]: int = self.pallete.index(runtime_id)
+        self.blocks[block_storage.get_index(x, y, x)]: int = self.palette.index(runtime_id)
 
     def network_serialize(stream: object):
         bits_per_block: int = math.ceil(math.log2(len(self.palette)))
