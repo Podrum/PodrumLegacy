@@ -51,7 +51,7 @@ class block_storage:
     
     def get_block(self, x, y, z) -> tuple:
         palette_index: int = self.blocks[block_storage.get_index(x, y, x)]
-        runtime_id: int = self.pallete[palette_index]
+        runtime_id: int = self.palette[palette_index]
         return block_storage.block_map.runtime_to_legacy_id(runtime_id)
     
     def set_block(self, x, y, z, block: int, meta: int) -> None:
