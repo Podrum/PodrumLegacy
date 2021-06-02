@@ -528,3 +528,15 @@ class mcbe_binary_stream(binary_stream):
         self.write_byte(value["type"])
         self.write_bool(value["immediate"])
         self.write_bool(value["rider_initiated"])
+        
+    def read_links(self) -> list:
+        links: list = []
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            links.append(self.read_link())
+        return links
+        
+    def write_links(self, value: list) -> None:
+        self.write_var_int(len(value))
+        for link in value:
+            self.write_link(link)
