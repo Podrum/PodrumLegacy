@@ -486,3 +486,29 @@ class mcbe_binary_stream(binary_stream):
                 raise Exception("Invalid metadata type")
             metadata_dictionary[metadata_key]: dict = {"type": metadata_type, "value": metadata_value}
         return metadata_dictionary
+    
+    def write_metadata_dictionary(self, metadata_dictionary: dict) -> None:
+        self.write_var_int(len(metadata_dictionary))
+        for key, metadata in metadata_dictionary.items():
+            self.write_var_int(key)
+            self.write_var_int(metadata["type"])
+            if metadata["type"] == metadata_dictionary_type.type_byte:
+                self.write_byte(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_short:
+                self.write_short_le(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_int:
+                self.write_signed_var_int(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_float:
+                self.write_float_le(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_string:
+                self.write_string(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_compound:
+                self.write_net_le_tag(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_vector_3_i:
+                self.write_vector_3_int(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_long:
+                self.write_signed_var_long(metadata["value"])
+            elif metadata["type"] == metadata_dictionary_type.type_vector_3_f:
+                self.write_vector_3_float(metadata["value"])
+            else:
+                raise Exception("Invalid metadata type")
