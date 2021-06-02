@@ -41,6 +41,7 @@ from protocol.mcbe.packet.creative_content_packet import creative_content_packet
 from protocol.mcbe.packet.item_component_packet import item_component_packet
 from protocol.mcbe.packet.level_chunk_packet import level_chunk_packet
 from protocol.mcbe.packet.login_packet import login_packet
+from protocol.mcbe.packet.network_chunk_publisher_update_packet import network_chunk_publisher_update_packet
 from protocol.mcbe.packet.play_status_packet import play_status_packet
 from protocol.mcbe.packet.resource_pack_client_response_packet import resource_pack_client_response_packet
 from protocol.mcbe.packet.resource_pack_stack_packet import resource_pack_stack_packet
@@ -208,10 +209,17 @@ class mcbe_player:
         packet: object = request_chunk_radius_packet(data)
         packet.decode()
         new_packet: object = chunk_radius_updated_packet()
-        new_packet.chunk_radius: int = 1
+        new_packet.chunk_radius: int = 2
         new_packet.encode()
         self.send_packet(new_packet.data)
-        distance: int = 1
+        new_packet: object = network_chunk_publisher_update_packet()
+        new_packet.x: int = 0
+        new_packet.y: int = 4
+        new_packet.z: int = 0
+        new_packet.chunk_radius: int = 2
+        new_packet.encode()
+        self.send_packet(new_packet.data)
+        distance: int = 2
         for chunk_x in range(-distance, distance + 1):
             for chunk_z in range(-distance, distance + 1):
                 send_chunk: object = chunk(chunk_x, chunk_z)
