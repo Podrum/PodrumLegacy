@@ -60,7 +60,7 @@ class block_map:
         self.runtime_to_legacy_ids[runtime_id]: list = [hashed_legacy_id]
 
     def runtime_to_legacy_id(self, runtime_id: int, legacy_state_offset: int = 0) -> tuple:
-        return block_map.unhash_legacy_id(runtime_to_legacy_ids[runtime_id][legacy_state_offset])
+        return block_map.unhash_legacy_id(self.runtime_to_legacy_ids[runtime_id][legacy_state_offset])
     
     def legacy_to_runtime_id(self, block_id: int, meta: int) -> int:
-        return legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]
+        return self.legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]
