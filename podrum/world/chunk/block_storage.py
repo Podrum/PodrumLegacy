@@ -49,7 +49,7 @@ class block_storage:
     def get_index(x: int, y: int, z: int) -> int:
         return (((x & 0x0f) << 8) + ((z & 0x0f) << 4)) | (y & 0x0f)
     
-    def get_block(self, x, y, z) -> tuple
+    def get_block(self, x, y, z) -> tuple:
         palette_index: int = self.blocks[block_storage.get_index(x, y, x)]
         runtime_id: int = self.pallete[palette_index]
         return block_storage.runtime_to_legacy_id(runtime_id)
