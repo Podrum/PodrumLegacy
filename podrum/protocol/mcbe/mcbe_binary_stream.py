@@ -34,6 +34,8 @@ from geometry.vector_2 import vector_2
 from geometry.vector_3 import vector_3
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
+from protocol.mcbe.type.gamerule_type import gamerule_type
+from protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 
 class mcbe_binary_stream(binary_stream):
     def read_string(self) -> str:
@@ -188,22 +190,22 @@ class mcbe_binary_stream(binary_stream):
             "name": self.read_string(),
             "type": self.read_var_int()
         }
-        if game_rule["type"] == 1:
+        if game_rule["type"] == gamerule_type.type_bool:
             game_rule["value"]: bool = self.read_bool()
-        elif game_rule["type"] == 2:
+        elif game_rule["type"] == gamerule_type.type_int:
             game_rule["value"]: int = self.read_signed_var_int()
-        elif game_rule["type"] == 3:
+        elif game_rule["type"] == gamerule_type.type_float:
             game_rule["value"]: float = self.read_float_le()
         return game_rule
         
     def write_game_rule(self, value: dict) -> None:
         self.write_string(value["name"])
         self.write_var_int(value["type"])
-        if value["type"] == 1:
+        if value["type"] == gamerule_type.type_bool:
             self.write_bool(value["value"])
-        elif value["type"] == 2:
+        elif value["type"] == gamerule_type.type_int:
             self.write_signed_var_int(value["value"])
-        elif value["type"] == 3:
+        elif value["type"] == gamerule_type.type_float:
             self.write_float_le(value["value"])
             
     def read_game_rules(self) -> list:
@@ -462,23 +464,23 @@ class mcbe_binary_stream(binary_stream):
         for i in range(0, length):
             metadata_key: int = self.read_var_int()
             metadata_type: int = self.read_var_int()
-            if metadata_type == 0:
+            if metadata_type == metadata_dictionary_type.type_byte:
                 metadata_value: int = self.read_byte()
-            elif metadata_type == 1:
+            elif metadata_type == metadata_dictionary_type.type_short:
                 metadata_value: int = self.read_short_le()
-            elif metadata_type == 2:
+            elif metadata_type == metadata_dictionary_type.type_int:
                 metadata_value: int = self.read_signed_var_int()
-            elif metadata_type == 3:
+            elif metadata_type == metadata_dictionary_type.type_float:
                 metadata_value: int = self.read_float_le()
-            elif metadata_type == 4:
+            elif metadata_type == metadata_dictionary_type.type_string:
                 metadata_value: int = self.read_string()
-            elif metadata_type == 5:
+            elif metadata_type == metadata_dictionary_type.type_compound:
                 metadata_value: int = self.read_net_le_tag()
-            elif metadata_type == 6:
+            elif metadata_type == metadata_dictionary_type.type_vector_3_i:
                 metadata_value: int = self.read_vector_3_int()
-            elif metadata_type == 7:
+            elif metadata_type == metadata_dictionary_type.type_long:
                 metadata_value: int = self.read_signed_var_long()
-            elif metadata_type == 8:
+            elif metadata_type == metadata_dictionary_type.type_vector_3_f:
                 metadata_value: int = self.read_vector_3_float()
             else:
                 raise Exception("Invalid metadata type")
