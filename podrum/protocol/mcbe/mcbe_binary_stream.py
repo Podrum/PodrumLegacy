@@ -540,3 +540,23 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(value))
         for link in value:
             self.write_link(link)
+            
+    def read_entity_attributes(self) -> list:
+        entity_attributes: list = []
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            entity_attributes.append({
+                "name": self.read_string(),
+                "min": self.read_float_le(),
+                "value": self.read_float_le(),
+                "max": self.read_float_le()
+            })
+        return entity_attributes
+        
+    def write_entity_attributes(self, value: list) -> None:
+        self.write_var_int(len(value))
+        for entity_attribute in value:
+            self.write_string(entity_attribute["name"])
+            self.write_float_le(entity_attribute["min"])
+            self.write_float_le(entity_attribute["value"])
+            self.write_float_le(entity_attribute["max"])
