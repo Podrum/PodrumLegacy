@@ -1,88 +1,83 @@
-from world.chunk.empty_sub_chunk import empty_sub_chunk
+################################################################################
+#                                                                              #
+#  ____           _                                                            #
+# |  _ \ ___   __| |_ __ _   _ _ __ ___                                        #
+# | |_) / _ \ / _` | '__| | | | '_ ` _ \                                       #
+# |  __/ (_) | (_| | |  | |_| | | | | | |                                      #
+# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|                                      #
+#                                                                              #
+# Copyright 2021 Podrum Studios                                                #
+#                                                                              #
+# Permission is hereby granted, free of charge, to any person                  #
+# obtaining a copy of this software and associated documentation               #
+# files (the "Software"), to deal in the Software without restriction,         #
+# including without limitation the rights to use, copy, modify, merge,         #
+# publish, distribute, sublicense, and/or sell copies of the Software,         #
+# and to permit persons to whom the Software is furnished to do so,            #
+# subject to the following conditions:                                         #
+#                                                                              #
+# The above copyright notice and this permission notice shall be included      #
+# in all copies or substantial portions of the Software.                       #
+#                                                                              #
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR   #
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,     #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  #
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER       #
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING      #
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS #
+# IN THE SOFTWARE.                                                             #
+#                                                                              #
+################################################################################
+
+from binary_utils.binary_stream import binary_stream
 from world.chunk.sub_chunk import sub_chunk
 
 class chunk:
-    def __init__(self, x: int, z: int, sub_chunks: dict = {}, entities: list = [], tiles: list = [], biomes: list = [], height_map: list = []) -> None:
+    def __init__(self, x: int, z: int, sub_chunks: dict = {}, biomes: list = []) -> None:
         self.x: int = x
         self.z: int = z
         self.has_changed: bool = False
-        self.height: int = 16
         self.sub_chunks: dict = {}
-        self.entities: list = entities
-        self.tiles: list = tiles
-        for y in range(0, self.height):
+        for y in range(0, 16):
             if y in self.sub_chunks:
                 self.sub_chunks[y]: object = sub_chunks[y]
             else:
-                self.sub_chunks[y]: object = empty_sub_chunk()
-        if len(height_map) == 256:
-            self.height_map: list = height_map
-        else:
-            self.height_map: list = [self.height * 16] * 256
+                self.sub_chunks[y]: object = sub_chunk()
         if len(biomes) == 256:
             self.biomes: list = biomes
         else:
             self.biomes: list = [0] * 256
-
-    @staticmethod
-    def get_id_index(x: int, y: int, z: int) -> int:
-        return (x << 12) | (z << 8) | y
-
-    @staticmethod
-    def get_biome_index(x: int, z: int) -> int:
-        return (x << 4) | z
-
-    @staticmethod
-    def get_height_map_index(x: int, z: int) -> int:
-        return (z << 4) | z
+                    
+    def get_height(self) -> int:
+        return len(self.sub_chunks)
+    
+    def get_highest_empty_sub_chunk_count(self) -> int:
+        count: int = 0
+        for i in range(15, -1, -1):
+            if self.sub_chunks[i].is_empty():
+                count += 1
+        return count
+    
+    def get_sub_chunk(self, y: int) -> object:
+        index: int = y >> 4
+        if index not in self.sub_chunks:
+            raise Exception("Invalid height")
+        else:
+            return self.sub_chunks[index]
         
-    def set_block_id(self, x: int, y: int, z: int, block_id: int) -> None:
-        if self.get_sub_chunk(y >> 4, True).set_block_id(x, y & 0x0f, z, block_id):
-            self.has_changed: bool = True
+    def get_block(self, x: int, y: int, z: int, layer: int = 0) -> tuple:
+        return self.get_sub_chunk().get_block(x, y, z, layer)
+    
+    def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int = 0) -> None:
+        self.get_sub_chunk().set_block(x, y, z, block_id, meta, layer)
 
-    def get_sub_chunk(self, y: int, generate_new: bool = False) -> object:
-        if y < 0 or y >= self.height:
-            return empty_sub_chunk()
-        if generate_new and isinstance(self.sub_chunks[y], empty_sub_chunk):
-            self.sub_chunks[y] = sub_chunk()
-        return self.sub_chunks[y]
-
-    def set_height_map(self, x: int, z: int, value: int) -> None:
-        self.height_map[chunk.get_height_map_index(x, z)]: int = value
-
-    def get_highest_sub_chunk_index(self) -> int:
-        for y in range(len(self.sub_chunks) - 1, -1, -1):
-            if isinstance(self.sub_chunks[y], empty_sub_chunk):
-                continue
-            return y
-
-    def get_highest_block(self, x: int, z: int) -> int:
-        index: int = self.get_highest_sub_chunk_index()
-        if index is None:
-            return -1
-        for y in range(index, -1, -1):
-            height: int = self.get_sub_chunk(y).get_highest_block_at(x, z) | (y << 4)
-            if height is not None:
-                return height
-        return -1
-
-    def get_sub_chunk_send_count(self) -> int:
-        index: int = self.get_highest_sub_chunk_index()
-        if index is not None:
-            return index + 1
-        return 0
-
-    def recalculate_height_map(self) -> None:
-        for x in range(0, 16):
-            for z in range(0, 16):
-                self.set_height_map(x, z, self.get_highest_block(x, z) + 1)
-
-    def encode(self) -> bytes:
-        data: bytes = b""
-        sub_chunk_count: int = self.get_sub_chunk_send_count()
+    def network_serialize(self) -> object:
+        stream: object = binary_stream()
+        sub_chunk_count: int = len(self.sub_chunks) - self.get_highest_empty_sub_chunk_count()
         for y in range(0, sub_chunk_count):
-            data += self.sub_chunks[y].encode()
+            self.sub_chunks[y].network_serialize(stream)
+        stream.write_unsigned_byte(len(self.biomes))
         for biome in self.biomes:
-            data += bytes([biome])
-        data += b"\x00"
-        return data
+            stream.write_unsigned_byte(biome)
+        stream.write_unsigned_byte(0)
+        return stream
