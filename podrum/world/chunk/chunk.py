@@ -76,7 +76,7 @@ class chunk:
         sub_chunk_count: int = len(self.sub_chunks) - self.get_highest_empty_sub_chunk_count()
         for y in range(0, sub_chunk_count):
             self.sub_chunks[y].network_serialize(stream)
-        stream.write_unsigned_byte(len(self.biomes))
+        stream.write_var_int(len(self.biomes))
         for biome in self.biomes:
             stream.write_unsigned_byte(biome)
         stream.write_unsigned_byte(0)
