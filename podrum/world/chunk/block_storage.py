@@ -34,11 +34,11 @@ from block.block_map import block_map
 class block_storage:
     block_map: object = block_map()
   
-    def __init__(self, blocks: list = [], palette: list = []):
+    def __init__(self, blocks: list = [], palette: list = []) -> None:
         if len(palette) > 0:
             self.palette: list = palette
         else:
-            self.palette: list = [self.block_map.legacy_to_runtime_id(0, 0)]
+            self.palette: list = [block_storage.legacy_to_runtime_id(0, 0)]
         if len(blocks) == 4096:
             self.blocks: list = blocks
         else:
@@ -48,3 +48,13 @@ class block_storage:
     def get_index(x: int, y: int, z: int) -> int:
         return (((x & 0x0f) << 8) + ((z & 0x0f) << 4)) | (y & 0x0f)
     
+    def get_block(self, x, y, z) -> tuple
+        palette_index: int = self.blocks[block_storage.get_index(x, y, x)]
+        runtime_id: int = self.pallete[palette_index]
+        return block_storage.runtime_to_legacy_id(runtime_id)
+    
+    def set_block(self, x, y, z, block: int, meta: int) -> None:
+        runtime_id: int = block_storage.legacy_to_runtime_id(block, meta)
+        if runtime_id not in self.palette:
+            self.palette.append(runtime_id)
+        self.blocks[block_storage.get_index(x, y, x)]: int = self.pallete.index(runtime_id)
