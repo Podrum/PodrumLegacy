@@ -43,7 +43,7 @@ class sub_chunk:
         return self.block_storages[layer]
     
     def is_empty(self) -> bool:
-        return bool(len(self.block_storages) < 1)
+        return bool(len(self.block_storages) == 0)
     
     def get_block(self, x: int, y: int, z: int, layer: int) -> tuple:
         return self.get_block_storage(layer).get_block(x, y & 0x0f, z)
