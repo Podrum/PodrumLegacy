@@ -32,7 +32,7 @@
 from world.chunk.block_storage import block_storage
 
 class sub_chunk:
-    def __init__(self, block_storages: dict) -> None:
+    def __init__(self, block_storages: dict = {}) -> None:
         self.block_storages: object = block_storages
 
     def get_block_storage(self, layer: int) -> object:
