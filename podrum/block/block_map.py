@@ -54,7 +54,7 @@ class block_map:
         self.legacy_to_runtime_ids[hashed_legacy_id]: int = runtime_id
         if runtime_id in self.runtime_to_legacy_ids:
             if isinstance(self.runtime_to_legacy_ids[runtime_id], list):
-                if len(self.runtime_to_legacy_ids[runtime_id]) > 1:
+                if len(self.runtime_to_legacy_ids[runtime_id]) > 0:
                     self.runtime_to_legacy_ids[runtime_id].append(hashed_legacy_id)
                     return
         self.runtime_to_legacy_ids[runtime_id]: list = [hashed_legacy_id]
