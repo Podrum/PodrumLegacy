@@ -37,8 +37,9 @@ class block_map:
         self.legacy_to_runtime_ids: dict = {}
         self.runtime_to_legacy_ids: dict = {}
         for runtime_id, state in enumerate(block_states):
-            legacy_states: list = state["LegacyStates"]
-            self.register_block(legacy_states[0]["id"], legacy_states[0]["val"], runtime_id)
+            if "LegacyStates" in state:
+                for legacy_state in state["LegacyStates"]:
+                    self.register_block(legacy_state["id"], legacy_state["val"], runtime_id)
                       
     @staticmethod
     def hash_legacy_id(block_id: int, meta: int) -> int:
@@ -49,11 +50,17 @@ class block_map:
         return hashed_legacy_id >> 4, hashed_legacy_id & 0x0f
                 
     def register_block(self, block_id: int, meta: int, runtime_id: int) -> None:
-        self.legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]: int = runtime_id
-        self.runtime_to_legacy_ids[runtime_id]: int = block_map.hash_legacy_id(block_id, meta)
+        hashed_legacy_id: int = block_map.hash_legacy_id(block_id, meta)
+        self.legacy_to_runtime_ids[hashed_legacy_id]: int = runtime_id
+        if runtime_id in self.runtime_to_legacy_ids:
+            if isinstance(self.runtime_to_legacy_ids[runtime_id], list):
+                if len(self.runtime_to_legacy_ids[runtime_id]) > 1:
+                    self.runtime_to_legacy_ids[runtime_id].append(hashed_legacy_id)
+                    return
+        self.runtime_to_legacy_ids[runtime_id]: list = [hashed_legacy_id]
 
-    def runtime_to_legacy_id(self, runtime_id: int) -> tuple:
-        return block_map.unhash_legacy_id(runtime_to_legacy_ids[runtime_id])
+    def runtime_to_legacy_id(self, runtime_id: int, legacy_state_offset: int = 0) -> tuple:
+        return block_map.unhash_legacy_id(runtime_to_legacy_ids[runtime_id][legacy_state_offset])
     
     def legacy_to_runtime_id(self, block_id: int, meta: int) -> int:
         return legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]
