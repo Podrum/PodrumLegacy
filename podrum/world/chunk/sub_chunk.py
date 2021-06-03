@@ -33,23 +33,19 @@ from world.chunk.block_storage import block_storage
 
 class sub_chunk:
     def __init__(self, block_storages: list = []) -> None:
-        self.block_storages: list = block_storages
-
-    def get_block_storage(self, layer: int) -> object:
-        temp: int = (len(self.block_storages) - 1) - layer
-        needs: int = 0 if temp > 0 else abs(temp)
-        for i in range(0, needs):
-            self.block_storages.append(block_storage())
-        return self.block_storages[layer]
+        if len(block_storages) == 2:
+            self.block_storages: list = block_storages
+        else:
+            self.block_storages: list = [block_storage(), block_storage()]
     
     def is_empty(self) -> bool:
         return bool(len(self.block_storages) == 0)
     
     def get_block(self, x: int, y: int, z: int, layer: int) -> tuple:
-        return self.get_block_storage(layer).get_block(x, y, z)
+        return self.block_storages[layer].get_block(x, y, z)
     
     def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int) -> None:
-        self.get_block_storage(layer).set_block(x, y, z, block_id, meta)
+        self.block_storages[layer].set_block(x, y, z, block_id, meta)
 
     def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
