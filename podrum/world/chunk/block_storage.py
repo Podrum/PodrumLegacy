@@ -67,6 +67,10 @@ class block_storage:
                 return
             else:
                 bits_per_block: int = 1
+        elif bits_per_block == 7:
+            bits_per_block: int = 8
+        elif bits_per_block > 8:
+            bits_per_block: int = 16
         stream.write_unsigned_byte((bits_per_block << 1) | 1)
         blocks_per_word: int = math.floor(32 / bits_per_block)
         words_per_chunk: int = math.ceil(4096 / blocks_per_word)
