@@ -39,14 +39,8 @@ class resource_pack_client_response_packet(mcbe_packet):
 
     def decode_payload(self):
         self.status: int = self.read_unsigned_byte()
-        pack_ids_count: int = self.read_unsigned_short_le()
-        for i in range(0, pack_ids_count):
-            self.pack_ids.append(self.read_string())
-
+        self.pack_ids: list = self.read_resource_pack_ids()
           
     def encode_payload(self):
         self.write_unsigned_byte(self.status)
-        self.write_unsigned_short_le(len(self.pack_ids))
-        for pack_id in self.pack_ids:
-            self.write_string(pack_id)
-        
+        self.write_resource_pack_ids(self.pack_ids)
