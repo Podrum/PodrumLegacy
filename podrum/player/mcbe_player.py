@@ -170,6 +170,8 @@ class mcbe_player:
         if packet.status == resource_pack_client_response_type.none:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
+            packet.behavior_pack_id_versions: list = []
+            packet.texture_pack_id_versions: list = []
             packet.game_version: str = mcbe_protocol_info.mcbe_version
             packet.expirement_count: int = 0
             packet.experimental: bool = False
@@ -178,6 +180,8 @@ class mcbe_player:
         elif packet.status == resource_pack_client_response_type.has_all_packs:
             packet: object = resource_pack_stack_packet()
             packet.forced_to_accept: bool = False
+            packet.behavior_pack_id_versions: list = []
+            packet.texture_pack_id_versions: list = []
             packet.game_version: str = mcbe_protocol_info.mcbe_version
             packet.experiment_count: int = 0
             packet.experimental: bool = False
