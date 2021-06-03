@@ -40,59 +40,11 @@ class resource_packs_info_packet(mcbe_packet):
     def decode_payload(self):
         self.forced_to_accept: bool = self.read_bool()
         self.scripting_enabled: bool = self.read_bool()
-        behavior_packs_count: int = self.read_unsigned_short_le()
-        for i in range(0, behavior_packs_count):
-            if not hasattr(self, "behavior_packs_info"):
-                self.behavior_packs_info = []
-            behavior_pack_info: dict = {}
-            behavior_pack_info["id"]: str = self.read_string()
-            behavior_pack_info["version"]: str = self.read_string()
-            behavior_pack_info["size"]: int = self.read_unsigned_long_le()
-            behavior_pack_info["encryption_key"]: str = self.read_string()
-            behavior_pack_info["sub_name"]: str = self.read_string()
-            behavior_pack_info["content_identity"]: str = self.read_string()
-            behavior_pack_info["has_scripts"]: bool = self.read_bool()
-            self.behavior_packs_info.append(behavior_pack_info)
-        resource_packs_count: int = self.read_unsigned_short_le()
-        for i in range(0, resource_packs_count):
-            if not hasattr(self, "resource_packs_info"):
-                self.resource_packs_info = []
-            resource_pack_info: dict = {}
-            resource_pack_info["id"]: str = self.read_string()
-            resource_pack_info["version"]: str = self.read_string()
-            resource_pack_info["size"]: int = self.read_unsigned_long_le()
-            resource_pack_info["encryption_key"]: str = self.read_string()
-            resource_pack_info["sub_name"]: str = self.read_string()
-            resource_pack_info["content_identity"]: str = self.read_string()
-            behavior_pack_info["has_scripts"]: bool = self.read_bool()
-            resource_pack_info["rtx"]: bool = self.read_bool()
-            self.resource_packs_info.append(resource_pack_info)
+        self.behavior_pack_info: list = self.read_behavior_pack_infos()
+        self.texture_packs_info: list = self.read_texture_pack_infos()
           
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
         self.write_bool(self.scripting_enabled)
-        if not hasattr(self, "behavior_packs_info"):
-            self.write_unsigned_short_le(0)
-        else:
-            self.write_unsigned_short_le(len(self.behavior_packs_info))
-            for pack in self.behavior_packs_info:
-                self.write_string(pack["id"])
-                self.write_string(pack["version"])
-                self.write_unsigned_long_le(pack["size"])
-                self.write_string(pack["encryption_key"])
-                self.write_string(pack["sub_name"])
-                self.write_string(pack["content_identity"])
-                self.write_bool(pack["has_scripts"])
-        if not hasattr(self, "resource_packs_info"):
-            self.write_unsigned_short_le(0)
-        else:
-            self.write_unsigned_short_le(len(self.resource_packs_info))
-            for pack in self.resource_packs_info:
-                self.write_string(pack["id"])
-                self.write_string(pack["version"])
-                self.write_unsigned_long_le(pack["size"])
-                self.write_string(pack["encryption_key"])
-                self.write_string(pack["sub_name"])
-                self.write_string(pack["content_identity"])
-                self.write_bool(pack["has_scripts"])
-                self.write_bool(pack["rtx"])
+        self.write_behavior_pack_infos(self.behavior_pack_info)
+        self.write_texture_pack_infos(self.texture_packs_info)
