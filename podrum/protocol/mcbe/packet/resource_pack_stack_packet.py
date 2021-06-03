@@ -39,46 +39,16 @@ class resource_pack_stack_packet(mcbe_packet):
 
     def decode_payload(self):
         self.forced_to_accept: bool = self.read_bool()
-        behavior_packs_count: int = self.read_var_int()
-        for i in range(0, behavior_packs_count):
-            if not hasattr(self, "behavior_pack_entries"):
-                self.behavior_pack_entries: list = []
-            behavior_pack_entry: dict = {}
-            behavior_pack_entry["id"]: str = self.read_string()
-            behavior_pack_entry["version"]: str = self.read_string()
-            behavior_pack_entry["sub_name"]: str = self.read_string()
-            self.behavior_pack_entries.append(behavior_pack_entry)
-        resource_packs_count: int = self.read_var_int()
-        for i in range(0, resource_packs_count):
-            if not hasattr(self, "resource_pack_entries"):
-                self.resource_pack_entries: list = []
-            resource_pack_entry: dict = {}
-            resource_pack_entry["id"]: str = self.read_string()
-            resource_pack_entry["version"]: str = self.read_string()
-            resource_pack_entry["sub_name"]: str = self.read_string()
-            self.resource_pack_entries.append(resource_pack_entry)
+        self.behavior_pack_entries: list = self.read_resource_pack_id_versions()
+        self.resource_pack_entries: list = self.read_resource_pack_id_versions()
         self.game_version: str = self.read_string()
         self.experiment_count: int = self.read_int_le()
         self.experimental: bool = self.read_bool()
           
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
-        if not hasattr(self, "behavior_pack_entries"):
-            self.write_var_int(0)
-        else:
-            self.write_var_int(len(self.behavior_pack_entries))
-            for pack in self.behavior_pack_entries:
-                self.write_string(pack["id"])
-                self.write_string(pack["version"])
-                self.write_string(pack["sub_name"])
-        if not hasattr(self, "resource_pack_entries"):
-            self.write_var_int(0)
-        else:
-            self.write_var_int(len(self.resource_pack_entries))
-            for pack in self.resource_pack_entries:
-                self.write_string(pack["id"])
-                self.write_string(pack["version"])
-                self.write_string(pack["sub_name"])
+        self.write_resource_pack_id_versions(self.behavior_pack_entries)
+        self.write_resource_pack_id_versions(self.resource_pack_entries)
         self.write_string(self.game_version)
         self.write_int_le(self.experiment_count)
         self.write_bool(self.experimental)
