@@ -47,9 +47,6 @@ class chunk:
             self.biomes: list = biomes
         else:
             self.biomes: list = [0] * 256
-                    
-    def get_height(self) -> int:
-        return len(self.sub_chunks)
     
     def get_highest_empty_sub_chunk_count(self) -> int:
         count: int = 0
