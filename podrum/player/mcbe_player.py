@@ -157,8 +157,8 @@ class mcbe_player:
         packet: object = resource_packs_info_packet()
         packet.forced_to_accept: bool = False
         packet.scripting_enabled: bool = False
-        packet.behavior_pack_info: list = []
-        packet.texture_pack_info: list = []
+        packet.behavior_packs_info: list = []
+        packet.texture_packs_info: list = []
         packet.encode()
         self.send_packet(packet.data)
         self.spawned: bool = False
