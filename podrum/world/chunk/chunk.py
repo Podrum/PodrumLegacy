@@ -54,19 +54,12 @@ class chunk:
             if self.sub_chunks[i].is_empty():
                 count += 1
         return count
-    
-    def get_sub_chunk(self, y: int) -> object:
-        index: int = y >> 4
-        if index not in self.sub_chunks:
-            raise Exception("Invalid height")
-        else:
-            return self.sub_chunks[index]
         
     def get_block(self, x: int, y: int, z: int, layer: int = 0) -> tuple:
-        return self.get_sub_chunk(y).get_block(x, y, z, layer)
+        return self.sub_chunks[y >> 4].get_block(x, y, z, layer)
     
     def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int = 0) -> None:
-        self.get_sub_chunk(y).set_block(x, y, z, block_id, meta, layer)
+        self.sub_chunks[y >> 4].set_block(x, y, z, block_id, meta, layer)
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
