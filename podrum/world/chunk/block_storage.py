@@ -65,8 +65,7 @@ class block_storage:
         if bits_per_block == 0:
             if not force:
                 return
-            else:
-                bits_per_block: int = 1
+            bits_per_block: int = 1
         elif bits_per_block == 7:
             bits_per_block: int = 8
         elif bits_per_block > 8:
