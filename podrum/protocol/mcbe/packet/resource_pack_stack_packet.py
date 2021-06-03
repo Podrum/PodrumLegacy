@@ -40,7 +40,7 @@ class resource_pack_stack_packet(mcbe_packet):
     def decode_payload(self):
         self.forced_to_accept: bool = self.read_bool()
         self.behavior_pack_entries: list = self.read_resource_pack_id_versions()
-        self.resource_pack_entries: list = self.read_resource_pack_id_versions()
+        self.texture_pack_entries: list = self.read_resource_pack_id_versions()
         self.game_version: str = self.read_string()
         self.experiment_count: int = self.read_int_le()
         self.experimental: bool = self.read_bool()
@@ -48,7 +48,7 @@ class resource_pack_stack_packet(mcbe_packet):
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
         self.write_resource_pack_id_versions(self.behavior_pack_entries)
-        self.write_resource_pack_id_versions(self.resource_pack_entries)
+        self.write_resource_pack_id_versions(self.texture_pack_entries)
         self.write_string(self.game_version)
         self.write_int_le(self.experiment_count)
         self.write_bool(self.experimental)
