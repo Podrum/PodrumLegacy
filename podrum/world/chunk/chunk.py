@@ -60,6 +60,7 @@ class chunk:
     
     def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int = 0) -> None:
         self.sub_chunks[y >> 4].set_block(x, y, z, block_id, meta, layer)
+        self.has_changed: bool = True
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
