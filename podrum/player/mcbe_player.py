@@ -58,8 +58,9 @@ import zlib
 
 class mcbe_player:
     def __init__(self, connection: object, server: object, entity_id: int) -> None:
-        self.connection = connection
-        self.server = server
+        self.connection: object = connection
+        self.server: object = server
+        self.entity_id: int = entity_id
         self.position: object = vector_3(0.0, 5.0, 0.0)
         
     def send_start_game(self) -> None:
