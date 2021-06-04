@@ -60,11 +60,9 @@ class block_storage:
             self.palette.append(runtime_id)
         self.blocks[block_storage.get_index(x, y, z)]: int = self.palette.index(runtime_id)
 
-    def network_serialize(self, stream: object, force: bool = False):
+    def network_serialize(self, stream: object):
         bits_per_block: int = math.ceil(math.log2(len(self.palette)))
         if bits_per_block == 0:
-            if not force:
-                return
             bits_per_block: int = 1
         elif bits_per_block == 7:
             bits_per_block: int = 8
