@@ -89,6 +89,8 @@ class server:
             self.config.data["motd"]: str = "Podrum Server"
         if "max_players" not in self.config.data:
             self.config.data["max_players"]: int = 20
+        if "max_view_distance" not in self.config.data:
+            self.config.data["max_view_distance"]: int = 2
         self.config.save()      
 
     def start(self) -> None:
