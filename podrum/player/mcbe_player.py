@@ -220,7 +220,7 @@ class mcbe_player:
         self.send_packet(new_packet.data)
         new_packet: object = network_chunk_publisher_update_packet()
         new_packet.x: int = 0
-        new_packet.y: int = 4
+        new_packet.y: int = 5
         new_packet.z: int = 0
         new_packet.chunk_radius: int = 2 * 16
         new_packet.encode()
