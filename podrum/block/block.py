@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from block.block_map import block_map
 from block.break_block_tool import break_block_tool
 from game_data.mcbe.block_id_map import block_id_map
 from game_data.mcbe.item_id_map import item_id_map
@@ -39,6 +40,7 @@ class block:
         self.meta: int = meta
         self.hardness: float = hardness
         self.block_id: int = block_id_map[name]
+        self.runtime_id: int = block_map().get_runtime_id(self.block_id, self.meta)
         self.network_id: int = item_id_map[name]
         self.blast_resistance: float = hardness * 5.0
         self.light_level: int = 0
