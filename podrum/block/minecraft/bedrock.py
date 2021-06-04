@@ -34,3 +34,4 @@ from block.solid import solid
 class bedrock(solid):
     def __init__(self):
         super().__init__("minecraft:bedrock", 0, -1.0)
+        self.is_breakable: bool = False
