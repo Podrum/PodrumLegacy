@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from block.minecraft.air import air
 import math
 
 class block_storage:
@@ -36,7 +37,7 @@ class block_storage:
         if len(palette) > 0:
             self.palette: list = palette
         else:
-            self.palette: list = [block_storage.block_map.legacy_to_runtime_id(0, 0)]
+            self.palette: list = [air.runtime_id]
         if len(blocks) == 4096:
             self.blocks: list = blocks
         else:
