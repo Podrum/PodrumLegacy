@@ -57,11 +57,11 @@ class chunk:
                 break
         return top_empty
         
-    def get_block(self, x: int, y: int, z: int, layer: int = 0) -> tuple:
-        return self.sub_chunks[y >> 4].get_block(x & 0x0f, y & 0x0f, z & 0x0f, layer)
+    def get_block_runtime_id(self, x: int, y: int, z: int, layer: int = 0) -> int:
+        return self.sub_chunks[y >> 4].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, layer)
     
-    def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int = 0) -> None:
-        self.sub_chunks[y >> 4].set_block(x & 0x0f, y & 0x0f, z & 0x0f, block_id, meta, layer)
+    def set_block_runtime_id(self, x: int, y: int, z: int, runtime_id: int, layer: int = 0) -> None:
+        self.sub_chunks[y >> 4].set_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, runtime_id, layer)
         self.has_changed: bool = True
 
     def network_serialize(self) -> object:
