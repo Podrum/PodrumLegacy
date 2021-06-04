@@ -221,7 +221,7 @@ class mcbe_player:
         new_packet.chunk_radius: int = 2
         new_packet.encode()
         self.send_packet(new_packet.data)
-        send_network_chunk_publisher_update()
+        self.send_network_chunk_publisher_update()
         distance: int = 2
         for chunk_x in range(-distance, distance + 1):
             for chunk_z in range(-distance, distance + 1):
@@ -261,9 +261,9 @@ class mcbe_player:
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
-        new_packet.x: int = self.position.x
-        new_packet.y: int = self.position.y
-        new_packet.z: int = self.position.z
+        new_packet.x: int = int(self.position.x)
+        new_packet.y: int = int(self.position.y)
+        new_packet.z: int = int(self.position.z)
         new_packet.chunk_radius: int = self.server.config.data["max_view_distance"] * 16
         new_packet.encode()
         self.send_packet(new_packet.data)
