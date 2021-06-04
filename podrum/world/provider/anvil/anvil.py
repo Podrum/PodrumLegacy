@@ -51,8 +51,8 @@ from world.chunk_utils import chunk_utils
 from world.format.anvil.region import region
 
 class anvil:
+    provider_name: str = "anvil"
     region_file_extension: str = "mca"
-    format_name: str = "anvil"
     
     def __init__(self, world_dir: str) -> None:
         self.world_dir: str = os.path.abspath(world_dir)
