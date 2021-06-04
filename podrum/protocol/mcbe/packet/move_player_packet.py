@@ -43,7 +43,7 @@ class move_player_packet(mcbe_packet):
         self.rotation: object = self.read_vector_3_float()
         self.mode: int = self.read_unsigned_byte()
         self.on_ground: bool = self.read_bool()
-        if not self.feos:
+        if not self.feos():
             self.riding_runtime_entity_id: int = self.read_float_le()
             self.teleportation_cause: int = self.read_var_long()
             self.entity_type: int = self.read_unsigned_byte()
