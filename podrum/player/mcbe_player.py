@@ -224,10 +224,10 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
         self.send_network_chunk_publisher_update()
-        chunk_x_start: int = (self.position.x >> 4) - self.view_distance
-        chunk_x_end: int = (self.position.x >> 4) + self.view_distance
-        chunk_z_start: int = (self.position.z >> 4) - self.view_distance
-        chunk_z_end: int = (self.position.z >> 4) + self.view_distance
+        chunk_x_start: int = (int(self.position.x) >> 4) - self.view_distance
+        chunk_x_end: int = (int(self.position.x) >> 4) + self.view_distance
+        chunk_z_start: int = (int(self.position.z) >> 4) - self.view_distance
+        chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
                 send_chunk: object = chunk(chunk_x, chunk_z)
