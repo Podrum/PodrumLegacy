@@ -17,8 +17,6 @@ It's still under active development, but yet it has few advantages:
 
 **2.** Written in Python which makes plugins easier to write,
 
-**3.** Work with both Java and Bedrock.
-
 ## Features:
  - [ ] World Generation
  - [x] Networking
