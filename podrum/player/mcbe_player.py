@@ -62,7 +62,7 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.position: object = vector_3(0.0, 5.0, 0.0)
-        self.view_distance: int = 0
+        self.view_distance: int = server.config.data["max_view_distance"]
         
     def send_start_game(self) -> None:
         packet: object = start_game_packet()
@@ -219,6 +219,31 @@ class mcbe_player:
         packet: object = request_chunk_radius_packet(data)
         packet.decode()
         self.view_distance: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
+        self.request_chunks()
+        if not self.spawned:
+            self.send_play_status(login_status_type.spawn)
+            self.spawned: bool = True
+                
+    def handle_move_player_packet(self, data):
+        packet: object = move_player_packet(data)
+        packet.decode()
+        self.position: object = packet.position
+        
+    def handle_packet(self, data: bytes) -> None:
+        if data[0] == mcbe_protocol_info.login_packet:
+            self.handle_login_packet(data)
+        elif data[0] == mcbe_protocol_info.resource_pack_client_response_packet:
+            self.handle_resource_pack_client_response_packet(data)
+        elif data[0] == mcbe_protocol_info.packet_violation_warning_packet:
+            self.handle_packet_violation_warning_packet(data)
+        elif data[0] == mcbe_protocol_info.request_chunk_radius_packet:
+            self.handle_request_chunk_radius_packet(data)
+        elif data[0] == mcbe_protocol_info.move_player_packet:
+            self.handle_move_player_packet(data)
+        if self.spawned:
+            self.request_chunks()
+            
+    def request_chunks(self) -> none:
         new_packet: object = chunk_radius_updated_packet()
         new_packet.chunk_radius: int = self.view_distance
         new_packet.encode()
@@ -243,26 +268,6 @@ class mcbe_player:
                         send_chunk.set_block(x, y, z, 2, 0)
                         y += 1
                 self.send_chunk(send_chunk)
-        if not self.spawned:
-            self.send_play_status(login_status_type.spawn)
-            self.spawned: bool = True
-                
-    def handle_move_player_packet(self, data):
-        packet: object = move_player_packet(data)
-        packet.decode()
-        self.position: object = packet.position
-        
-    def handle_packet(self, data: bytes) -> None:
-        if data[0] == mcbe_protocol_info.login_packet:
-            self.handle_login_packet(data)
-        elif data[0] == mcbe_protocol_info.resource_pack_client_response_packet:
-            self.handle_resource_pack_client_response_packet(data)
-        elif data[0] == mcbe_protocol_info.packet_violation_warning_packet:
-            self.handle_packet_violation_warning_packet(data)
-        elif data[0] == mcbe_protocol_info.request_chunk_radius_packet:
-            self.handle_request_chunk_radius_packet(data)
-        elif data[0] == mcbe_protocol_info.move_player_packet:
-            self.handle_move_player_packet(data)
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
