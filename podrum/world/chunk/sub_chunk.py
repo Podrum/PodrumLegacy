@@ -49,10 +49,10 @@ class sub_chunk:
         return bool(len(self.block_storages) == 0)
     
     def get_block(self, x: int, y: int, z: int, layer: int) -> tuple:
-        return self.get_block_storage(layer).get_block(x, y & 0xf, z)
+        return self.get_block_storage(layer).get_block(x, y, z)
     
     def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int) -> None:
-        self.get_block_storage(layer).set_block(x, y & 0xf, z, block_id, meta)
+        self.get_block_storage(layer).set_block(x, y, z, block_id, meta)
 
     def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
