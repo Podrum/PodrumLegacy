@@ -29,12 +29,9 @@
 #                                                                              #
 ################################################################################
 
-from block.block_map import block_map
 import math
 
 class block_storage:
-    block_map: object = block_map()
-  
     def __init__(self, blocks: list = [], palette: list = []) -> None:
         if len(palette) > 0:
             self.palette: list = palette
@@ -55,15 +52,13 @@ class block_storage:
         assert(y >= 0 and y < 16, f"y ({y}) is not between 0 and 15")
         assert(z >= 0 and z < 16, f"z ({z}) is not between 0 and 15")
     
-    def get_block(self, x, y, z) -> tuple:
+    def get_block_runtime_id(self, x, y, z) -> int:
         block_storage.check_bounds(x, y, z)
         palette_index: int = self.blocks[block_storage.get_index(x, y, z)]
-        runtime_id: int = self.palette[palette_index]
-        return block_storage.block_map.runtime_to_legacy_id(runtime_id)
+        return self.palette[palette_index]
     
-    def set_block(self, x, y, z, block: int, meta: int) -> None:
+    def set_block_runtime_id(self, x, y, z, runtime_id: int) -> None:
         block_storage.check_bounds(x, y, z)
-        runtime_id: int = block_storage.block_map.legacy_to_runtime_id(block, meta)
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
         self.blocks[block_storage.get_index(x, y, z)]: int = self.palette.index(runtime_id)
