@@ -37,10 +37,10 @@ class block:
     def __init__(self, name: int, meta: int, hardness: int):
         self.name: str = name
         self.meta: int = meta
-        self.hardness: int = hardness
+        self.hardness: float = hardness
         self.block_id: int = block_id_map[name]
         self.network_id: int = item_id_map[name]
-        self.blast_resistance: int = hardness * 5
+        self.blast_resistance: float = hardness * 5.0
         self.light_level: int = 0
         self.flammability: int = 0
         self.break_block_tool: int = break_block_tool.none
