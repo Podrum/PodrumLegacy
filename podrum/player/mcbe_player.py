@@ -223,7 +223,7 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
         self.send_network_chunk_publisher_update(chunk_radius)
-        self.request_chunks()
+        self.request_chunks(chunk_radius)
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
             self.spawned: bool = True
