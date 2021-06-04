@@ -65,7 +65,7 @@ class mcbe_player:
         packet.entity_id: int = self.entity_id
         packet.entity_runtime_id: int = self.entity_id
         packet.player_gamemode: int = 1
-        packet.spawn: object = vector_3(0, 4.0, 0)
+        packet.spawn: object = vector_3(0, 5.0, 0)
         packet.rotation: object = vector_2(0, 0)
         packet.seed: int = 0
         packet.spawn_biome_type: int = 0
