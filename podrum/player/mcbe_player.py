@@ -258,10 +258,10 @@ class mcbe_player:
                 send_chunk: object = chunk(chunk_x, chunk_z)
                 for x in range(0, 16):
                     for z in range(0, 16):
-                        send_chunk.set_block_runtime_id(x, 0, z, bedrock.runtime_id)
-                        send_chunk.set_block_runtime_id(x, 1, z, dirt.runtime_id)
-                        send_chunk.set_block_runtime_id(x, 2, z, dirt.runtime_id)
-                        send_chunk.set_block_runtime_id(x, 3, z, grass.runtime_id)
+                        send_chunk.set_block_runtime_id(x, 0, z, bedrock().runtime_id)
+                        send_chunk.set_block_runtime_id(x, 1, z, dirt().runtime_id)
+                        send_chunk.set_block_runtime_id(x, 2, z, dirt().runtime_id)
+                        send_chunk.set_block_runtime_id(x, 3, z, grass().runtime_id)
                 self.send_chunk(send_chunk)
             
     def send_network_chunk_publisher_update(self, chunk_radius: int) -> None:
