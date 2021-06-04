@@ -33,7 +33,10 @@ from world.chunk.block_storage import block_storage
 
 class sub_chunk:
     def __init__(self, block_storages: dict = {}) -> None:
-        self.block_storages: dict = block_storages
+        if len(block_storages) < 2:
+            self.block_storages: dict = {0: block_storage(), 1: block_storage()}
+        else:
+            self.block_storages: dict = block_storages
                 
     def get_block_storage(self, layer: int) -> None:
         if layer not in self.block_storages:
@@ -52,7 +55,7 @@ class sub_chunk:
         self.get_block_storage(layer).set_block(x, y & 0xf, z, block_id, meta)
 
     def network_serialize(self, stream: object) -> None:
-        stream.write_unsigned_byte(1)
+        stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
         for storage in self.block_storages.values():
             storage.network_serialize(stream)
