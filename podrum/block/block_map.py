@@ -29,7 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from block.block_ids import block_ids
 from game_data.mcbe.block_states import block_states
 
 class block_map:
