@@ -30,7 +30,7 @@
 ################################################################################
 
 from block.block_map import block_map
-from block.break_block_tool import break_block_tool
+from block.break_block_tool_type import break_block_tool_type
 from game_data.mcbe.block_id_map import block_id_map
 from game_data.mcbe.item_id_map import item_id_map
 
@@ -45,7 +45,7 @@ class block:
         self.blast_resistance: float = hardness * 5.0
         self.light_level: int = 0
         self.flammability: int = 0
-        self.break_block_tool: int = break_block_tool.none
+        self.break_block_tool: int = break_block_tool_type.none
         self.is_solid: bool = False
         self.is_liquid: bool = False
         self.is_transparent: bool = False
