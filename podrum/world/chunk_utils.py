@@ -72,7 +72,7 @@ class chunk_utils:
         return result
     
     @staticmethod
-    def nibble_4(items: list, index: int) -> int:
+    def get_nibble_4(items: list, index: int) -> int:
         if index % 2 == 0:
             return items[index >> 1] & 0x0f
         else:
