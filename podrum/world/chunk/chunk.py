@@ -48,12 +48,14 @@ class chunk:
         else:
             self.biomes: list = [0] * 256
     
-    def get_highest_empty_sub_chunk_count(self) -> int:
-        count: int = 0
-        for i in range(15, -1, -1):
+    def get_top_empty(self) -> int:
+        top_empty: int = 16
+        for i in range(0, 16 + 1, ):
             if self.sub_chunks[i].is_empty():
-                count += 1
-        return count
+                top_empty: int = i
+            else:
+                break
+        return top_empty
         
     def get_block(self, x: int, y: int, z: int, layer: int = 0) -> tuple:
         return self.sub_chunks[y >> 4].get_block(x, y, z, layer)
@@ -64,8 +66,7 @@ class chunk:
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
-        sub_chunk_count: int = len(self.sub_chunks) - self.get_highest_empty_sub_chunk_count()
-        for y in range(0, sub_chunk_count):
+        for y in range(0, self.get_top_empty()):
             self.sub_chunks[y].network_serialize(stream)
         stream.write_var_int(len(self.biomes))
         for biome in self.biomes:
