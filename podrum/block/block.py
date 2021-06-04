@@ -40,7 +40,7 @@ class block:
         self.meta: int = meta
         self.hardness: float = hardness
         self.block_id: int = block_id_map[name]
-        self.runtime_id: int = block_map().get_runtime_id(self.block_id, self.meta)
+        self.runtime_id: int = block_map.get_runtime_id(self.block_id, self.meta)
         self.network_id: int = item_id_map[name]
         self.blast_resistance: float = hardness * 5.0
         self.light_level: int = 0
