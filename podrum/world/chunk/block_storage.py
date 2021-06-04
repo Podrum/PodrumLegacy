@@ -37,7 +37,7 @@ class block_storage:
         if len(palette) > 0:
             self.palette: list = palette
         else:
-            self.palette: list = [air.runtime_id]
+            self.palette: list = [air().runtime_id]
         if len(blocks) == 4096:
             self.blocks: list = blocks
         else:
