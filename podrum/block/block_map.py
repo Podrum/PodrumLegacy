@@ -29,26 +29,16 @@
 #                                                                              #
 ################################################################################
 
+from game_data.mcbe.block_id_map import block_id_map
 from game_data.mcbe.block_states import block_states
 
 class block_map:
     def __init__(self) -> None:
         self.states: dict = {}
         for runtime_id, state in enumerate(block_states):
-            block_name: str = self.states[state["block"]["name"]]
-            if block_name not in self.states:
-                self.states[block_name]: dict = {}
             if "LegacyStates" in state:
                 for legacy_state in state["LegacyStates"]:
-                    
-                    self.register_block(legacy_state["id"], legacy_state["val"], runtime_id)
-                      
-    @staticmethod
-    def hash_legacy_id(block_id: int, meta: int) -> int:
-        return 
-                
-    def register_block(self, block_id: int, meta: int, runtime_id: int) -> None:
-        self.legacy_to_runtime_ids[(block_id << 4) | meta]: int = runtime_id
+                    self.states[f"""{legacy_state["id"]} {legacy_state["val"]}"""]: int = runtime_id
     
-    def legacy_to_runtime_id(self, block_id: int, meta: int) -> int:
-        return self.legacy_to_runtime_ids[block_map.hash_legacy_id(block_id, meta)]
+    def get_runtime_id(self, block_id: int, meta: int) -> int:
+        return self.states[f"{block_id} {meta}"]
