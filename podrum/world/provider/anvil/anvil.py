@@ -80,7 +80,7 @@ class anvil:
         for x in range(0, 16):
             for z in range(0, 16):
                 for y in range(0, 16):
-                    i_sub_chunk.set_block(x, y, z, block[pos], chunk_utils.get_nibble_4(meta, pos))
+                    i_sub_chunk.set_block(x, y, z, block[pos], chunk_utils.get_nibble_4(meta, pos), 0)
                     pos += 1
         return i_sub_chunk
     
