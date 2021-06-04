@@ -30,7 +30,7 @@
 ################################################################################
 
 from block.block_ids import block_ids
-from block.block_states import block_states
+from game_data.mcbe.block_states import block_states
 
 class block_map:
     def __init__(self) -> None:
