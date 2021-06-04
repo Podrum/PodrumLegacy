@@ -30,4 +30,5 @@
 ################################################################################
 
 class world:
-    pass
+    def __init__(self, path: str, provider: object):
+        pass
