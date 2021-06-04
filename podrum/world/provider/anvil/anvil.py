@@ -45,7 +45,6 @@ import random
 import sys
 import time
 from world.chunk.chunk import chunk
-from world.chunk.empty_sub_chunk import empty_sub_chunk
 from world.chunk.sub_chunk import sub_chunk
 from world.chunk_utils import chunk_utils
 from world.provider.anvil.region import region
