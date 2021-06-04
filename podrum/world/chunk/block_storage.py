@@ -47,7 +47,7 @@ class block_storage:
            
     @staticmethod
     def get_index(x: int, y: int, z: int) -> int:
-        return (((x & 0x0f) << 8) + ((z & 0x0f) << 4)) | (y & 0x0f)
+        return (x << 8) | (z << 4) | y
     
     def get_block(self, x, y, z) -> tuple:
         palette_index: int = self.blocks[block_storage.get_index(x, y, z)]
