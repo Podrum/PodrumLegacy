@@ -32,34 +32,27 @@
 from world.chunk.block_storage import block_storage
 
 class sub_chunk:
-    def __init__(self, block_storages: list = []) -> None:
-        if len(block_storages) >= 2:
-            self.block_storages: list = block_storages
-        else:
-            self.block_storages: list = [block_storage(), block_storage()]
+    def __init__(self, block_storages: dict = {}) -> None:
+        self.block_storages: dict = block_storages
                 
-    def create_missing_layers(self, layer: int) -> None:
-        temp: int = (len(self.block_storages) - 1) - layer
-        needs: int = 0 if temp > 0 else abs(temp)
-        for i in range(0, needs):
-            self.block_storages.append(block_storage())
+    def get_block_storage(self, layer: int) -> None:
+        if layer not in self.block_storages:
+            for i in range(0, layer + 1):
+                if i not in self.block_storages:
+                    self.block_storages[i]: object = block_storage()
+        return self.block_storages[i]
     
     def is_empty(self) -> bool:
         return bool(len(self.block_storages) == 0)
     
     def get_block(self, x: int, y: int, z: int, layer: int) -> tuple:
-        self.create_missing_layers(layer)
-        return self.block_storages[layer].get_block(x, y & 0xf, z)
+        return self.get_block_storage(layer).get_block(x, y & 0xf, z)
     
     def set_block(self, x: int, y: int, z: int, block_id: int, meta: int, layer: int) -> None:
-        self.create_missing_layers(layer)
-        self.block_storages[layer].set_block(x, y & 0xf, z, block_id, meta)
+        self.get_block_storage(layer).set_block(x, y & 0xf, z, block_id, meta)
 
     def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
-        for count, storage in enumerate(self.block_storages):
-            force: bool = False
-            if count == 0 or count == 1:
-                force: bool = True
-            storage.network_serialize(stream, force)
+        for storage in self.block_storages.values():
+            storage.network_serialize(stream)
