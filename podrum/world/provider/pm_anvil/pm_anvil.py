@@ -30,11 +30,11 @@
 ################################################################################
 
 from nbt_utils.tag.byte_array_tag import byte_array_tag
-from world.format.anvil.anvil import anvil
+from world.provider.anvil.anvil import anvil
 
 class pm_anvil(anvil):
+    provider_name: str = "pmanvil"
     region_file_extension: str = "mcapm"
-    format_name: str = "pmanvil"
     
     @staticmethod
     def section_to_sub_chunk(section_tag: object) -> object:
