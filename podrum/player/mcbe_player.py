@@ -29,6 +29,9 @@
 #                                                                              #
 ################################################################################
 
+from block.minecraft.bedrock import bedrock
+from block.minecraft.dirt import dirt
+from block.minecraft.grass import grass
 from geometry.vector_2 import vector_2
 from geometry.vector_3 import vector_3
 from mcbe_data.get import get as get_mcbe_data
@@ -255,15 +258,10 @@ class mcbe_player:
                 send_chunk: object = chunk(chunk_x, chunk_z)
                 for x in range(0, 16):
                     for z in range(0, 16):
-                        y: int = 0
-                        send_chunk.set_block(x, y, z, 7, 0)
-                        y += 1
-                        send_chunk.set_block(x, y, z, 3, 0)
-                        y += 1
-                        send_chunk.set_block(x, y, z, 3, 0)
-                        y += 1
-                        send_chunk.set_block(x, y, z, 2, 0)
-                        y += 1
+                        send_chunk.set_block_runtime_id(x, 0, z, bedrock.runtime_id)
+                        send_chunk.set_block_runtime_id(x, 1, z, dirt.runtime_id)
+                        send_chunk.set_block_runtime_id(x, 2, z, dirt.runtime_id)
+                        send_chunk.set_block_runtime_id(x, 3, z, grass.runtime_id)
                 self.send_chunk(send_chunk)
             
     def send_network_chunk_publisher_update(self, chunk_radius: int) -> None:
