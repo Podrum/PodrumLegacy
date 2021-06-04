@@ -62,6 +62,7 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.position: object = vector_3(0.0, 5.0, 0.0)
+        self.view_distance: int = 0
         
     def send_start_game(self) -> None:
         packet: object = start_game_packet()
@@ -217,14 +218,18 @@ class mcbe_player:
     def handle_request_chunk_radius_packet(self, data: bytes) -> None:
         packet: object = request_chunk_radius_packet(data)
         packet.decode()
+        self.view_distance: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
         new_packet: object = chunk_radius_updated_packet()
-        new_packet.chunk_radius: int = 2
+        new_packet.chunk_radius: int = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
         self.send_network_chunk_publisher_update()
-        distance: int = 2
-        for chunk_x in range(-distance, distance + 1):
-            for chunk_z in range(-distance, distance + 1):
+        chunk_x_start: int = (self.position.x >> 4) - self.view_distance
+        chunk_x_end: int = (self.position.x >> 4) + self.view_distance
+        chunk_z_start: int = (self.position.z >> 4) - self.view_distance
+        chunk_z_end: int = (self.position.z >> 4) + self.view_distance
+        for chunk_x in range(chunk_x_start, chunk_x_end):
+            for chunk_z in range(chunk_z_start, chunk_z_end):
                 send_chunk: object = chunk(chunk_x, chunk_z)
                 for x in range(0, 16):
                     for z in range(0, 16):
@@ -264,7 +269,7 @@ class mcbe_player:
         new_packet.x: int = int(self.position.x)
         new_packet.y: int = int(self.position.y)
         new_packet.z: int = int(self.position.z)
-        new_packet.chunk_radius: int = self.server.config.data["max_view_distance"] * 16
+        new_packet.chunk_radius: int = self.view_distance * 16
         new_packet.encode()
         self.send_packet(new_packet.data)
     
