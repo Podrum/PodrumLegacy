@@ -15,7 +15,7 @@ It's still under active development, but yet it has few advantages:
 
 **1.** Easy to use,
 
-**2.** Written in Python which makes plugins easier to write,
+**2.** Written in Python which makes plugins easier to write
 
 ## Features:
  - [ ] World Generation
