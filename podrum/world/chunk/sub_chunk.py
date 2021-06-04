@@ -40,7 +40,7 @@ class sub_chunk:
             for i in range(0, layer + 1):
                 if i not in self.block_storages:
                     self.block_storages[i]: object = block_storage()
-        return self.block_storages[i]
+        return self.block_storages[layer]
     
     def is_empty(self) -> bool:
         return bool(len(self.block_storages) == 0)
