@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from block.block_map import block_map
 from command.command_interface import command_interface
 from command.command_manager import command_manager
 from command.default.help_command import help_command
@@ -96,6 +97,7 @@ class server:
     def start(self) -> None:
         start_time: float = time.time()
         self.logger.info("Podrum is starting up...")
+        block_map.load_map()
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
