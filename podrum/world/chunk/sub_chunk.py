@@ -52,7 +52,7 @@ class sub_chunk:
         self.get_block_storage(layer).set_block(x, y & 0xf, z, block_id, meta)
 
     def network_serialize(self, stream: object) -> None:
-        stream.write_unsigned_byte(8)
+        stream.write_unsigned_byte(1)
         stream.write_unsigned_byte(len(self.block_storages))
         for storage in self.block_storages.values():
             storage.network_serialize(stream)
