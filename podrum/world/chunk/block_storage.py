@@ -50,7 +50,7 @@ class block_storage:
         return ((x & 0x0f) << 8) + ((z & 0x0f) << 4) | (y & 0x0f)
     
     def get_block(self, x, y, z) -> tuple:
-        palette_index: int = self.blocks[block_storage.get_index(x, y, z)]
+        palette_index: int = self.blocks[block_storage.get_index(x, y & 0xf, z)]
         runtime_id: int = self.palette[palette_index]
         return block_storage.block_map.runtime_to_legacy_id(runtime_id)
     
@@ -58,7 +58,7 @@ class block_storage:
         runtime_id: int = block_storage.block_map.legacy_to_runtime_id(block, meta)
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
-        self.blocks[block_storage.get_index(x, y, z)]: int = self.palette.index(runtime_id)
+        self.blocks[block_storage.get_index(x, y & 0xf, z)]: int = self.palette.index(runtime_id)
 
     def network_serialize(self, stream: object, force: bool = False):
         bits_per_block: int = math.ceil(math.log2(len(self.palette)))
