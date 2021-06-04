@@ -74,12 +74,16 @@ class anvil:
     
     @staticmethod
     def section_to_sub_chunk(section_tag: object) -> object:
-        return sub_chunk(
-            chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value),
-            chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value),
-            chunk_utils.reorder_nibble_array(section_tag.get_tag("SkyLight").value),
-            chunk_utils.reorder_nibble_array(section_tag.get_tag("BlockLight").value)
-        )
+        i_sub_chunk: object = sub_chunk()
+        block: list = chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value)
+        meta: list = chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value)
+        pos: int = 0
+        for x in range(0, 16):
+            for z in range(0, 16):
+                for y in range(0, 16):
+                    i_sub_chunk.set_block(x, y, z, block[pos], chunk_utils.get_nibble_4(meta, pos))
+                    pos += 1
+        return i_sub_chunk
     
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
@@ -103,13 +107,10 @@ class anvil:
             level_tag.get_tag("xPos").value,
             level_tag.get_tag("zPos").value,
             sub_chunks,
-            level_tag.get_tag("Entities").value,
-            level_tag.get_tag("TileEntities").value,
-            biomes,
-            level_tag.get_tag("HeightMap").value
+            biomes
         )
-        result.is_light_populated: int = level_tag.get_tag("LightPopulated").value > 0
-        result.is_terrain_populated: int = level_tag.get_tag("TerrainPopulated").value > 0
+        #result.is_light_populated: int = level_tag.get_tag("LightPopulated").value > 0
+        result.has_changed: int = level_tag.get_tag("TerrainPopulated").value > 0
         return result
     
     @staticmethod
