@@ -50,7 +50,7 @@ class chunk:
     
     def get_sub_chunk_send_count(self) -> int:
         top_empty: int = 16
-        for i in range(0, 16 + 1, ):
+        for i in range(0, 16 + 1):
             if self.sub_chunks[i].is_empty():
                 top_empty: int = i
             else:
