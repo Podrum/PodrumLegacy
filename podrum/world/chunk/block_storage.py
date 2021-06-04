@@ -49,12 +49,20 @@ class block_storage:
     def get_index(x: int, y: int, z: int) -> int:
         return (x << 8) | (z << 4) | y
     
+    @staticmethod
+    def check_bounds(x: int, y: int, z: int) -> None:
+        assert(x >= 0 and x < 16, f"x ({x}) is not between 0 and 15")
+        assert(y >= 0 and y < 16, f"y ({y}) is not between 0 and 15")
+        assert(z >= 0 and z < 16, f"z ({z}) is not between 0 and 15")
+    
     def get_block(self, x, y, z) -> tuple:
+        block_storage.check_bounds(x, y, z)
         palette_index: int = self.blocks[block_storage.get_index(x, y, z)]
         runtime_id: int = self.palette[palette_index]
         return block_storage.block_map.runtime_to_legacy_id(runtime_id)
     
     def set_block(self, x, y, z, block: int, meta: int) -> None:
+        block_storage.check_bounds(x, y, z)
         runtime_id: int = block_storage.block_map.legacy_to_runtime_id(block, meta)
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
