@@ -56,7 +56,7 @@ from world.chunk.chunk import chunk
 import zlib
 
 class mcbe_player:
-    def __init__(self, connection, server):
+    def __init__(self, connection: object, server: object, entity_id: int) -> None:
         self.connection = connection
         self.server = server
         
