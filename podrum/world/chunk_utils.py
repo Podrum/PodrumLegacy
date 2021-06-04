@@ -42,7 +42,7 @@ class chunk_utils:
                     for y in range(z, y_m, 256):
                         result[i]: int = array[y]
                         i += 1
-            return result
+        return result
         
     @staticmethod
     def reorder_nibble_array(array: list, common_value: int = 0) -> list:
@@ -62,7 +62,7 @@ class chunk_utils:
                             result[i | 0x80]: int = (i1 >> 4) | (i2 & 0xf0)
                         i += 1
                 i += 128
-            return result
+        return result
 
     @staticmethod
     def convert_biome_colors(array: list) -> list:
