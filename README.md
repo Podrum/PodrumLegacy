@@ -49,7 +49,7 @@ python podrum
  - Is this free?
  > Yes it is.
  - Is this for Minecraft Java or Bedrock?
- > It's for both.
+ > Its currently for bedrock but there may be a plugin for java edition.
  - Can I use this yet?
  > We wouldn't recommend using this for a serious project yet.
  - Does it support plugins?
