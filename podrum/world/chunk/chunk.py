@@ -48,7 +48,7 @@ class chunk:
         else:
             self.biomes: list = [0] * 256
     
-    def get_top_empty(self) -> int:
+    def get_sub_chunk_send_count(self) -> int:
         top_empty: int = 16
         for i in range(0, 16 + 1, ):
             if self.sub_chunks[i].is_empty():
@@ -66,10 +66,10 @@ class chunk:
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
-        for y in range(0, self.get_top_empty()):
+        for y in range(0, self.get_sub_chunk_send_count()):
             self.sub_chunks[y].network_serialize(stream)
         stream.write_var_int(len(self.biomes))
         for biome in self.biomes:
             stream.write_unsigned_byte(biome)
         stream.write_unsigned_byte(0)
-        return stream
+        return stream.data
