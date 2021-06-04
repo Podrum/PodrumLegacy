@@ -32,12 +32,14 @@
 from game_data.mcbe.block_states import block_states
 
 class block_map:
-    def __init__(self) -> None:
-        self.states: dict = {}
+    @staticmethod
+    def load_map() -> None:
+        block_map.states: dict = {}
         for runtime_id, state in enumerate(block_states):
             if "LegacyStates" in state:
                 for legacy_state in state["LegacyStates"]:
-                    self.states[f"""{legacy_state["id"]} {legacy_state["val"]}"""]: int = runtime_id
+                    block_map.states[f"""{legacy_state["id"]} {legacy_state["val"]}"""]: int = runtime_id
     
-    def get_runtime_id(self, block_id: int, meta: int) -> int:
-        return self.states[f"{block_id} {meta}"]
+    @staticmethod
+    def get_runtime_id(block_id: int, meta: int) -> int:
+        return block_map.states[f"{block_id} {meta}"]
