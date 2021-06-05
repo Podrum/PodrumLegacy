@@ -69,6 +69,7 @@ class chunk:
             y = self.sub_chunks[i].get_highest_block_at(x, z, layer)
             if index != -1:
                 return index + (i << 4)
+        return -1
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
