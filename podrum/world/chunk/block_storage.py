@@ -72,7 +72,7 @@ class block_storage:
             palette_index: int = self.blocks[index]
             runtime_id: int = self.palette[palette_index]
             if runtime_id != air().runtime_id:
-                return i
+                return y
         return -1
 
     def network_serialize(self, stream: object):
