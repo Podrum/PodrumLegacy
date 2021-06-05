@@ -64,6 +64,51 @@ class anvil:
         region_dir: str = os.path.join(self.world_dir, "region")
         if not os.path.isdir(region_dir):
             os.mkdir(region_dir)
+            
+    @staticmethod
+    def get_index(x: int, y: int, z: int) -> int:
+        return (x << 8) | (z << 4) | y
+            
+    @staticmethod
+    def deserialize_sub_chunk(blocks: list, metas: list) -> object:
+        blocks: list = chunk_utils.reorder_byte_array(blocks)
+        metas: list = chunk_utils.reorder_nibble_array(metas)
+        i_sub_chunk: object = sub_chunk()
+        for x in range(0, 16):
+            for z in range(0, 16):
+                for y in range(0, 16):
+                    index: int = anvil.get_index(x, y, z)
+                    runtime_id: int = block_map.get_runtime_id(blocks[index], chunk_utils.get_nibble_4(metas, index))
+                    i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id, 0)
+        return i_sub_chunk
+            
+    @staticmethod
+    def deserialize_chunk(data: bytes) -> object:
+        stream = nbt_be_binary_stream(data)
+        root_tag: object = stream.read_root_tag()
+        if not isinstance(root_tag, compound_tag):
+            raise Exception("Invalid NBT data!")
+        if not root_tag.has_tag("Level"):
+            raise Exception("Level tag isnt present!")
+        level_tag: object = root_tag.get_tag("Level")
+        sub_chunks: dict = {}
+        sections_tag: object = level_tag.get_tag("Sections")
+        for section_tag in sections_tag.value:
+            sub_chunks[section_tag.get_tag("Y").value]: object = anvil.deserialize_sub_chunk(
+                section_tag.get_tag("Blocks").value,
+                section_tag.get_tag("Data").value
+            )
+        if level_tag.has_tag("BiomeColors"):
+            biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
+        else:
+            biomes: list = level_tag.get_tag("Biomes").value
+        i_chunk: object = chunk(
+            level_tag.get_tag("xPos").value,
+            level_tag.get_tag("zPos").value,
+            sub_chunks,
+            biomes
+        )
+        i_chunk.has_changed: bool = level_tag.get_tag("TerrainPopulated").value > 0
         
     @staticmethod
     def cr_index(x: int, z: int) -> tuple:
@@ -73,48 +118,13 @@ class anvil:
     def rc_index(x: int, z: int) -> tuple:
         return x - ((x >> 5) << 5), z - ((z >> 5) << 5)
     
-    @staticmethod
-    def section_to_sub_chunk(section_tag: object) -> object:
-        i_sub_chunk: object = sub_chunk()
-        block: list = section_tag.get_tag("Blocks").value
-        meta: list = section_tag.get_tag("Data").value
-        for x in range(0, 16):
-            for z in range(0, 16):
-                for y in range(0, 16):
-                    index: int = block_storage.get_index(y, x, z)
-                    runtime_id: int = block_map.get_runtime_id(block[index], chunk_utils.get_nibble_4(meta, index))
-                    i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id, 0)
-        return i_sub_chunk
-    
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
-        stream: object = nbt_be_binary_stream(chunk_data)
-        tag: object = stream.read_root_tag()
-        if tag is None:
-            return chunk(x, z)
-        level_tag: object = tag.get_tag("Level")
-        sub_chunks: dict = {}
-        for section_tag in level_tag.get_tag("Sections").value:
-            sub_chunks[section_tag.get_tag("Y").value] = anvil.section_to_sub_chunk(section_tag)
-        if level_tag.has_tag("BiomeColors"): # Just a check for pmmp worlds
-            biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
-        elif level_tag.has_tag("Biomes"):
-            biomes: list = level_tag.get_tag("Biomes").value
-        else:
-            biomes: list = []
-        result: object = chunk(
-            level_tag.get_tag("xPos").value,
-            level_tag.get_tag("zPos").value,
-            sub_chunks,
-            biomes
-        )
-        #result.is_light_populated: int = level_tag.get_tag("LightPopulated").value > 0
-        result.has_changed: int = level_tag.get_tag("TerrainPopulated").value > 0
-        return result
+        return anvil.deserialize_chunk(chunk_data)
     
     @staticmethod
     def sub_chunk_to_section(sub_chunk: object) -> object:
