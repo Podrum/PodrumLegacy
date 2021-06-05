@@ -100,8 +100,10 @@ class anvil:
             )
         if level_tag.has_tag("BiomeColors"):
             biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
-        else:
+        elif level_tag.has_tag("Biomes"):
             biomes: list = level_tag.get_tag("Biomes").value
+        else:
+            biomes: list = []
         i_chunk: object = chunk(
             level_tag.get_tag("xPos").value,
             level_tag.get_tag("zPos").value,
@@ -109,6 +111,7 @@ class anvil:
             biomes
         )
         i_chunk.has_changed: bool = level_tag.get_tag("TerrainPopulated").value > 0
+        return i_chunk
         
     @staticmethod
     def cr_index(x: int, z: int) -> tuple:
