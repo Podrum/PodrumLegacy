@@ -54,8 +54,8 @@ class sub_chunk:
     def set_block_runtime_id(self, x: int, y: int, z: int, runtime_id: int, layer: int) -> None:
         self.get_block_storage(layer).set_block_runtime_id(x, y, z, runtime_id)
         
-    def get_highest_block_index(self, x: int, z: int, layer: int) -> int:
-        return self.get_block_storage(layer).get_highest_block_index(x, z)
+    def get_highest_block_at(self, x: int, z: int, layer: int) -> int:
+        return self.get_block_storage(layer).get_highest_block_at(x, z)
 
     def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
