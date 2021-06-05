@@ -30,6 +30,7 @@
 ################################################################################
 
 import gzip
+from block.block_map import block_map
 from nbt_utils.constant.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
@@ -44,6 +45,7 @@ import os
 import random
 import sys
 import time
+from world.chunk.block_storage import block_storage
 from world.chunk.chunk import chunk
 from world.chunk.sub_chunk import sub_chunk
 from world.chunk_utils import chunk_utils
@@ -74,14 +76,14 @@ class anvil:
     @staticmethod
     def section_to_sub_chunk(section_tag: object) -> object:
         i_sub_chunk: object = sub_chunk()
-        block: list = chunk_utils.reorder_byte_array(section_tag.get_tag("Blocks").value)
-        meta: list = chunk_utils.reorder_nibble_array(section_tag.get_tag("Data").value)
-        pos: int = 0
+        block: list = section_tag.get_tag("Blocks").value
+        meta: list = section_tag.get_tag("Data").value
         for x in range(0, 16):
             for z in range(0, 16):
                 for y in range(0, 16):
-                    i_sub_chunk.set_block(x, y, z, block[pos], chunk_utils.get_nibble_4(meta, pos), 0)
-                    pos += 1
+                    index: int = block_storage.get_index(x, y, z)
+                    runtime_id: int = block_map.get_runtime_id(block[index], chunk_utils.get_nibble_4(meta, index))
+                    i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id)
         return i_sub_chunk
     
     def get_chunk(self, x: int, z: int) -> object:
