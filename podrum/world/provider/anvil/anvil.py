@@ -81,7 +81,7 @@ class anvil:
         for x in range(0, 16):
             for z in range(0, 16):
                 for y in range(0, 16):
-                    index: int = block_storage.get_index(x, y, z)
+                    index: int = block_storage.get_index(y, x, z)
                     runtime_id: int = block_map.get_runtime_id(block[index], chunk_utils.get_nibble_4(meta, index))
                     i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id, 0)
         return i_sub_chunk
