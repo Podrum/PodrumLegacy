@@ -83,7 +83,7 @@ class anvil:
                 for y in range(0, 16):
                     index: int = block_storage.get_index(x, y, z)
                     runtime_id: int = block_map.get_runtime_id(block[index], chunk_utils.get_nibble_4(meta, index))
-                    i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id)
+                    i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id, 0)
         return i_sub_chunk
     
     def get_chunk(self, x: int, z: int) -> object:
@@ -102,8 +102,10 @@ class anvil:
             sub_chunks[section_tag.get_tag("Y").value] = anvil.section_to_sub_chunk(section_tag)
         if level_tag.has_tag("BiomeColors"): # Just a check for pmmp worlds
             biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
+        elif level_tag.has_tag("Biomes"):
+            biomes: list = level_tag.get_tag("Biomes").value
         else:
-            biomes: list = level_tag.get_tag("Biomes").value    
+            biomes: list = []
         result: object = chunk(
             level_tag.get_tag("xPos").value,
             level_tag.get_tag("zPos").value,
