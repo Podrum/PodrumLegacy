@@ -66,7 +66,7 @@ class chunk:
             
     def get_highest_block_at(self, x: int, z: int, layer: int = 0) -> int:
         for i in range(15, -1, -1):
-            index = self.sub_chunks[i].get_highest_block_at(x, z, layer)
+            index: int = self.sub_chunks[i].get_highest_block_at(x, z, layer)
             if index != -1:
                 return index + (i << 4)
         return -1
