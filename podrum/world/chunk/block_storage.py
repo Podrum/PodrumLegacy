@@ -67,7 +67,7 @@ class block_storage:
     def get_highest_block_at(self, x: int, z: int) -> int:
         block_storage.check_bounds(x, 15, z)
         highest_index: int = 15
-        for y in range(highest_index, -1, -1)
+        for y in range(highest_index, -1, -1):
             index = block_storage.get_index(x, y, z)
             palette_index: int = self.blocks[index]
             runtime_id: int = self.palette[palette_index]
