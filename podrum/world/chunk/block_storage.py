@@ -63,6 +63,16 @@ class block_storage:
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
         self.blocks[block_storage.get_index(x, y, z)]: int = self.palette.index(runtime_id)
+            
+    def get_highest_block_index(self, x: int, z: int) -> int:
+        block_storage.check_bounds(x, 15, z)
+        highest_index: int = block_storage.get_index(x, 15, z)
+        for i in range(highest_index, -1, -1)
+            palette_index: int = self.blocks[i]
+            runtime_id: int = self.palette[palette_index]
+            if runtime_id != air().runtime_id:
+                return i
+        return -1
 
     def network_serialize(self, stream: object):
         bits_per_block: int = math.ceil(math.log2(len(self.palette)))
