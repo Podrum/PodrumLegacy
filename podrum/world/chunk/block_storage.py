@@ -82,7 +82,7 @@ class block_storage:
                 state: int = self.blocks[pos]
                 word |= state << (bits_per_block * block)
                 pos += 1
-            stream.write_int_le(word)
+            stream.write_unsigned_int_le(word)
         stream.write_signed_var_int(len(self.palette))
         for runtime_id in self.palette:
             stream.write_signed_var_int(runtime_id)
