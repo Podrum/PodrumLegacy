@@ -65,6 +65,7 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.position: object = vector_3(0.0, 5.0, 0.0)
+        self.world: object = server.world_manager.worlds["world"]
         
     def send_start_game(self) -> None:
         packet: object = start_game_packet()
@@ -255,14 +256,8 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + chunk_radius
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                send_chunk: object = chunk(chunk_x, chunk_z)
-                for x in range(0, 16):
-                    for z in range(0, 16):
-                        send_chunk.set_block_runtime_id(x, 0, z, bedrock().runtime_id)
-                        send_chunk.set_block_runtime_id(x, 1, z, dirt().runtime_id)
-                        send_chunk.set_block_runtime_id(x, 2, z, dirt().runtime_id)
-                        send_chunk.set_block_runtime_id(x, 3, z, grass().runtime_id)
-                self.send_chunk(send_chunk)
+                self.world.load_chunk(chunk_x, chunk_z)
+                self.send_chunk(self.world.get_chunk(chunk_x, chunk_z))
             
     def send_network_chunk_publisher_update(self, chunk_radius: int) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
