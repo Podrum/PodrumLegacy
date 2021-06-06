@@ -41,7 +41,7 @@ class world_manager:
     def get_default_world_path(self) -> str:
         return os.path.join(os.getcwd(), "worlds")
         
-    def load_world(self, world_name: str, worlds_path: ""):
+    def load_world(self, world_name: str, worlds_path: str = "") -> None:
         self.server.logger.info(f"Loading world -> {world_name}")
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
@@ -55,6 +55,6 @@ class world_manager:
         )
         self.server.logger.success(f"Loaded world -> {world_name}")
         
-    def unload_world(self, world_name: str):
+    def unload_world(self, world_name: str) -> None:
         self.worlds[world_name].save()
         del self.worlds[world_name]
