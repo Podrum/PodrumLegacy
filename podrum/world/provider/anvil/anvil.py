@@ -76,10 +76,10 @@ class anvil:
     
     @staticmethod
     def to_server_chunk(chunk_in: object) -> object:
-        cnv_chunk: object = server_chunk()
+        cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
         for x in range(0, 16):
-            for y in range(0, chunk_in.get_highest_block_at() + 1):
-                for z in range(0, 16):
+            for z in range(0, 16):
+                for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
                     block: int = chunk_in.get_block_id(x, y, z) & 0xff
                     meta: int = chunk_in.get_data(x, y, z) & 0xff
                     try:
