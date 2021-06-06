@@ -53,11 +53,11 @@ class chunk:
                 self.sections[i]: object = sections[i]
             else:
                 self.sections[i]: object = section()
-        if len(height_map) == 256;
+        if len(height_map) == 256:
             self.height_map: list = height_map
         else:
             self.height_map: list = [0] * 256      
-        if len(biomes) == 256;
+        if len(biomes) == 256:
             self.biomes: list = biomes
         else:
             self.biomes: list = [0] * 256
@@ -179,7 +179,7 @@ class chunk:
             
     def network_serialize(self) -> bytes:
         stream: object = binary_stream()
-        for i in in range(0, self.get_sub_chunk_send_count()):
+        for i in range(0, self.get_sub_chunk_send_count()):
            stream.write(bytes([0] + chunk_utils.reorder_byte_array(self.sections[i].block_ids) + chunk_utils.reorder_nibble_array(self.sections[i].data_entries)))
         stream.write_var_int(len(self.biomes))
         stream.write(bytes(self.biomes))
