@@ -87,6 +87,7 @@ class anvil:
                     except KeyError:
                         runtime_id: int = block_map.get_runtime_id(block, 0)
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
+        return cnv_chunk
     
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
@@ -97,7 +98,7 @@ class anvil:
         result: object = chunk(x, z)
         if len(chunk_data) > 0:
             result.nbt_deserialize(chunk_data)
-        return result
+        return anvil.to_server_chunk(result)
                                         
     def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(x, z)
