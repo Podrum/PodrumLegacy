@@ -100,6 +100,10 @@ class server:
             self.config.data["max_players"]: int = 20
         if "max_view_distance" not in self.config.data:
             self.config.data["max_view_distance"]: int = 2
+        if "world_provider" not in self.config.data:
+            self.config.data["world_provider"]: int = "anvil"
+        if "world_name" not in self.config.data:
+            self.config.data["world_name"]: int = "world"
         self.config.save()      
 
     def start(self) -> None:
