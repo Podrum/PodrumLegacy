@@ -53,7 +53,7 @@ from world.chunk_utils import chunk_utils
 from world.provider.pm_anvil.chunk import chunk
 from world.provider.anvil.region import region
 
-class anvil:
+class pm_anvil:
     provider_name: str = "pmanvil"
     region_file_extension: str = "mcapm"
     
