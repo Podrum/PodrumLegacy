@@ -32,7 +32,7 @@
 from world.chunk_utils import chunk_utils
 
 class section:
-    def __init__(self, block_ids: list, data_entries: list, block_light_entries: list, sky_light_entries: list) -> None:
+    def __init__(self, block_ids: list = [], data_entries: list = [], block_light_entries: list = [], sky_light_entries: list = []) -> None:
         if len(block_ids) == 4096:
             self.block_ids: list = block_ids
         else:
