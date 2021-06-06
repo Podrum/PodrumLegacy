@@ -42,7 +42,7 @@ from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 from world.provider.anvil.section import section
 
 class chunk:
-    def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: object = compound_tag("Entities"), tile_entities: object = compound_tag("TileEntities")) -> None:
+    def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: list = [], tile_entities: list = []) -> None:
         self.x: int = x
         self.z: int = z
         self.sections: dict = {}
@@ -59,8 +59,8 @@ class chunk:
             self.biomes: list = biomes
         else:
             self.biomes: list = [0] * 256
-        self.entities: object = entities
-        self.tile_entities: object = tile_entities
+        self.entities: list = entities
+        self.tile_entities: list = tile_entities
         self.light_populated: bool = False
         self.terrain_populated: bool = False
         
@@ -129,8 +129,8 @@ class chunk:
                 byte_tag("LightPopulated", 1 if self.light_populated else 0),
                 sections,
                 byte_array_tag("Biomes", self.biomes),
-                entities,
-                tile_entities,
+                list_tag("Entities", self.entities, tag_ids.compound_tag),
+                list_tag("TileEntities", self.tile_entities, tag_ids.compound_tag),
                 int_array_tag("HeightMap", self.height_map)
             ]),
             int_tag("DataVersion", 1343)
