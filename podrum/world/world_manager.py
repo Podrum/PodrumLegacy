@@ -54,3 +54,7 @@ class world_manager:
             self.server
         )
         self.server.logger.success(f"Loaded world -> {world_name}")
+        
+    def unload_world(self, world_name: str):
+        self.worlds[world_name].save()
+        del self.worlds[world_name]
