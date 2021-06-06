@@ -30,6 +30,7 @@
 ################################################################################
 
 from nbt_utils.tag.compound_tag import compound_tag
+from world.provider.anvil.section import section
 
 class chunk:
     def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: object = compound_tag("Entities"), tile_entities: object = compound_tag("TileEntities")) -> None:
@@ -40,7 +41,7 @@ class chunk:
             if i in sections:
                 self.sections[i]: object = sections[i]
             else:
-                self.sections[i]: object = None
+                self.sections[i]: object = section()
         if len(height_map) == 256;
             self.height_map: list = height_map
         else:
@@ -85,10 +86,9 @@ class chunk:
     def get_highest_block_at(self, x: int, z: int) -> int:
         for i in range(len(self.sections) - 1, -1, -1):
             section_to_check: object = self.sections[i]
-            if section_to_check is not None:
-                index: int = section_to_check.get_highest_block_at(x & 0x0f, z & 0x0f)
-                if index != -1:
-                    return index + (i << 4)
+            index: int = section_to_check.get_highest_block_at(x & 0x0f, z & 0x0f)
+            if index != -1:
+                return index + (i << 4)
         return -1
     
     def recalculate_height_map(self) -> None:
