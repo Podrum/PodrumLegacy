@@ -74,15 +74,15 @@ class anvil:
         blocks: list = chunk_utils.reorder_byte_array(blocks)
         metas: list = chunk_utils.reorder_nibble_array(metas)
         i_sub_chunk: object = sub_chunk()
-        for x in range(0, 16):
-            for z in range(0, 16):
-                for y in range(0, 16):
-                    index: int = anvil.get_index(x, y, z)
-                    try:
-                        runtime_id: int = block_map.get_runtime_id(blocks[index], chunk_utils.get_nibble_4(metas, index))
-                    except KeyError:
-                        runtime_id: int = block_map.get_runtime_id(blocks[index], 0)
-                    i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id, 0)
+        for i in range(0, 4096):
+            try:
+                runtime_id: int = block_map.get_runtime_id(blocks[index] & 0xff, chunk_utils.get_nibble_4(metas, index) & 0xff)
+            except KeyError:
+                runtime_id: int = block_map.get_runtime_id(blocks[index] & 0xff, 0)
+            storage: object = i_sub_chunk.get_block_storage(0)
+            if runtime_id not in storage.palette:
+                storage.palette.append(runtime_id)
+            storage.blocks[i]: int = storage.palette.index(runtime_id)
         return i_sub_chunk
             
     @staticmethod
