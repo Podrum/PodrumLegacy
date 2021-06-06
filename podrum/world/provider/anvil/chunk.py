@@ -76,7 +76,7 @@ class chunk:
     def set_sky_light(self, x: int, y: int, z: int, light_level: int) -> None:
         self.sections[y >> 4].set_sky_light(x & 0x0f, y & 0x0f, z & 0x0f, light_level)
         
-    def get_highest_block_at(self, x: int, z: int, layer: int = 0) -> int:
+    def get_highest_block_at(self, x: int, z: int) -> int:
         for i in range(len(self.sections) - 1, -1, -1):
             section_to_check: object = self.sections[i]
             if section_to_check is not None:
@@ -84,3 +84,8 @@ class chunk:
                 if index != -1:
                     return index + (i << 4)
         return -1
+    
+    def recalculate_height_map(self) -> None:
+        for x in range(0, 16):
+            for z in range(0, 16):
+                self.height_map[(x << 4) + z]: int = get_highest_block_at(x, z) + 1
