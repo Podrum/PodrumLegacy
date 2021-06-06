@@ -31,7 +31,7 @@
 
 import gzip
 from block.block_map import block_map
-from nbt_utils.constant.tag_ids import tag_ids
+from nbt_utils.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
 from nbt_utils.tag.compound_tag import compound_tag
@@ -78,7 +78,10 @@ class anvil:
             for z in range(0, 16):
                 for y in range(0, 16):
                     index: int = anvil.get_index(x, y, z)
-                    runtime_id: int = block_map.get_runtime_id(blocks[index], chunk_utils.get_nibble_4(metas, index))
+                    try:
+                        runtime_id: int = block_map.get_runtime_id(blocks[index], chunk_utils.get_nibble_4(metas, index))
+                    except KeyError:
+                        runtime_id: int = block_map.get_runtime_id(blocks[index], 0)
                     i_sub_chunk.set_block_runtime_id(x, y, z, runtime_id, 0)
         return i_sub_chunk
             
