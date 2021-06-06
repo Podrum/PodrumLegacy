@@ -70,9 +70,10 @@ class anvil:
         return (x << 8) | (z << 4) | y
             
     @staticmethod
-    def deserialize_sub_chunk(blocks: list, metas: list) -> object:
-        blocks: list = chunk_utils.reorder_byte_array(blocks)
-        metas: list = chunk_utils.reorder_nibble_array(metas)
+    def deserialize_sub_chunk(blocks: list, metas: list, reorder: object = True) -> object:
+        if reorder:
+            blocks: list = chunk_utils.reorder_byte_array(blocks)
+            metas: list = chunk_utils.reorder_nibble_array(metas)
         i_sub_chunk: object = sub_chunk()
         for i in range(0, 4096):
             try:
