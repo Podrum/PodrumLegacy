@@ -77,7 +77,7 @@ class anvil:
         i_sub_chunk: object = sub_chunk()
         for i in range(0, 4096):
             try:
-                runtime_id: int = block_map.get_runtime_id(blocks[i] & 0xff, chunk_utils.get_nibble_4(metas, index) & 0xff)
+                runtime_id: int = block_map.get_runtime_id(blocks[i] & 0xff, chunk_utils.get_nibble_4(metas, i) & 0xff)
             except KeyError:
                 runtime_id: int = block_map.get_runtime_id(blocks[i] & 0xff, 0)
             storage: object = i_sub_chunk.get_block_storage(0)
