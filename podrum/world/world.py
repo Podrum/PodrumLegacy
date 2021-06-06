@@ -29,6 +29,25 @@
 #                                                                              #
 ################################################################################
 
+import copy
+import threading
+
 class world:
-    def __init__(self, path: str, server: object):
+    def __init__(self, provider: object, server: object):
+        self.provider: object = provider
         self.server: object = server
+        self.chunks: dict = {}
+            
+    def load_chunk(self, x: int, z: int):
+        self.chunks[f"{x} {z}"]: object = self.provider.get_chunk(x, z)
+            
+    def unload_chunk(self, x: int, z: int):
+        self.provider.save_chunk(x, z)
+        del self.chunks[f"{x} {z}"]
+            
+    def get_chunk(self, x: int, z: int):
+        return self.chunks[f"{x} {z}"]
+        
+    def save_chunk(self, x: int, z: int)
+        thread: object = threading.Thread(target = self.provider.set_chunk, args = [copy.deepcopy(self.get_chunk(x, z))])
+        thread.start()
