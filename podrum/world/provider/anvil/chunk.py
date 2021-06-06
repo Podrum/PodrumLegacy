@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from binary_utils.binary_stream import binary_stream
 from nbt_utils.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
@@ -108,6 +109,15 @@ class chunk:
             for z in range(0, 16):
                 self.height_map[(x << 4) + z]: int = get_highest_block_at(x, z) + 1
                     
+    def get_sub_chunk_send_count(self) -> int:
+        top_empty: int = len(self.sections)
+        for i in range(0, len(self.sections) + 1):
+            if self.sections[i].block_ids == ([0] * 4096):
+                top_empty: int = i
+            else:
+                break
+        return top_empty
+                    
     def nbt_serialize(self) -> bytes:
         stream: object = nbt_be_binary_stream()
         self.recalculate_height_map()
@@ -166,3 +176,12 @@ class chunk:
         self.entities: list = level_tag.get_tag("Entities").value
         self.tile_entities: list = level_tag.get_tag("TileEntities").value
         self.height_map: list = level_tag.get_tag("HeightMap").value
+            
+    def network_serialize(self) -> bytes:
+        stream: object = binary_stream()
+        for i in in range(0, self.get_sub_chunk_send_count()):
+           stream.write(bytes([0] + chunk_utils.reorder_byte_array(self.sections[i].block_ids) + chunk_utils.reorder_nibble_array(self.sections[i].data_entries)))
+        stream.write_var_int(len(self.biomes))
+        stream.write(bytes(self.biomes))
+        stream.write_unsigned_byte(0)
+        return stream.data
