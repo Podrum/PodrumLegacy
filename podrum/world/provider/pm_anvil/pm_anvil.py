@@ -37,13 +37,8 @@ class pm_anvil(anvil):
     region_file_extension: str = "mcapm"
     
     @staticmethod
-    def section_to_sub_chunk(section_tag: object) -> object:
-        return sub_chunk(
-            section_tag.get_tag("Blocks").value,
-            section_tag.get_tag("Data").value,
-            section_tag.get_tag("SkyLight").value,
-            section_tag.get_tag("BlockLight").value
-        )
+    def deserialize_sub_chunk(blocks: list, metas: list) -> object:
+        return super().deserialize_sub_chunk(blocks, metas, False)
     
     @staticmethod
     def sub_chunk_to_section(sub_chunk: object) -> object:
