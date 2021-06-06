@@ -29,7 +29,16 @@
 #                                                                              #
 ################################################################################
 
+from nbt_utils.tag_ids import tag_ids
+from nbt_utils.tag.byte_tag import byte_tag
+from nbt_utils.tag.byte_array_tag import byte_array_tag
 from nbt_utils.tag.compound_tag import compound_tag
+from nbt_utils.tag.int_tag import int_tag
+from nbt_utils.tag.int_array_tag import int_array_tag
+from nbt_utils.tag.list_tag import list_tag
+from nbt_utils.tag.long_tag import long_tag
+from nbt_utils.tag.string_tag import string_tag
+from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 from world.provider.anvil.section import section
 
 class chunk:
@@ -95,3 +104,32 @@ class chunk:
         for x in range(0, 16):
             for z in range(0, 16):
                 self.height_map[(x << 4) + z]: int = get_highest_block_at(x, z) + 1
+                    
+    def nbt_serialize(self) -> None:
+        stream: object = nbt_be_binary_stream()
+        self.recalculate_height_map()
+        sections: list = list_tag("Sections", [], tag_ids.compound_tag)
+        for i, sect in self.sections.items():
+            sections.value.append(compound_tag("", [
+                byte_array_tag("Blocks", sect.block_ids),
+                byte_array_tag("Data", sect.data_entries),
+                byte_array_tag("BlockLight", sect.block_light_entries),
+                byte_array_tag("SkyLight", sect.sky_light_entries)
+            ]))
+        root_tag: object = compound("", [
+            compound("Level", [
+                int_tag("xPos", self.x),
+                int_tag("zPos", self.z),
+                byte_tag("V", 1),
+                long_tag("LastUpdate", 0),
+                long_tag("InhabitedTime", 0),
+                byte_tag("TerrainPopulated", 1 if self.terrain_populated else 0),
+                byte_tag("LightPopulated", 1 if self.light_populated else 0),
+                sections,
+                byte_array_tag("Biomes", self.biomes),
+                int_array_tag("HeightMap", self.height_map)
+            ]),
+            int_tag("DataVersion", 1343)
+        ])
+        stream.write_root_tag(root_tag)
+        return stream.data
