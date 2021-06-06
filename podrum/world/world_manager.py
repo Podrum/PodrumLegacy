@@ -36,11 +36,13 @@ class world_manager:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.worlds: dict = {}
+        self.load_world(self.server.config.data["world_name"])
         
     def get_default_world_path(self) -> str:
         return os.path.join(os.getcwd(), "worlds")
         
     def load_world(self, world_name: str, worlds_path: ""):
+        self.server.logger.info(f"Loading world -> {world_name}")
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_name)
@@ -51,3 +53,4 @@ class world_manager:
             (world_path),
             self.server
         )
+        self.server.logger.success(f"Loaded world -> {world_name}")
