@@ -46,9 +46,10 @@ import random
 import sys
 import time
 from world.chunk.block_storage import block_storage
-from world.chunk.chunk import chunk
+from world.chunk.chunk import chunk as network_chunk
 from world.chunk.sub_chunk import sub_chunk
 from world.chunk_utils import chunk_utils
+from world.provider.anvil.chunk import chunk
 from world.provider.anvil.region import region
 
 class anvil:
@@ -64,58 +65,6 @@ class anvil:
         region_dir: str = os.path.join(self.world_dir, "region")
         if not os.path.isdir(region_dir):
             os.mkdir(region_dir)
-            
-    @staticmethod
-    def get_index(x: int, y: int, z: int) -> int:
-        return (x << 8) | (z << 4) | y
-            
-    @staticmethod
-    def deserialize_sub_chunk(blocks: list, metas: list, reorder: object = True) -> object:
-        if reorder:
-            blocks: list = chunk_utils.reorder_byte_array(blocks)
-            metas: list = chunk_utils.reorder_nibble_array(metas)
-        i_sub_chunk: object = sub_chunk()
-        for i in range(0, 4096):
-            try:
-                runtime_id: int = block_map.get_runtime_id(blocks[i] & 0xff, chunk_utils.get_nibble_4(metas, i) & 0xff)
-            except KeyError:
-                runtime_id: int = block_map.get_runtime_id(blocks[i] & 0xff, 0)
-            storage: object = i_sub_chunk.get_block_storage(0)
-            if runtime_id not in storage.palette:
-                storage.palette.append(runtime_id)
-            storage.blocks[i]: int = storage.palette.index(runtime_id)
-        return i_sub_chunk
-            
-    @staticmethod
-    def deserialize_chunk(data: bytes) -> object:
-        stream = nbt_be_binary_stream(data)
-        root_tag: object = stream.read_root_tag()
-        if not isinstance(root_tag, compound_tag):
-            raise Exception("Invalid NBT data!")
-        if not root_tag.has_tag("Level"):
-            raise Exception("Level tag isnt present!")
-        level_tag: object = root_tag.get_tag("Level")
-        sub_chunks: dict = {}
-        sections_tag: object = level_tag.get_tag("Sections")
-        for section_tag in sections_tag.value:
-            sub_chunks[section_tag.get_tag("Y").value]: object = anvil.deserialize_sub_chunk(
-                section_tag.get_tag("Blocks").value,
-                section_tag.get_tag("Data").value
-            )
-        if level_tag.has_tag("BiomeColors"):
-            biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
-        elif level_tag.has_tag("Biomes"):
-            biomes: list = level_tag.get_tag("Biomes").value
-        else:
-            biomes: list = []
-        i_chunk: object = chunk(
-            level_tag.get_tag("xPos").value,
-            level_tag.get_tag("zPos").value,
-            sub_chunks,
-            biomes
-        )
-        i_chunk.has_changed: bool = level_tag.get_tag("TerrainPopulated").value > 0
-        return i_chunk
         
     @staticmethod
     def cr_index(x: int, z: int) -> tuple:
@@ -131,48 +80,17 @@ class anvil:
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
-        return anvil.deserialize_chunk(chunk_data)
-    
-    @staticmethod
-    def sub_chunk_to_section(sub_chunk: object) -> object:
-        return compound_tag("", [
-                byte_array_tag("Blocks", chunk_utils.reorder_byte_array(sub_chunk.ids)),
-                byte_array_tag("Data", chunk_utils.reorder_byte_array(sub_chunk.data)),
-                byte_array_tag("SkyLight", chunk_utils.reorder_byte_array(sub_chunk.sky_light)),
-                byte_array_tag("BlockLight", chunk_utils.reorder_byte_array(sub_chunk.block_light))
-        ])
+        result: object = chunk(x, z)
+        if len(chunk_data) > 0:
+            result.nbt_deserialize(chunk_data)
+        return result
                                         
     def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
-        chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
-        stream: object = nbt_be_binary_stream(chunk_data)
-        sections_tag = list_tag("Sections", [], tag_ids.compound_tag)
-        for y, sub_chunk in chunk_in.sub_chunks.items():
-            section_tag = anvil.sub_chunk_to_section(sub_chunk)
-            section_tag.set_tag(byte_tag("Y", y))
-            sections_tag.value.append(section_tag)
-        tag: object = compound_tag("", [
-            compound_tag("Level", [
-                byte_array_tag("Biomes", chunk_in.biomes),
-                list_tag("TileEntities", chunk_in.tiles, tag_ids.compound_tag),
-                int_tag("xPos", chunk_in.x),
-                int_tag("zPos", chunk_in.z),
-                int_array_tag("HeightMap", chunk_in.height_map),
-                byte_tag("V", 1),
-                long_tag("LastUpdate", 0),
-                long_tag("InhabitedTime", 0),
-                byte_tag("LightPopulated", chunk_in.is_light_populated),
-                byte_tag("TerrainPopulated", chunk_in.is_terrain_populated),
-                list_tag("Entities", chunk_in.entities, tag_ids.compound_tag),
-                sections_tag
-            ]),
-            int_tag("DataVersion", 1343)
-        ])
-        stream.write_root_tag(tag)
-        reg.put_chunk_data(chunk_index[0], chunk_index[1], stream.data)
+        reg.put_chunk_data(chunk_index[0], chunk_index[1], chunk_in.serialize())
                                         
     def get_option(self, name: str) -> object:
         stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
