@@ -30,5 +30,6 @@
 ################################################################################
 
 class world:
-    def __init__(self, path: str, provider: object):
-        pass
+    def __init__(self, path: str, provider: object, server: object):
+        self.provider: object = provider(path)
+        self.server: object = server
