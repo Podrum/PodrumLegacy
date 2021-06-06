@@ -160,7 +160,10 @@ class chunk:
         self.x: int = level_tag.get_tag("xPos").value
         self.z: int = level_tag.get_tag("zPos").value
         self.terrain_populated: bool = level_tag.get_tag("TerrainPopulated").value > 0
-        self.light_populated: bool = level_tag.get_tag("LightPopulated").value > 0
+        if level_tag.has_tag("LightPopulated"):
+            self.light_populated: bool = level_tag.get_tag("LightPopulated").value > 0
+        else:
+            self.light_populated: bool = False
         sections_tag: object = level_tag.get_tag("Sections")
         for section_tag in sections_tag.value:
             self.sections[section_tag.get_tag("Y").value]: object = section(
