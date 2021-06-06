@@ -51,3 +51,9 @@ class world:
     def save_chunk(self, x: int, z: int)
         thread: object = threading.Thread(target = self.provider.set_chunk, args = [copy.deepcopy(self.get_chunk(x, z))])
         thread.start()
+        
+    def get_block(self, x: int, y: int, z: int, block: object) -> None:
+        return self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f)
+        
+    def set_block(self, x: int, y: int, z: int, block: object) -> None:
+        self.chunks[f"{x >> 4} {z >> 4}"].set_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, block.runtime_id)
