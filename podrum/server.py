@@ -48,6 +48,7 @@ import time
 from world.provider.anvil.anvil import anvil
 from world.provider.pm_anvil.pm_anvil import pm_anvil
 from world.provider_manager import provider_manager
+from world.world_manager import world_manager
 
 class server:
     def __init__(self) -> None:
@@ -117,6 +118,7 @@ class server:
         worlds_path: str = os.path.join(os.getcwd(), "worlds")
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
+        self.world_manager: object = world_manager(self)
         self.register_default_commands()
         self.register_events()
         self.command_interface.start_interface()
