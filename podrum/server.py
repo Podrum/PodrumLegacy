@@ -45,6 +45,9 @@ import os
 from plugin_manager import plugin_manager
 from protocol.mcbe.rak_net_interface import rak_net_interface
 import time
+from world.provider.anvil.anvil import anvil
+from world.provider.pm_anvil.pm_anvil import pm_anvil
+from world.provider_manager import provider_manager
 
 class server:
     def __init__(self) -> None:
@@ -52,6 +55,7 @@ class server:
         self.command_manager: object = command_manager(self)
         self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
+        self.provider_manager: object = provider_manager()
         self.rak_net_interface: object = rak_net_interface(self)
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
@@ -66,6 +70,10 @@ class server:
         self.command_manager.register(say_command())
         self.command_manager.register(stop_command())
         self.command_manager.register(version_command())
+        
+    def register_default_providers(self) -> None:
+        self.provider_manager.register_provider(anvil)
+        self.provider_manager.register_provider(pm_anvil)
         
     def register_events(self) -> None:
         pass
