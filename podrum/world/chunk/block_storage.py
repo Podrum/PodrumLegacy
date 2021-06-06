@@ -89,6 +89,8 @@ class block_storage:
         for chunk in range(0, words_per_chunk):
             word: int = 0
             for block in range(0, blocks_per_word):
+                if pos >= 4096:
+                    break
                 state: int = self.blocks[pos]
                 word |= state << (bits_per_block * block)
                 pos += 1
