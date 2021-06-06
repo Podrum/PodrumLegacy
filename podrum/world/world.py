@@ -45,7 +45,7 @@ class world:
     def get_chunk(self, x: int, z: int):
         return self.chunks[f"{x} {z}"]
         
-    def save_chunk(self, x: int, z: int)
+    def save_chunk(self, x: int, z: int):
         self.provider.set_chunk(self.get_chunk(x, z))
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
