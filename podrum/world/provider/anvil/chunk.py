@@ -59,6 +59,8 @@ class chunk:
             self.biomes: list = biomes
         else:
             self.biomes: list = [0] * 256
+        self.entities: object = entities
+        self.tile_entities: object = tile_entities
         self.light_populated: bool = False
         self.terrain_populated: bool = False
         
@@ -127,6 +129,8 @@ class chunk:
                 byte_tag("LightPopulated", 1 if self.light_populated else 0),
                 sections,
                 byte_array_tag("Biomes", self.biomes),
+                entities,
+                tile_entities,
                 int_array_tag("HeightMap", self.height_map)
             ]),
             int_tag("DataVersion", 1343)
