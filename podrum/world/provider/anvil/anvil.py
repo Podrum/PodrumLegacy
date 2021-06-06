@@ -46,7 +46,7 @@ import random
 import sys
 import time
 from world.chunk.block_storage import block_storage
-from world.chunk.chunk import chunk as network_chunk
+from world.chunk.chunk import chunk as server_chunk
 from world.chunk.sub_chunk import sub_chunk
 from world.chunk_utils import chunk_utils
 from world.provider.anvil.chunk import chunk
@@ -73,6 +73,20 @@ class anvil:
     @staticmethod
     def rc_index(x: int, z: int) -> tuple:
         return x - ((x >> 5) << 5), z - ((z >> 5) << 5)
+    
+    @staticmethod
+    def to_server_chunk(chunk_in: object) -> object:
+        cnv_chunk: object = server_chunk()
+        for x in range(0, 16):
+            for y in range(0, chunk_in.get_highest_block_at() + 1):
+                for z in range(0, 16):
+                    block: int = chunk_in.get_block_id(x, y, z) & 0xff
+                    meta: int = chunk_in.get_data(x, y, z) & 0xff
+                    try:
+                        runtime_id: int = block_map.get_runtime_id(block, meta)
+                    except KeyError:
+                        runtime_id: int = block_map.get_runtime_id(block, 0)
+                    cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
     
     def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
