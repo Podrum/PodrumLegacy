@@ -39,6 +39,7 @@ from nbt_utils.tag.list_tag import list_tag
 from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
+from world.chunk_utils import chunk_utils
 from world.provider.anvil.section import section
 
 class chunk:
@@ -107,7 +108,7 @@ class chunk:
             for z in range(0, 16):
                 self.height_map[(x << 4) + z]: int = get_highest_block_at(x, z) + 1
                     
-    def nbt_serialize(self) -> None:
+    def nbt_serialize(self) -> bytes:
         stream: object = nbt_be_binary_stream()
         self.recalculate_height_map()
         sections: list = list_tag("Sections", [], tag_ids.compound_tag)
@@ -137,3 +138,31 @@ class chunk:
         ])
         stream.write_root_tag(root_tag)
         return stream.data
+    
+    def nbt_deserialize(self, data: bytes) -> None:
+        stream = nbt_be_binary_stream(data)
+        root_tag: object = stream.read_root_tag()
+        if not isinstance(root_tag, compound_tag):
+            raise Exception("Invalid NBT data!")
+        if not root_tag.has_tag("Level"):
+            raise Exception("Level tag isnt present!")
+        level_tag: object = root_tag.get_tag("Level")
+        self.x: int = level_tag.get_tag("xPos").value
+        self.z: int = level_tag.get_tag("zPos").value
+        self.terrain_populated: bool = level_tag.get_tag("TerrainPopulated").value > 0
+        self.light_populated: bool = level_tag.get_tag("LightPopulated").value > 0
+        sections_tag: object = level_tag.get_tag("Sections")
+        for section_tag in sections_tag.value:
+            self.sections[section_tag.get_tag("Y").value]: object = section(
+                section_tag.get_tag("Blocks").value,
+                section_tag.get_tag("Data").value,
+                section_tag.get_tag("BlockLight").value,
+                section_tag.get_tag("SkyLight").value
+            )
+        if level_tag.has_tag("BiomeColors"):
+            self.biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
+        elif level_tag.has_tag("Biomes"):
+            self.biomes: list = level_tag.get_tag("Biomes").value
+        self.entities: list = level_tag.get_tag("Entities").value
+        self.tile_entities: list = level_tag.get_tag("TileEntities").value
+        self.height_map: list = level_tag.get_tag("HeightMap").value
