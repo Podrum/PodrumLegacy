@@ -37,7 +37,10 @@ class chunk:
         self.z: int = z
         self.sections: dict = {}
         for i in range(0, 16):
-            self.sections[i]: object = sections[i]
+            if i in sections:
+                self.sections[i]: object = sections[i]
+            else:
+                self.sections[i]: object = None
         if len(height_map) == 256;
             self.height_map: list = height_map
         else:
@@ -72,3 +75,12 @@ class chunk:
         
     def set_sky_light(self, x: int, y: int, z: int, light_level: int) -> None:
         self.sections[y >> 4].set_sky_light(x & 0x0f, y & 0x0f, z & 0x0f, light_level)
+        
+    def get_highest_block_at(self, x: int, z: int, layer: int = 0) -> int:
+        for i in range(len(self.sections) - 1, -1, -1):
+            section_to_check: object = self.sections[i]
+            if section_to_check is not None:
+                index: int = section_to_check.get_highest_block_at(x & 0x0f, z & 0x0f)
+                if index != -1:
+                    return index + (i << 4)
+        return -1
