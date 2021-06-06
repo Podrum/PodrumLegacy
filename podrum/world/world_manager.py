@@ -43,4 +43,11 @@ class world_manager:
     def load_world(self, world_name: str, worlds_path: ""):
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
-        self.worlds[world_name]: object = world()
+        world_path: str = os.path.join(worlds_path, world_name)
+        self.worlds[world_name]: object = world(
+            self.server.provider_manager.get_provider(
+                self.server.config.data["world_provider"]
+            )
+            (world_path),
+            self.server
+        )
