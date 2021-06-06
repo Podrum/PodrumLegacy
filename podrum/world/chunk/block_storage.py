@@ -45,7 +45,7 @@ class block_storage:
            
     @staticmethod
     def get_index(x: int, y: int, z: int) -> int:
-        return (x << 8) | (z << 4) | y
+        return (x << 8) + (z << 4) + y
     
     @staticmethod
     def check_bounds(x: int, y: int, z: int) -> None:
@@ -66,8 +66,7 @@ class block_storage:
             
     def get_highest_block_at(self, x: int, z: int) -> int:
         block_storage.check_bounds(x, 15, z)
-        highest_index: int = 15
-        for y in range(highest_index, -1, -1):
+        for y in range(15, -1, -1):
             index: int = block_storage.get_index(x, y, z)
             palette_index: int = self.blocks[index]
             runtime_id: int = self.palette[palette_index]
