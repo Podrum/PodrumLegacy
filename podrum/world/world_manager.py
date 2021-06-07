@@ -41,11 +41,10 @@ class world_manager:
     def get_default_world_path(self) -> str:
         return os.path.join(os.getcwd(), "worlds")
         
-    def load_world(self, world_name: str, worlds_path: str = "") -> None:
-        self.server.logger.info(f"Loading world -> {world_name}")
+    def load_world(self, world_folder_name: str, worlds_path: str = "") -> None:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
-        world_path: str = os.path.join(worlds_path, world_name)
+        world_path: str = os.path.join(worlds_path, world_folder_name)
         world: object = world(
             self.server.provider_manager.get_provider(
                 self.server.config.data["world_provider"]
@@ -53,9 +52,19 @@ class world_manager:
             (world_path),
             self.server
         )
-        self.worlds[world.get_world_name()]: object = world
-        self.path_to_world_name[world_path]; str = world.get_world_name()
+        world_name: str = world.get_world_name()
+        self.worlds[world_name]: object = world
+        self.path_to_world_name[world_path]; str = world_name
         self.server.logger.success(f"Loaded world -> {world_name}")
+        
+    def get_world(self, name: str) -> object:
+        return self.worlds[name]
+    
+    def get_world_from_folder_name(self, world_folder_name: str, worlds_path: str = "") -> None:
+        if len(worlds_path) < 1:
+            worlds_path: str = self.get_default_world_path()
+        world_path: str = os.path.join(worlds_path, world_folder_name)
+        return self.get_world(self.path_to_world_name[world_path])
         
     def unload_world(self, world_name: str) -> None:
         self.worlds[world_name].save()
