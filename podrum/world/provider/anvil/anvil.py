@@ -40,6 +40,7 @@ from nbt_utils.tag.int_tag import int_tag
 from nbt_utils.tag.int_array_tag import int_array_tag
 from nbt_utils.tag.list_tag import list_tag
 from nbt_utils.tag.long_tag import long_tag
+from nbt_utils.tag.short_tag import short_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 import os
@@ -144,6 +145,24 @@ class anvil:
             file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
             file.write(gzip.compress(stream.data))
             
+    def get_player_option(self, uuid: str, name: str) -> object:
+        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb").read()))
+        tag: object = stream.read_root_tag()
+        return tag.get_tag(name).value
+    
+    def set_player_option(self, uuid: str, name: str, value: object) -> None:
+        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb").read()))
+        tag: object = stream.read_root_tag()
+        if tag.has_tag(name):
+            option_tag: object = tag.get_tag(name)
+            option_tag.value = value
+            tag.set_tag(option_tag)
+            stream.buffer: bytes = b""
+            stream.pos: int = 0
+            stream.write_root_tag(tag)
+            file: object = open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb")
+            file.write(gzip.compress(stream.data))
+            
     def get_spawn_position(self) -> object:
         return vector_3(self.get_option("SpawnX"), self.get_option("SpawnY"), self.get_option("SpawnZ"))
     
@@ -155,8 +174,68 @@ class anvil:
     def get_default_gamemode(self) -> int:
         return self.get_option("GameType")
     
-    def set_default_gamemode(self, gamemode: int)
+    def set_default_gamemode(self, gamemode: int) -> None:
         self.set_option("GameType", gamemode)
+        
+    def get_world_name(self) -> str:
+        return self.get_option("LevelName")
+    
+    def set_world_name(self, world_name: str) -> None:
+        self.set_option("LevelName", world_name)
+        
+    def get_player_position(self, uuid: str) -> object:
+        position_tag: object = self.get_player_option(uuid, "Pos")
+        return vector_3(position_tag.value[0], position_tag.value[1], position_tag.value[2])
+            
+    def set_player_position(self, uuid: str, position) -> None:
+        self.set_player_option(uuid, "Pos", [
+            double_tag("", position.x),
+            double_tag("", position.y),
+            double_tag("", position.z)
+        ])
+        
+    def create_player_file(self, uuid: str) -> None:
+        stream: object = nbt_be_binary_stream()
+        tag: object = compound_tag("", [
+            byte_tag("OnGround", 1),
+            byte_tag("Sleeping", 0),
+            short_tag("Air", 300),
+            short_tag("AttackTime", 0),
+            short_tag("DeathTime", 0),
+            short_tag("Fire", 0),
+            short_tag("Health", 20),
+            short_tag("HurtTime", 0),
+            short_tag("SleepTimer", 0),
+            int_tag("Dimension", 0),
+            int_tag("foodLevel", 0),
+            int_tag("foodTickTimer", 0),
+            int_tag("playerGameType", 0),
+            int_tag("XpLevel", 0),
+            int_tag("XpTotal", 0),
+            float_tag("FallDistance", 0),
+            float_tag("foodExhastionLevel", 0),
+            float_tag("foodSaturationLevel", 0),
+            float_tag("XpP", 0),
+            compound_tag("Inventory", []),
+            list_tag("Motion", [
+                double_tag("", 0),
+                double_tag("", 0),
+                double_tag("", 0)
+            ]),
+            list_tag("Pos", [
+                double_tag("", self.get_spawn_position().x),
+                double_tag("", self.get_spawn_position().y),
+                double_tag("", self.get_spawn_position().z)
+            ]),
+            list_tag("Rotation", [
+                float_tag("", 0),
+                float_tag("", 0),
+                float_tag("", 0)
+            ])
+        ])
+        stream.write_root_tag(tag)
+        file: object = open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb")
+        file.write(gzip.compress(stream.data))
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
