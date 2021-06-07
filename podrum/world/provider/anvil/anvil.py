@@ -187,12 +187,18 @@ class anvil:
         position_tag: object = self.get_player_option(uuid, "Pos")
         return vector_3(position_tag.value[0], position_tag.value[1], position_tag.value[2])
             
-    def set_player_position(self, uuid: str, position) -> None:
+    def set_player_position(self, uuid: str, position: object) -> None:
         self.set_player_option(uuid, "Pos", [
             double_tag("", position.x),
             double_tag("", position.y),
             double_tag("", position.z)
         ])
+        
+    def get_player_gamemode(self, uuid: str) -> int:
+        return self.get_player_option(uuid, "playerGameType")
+            
+    def set_player_gamemode(self, uuid: str, gamemode: object) -> None:
+        self.set_player_option(uuid, "playerGameType", gamemode)
         
     def has_player(self, uuid: str) -> bool:
         if os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat")):
