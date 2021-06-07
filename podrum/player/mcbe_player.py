@@ -229,7 +229,7 @@ class mcbe_player:
         new_packet.chunk_radius: int = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
-        self.request_chunks()
+        self.send_chunks()
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
             self.spawned: bool = True
