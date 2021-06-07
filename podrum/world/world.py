@@ -116,7 +116,7 @@ class world:
         self.unload_queue.put((x, z))
         
     def load_worker(self) -> None:
-        while self.load_workers_running: bool:
+        while self.load_workers_running:
             if self.unload_queue.full():
                 chunk_tuple: tuple = self.unload_queue.get()
                 if not self.has_loaded_chunk(chunk_tuple[0], chunk_tuple[1]):
