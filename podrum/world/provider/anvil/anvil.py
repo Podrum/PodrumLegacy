@@ -148,7 +148,6 @@ class anvil:
                 byte_tag("MapFeatures", 0),
                 byte_tag("raining", 0),
                 byte_tag("Difficulty", 0),
-                byte_tag("initialized", 1),
                 byte_tag("thundering", 0),
                 int_tag("GameType", 0),
                 int_tag("generatorVersion", 1),
@@ -162,9 +161,9 @@ class anvil:
                 long_tag("RandomSeed", random.randint(0, sys.maxsize)),
                 long_tag("SizeOnDisk", 0),
                 long_tag("Time", 0),
-                compound_tag("GameRules", []),
                 string_tag("generatorName", "flat"),
-                string_tag("LevelName", "world")
+                string_tag("LevelName", "world"),
+                compound_tag("GameRules", [])
             ])
         ])
         stream.write_root_tag(tag)
