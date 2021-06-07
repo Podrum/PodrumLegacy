@@ -200,7 +200,7 @@ class anvil:
     def set_player_gamemode(self, uuid: str, gamemode: object) -> None:
         self.set_player_option(uuid, "playerGameType", gamemode)
         
-    def has_player(self, uuid: str) -> bool:
+    def has_player_file(self, uuid: str) -> bool:
         if os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat")):
             return True
         return False
