@@ -259,7 +259,8 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + chunk_radius
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                self.world.load_chunk(chunk_x, chunk_z)
+                if not self.world.has_loaded_chunk(chunk_x, chunk_z):
+                    self.world.load_chunk(chunk_x, chunk_z)
                 self.send_chunk(self.world.get_chunk(chunk_x, chunk_z))
             
     def send_network_chunk_publisher_update(self, chunk_radius: int) -> None:
