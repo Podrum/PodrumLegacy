@@ -45,16 +45,16 @@ class world_manager:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_folder_name)
-        world: object = world(
+        world_obj: object = world(
             self.server.provider_manager.get_provider(
                 self.server.config.data["world_provider"]
             )
             (world_path),
             self.server
         )
-        world_name: str = world.get_world_name()
+        world_name: str = world_obj.get_world_name()
         self.worlds[world_name]: object = world
-        self.path_to_world_name[world_path]; str = world_name
+        self.path_to_world_name[world_path]: str = world_name
         self.server.logger.success(f"Loaded world -> {world_name}")
         
     def get_world(self, name: str) -> object:
