@@ -65,6 +65,9 @@ class anvil:
         region_dir: str = os.path.join(self.world_dir, "region")
         if not os.path.isdir(region_dir):
             os.mkdir(region_dir)
+        player_dir: str = os.path.join(self.world_dir, "players")
+        if not os.path.isdir(player_dir):
+            os.mkdir(player_dir)
         
     @staticmethod
     def cr_index(x: int, z: int) -> tuple:
