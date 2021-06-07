@@ -52,7 +52,6 @@ class world_manager:
             (world_path),
             self.server
         )
-        world_obj.start_workers(12)
         world_name: str = world_obj.get_world_name()
         self.worlds[world_name]: object = world_obj
         self.path_to_world_name[world_path]: str = world_name
@@ -68,6 +67,5 @@ class world_manager:
         return self.get_world(self.path_to_world_name[world_path])
         
     def unload_world(self, world_name: str) -> None:
-        self.worlds[world_name].stop_workers()
         self.worlds[world_name].save()
         del self.worlds[world_name]
