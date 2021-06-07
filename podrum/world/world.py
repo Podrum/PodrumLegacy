@@ -80,13 +80,13 @@ class world:
         self.provider.set_world_gamemode(world_name)
         
     def get_player_position(self, uuid: str) -> object:
-        self.provider.get_player_position(uuid)
+        return self.provider.get_player_position(uuid)
         
     def set_player_position(self, uuid: str, position: object) -> None:
         self.provider.set_player_position(uuid, position)
 
     def get_player_gamemode(self, uuid: str) -> int:
-        self.provider.get_player_gamemode(uuid)
+        return self.provider.get_player_gamemode(uuid)
         
     def set_player_gamemode(self, uuid: str, gamemode: int) -> None:
         self.provider.set_player_gamemode(uuid, gamemode)
