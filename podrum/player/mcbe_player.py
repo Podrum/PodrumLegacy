@@ -64,7 +64,7 @@ class mcbe_player:
         self.connection: object = connection
         self.server: object = server
         self.entity_id: int = entity_id
-        self.world: object = server.world_manager.worlds["world"]
+        self.world: object = server.world
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
