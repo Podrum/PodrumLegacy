@@ -34,6 +34,7 @@ class world:
         self.provider: object = provider
         self.server: object = server
         self.chunks: dict = {}
+        self.world_path: str = provider.world_dir
             
     def load_chunk(self, x: int, z: int) -> None:
         self.chunks[f"{x} {z}"]: object = self.provider.get_chunk(x, z)
