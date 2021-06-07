@@ -35,17 +35,17 @@ class world:
         self.server: object = server
         self.chunks: dict = {}
             
-    def load_chunk(self, x: int, z: int):
+    def load_chunk(self, x: int, z: int) -> None:
         self.chunks[f"{x} {z}"]: object = self.provider.get_chunk(x, z)
             
-    def unload_chunk(self, x: int, z: int):
+    def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)
         del self.chunks[f"{x} {z}"]
             
-    def get_chunk(self, x: int, z: int):
+    def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
         
-    def save_chunk(self, x: int, z: int):
+    def save_chunk(self, x: int, z: int) -> None:
         self.provider.set_chunk(self.get_chunk(x, z))
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
@@ -53,6 +53,9 @@ class world:
         
     def set_block(self, x: int, y: int, z: int, block: object) -> None:
         self.chunks[f"{x >> 4} {z >> 4}"].set_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, block.runtime_id)
+        
+    def get_highest_block_at(self, x: int, z: int) -> int:
+        return self.chunks[f"{x >> 4} {z >> 4}"].get_highest_block_at(x & 0x0f, z & 0x0f)
         
     def save(self) -> None:
         for chunk in self.chunks.values():
