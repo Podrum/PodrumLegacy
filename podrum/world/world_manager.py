@@ -46,13 +46,14 @@ class world_manager:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_name)
-        self.worlds[world_name]: object = world(
+        world: object = world(
             self.server.provider_manager.get_provider(
                 self.server.config.data["world_provider"]
             )
             (world_path),
             self.server
         )
+        self.worlds[world.get_world_name()]: object = world
         self.server.logger.success(f"Loaded world -> {world_name}")
         
     def unload_world(self, world_name: str) -> None:
