@@ -70,6 +70,7 @@ class mcbe_player:
         if not self.world.has_player(self.identity):
             self.world.create_player(self.identity)
         self.position: object = self.world.get_player_position(self.identity)
+        self.position.y += 1
         packet: object = start_game_packet()
         packet.entity_id: int = self.entity_id
         packet.entity_runtime_id: int = self.entity_id
