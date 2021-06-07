@@ -101,7 +101,7 @@ class server:
         if "max_players" not in self.config.data:
             self.config.data["max_players"]: int = 20
         if "max_view_distance" not in self.config.data:
-            self.config.data["max_view_distance"]: int = 2
+            self.config.data["max_view_distance"]: int = 8
         if "world_provider" not in self.config.data:
             self.config.data["world_provider"]: int = "anvil"
         if "world_name" not in self.config.data:
