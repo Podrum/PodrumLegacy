@@ -194,6 +194,11 @@ class anvil:
             double_tag("", position.z)
         ])
         
+    def has_player(self, uuid: str) -> bool:
+        if os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat")):
+            return True
+        return False
+        
     def create_player_file(self, uuid: str) -> None:
         stream: object = nbt_be_binary_stream()
         tag: object = compound_tag("", [
