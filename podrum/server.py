@@ -121,6 +121,7 @@ class server:
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
         self.world_manager.load_world(self.config.data["world_name"])
+        self.world: object = self.world_manager.get_world_from_folder_name(self.config.data["world_name"])
         self.register_default_commands()
         self.register_events()
         self.command_interface.start_interface()
