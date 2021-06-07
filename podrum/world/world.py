@@ -41,6 +41,11 @@ class world:
     def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)
         del self.chunks[f"{x} {z}"]
+        
+    def has_loaded_chunk(self, x: int, z: int) -> bool:
+        if f"{x} {z}" in self.chunks:
+            return True
+        return False
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
