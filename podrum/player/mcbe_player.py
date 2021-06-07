@@ -67,9 +67,9 @@ class mcbe_player:
         self.world: object = server.world_manager.worlds["world"]
         
     def send_start_game(self) -> None:
-        if not self.world.has_player(self.xuid):
-            self.world.create_player(self.xuid)
-        self.position: object = self.world.get_player_position(self.xuid)
+        if not self.world.has_player(self.identity):
+            self.world.create_player(self.identity)
+        self.position: object = self.world.get_player_position(self.identity)
         packet: object = start_game_packet()
         packet.entity_id: int = self.entity_id
         packet.entity_runtime_id: int = self.entity_id
