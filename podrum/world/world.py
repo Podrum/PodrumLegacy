@@ -90,3 +90,9 @@ class world:
         
     def set_player_gamemode(self, uuid: str, gamemode: int) -> None:
         self.provider.set_player_gamemode(uuid, gamemode)
+        
+    def create_player(self, uuid: str) -> None:
+        self.provider.create_player_file(uuid)
+        
+    def has_player(self, uuid: str) -> bool:
+        self.provider.has_player_file(uuid)
