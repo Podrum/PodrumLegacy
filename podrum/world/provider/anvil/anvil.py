@@ -171,10 +171,10 @@ class anvil:
         self.set_option("SpawnY", position.y)
         self.set_option("SpawnZ", position.z)
         
-    def get_default_gamemode(self) -> int:
+    def get_world_gamemode(self) -> int:
         return self.get_option("GameType")
     
-    def set_default_gamemode(self, gamemode: int) -> None:
+    def set_world_gamemode(self, gamemode: int) -> None:
         self.set_option("GameType", gamemode)
         
     def get_world_name(self) -> str:
@@ -220,7 +220,7 @@ class anvil:
             int_tag("Dimension", 0),
             int_tag("foodLevel", 0),
             int_tag("foodTickTimer", 0),
-            int_tag("playerGameType", 0),
+            int_tag("playerGameType", self.get_world_gamemode()),
             int_tag("XpLevel", 0),
             int_tag("XpTotal", 0),
             float_tag("FallDistance", 0),
