@@ -55,7 +55,6 @@ from protocol.mcbe.packet.start_game_packet import start_game_packet
 from protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
 from protocol.mcbe.type.login_status_type import login_status_type
 from protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
-import queue
 from rak_net.protocol.frame import frame
 from world.chunk.chunk import chunk
 import zlib
@@ -260,7 +259,8 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                self.world.load_chunk(chunk_x, chunk_z)
+                if not self.world.has_loaded_chunk(chunk_x, chunk_z):
+                    self.world.load_chunk(chunk_x, chunk_z)
                 self.send_chunk(self.world.get_chunk(chunk_x, chunk_z))
             
     def send_network_chunk_publisher_update(self) -> None:
