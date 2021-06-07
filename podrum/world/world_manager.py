@@ -36,7 +36,6 @@ class world_manager:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.worlds: dict = {}
-        self.load_world(self.server.config.data["world_name"])
         
     def get_default_world_path(self) -> str:
         return os.path.join(os.getcwd(), "worlds")
