@@ -224,13 +224,12 @@ class mcbe_player:
     def handle_request_chunk_radius_packet(self, data: bytes) -> None:
         packet: object = request_chunk_radius_packet(data)
         packet.decode()
-        chunk_radius: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
+        self.view_distance: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
         new_packet: object = chunk_radius_updated_packet()
-        new_packet.chunk_radius: int = chunk_radius
+        new_packet.chunk_radius: int = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
-        self.send_network_chunk_publisher_update(chunk_radius)
-        self.request_chunks(chunk_radius)
+        self.request_chunks()
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
             self.spawned: bool = True
@@ -252,23 +251,24 @@ class mcbe_player:
         elif data[0] == mcbe_protocol_info.move_player_packet:
             self.handle_move_player_packet(data)
             
-    def request_chunks(self, chunk_radius: int) -> None:
-        chunk_x_start: int = (int(self.position.x) >> 4) - chunk_radius
-        chunk_x_end: int = (int(self.position.x) >> 4) + chunk_radius
-        chunk_z_start: int = (int(self.position.z) >> 4) - chunk_radius
-        chunk_z_end: int = (int(self.position.z) >> 4) + chunk_radius
+    def send_chunks(self) -> None:
+        self.send_network_chunk_publisher_update()
+        chunk_x_start: int = (int(self.position.x) >> 4) - self.view_distance
+        chunk_x_end: int = (int(self.position.x) >> 4) + self.view_distance
+        chunk_z_start: int = (int(self.position.z) >> 4) - self.view_distance
+        chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
                 if not self.world.has_loaded_chunk(chunk_x, chunk_z):
                     self.world.load_chunk(chunk_x, chunk_z)
                 self.send_chunk(self.world.get_chunk(chunk_x, chunk_z))
             
-    def send_network_chunk_publisher_update(self, chunk_radius: int) -> None:
+    def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
         new_packet.x: int = int(self.position.x)
         new_packet.y: int = int(self.position.y)
         new_packet.z: int = int(self.position.z)
-        new_packet.chunk_radius: int = chunk_radius * 16
+        new_packet.chunk_radius: int = self.view_distance * 16
         new_packet.encode()
         self.send_packet(new_packet.data)
     
