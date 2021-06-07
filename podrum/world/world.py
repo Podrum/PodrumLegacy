@@ -29,12 +29,16 @@
 #                                                                              #
 ################################################################################
 
+import queue
+
 class world:
     def __init__(self, provider: object, server: object):
         self.provider: object = provider
         self.server: object = server
         self.chunks: dict = {}
         self.world_path: str = provider.world_dir
+        self.load_queue: object = queue.LifoQueue()
+        self.unload_queue: object = queue.LifoQueue()
             
     def load_chunk(self, x: int, z: int) -> None:
         self.chunks[f"{x} {z}"]: object = self.provider.get_chunk(x, z)
@@ -102,3 +106,31 @@ class world:
         
     def has_player(self, uuid: str) -> bool:
         self.provider.has_player_file(uuid)
+        
+    def add_to_load_queue(self, x: int, z: int) -> None:
+        
+        self.load_queue.put((x, z))
+        
+    def add_to_unload_queue(self, x: int, z: int) -> None:
+        self.unload_queue.put((x, z))
+        
+    def load_worker(self) -> None:
+        while True:
+            if self.unload_queue.full():
+                chunk_tuple: tuple = self.unload_queue.get()
+                if not self.has_loaded_chunk(chunk_tuple[0], chunk_tuple[1]):
+                    self.load_chunk(chunk_tuple[0], chunk_tuple[1])
+                
+    def unload_worker(self) -> None:
+        while True:
+            if self.unload_queue.full():
+                chunk_tuple: tuple = self.unload_queue.get()
+                if self.has_loaded_chunk(chunk_tuple[0], chunk_tuple[1]):
+                    self.unload_chunk(chunk_tuple[0], chunk_tuple[1])
+                    
+    def start_workers(self, count: int) -> None:
+        for i in range(0, count):
+            load_worker: object = threading.Thread(target = self.load_worker)
+            unload_worker: object = threading.Thread(target = self.unload_worker)
+            load_worker.start()
+            unload_worker.start()
