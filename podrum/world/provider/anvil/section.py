@@ -48,7 +48,7 @@ class section:
         if len(sky_light_entries) == 2048:
             self.sky_light_entries: list = sky_light_entries
         else:
-            self.sky_light_entries: list = [0] * 2048
+            self.sky_light_entries: list = [255] * 2048
             
     @staticmethod
     def get_index(x: int, y: int, z: int) -> int:
