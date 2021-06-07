@@ -31,6 +31,7 @@
 
 import gzip
 from block.block_map import block_map
+from geometry.vector_3 import vector_3
 from nbt_utils.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
@@ -142,6 +143,20 @@ class anvil:
             stream.write_root_tag(tag)
             file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
             file.write(gzip.compress(stream.data))
+            
+    def get_spawn_position(self) -> object:
+        return vector_3(self.get_option("SpawnX"), self.get_option("SpawnY"), self.get_option("SpawnZ"))
+    
+    def set_spawn_position(self, position: object) -> None:
+        self.set_option("SpawnX", position.x)
+        self.set_option("SpawnY", position.y)
+        self.set_option("SpawnZ", position.z)
+        
+    def get_default_gamemode(self) -> int:
+        return self.get_option("GameType")
+    
+    def set_default_gamemode(self, gamemode: int)
+        self.set_option("GameType", gamemode)
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
