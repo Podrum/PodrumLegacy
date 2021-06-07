@@ -60,3 +60,27 @@ class world:
     def save(self) -> None:
         for chunk in self.chunks.values():
             self.save_chunk(chunk)
+            
+    def get_world_name(self) -> str:
+        return self.provider.get_world_name()
+        
+    def set_world_name(self, world_name: str) -> None:
+        self.provider.set_world_name(world_name)
+        
+    def get_spawn_position(self) -> object:
+        return self.provider.get_spawn_position()
+        
+    def set_spawn_position(self, world_name: object) -> None:
+        self.provider.set_spawn_position(world_name)
+        
+    def get_default_gamemode(self) -> str:
+        return self.provider.get_default_gamemode()
+        
+    def set_default_gamemode(self, world_name: str) -> None:
+        self.provider.set_default_gamemode(world_name)
+        
+    def get_player_position(self, uuid: str) -> object:
+        self.provider.get_player_position(uuid)
+        
+    def set_player_position(self, uuid: str, position: object) -> None:
+        self.provider.set_player_position(uuid, position)
