@@ -124,7 +124,6 @@ class chunk:
             compound("Level", [
                 int_tag("xPos", self.x),
                 int_tag("zPos", self.z),
-                byte_tag("V", 1),
                 long_tag("LastUpdate", 0),
                 long_tag("InhabitedTime", 0),
                 byte_tag("TerrainPopulated", 1 if self.terrain_populated else 0),
