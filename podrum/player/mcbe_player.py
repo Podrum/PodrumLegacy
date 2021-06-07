@@ -64,10 +64,12 @@ class mcbe_player:
         self.connection: object = connection
         self.server: object = server
         self.entity_id: int = entity_id
-        self.position: object = vector_3(0.0, 5.0, 0.0)
         self.world: object = server.world_manager.worlds["world"]
         
     def send_start_game(self) -> None:
+        if not self.world.has_player(self.xuid):
+            self.world.create_player(self.xuid)
+        self.position: object = self.world.get_player_position(self.xuid)
         packet: object = start_game_packet()
         packet.entity_id: int = self.entity_id
         packet.entity_runtime_id: int = self.entity_id
@@ -79,7 +81,7 @@ class mcbe_player:
         packet.custom_biome_name: str = "plains"
         packet.dimension: int = 0
         packet.generator: int = 2
-        packet.world_gamemode: int = 1
+        packet.world_gamemode: int = self.world.get_world_gamemode()
         packet.difficulty: int = 0
         packet.world_spawn: object = vector_3(0, 4.0, 0)
         packet.disable_achivements: bool = False
@@ -116,7 +118,7 @@ class mcbe_player:
         packet.new_nether: bool = False
         packet.experimental_gamplay: bool = False
         packet.level_id: str = ""
-        packet.world_name: str = "Podrum"
+        packet.world_name: str = self.world.get_world_name()
         packet.premium_world_template_id: str = ""
         packet.trial: bool = False
         packet.movement_type: int = 0
