@@ -66,24 +66,6 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.world: object = server.world
-        self.chunk_send_queue: object = queue.LifoQueue()
-        self.send_chunks_worker_running: bool = False
-        self.start_workers(12)
-            
-    def send_chunks_worker(self):
-        while self.send_chunks_worker_running:
-            chunk_tuple: object = self.chunk_send_queue.get()
-            if self.world.has_loaded_chunk(chunk_tuple[0], chunk_tuple[1])
-                self.send_chunk(self.world.get_chunk(chunk_tuple[0], chunk_tuple[1]))
-            else:
-                self.chunk_send_queue.put(chunk_tuple)
-                
-    def start_workers(self, count: int) -> None:
-        for i in range(0, count):
-            self.chunk_send_queue_running: bool = True
-            chunk_send_worker: object = threading.Thread(target = self.send_chunks_worker)
-            chunk_send_worker.setDaemon(True)
-            chunk_send_worker.start()
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
@@ -278,8 +260,8 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                self.world.add_to_load_queue((chunk_x, chunk_z))
-                self.send_chunk_queue.put((chunk_x, chunk_z))
+                self.world.load_chunk(chunk_x, chunk_z)
+                self.send_chunk(self.world.get_chunk(chunk_x, chunk_z))
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
