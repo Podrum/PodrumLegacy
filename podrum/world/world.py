@@ -30,6 +30,7 @@
 ################################################################################
 
 import queue
+import threading
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -115,14 +116,14 @@ class world:
         self.unload_queue.put((x, z))
         
     def load_worker(self) -> None:
-        while True:
+        while self.load_workers_running: bool:
             if self.unload_queue.full():
                 chunk_tuple: tuple = self.unload_queue.get()
                 if not self.has_loaded_chunk(chunk_tuple[0], chunk_tuple[1]):
                     self.load_chunk(chunk_tuple[0], chunk_tuple[1])
                 
     def unload_worker(self) -> None:
-        while True:
+        while self.unload_workers_running:
             if self.unload_queue.full():
                 chunk_tuple: tuple = self.unload_queue.get()
                 if self.has_loaded_chunk(chunk_tuple[0], chunk_tuple[1]):
@@ -130,7 +131,15 @@ class world:
                     
     def start_workers(self, count: int) -> None:
         for i in range(0, count):
+            self.load_workers_running: bool = True
+            self.unload_workers_running: bool = True
             load_worker: object = threading.Thread(target = self.load_worker)
             unload_worker: object = threading.Thread(target = self.unload_worker)
+            load_worker.setDaemon(True)
+            unload_worker.setDaemon(True)
             load_worker.start()
             unload_worker.start()
+            
+    def stop_workers(self) -> None:
+        self.load_workers_running: bool = False
+        self.unload_workers_running: bool = False
