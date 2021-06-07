@@ -234,17 +234,17 @@ class anvil:
                 double_tag("", 0),
                 double_tag("", 0),
                 double_tag("", 0)
-            ]),
+            ], tag_ids.double_tag),
             list_tag("Pos", [
                 double_tag("", self.get_spawn_position().x),
                 double_tag("", self.get_spawn_position().y),
                 double_tag("", self.get_spawn_position().z)
-            ]),
+            ], tag_ids.double_tag),
             list_tag("Rotation", [
                 float_tag("", 0),
                 float_tag("", 0),
                 float_tag("", 0)
-            ])
+            ], tag_ids.float_tag)
         ])
         stream.write_root_tag(tag)
         file: object = open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb")
