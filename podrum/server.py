@@ -57,6 +57,7 @@ class server:
         self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
         self.provider_manager: object = provider_manager()
+        self.world_manager: object = world_manager(self)
         self.rak_net_interface: object = rak_net_interface(self)
         self.logger: object = logger()
         self.plugin_manager: object = plugin_manager(self)
@@ -119,7 +120,7 @@ class server:
         worlds_path: str = os.path.join(os.getcwd(), "worlds")
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
-        self.world_manager: object = world_manager(self)
+        self.world_manager.load_world(self.config.data["world_name"])
         self.register_default_commands()
         self.register_events()
         self.command_interface.start_interface()
