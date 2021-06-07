@@ -162,9 +162,7 @@ class chunk:
                 section_tag.get_tag("BlockLight").value,
                 section_tag.get_tag("SkyLight").value
             )
-        if level_tag.has_tag("BiomeColors"):
-            self.biomes: list = chunk_utils.convert_biome_colors(level_tag.get_tag("BiomeColors").value)
-        elif level_tag.has_tag("Biomes"):
+        if level_tag.has_tag("Biomes"):
             self.biomes: list = level_tag.get_tag("Biomes").value
         self.entities: list = level_tag.get_tag("Entities").value
         self.tile_entities: list = level_tag.get_tag("TileEntities").value
