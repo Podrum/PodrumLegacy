@@ -187,7 +187,7 @@ class anvil:
         
     def get_player_position(self, uuid: str) -> object:
         position_tag: object = self.get_player_option(uuid, "Pos")
-        return vector_3(position_tag.value[0], position_tag.value[1], position_tag.value[2])
+        return vector_3(position_tag[0].value, position_tag[1].value, position_tag[2].value)
             
     def set_player_position(self, uuid: str, position: object) -> None:
         self.set_player_option(uuid, "Pos", [
