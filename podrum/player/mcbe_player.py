@@ -32,9 +32,9 @@
 from block.minecraft.bedrock import bedrock
 from block.minecraft.dirt import dirt
 from block.minecraft.grass import grass
+from game_data.mcbe.item_id_map import item_id_map
 from geometry.vector_2 import vector_2
 from geometry.vector_3 import vector_3
-from mcbe_data.get import get as get_mcbe_data
 from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
 from protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
@@ -127,7 +127,7 @@ class mcbe_player:
         packet.server_authoritative_block_breaking: bool = False
         packet.current_tick: int = 0
         packet.enchantment_seed: int = 0
-        packet.item_table: dict = get_mcbe_data.get_item_table()
+        packet.item_table: dict = item_id_map
         packet.multiplayer_correlation_id: str = ""
         packet.server_authoritative_inventories: bool = False
         packet.encode()
