@@ -610,7 +610,7 @@ block_id_map: dict = {
     "minecraft:cave_vines": 577,
     "minecraft:big_dripleaf": 578,
     "minecraft:azalea_leaves": 579,
-    "minecraft:flowered_azalea_leaves": 580,
+    "minecraft:azalea_leaves_flowered": 580,
     "minecraft:calcite": 581,
     "minecraft:amethyst_block": 582,
     "minecraft:budding_amethyst": 583,
