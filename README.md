@@ -22,7 +22,7 @@ It's still under active development, but yet it has few advantages:
  - [x] Networking
  - [x] Commands
  - [x] MOTD
- - [x] Joinable (1.16.220)
+ - [x] Joinable (1.17.0)
  - [ ] Mobs 
 
 ## Running:
