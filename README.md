@@ -11,7 +11,7 @@
 
 # Podrum
 Is a Minecraft Bedrock Edition server software written in Python.
-It's still under active development, but yet it has few advantages:
+It's still under active development, yet it has a few advantages:
 
 **1.** Easy to use,
 
