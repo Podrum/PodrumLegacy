@@ -63,7 +63,7 @@ class logger:
             color: str = text_format.gray
         else:
             return
-        print(f"{color}[{log_type.upper()}: {date_time.strftime('%H:%M')}]{text_format.white} {content}")
+        print(minecraft_to_console_colors(f"{color}[{log_type.upper()}: {date_time.strftime('%H:%M')}]{text_format.white} {content}{text_format.reset()}"))
 
     def info(self, content: str) -> None:
         self.log(inspect.stack()[0][3], content)
