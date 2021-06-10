@@ -104,3 +104,4 @@ class start_game_packet(mcbe_packet):
             self.write_bool(False)
         self.write_string(self.multiplayer_correlation_id)
         self.write_bool(self.server_authoritative_inventories)
+        self.write_string(self.server_engine)
