@@ -125,5 +125,10 @@ block_id_map: dict = {
     "minecraft:cake": 92,
     "minecraft:unpowered_repeater": 93,
     "minecraft:powered_repeater": 94,
-    "minecraft:stained_glass": 95
+    "minecraft:stained_glass": 95,
+    "minecraft:trapdoor": 96,
+    "minecraft:monster_egg": 97,
+    "minecraft:stonebrick": 98,
+    "minecraft:brown_mushroom_block": 99,
+    "minecraft:red_mushroom_block": 100
 }
