@@ -47,8 +47,7 @@ class block_map:
             previous_state_name: str = state["name"]
             legacy_id: int = block_ids_map[state["name"]]
             block_map.states_2[runtime_id]: tuple = (legacy_id, legacy_meta)
-            block_map.states_1[f"{legacy_id} {legacy_meta}"]: int = runtime_id
-                    
+            block_map.states_1[f"{legacy_id} {legacy_meta}"]: int = runtime_id           
     
     @staticmethod
     def get_runtime_id(block_id: int, meta: int) -> int:
