@@ -29,7 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from game_data.mcbe.block_id_map import block_id_map
 from game_data.mcbe.block_states import block_states
 
 class block_map:
@@ -37,22 +36,21 @@ class block_map:
     def load_map() -> None:
         block_map.states_1: dict = {}
         block_map.states_2: dict = {}
-        legacy_meta: int = 0
+        meta: int = 0
         previous_state_name: str = ""
         for runtime_id, state in enumerate(block_states):
             if previous_state_name == state["name"]:
-                legacy_meta += 1
+                meta += 1
             else:
-                legacy_meta: int = 0
+                meta: int = 0
             previous_state_name: str = state["name"]
-            legacy_id: int = block_id_map[state["name"]]
-            block_map.states_2[runtime_id]: tuple = (legacy_id, legacy_meta)
-            block_map.states_1[f"{legacy_id} {legacy_meta}"]: int = runtime_id           
+            block_map.states_2[runtime_id]: tuple = (state["name"], meta)
+            block_map.states_1[f"{state["name"]} {meta}"]: int = runtime_id           
     
     @staticmethod
-    def get_runtime_id(block_id: int, meta: int) -> int:
-        return block_map.states_1[f"{block_id} {meta}"]
+    def get_runtime_id(block_name: str, meta: int) -> int:
+        return block_map.states_1[f"{block_name} {meta}"]
     
     @staticmethod
-    def get_legacy_id(runtime_id: int) -> tuple:
+    def get_name_and_meta(runtime_id: int) -> tuple:
         return block_map.states_2[runtime_id]
