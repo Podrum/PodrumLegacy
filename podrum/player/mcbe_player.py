@@ -130,6 +130,7 @@ class mcbe_player:
         packet.item_table: dict = item_id_map
         packet.multiplayer_correlation_id: str = ""
         packet.server_authoritative_inventories: bool = False
+        packet.server_engine: str = "Podrum"
         packet.encode()
         self.send_packet(packet.data)
         
