@@ -267,7 +267,7 @@ block_id_map: dict = {
     "minecraft:red_glazed_terracotta": 234,
     "minecraft:black_glazed_terracotta": 235,
     "minecraft:concrete": 236,
-    "minecraft:concretepowder": 237,
+    "minecraft:concretePowder": 237,
     "minecraft:chemistry_table": 238,
     "minecraft:underwater_torch": 239,
     "minecraft:chorus_plant": 240,
