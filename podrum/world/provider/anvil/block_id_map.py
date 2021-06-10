@@ -29,5 +29,9 @@
 #                                                                              #
 ################################################################################
 
-class block_id_map:
-    pass
+block_id_map: dict = {
+    "minecraft:air": 0,
+    "minecraft:stone": 1,
+    "minecraft:grass": 2,
+    "minecraft:dirt": 3
+}
