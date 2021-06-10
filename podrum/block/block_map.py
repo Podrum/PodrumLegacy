@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-from game_data.mcbe.block_ids_map import block_ids_map
+from game_data.mcbe.block_id_map import block_id_map
 from game_data.mcbe.block_states import block_states
 
 class block_map:
@@ -45,7 +45,7 @@ class block_map:
             else:
                 legacy_meta: int = 0
             previous_state_name: str = state["name"]
-            legacy_id: int = block_ids_map[state["name"]]
+            legacy_id: int = block_id_map[state["name"]]
             block_map.states_2[runtime_id]: tuple = (legacy_id, legacy_meta)
             block_map.states_1[f"{legacy_id} {legacy_meta}"]: int = runtime_id           
     
