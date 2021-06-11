@@ -31,7 +31,7 @@
 
 from block.block import block
 
-class stone:
+class stone(block):
     def __init__(self) -> None:
         super().__init__("minecraft:stone", 0, 1.5, 6)
         self.stack_size: int = 64
