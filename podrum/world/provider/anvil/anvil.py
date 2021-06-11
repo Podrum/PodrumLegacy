@@ -104,7 +104,7 @@ class anvil:
         for x in range(0, 16):
             for z in range(0, 16):
                 for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
-                    legacy_id: tuple = block_map.get_legacy_id(chunk_in.get_block_runtime_id(x, y, z))
+                    legacy_id: tuple = block_map.get_name_and_meta(chunk_in.get_block_runtime_id(x, y, z))
                     block: int = (((block_id_map[legacy_id[0]] >> 7) * 128) ^ block_id_map[legacy_id[0]]) - ((block_id_map[legacy_id[0]] >> 7) * 128)
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)
                     cnv_chunk.set_block_id(x, y, z, block)
