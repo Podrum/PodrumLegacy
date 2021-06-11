@@ -91,7 +91,10 @@ class anvil:
                 for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
                     block: int = chunk_in.get_block_id(x, y, z) & 0xff
                     meta: int = chunk_in.get_data(x, y, z) & 0xff
-                    runtime_id: int = block_map.get_runtime_id(id_to_name_map[block], meta)
+                    try:
+                        runtime_id: int = block_map.get_runtime_id(id_to_name_map[block], meta)
+                    except KeyError:
+                        runtime_id: int = block_map.get_runtime_id(id_to_name_map[block], 0)
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
         return cnv_chunk
     
