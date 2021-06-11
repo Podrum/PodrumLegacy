@@ -100,10 +100,11 @@ class region:
         index_location_data += binary_converter.write_unsigned_byte(sector_count)
         timestamp_data = binary_converter.write_unsigned_int_be(int(time.time()))
         file: object = open(self.path, "+rb")
-        for i in range((index_location << 2), 4):
-            file.seek(i)
+        ilo: int = (index_location << 2)
+        for i in range(0, 4):
+            file.seek(i + ilo)
             file.write(index_location_data)
-            file.seek(i + 4096)
+            file.seek(i + ilo + 4096)
             file.write(timestamp_data)
         file.close()
         
