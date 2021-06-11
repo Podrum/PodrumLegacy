@@ -58,6 +58,9 @@ import os
 from plugin_manager import plugin_manager
 from protocol.mcbe.rak_net_interface import rak_net_interface
 import time
+from world.generator.flat import flat
+from world.generator.void import void
+from world.generator_manager import generator_manager
 from world.provider.anvil.anvil import anvil
 from world.provider.pm_anvil.pm_anvil import pm_anvil
 from world.provider_manager import provider_manager
@@ -71,6 +74,7 @@ class server:
         self.event_manager: object = event_manager(self)
         self.block_manager: object = block_manager()
         self.provider_manager: object = provider_manager()
+        self.generator_manager: object = generator_manager()
         self.world_manager: object = world_manager(self)
         self.rak_net_interface: object = rak_net_interface(self)
         self.logger: object = logger()
@@ -90,6 +94,10 @@ class server:
     def register_default_providers(self) -> None:
         self.provider_manager.register_provider(anvil)
         self.provider_manager.register_provider(pm_anvil)
+        
+    def register_default_generators(self) -> None:
+        self.generator_manager.register_generator(flat())
+        self.generator_manager.register_generator(void())
         
     def register_default_blocks(self) -> None:
         self.block_manager.register_block(air())
@@ -141,6 +149,7 @@ class server:
         self.logger.info("Podrum is starting up...")
         block_map.load_map()
         self.register_default_blocks()
+        self.register_default_generators()
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
