@@ -41,10 +41,9 @@ from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 from world.chunk_utils import chunk_utils
-from world.provider.anvil.chunk import chunk
 from world.provider.pm_anvil.section import section
 
-class chunk(chunk):
+class chunk:
     def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: list = [], tile_entities: list = []) -> None:
         self.x: int = x
         self.z: int = z
@@ -66,7 +65,50 @@ class chunk(chunk):
         self.tile_entities: list = tile_entities
         self.light_populated: bool = False
         self.terrain_populated: bool = False
-            
+        
+    def get_block_id(self, x: int, y: int, z: int) -> int:
+        return self.sections[y >> 4].get_block_id(x & 0x0f, y & 0x0f, z & 0x0f)
+        
+    def set_block_id(self, x: int, y: int, z: int, block_id: int) -> None:
+        self.sections[y >> 4].set_block_id(x & 0x0f, y & 0x0f, z & 0x0f, block_id)
+        
+    def get_data(self, x: int, y: int, z: int) -> int:
+        return self.sections[y >> 4].get_data(x & 0x0f, y & 0x0f, z & 0x0f)
+        
+    def set_data(self, x: int, y: int, z: int, data: int) -> None:
+        self.sections[y >> 4].set_data(x & 0x0f, y & 0x0f, z & 0x0f, data)
+        
+    def get_block_light(self, x: int, y: int, z: int) -> int:
+        return self.sections[y >> 4].get_block_light(x & 0x0f, y & 0x0f, z & 0x0f)
+        
+    def set_block_light(self, x: int, y: int, z: int, light_level: int) -> None:
+        self.sections[y >> 4].set_block_light(x & 0x0f, y & 0x0f, z & 0x0f, light_level)
+        
+    def get_sky_light(self, x: int, y: int, z: int) -> int:
+        return self.sections[y >> 4].get_sky_light(x & 0x0f, y & 0x0f, z & 0x0f)
+        
+    def set_sky_light(self, x: int, y: int, z: int, light_level: int) -> None:
+        self.sections[y >> 4].set_sky_light(x & 0x0f, y & 0x0f, z & 0x0f, light_level)
+        
+    def get_biome(self, x: int, z: int) -> int:
+        return self.biomes[(x << 4) + z]
+    
+    def set_biome(self, x: int, z: int, biome: int) -> None:
+        self.biomes[(x << 4) + z]: int = biome
+        
+    def get_highest_block_at(self, x: int, z: int) -> int:
+        for i in range(len(self.sections) - 1, -1, -1):
+            section_to_check: object = self.sections[i]
+            index: int = section_to_check.get_highest_block_at(x & 0x0f, z & 0x0f)
+            if index != -1:
+                return index + (i << 4)
+        return -1
+    
+    def recalculate_height_map(self) -> None:
+        for x in range(0, 16):
+            for z in range(0, 16):
+                self.height_map[(x << 4) + z]: int = get_highest_block_at(x, z) + 1
+                    
     def nbt_serialize(self) -> bytes:
         stream: object = nbt_be_binary_stream()
         self.recalculate_height_map()
