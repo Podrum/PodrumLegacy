@@ -35,6 +35,8 @@ from block.default.grass import grass
 from world.chunk.chunk import chunk
 
 class flat:
+    generator_name: str = "flat"
+    
     @staticmethod
     def generate(x: int, z: int, world: object) -> object:
         result: object = chunk(x, z)
