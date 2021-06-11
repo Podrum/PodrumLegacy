@@ -43,4 +43,6 @@ class void:
             for x in range(0, 16):
                 for z in range(0, 16):
                     result.set_block_runtime_id(x, 0, z, stone().runtime_id)
+            spawn_position.y: int = result.get_highest_block_at(spawn_position.x, spawn_position.z)
+            world.set_spawn_position(spawn_position)
         return result
