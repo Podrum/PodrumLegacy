@@ -72,7 +72,7 @@ class world:
         
     def save(self) -> None:
         for chunk in self.chunks.values():
-            self.save_chunk(chunk)
+            self.save_chunk(chunk.x, chunk.z)
             
     def get_world_name(self) -> str:
         return self.provider.get_world_name()
