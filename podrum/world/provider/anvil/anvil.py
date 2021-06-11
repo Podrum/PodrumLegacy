@@ -122,9 +122,9 @@ class anvil:
             result.nbt_deserialize(chunk_data)
             return anvil.to_server_chunk(result)
                                         
-    def set_chunk(self, x: int, z: int, chunk_in: object) -> None:
-        region_index: tuple = anvil.cr_index(x, z)
-        chunk_index: tuple = anvil.rc_index(x, z)
+    def set_chunk(self, chunk_in: object) -> None:
+        region_index: tuple = anvil.cr_index(chunk_in.x, chunk_in.z)
+        chunk_index: tuple = anvil.rc_index(chunk_in.x, chunk_in.z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], anvil.to_anvil_chunk(chunk_in).serialize())
