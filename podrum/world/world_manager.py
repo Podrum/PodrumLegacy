@@ -73,5 +73,5 @@ class world_manager:
         del self.worlds[world_name]
 
     def unload_all(self) -> None:
-        for world_name in self.worlds:
+        for world_name in dict(self.worlds):
             self.unload_world(world_name)
