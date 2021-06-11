@@ -39,7 +39,7 @@ block_states: list = []
 
 while not stream.feos():
     root_tag: object = stream.read_root_tag()
-    name: str = root_tag.get_tag("name").value.lower()
+    name: str = root_tag.get_tag("name").value
     states: list = root_tag.get_tag("states").value
     version: int = root_tag.get_tag("version").value
     parsed_states: dict = {}
