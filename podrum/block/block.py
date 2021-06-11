@@ -34,7 +34,7 @@
  from game_data.mcbe.item_id_map import item_id_map
 
  class block:
-     def __init__(self, name: int, meta: int, hardness: float, blast_resistance: float):
+     def __init__(self, name: int, meta: int, hardness: float, blast_resistance: float) -> None:
          self.name: str = name
          self.meta: int = meta
          self.hardness: float = hardness
@@ -47,3 +47,6 @@
          self.transparent: bool = False
          self.flammable: bool = False
          self.catches_fire_from_lava: bool = False
+         self.creates_sources: bool = False
+         self.flow_distance: int = 0
+         self.flow_speed: int = 0
