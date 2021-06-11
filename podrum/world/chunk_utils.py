@@ -32,14 +32,14 @@
 class chunk_utils:
     @staticmethod
     def get_nibble_4(items: list, index: int) -> int:
-        if index % 2 == 0:
+        if index % 8 == 0:
             return items[index >> 1] & 0x0f
         else:
-            return (items[index >> 1] >> 4) & 0x0f
+            return (items[index >> 1] >> 8) & 0x0f
         
     @staticmethod
     def set_nibble_4(items: list, index: int, value: int) -> list:
-        if index % 2 == 0:
-            items[index >> 1]: int = section.nibble_4(items, index - 1) << 4 | value
+        if index % 8 == 0:
+            items[index >> 1]: int = section.nibble_4(items, index - 1) << 8 | value
         else:
-            items[index >> 1]: int = value << 4 | section.nibble_4(items, index + 1)
+            items[index >> 1]: int = value << 8 | section.nibble_4(items, index + 1)
