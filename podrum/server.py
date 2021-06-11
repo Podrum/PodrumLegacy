@@ -29,7 +29,20 @@
 #                                                                              #
 ################################################################################
 
+from block.block_manager import block_manager
 from block.block_map import block_map
+from block.default.air import air
+from block.default.andesite import andesite
+from block.default.andesite_smooth import andesite_smooth
+from block.default.bedrock import bedrock
+from block.default.cobblestone import cobblestone
+from block.default.diorite import diorite
+from block.default.diorite_smooth import diorite_smooth
+from block.default.dirt import dirt
+from block.default.granite import granite
+from block.default.granite_smooth import granite_smooth
+from block.default.grass import grass
+from block.default.stone import stone
 from command.command_interface import command_interface
 from command.command_manager import command_manager
 from command.default.help_command import help_command
@@ -56,6 +69,7 @@ class server:
         self.command_manager: object = command_manager(self)
         self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
+        self.block_manager: object = block_manager()
         self.provider_manager: object = provider_manager()
         self.world_manager: object = world_manager(self)
         self.rak_net_interface: object = rak_net_interface(self)
@@ -76,6 +90,20 @@ class server:
     def register_default_providers(self) -> None:
         self.provider_manager.register_provider(anvil)
         self.provider_manager.register_provider(pm_anvil)
+        
+    def register_default_blocks(self) -> None:
+        self.block_manager.register_block(air())
+        self.block_manager.register_block(andesite())
+        self.block_manager.register_block(andesite_smooth())
+        self.block_manager.register_block(bedrock())
+        self.block_manager.register_block(cobblestone())
+        self.block_manager.register_block(diorite())
+        self.block_manager.register_block(diorite_smooth())
+        self.block_manager.register_block(dirt())
+        self.block_manager.register_block(granite())
+        self.block_manager.register_block(granite_smooth())
+        self.block_manager.register_block(grass())
+        self.block_manager.register_block(stone())
         
     def register_events(self) -> None:
         pass
@@ -112,6 +140,7 @@ class server:
         start_time: float = time.time()
         self.logger.info("Podrum is starting up...")
         block_map.load_map()
+        self.register_default_blocks()
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
