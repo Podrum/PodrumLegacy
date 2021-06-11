@@ -71,3 +71,7 @@ class world_manager:
     def unload_world(self, world_name: str) -> None:
         self.worlds[world_name].save()
         del self.worlds[world_name]
+
+    def unload_all(self) -> None:
+        for world_name in self.worlds:
+            self.unload_world(world_name)
