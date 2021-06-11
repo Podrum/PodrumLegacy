@@ -29,9 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from block.minecraft.bedrock import bedrock
-from block.minecraft.dirt import dirt
-from block.minecraft.grass import grass
 from game_data.mcbe.item_id_map import item_id_map
 from geometry.vector_2 import vector_2
 from geometry.vector_3 import vector_3
