@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-class break_block_tool_type:
+class tool:
     none: int = 0
     sword: int = 1
     shovel: int = 2
