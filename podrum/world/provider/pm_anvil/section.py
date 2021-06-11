@@ -35,4 +35,4 @@ from world.provider.anvil.section import section
 class section(section):
     @staticmethod
     def get_index(x: int, y: int, z: int) -> int:
-        return (x << 8) | (z << 4) | y
+        return (x << 8) + (z << 4) + y
