@@ -187,6 +187,12 @@ class anvil:
     def set_world_name(self, world_name: str) -> None:
         self.set_option("LevelName", world_name)
         
+    def get_generator_name(self) -> str:
+        return self.get_option("generatorName")
+    
+    def set_generator_name(self, generator_name: str) -> None:
+        self.set_option("generatorName", generator_name)
+        
     def get_player_position(self, uuid: str) -> object:
         position_tag: object = self.get_player_option(uuid, "Pos")
         return vector_3(position_tag[0].value, position_tag[1].value, position_tag[2].value)
