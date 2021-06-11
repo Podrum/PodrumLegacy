@@ -30,7 +30,7 @@
  ################################################################################
 
  from block.block_map import block_map
- from block.break_block_tool_type import break_block_tool_type
+ from block.tool_type import tool_type
  from game_data.mcbe.item_id_map import item_id_map
 
  class block:
@@ -41,4 +41,9 @@
          self.blast_resistance: float = blast_resistance
          self.runtime_id: int = block_map.get_runtime_id(name, meta)
          self.network_id: int = item_id_map[name]
-         
+         self.stack_size: int = 0
+         self.tool: int = tool.none
+         self.luminant: bool = False
+         self.transparent: bool = False
+         self.flammable: bool = False
+         self.catches_fire_from_lava: bool = False
