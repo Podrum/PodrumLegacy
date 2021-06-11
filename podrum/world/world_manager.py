@@ -55,6 +55,8 @@ class world_manager:
         world_name: str = world_obj.get_world_name()
         self.worlds[world_name]: object = world_obj
         self.path_to_world_name[world_path]: str = world_name
+        self.server.logger.success(f"Loading world -> {world_name}")
+        self.worlds[world_name].load_spawn_area()
         self.server.logger.success(f"Loaded world -> {world_name}")
         
     def get_world(self, name: str) -> object:
