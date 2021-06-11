@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-block_id_map: dict = {
+name_to_id: dict = {
     "minecraft:air": 0,
     "minecraft:stone": 1,
     "minecraft:grass": 2,
