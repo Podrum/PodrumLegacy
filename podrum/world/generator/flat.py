@@ -48,6 +48,6 @@ class flat:
                 result.set_block_runtime_id(x, 2, z, dirt().runtime_id)
                 result.set_block_runtime_id(x, 3, z, grass().runtime_id)
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
-            spawn_position.y: int = result.get_highest_block_at(spawn_position.x, spawn_position.z)
+            spawn_position.y: int = 4
             world.set_spawn_position(spawn_position)
         return result
