@@ -31,6 +31,6 @@
 
 from block.block import block
 
-class air:
+class air(block):
     def __init__(self) -> None:
         super().__init__("minecraft:air", 0, 0, 0)
