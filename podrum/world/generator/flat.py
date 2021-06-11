@@ -39,9 +39,10 @@ class flat:
     @staticmethod
     def generate(x: int, z: int) -> object:
         result: object = chunk(x, z)
-            for x in range(0, 16):
-                for z in range(0, 16):
-                    result.set_block_runtime_id(x, 0, z, bedrock().runtime_id)
-                    result.set_block_runtime_id(x, 1, z, dirt().runtime_id)
-                    result.set_block_runtime_id(x, 2, z, dirt().runtime_id)
-                    result.set_block_runtime_id(x, 3, z, grass().runtime_id)
+        for x in range(0, 16):
+            for z in range(0, 16):
+                result.set_block_runtime_id(x, 0, z, bedrock().runtime_id)
+                result.set_block_runtime_id(x, 1, z, dirt().runtime_id)
+                result.set_block_runtime_id(x, 2, z, dirt().runtime_id)
+                result.set_block_runtime_id(x, 3, z, grass().runtime_id)
+        return result
