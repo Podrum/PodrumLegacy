@@ -54,6 +54,8 @@ from world.chunk.chunk import chunk as server_chunk
 from world.chunk.sub_chunk import sub_chunk
 from world.chunk_utils import chunk_utils
 from world.provider.anvil.chunk import chunk
+from world.provider.anvil.id_to_name_map import id_to_name_map
+from world.provider.anvil.name_to_id_map import name_to_id_map
 from world.provider.anvil.region import region
 
 class anvil:
@@ -89,10 +91,7 @@ class anvil:
                 for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
                     block: int = chunk_in.get_block_id(x, y, z) & 0xff
                     meta: int = chunk_in.get_data(x, y, z) & 0xff
-                    try:
-                        runtime_id: int = block_map.get_runtime_id(block, meta)
-                    except KeyError:
-                        runtime_id: int = block_map.get_runtime_id(block, 0)
+                    runtime_id: int = block_map.get_runtime_id(id_to_name_map[block], meta)
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
         return cnv_chunk
     
@@ -103,7 +102,7 @@ class anvil:
             for z in range(0, 16):
                 for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
                     legacy_id: tuple = block_map.get_legacy_id(chunk_in.get_block_runtime_id(x, y, z))
-                    block: int = (((legacy_id[0] >> 7) * 128) ^ legacy_id[0]) - ((legacy_id[0] >> 7) * 128)
+                    block: int = (((name_to_id_map[legacy_id[0]] >> 7) * 128) ^ name_to_id_map[legacy_id[0]]) - ((legacy_id[0] >> 7) * 128)
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)
                     cnv_chunk.set_block_id(x, y, z, block)
                     cnv_chunk.set_data(x, y, z, meta)
