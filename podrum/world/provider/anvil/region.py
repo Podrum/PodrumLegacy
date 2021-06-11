@@ -83,15 +83,10 @@ class region:
         ccc: bytes = binary_converter.write_unsigned_int_be(len(cc))
         ccc += binary_converter.write_unsigned_byte(compression_type)
         ccc += cc
-        size: int = 0
-        while True:
-            remaining: int = size - len(ccc)
-            if remaining > 0:
-                ccc += b"\x00" * remaining
-                break
-            size += 4096
+        size: int = math.ceil(len(ccc) / 4096)
+        ccc += b"\x00" * size
         index_location: int = region.get_location(x, z)
-        sector_count: int = len(ccc) >> 12
+        sector_count: int = size >> 12
         file: object = open(self.path, "ab")
         offset: int = file.tell() >> 12
         file.write(ccc)
