@@ -74,9 +74,9 @@ class region:
 
     def put_chunk_data(self, x: int, z: int, chunk_data: bytes, compression_type: int = 2) -> None:
         if compression_type == 1:
-            cc: bytes = gzip.compress(chunk_data)
+            cc: bytes = gzip.compress(chunk_data, 0)
         elif compression_type == 2:
-            cc: bytes = zlib.compress(chunk_data)
+            cc: bytes = zlib.compress(chunk_data, 0)
         elif compression_type == 3:
             cc: bytes = chunk_data
         else:
