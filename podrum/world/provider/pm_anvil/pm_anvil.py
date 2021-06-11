@@ -1,4 +1,3 @@
-
 ################################################################################
 #                                                                              #
 #  ____           _                                                            #
@@ -32,6 +31,7 @@
 
 import gzip
 from block.block_map import block_map
+from game_data.mcbe.block_id_map import block_id_map
 import os
 from world.chunk.block_storage import block_storage
 from world.chunk.chunk import chunk as server_chunk
@@ -51,12 +51,13 @@ class pm_anvil(anvil):
         for x in range(0, 16):
             for z in range(0, 16):
                 for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
-                    block: int = chunk_in.get_block_id(x, y, z) & 0xff
+                    block_id: int = chunk_in.get_block_id(x, y, z) & 0xff
                     meta: int = chunk_in.get_data(x, y, z) & 0xff
+                    block_name: str = list(block_id_map.keys())[list(block_id_map.values()).index(block_id)]
                     try:
-                        runtime_id: int = block_map.get_runtime_id(block, meta)
+                        runtime_id: int = block_map.get_runtime_id(block_name, meta)
                     except KeyError:
-                        runtime_id: int = block_map.get_runtime_id(block, 0)
+                        runtime_id: int = block_map.get_runtime_id(block_name, 0)
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
         return cnv_chunk
     
@@ -67,7 +68,7 @@ class pm_anvil(anvil):
             for z in range(0, 16):
                 for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
                     legacy_id: tuple = block_map.get_legacy_id(chunk_in.get_block_runtime_id(x, y, z))
-                    block: int = (((legacy_id[0] >> 7) * 128) ^ legacy_id[0]) - ((legacy_id[0] >> 7) * 128)
+                    block: int = (((block_id_map[legacy_id[0]] >> 7) * 128) ^ block_id_map[legacy_id[0]]) - ((block_id_map[legacy_id[0]] >> 7) * 128)
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)
                     cnv_chunk.set_block_id(x, y, z, block)
                     cnv_chunk.set_data(x, y, z, meta)
