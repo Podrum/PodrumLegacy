@@ -33,6 +33,8 @@ from block.default.stone import stone
 from world.chunk.chunk import chunk
 
 class void:
+    generator_name: str = "void"
+    
     @staticmethod
     def generate(chunk_x: int, chunk_z: int, world: object) -> object:
         result: object = chunk(chunk_x, chunk_z)
