@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-from block.minecraft.air import air
+from block.default.air import air
 import math
 
 class block_storage:
