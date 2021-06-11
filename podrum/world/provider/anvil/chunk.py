@@ -120,8 +120,8 @@ class chunk:
                 byte_array_tag("BlockLight", sect.block_light_entries),
                 byte_array_tag("SkyLight", sect.sky_light_entries)
             ]))
-        root_tag: object = compound("", [
-            compound("Level", [
+        root_tag: object = compound_tag("", [
+            compound_tag("Level", [
                 int_tag("xPos", self.x),
                 int_tag("zPos", self.z),
                 long_tag("LastUpdate", 0),
