@@ -29,7 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from block.default.air import air
 from block.default.bedrock import bedrock
 from block.default.dirt import dirt
 from block.default.grass import grass
