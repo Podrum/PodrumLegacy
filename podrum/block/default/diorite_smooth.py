@@ -34,4 +34,4 @@ from block.default.stone import stone
 class diorite_smooth(stone):
     def __init__(self) -> None:
         super().__init__()
-        self.meta: int = 3
+        self.meta: int = 4
