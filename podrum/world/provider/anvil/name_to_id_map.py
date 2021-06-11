@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-name_to_id: dict = {
+name_to_id_map: dict = {
     "minecraft:air": 0,
     "minecraft:stone": 1,
     "minecraft:grass": 2,
