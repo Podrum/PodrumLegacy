@@ -88,7 +88,7 @@ java_to_bedrock_map: dict = {
     "minecraft:golden_rail 0": "minecraft:golden_rail 0",
     "minecraft:detector_rail 0": "minecraft:detector_rail 0",
     "minecraft:sticky_piston 0": "minecraft:sticky_piston 0",
-    "minecraft:web": 30,
+    "minecraft:web 0": "minecraft:web 0",
     "minecraft:tallgrass": 31,
     "minecraft:deadbush": 32,
     "minecraft:piston": 33,
