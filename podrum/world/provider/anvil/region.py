@@ -31,6 +31,7 @@
 
 from binary_utils.binary_converter import binary_converter
 import gzip
+import math
 import os
 import time
 import zlib
