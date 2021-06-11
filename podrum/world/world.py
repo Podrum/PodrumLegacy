@@ -29,6 +29,8 @@
 #                                                                              #
 ################################################################################
 
+from block.block_map import block_map
+
 class world:
     def __init__(self, provider: object, server: object):
         self.provider: object = provider
@@ -55,7 +57,8 @@ class world:
         self.provider.set_chunk(self.get_chunk(x, z))
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
-        return self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f)
+        block_and_meta: tuple = block_map.get_name_and_meta(self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f))
+        return self.server.block_manager.get_block(block_and_meta[0], block_and_meta[1])
         
     def set_block(self, x: int, y: int, z: int, block: object) -> None:
         self.chunks[f"{x >> 4} {z >> 4}"].set_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, block.runtime_id)
