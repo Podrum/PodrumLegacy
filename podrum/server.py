@@ -172,6 +172,7 @@ class server:
         self.rak_net_interface.stop_interface()
         self.command_interface.stop_interface()
         self.plugin_manager.unload_all()
+        self.world_manager.unload_all()
 
     def send_message(self, message: str) -> None:
         self.logger.info(message)
