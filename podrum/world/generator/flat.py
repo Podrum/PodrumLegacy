@@ -37,7 +37,7 @@ from world.chunk.chunk import chunk
 
 class flat:
     @staticmethod
-    def generate(x: int, z: int) -> object:
+    def generate(x: int, z: int, world: object) -> object:
         result: object = chunk(x, z)
         for x in range(0, 16):
             for z in range(0, 16):
