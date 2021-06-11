@@ -115,3 +115,15 @@ class world:
     
     def set_generator_name(self, generator_name: str) -> None:
         self.provider.set_generator_name(generator_name)
+        
+    def load_spawn_area(self) -> None:
+        radius: int = self.server.config.data["max_view_distance"]
+        spawn_position: object = self.get_spawn_position()
+        chunk_x_start: int = (int(spawn_position.x) >> 4) - radius
+        chunk_x_end: int = (int(spawn_position.x) >> 4) + radius
+        chunk_z_start: int = (int(spawn_position.z) >> 4) - radius
+        chunk_z_end: int = (int(spawn_position.z) >> 4) + radius
+        for chunk_x in range(chunk_x_start, chunk_x_end):
+            for chunk_z in range(chunk_z_start, chunk_z_end):
+                if not self.has_loaded_chunk(chunk_x, chunk_z):
+                    self.load_chunk(chunk_x, chunk_z)
