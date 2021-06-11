@@ -126,6 +126,7 @@ class chunk:
                 int_tag("xPos", self.x),
                 int_tag("zPos", self.z),
                 long_tag("LastUpdate", 0),
+                byte_tag("V", 1),
                 long_tag("InhabitedTime", 0),
                 byte_tag("TerrainPopulated", 1 if self.terrain_populated else 0),
                 byte_tag("LightPopulated", 1 if self.light_populated else 0),
