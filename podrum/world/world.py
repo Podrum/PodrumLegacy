@@ -39,7 +39,11 @@ class world:
         self.world_path: str = provider.world_dir
             
     def load_chunk(self, x: int, z: int) -> None:
-        self.chunks[f"{x} {z}"]: object = self.provider.get_chunk(x, z)
+        chunk: object = self.provider.get_chunk(x, z)
+        if chunk is None:
+            generator: object = self.server.generator_manager.get_generator(self.get_generator_name())
+            chunk: object = generator.generate(x, z, self)
+        self.chunks[f"{x} {z}"]: object = chunk
             
     def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)
@@ -105,3 +109,9 @@ class world:
         
     def has_player(self, uuid: str) -> bool:
         self.provider.has_player_file(uuid)
+        
+    def get_generator_name(self) -> str:
+        return self.provider.get_generator_name()
+    
+    def set_generator_name(self, generator_name: str) -> None:
+        self.provider.set_generator_name(generator_name)
