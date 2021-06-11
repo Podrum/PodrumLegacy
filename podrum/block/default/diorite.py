@@ -34,4 +34,4 @@ from block.default.stone import stone
 class diorite(stone):
     def __init__(self) -> None:
         super().__init__()
-        self.meta: int = 2
+        self.meta: int = 3
