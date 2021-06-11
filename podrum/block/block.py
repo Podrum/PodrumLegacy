@@ -30,7 +30,7 @@
  ################################################################################
 
  from block.block_map import block_map
- from block.tool_type import tool_type
+ from block.tool import tool
  from game_data.mcbe.item_id_map import item_id_map
 
  class block:
