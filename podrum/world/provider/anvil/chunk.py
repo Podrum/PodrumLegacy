@@ -107,7 +107,8 @@ class chunk:
     def recalculate_height_map(self) -> None:
         for x in range(0, 16):
             for z in range(0, 16):
-                self.height_map[(x << 4) + z]: int = self.get_highest_block_at(x, z) + 1
+                y: int = self.get_highest_block_at(x, z) + 1
+                self.height_map[(x << 4) + z]: int = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
                     
     def nbt_serialize(self) -> bytes:
         stream: object = nbt_be_binary_stream()
