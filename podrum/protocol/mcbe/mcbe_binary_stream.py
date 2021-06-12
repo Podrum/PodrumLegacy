@@ -584,3 +584,25 @@ class mcbe_binary_stream(binary_stream):
         self.write_signed_var_int(int(value.x))
         self.write_var_int(int(value.y))
         self.write_signed_var_int(int(value.z))
+        
+    def read_player_attributes(self) -> list:
+        player_attributes: list = []
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            player_attributes.append({
+                "min": self.read_float_le(),
+                "max": self.read_float_le(),
+                "current": self.read_float_le(),
+                "default": self.read_float_le(),
+                "name": self.read_string()
+            })
+        return player_attributes
+        
+    def write_player_attributes(self, value: list) -> None:
+        self.write_var_int(len(value))
+        for player_attribute in value:
+            self.write_float_le(player_attribute["min"])
+            self.write_float_le(player_attribute["max"])
+            self.write_float_le(player_attribute["current"])
+            self.write_float_le(player_attribute["default"])
+            self.write_string(player_attribute["name"])
