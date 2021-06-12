@@ -43,6 +43,7 @@ from protocol.mcbe.packet.level_chunk_packet import level_chunk_packet
 from protocol.mcbe.packet.login_packet import login_packet
 from protocol.mcbe.packet.move_player_packet import move_player_packet
 from protocol.mcbe.packet.network_chunk_publisher_update_packet import network_chunk_publisher_update_packet
+from protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
 from protocol.mcbe.packet.play_status_packet import play_status_packet
 from protocol.mcbe.packet.resource_pack_client_response_packet import resource_pack_client_response_packet
 from protocol.mcbe.packet.resource_pack_stack_packet import resource_pack_stack_packet
@@ -50,7 +51,7 @@ from protocol.mcbe.packet.resource_packs_info_packet import resource_packs_info_
 from protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
 from protocol.mcbe.packet.set_entity_data_packet import set_entity_data_packet
 from protocol.mcbe.packet.start_game_packet import start_game_packet
-from protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
+from protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
 from protocol.mcbe.type.login_status_type import login_status_type
 from protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
 from rak_net.protocol.frame import frame
@@ -63,6 +64,8 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.world: object = server.world
+        self.metadata: dict = {}
+        self.attributes: list = []
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
@@ -201,7 +204,8 @@ class mcbe_player:
             self.send_start_game()
             self.send_creative_content_packet()
             self.send_biome_definition_list_packet()
-            self.send_metadata({})
+            self.send_metadata()
+            self.send_attributes()
             #self.send_item_component_packet()
             #self.send_available_entity_identifiers_packet()
             
@@ -288,10 +292,16 @@ class mcbe_player:
         packet.encode()
         self.send_packet(packet.data)
         
-    def send_metadata(self, metadata) -> None:
+    def send_metadata(self) -> None:
         packet: object = set_entity_data_packet()
         packet.runtime_entity_id: int = self.entity_id
-        packet.metadata = metadata
+        packet.metadata: dict = self.metadata
+        packet.tick: int = 0
+            
+    def send_attributes(self) -> None:
+        packet: object = update_attributes_packet()
+        packet.runtime_entity_id: int = self.entity_id
+        packet.attributes: list = self.attributes
         packet.tick: int = 0
     
     def send_packet(self, data: bytes) -> None:
