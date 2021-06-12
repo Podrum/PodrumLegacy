@@ -206,8 +206,8 @@ class mcbe_player:
             self.send_biome_definition_list_packet()
             self.send_metadata()
             self.send_attributes()
-            #self.send_item_component_packet()
-            #self.send_available_entity_identifiers_packet()
+            self.send_item_component_packet()
+            self.send_available_entity_identifiers_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packet_violation_warning_packet(data)
@@ -297,12 +297,16 @@ class mcbe_player:
         packet.runtime_entity_id: int = self.entity_id
         packet.metadata: dict = self.metadata
         packet.tick: int = 0
+        packet.encode()
+        self.send_packet(packet.data)
             
     def send_attributes(self) -> None:
         packet: object = update_attributes_packet()
         packet.runtime_entity_id: int = self.entity_id
         packet.attributes: list = self.attributes
         packet.tick: int = 0
+        packet.encode()
+        self.send_packet(packet.data)
     
     def send_packet(self, data: bytes) -> None:
         new_packet: object = game_packet()
