@@ -101,7 +101,7 @@ class rak_net_interface(Thread):
         ]
         t: object = metadata_dictionary_type
         self.server.players[connection.address.token].metadata: dict = {
-            t.key_player_index: {"type": t.type_long, "value": 0},
+            t.key_flags: {"type": t.type_long, "value": 0 ^ (1 << (47 % 64)) ^ (1 << (48 % 64))},
             t.key_max_air: {"type": t.type_short, "value": 400},
             t.key_lead_holder_eid: {"type": t.type_long, "value": -1},
             t.key_scale: {"type": t.type_float, "value": 1},
