@@ -73,10 +73,11 @@ class region:
             return chunk_data
 
     def put_chunk_data(self, x: int, z: int, chunk_data: bytes, compression_type: int = 2) -> None:
+        file: object = open(self.path, "r+b")
         if compression_type == 1:
-            cc: bytes = gzip.compress(chunk_data, 0)
+            cc: bytes = gzip.compress(chunk_data)
         elif compression_type == 2:
-            cc: bytes = zlib.compress(chunk_data, 0)
+            cc: bytes = zlib.compress(chunk_data)
         elif compression_type == 3:
             cc: bytes = chunk_data
         else:
@@ -85,23 +86,38 @@ class region:
         ccc += binary_converter.write_unsigned_byte(compression_type)
         ccc += cc
         size: int = math.ceil(len(ccc) / 4096)
-        ccc += b"\x00" * size
+        remaining: int = (size << 12) - len(ccc)
+        ccc += b"\x00" * remaining
         index_location: int = region.get_location(x, z)
-        sector_count: int = size >> 12
-        file: object = open(self.path, "ab")
-        offset: int = file.tell() >> 12
-        file.write(ccc)
-        file.close()
-        index_location_data: bytes = binary_converter.write_unsigned_triad_be(offset)
-        index_location_data += binary_converter.write_unsigned_byte(sector_count)
-        timestamp_data = binary_converter.write_unsigned_int_be(int(time.time()))
-        file: object = open(self.path, "+rb")
-        ilo: int = (index_location << 2)
-        for i in range(0, 4):
-            file.seek(i + ilo)
-            file.write(index_location_data)
-            file.seek(i + ilo + 4096)
-            file.write(timestamp_data)
+        index_location_data: bytes = b""
+        timestamp_data: bytes = b""
+        chunks_data: bytes = b""
+        offset: int = 2
+        for i in range(0, 1024):
+            if i == (index_location >> 2):
+                sector_count: int = size
+                index_location_data += binary_converter.write_unsigned_triad_be(offset)
+                index_location_data += binary_converter.write_unsigned_byte(sector_count)
+                timestamp_data += binary_converter.write_unsigned_int_be(int(time.time()))
+                chunks_data += ccc
+                offset += sector_count
+            else:
+                file.seek(i << 2)
+                chunk_offset: int = binary_converter.read_unsigned_triad_be(file.read(3))
+                sector_count: int = binary_converter.read_unsigned_byte(file.read(1))
+                if chunk_offset > 0 and sector_count > 0:
+                    index_location_data += binary_converter.write_unsigned_triad_be(offset)
+                    index_location_data += binary_converter.write_unsigned_byte(sector_count)
+                    offset += sector_count
+                    file.seek((i << 2) + 4096)
+                    timestamp_data += file.read(4)
+                    file.seek(chunk_offset << 12)
+                    chunks_data += file.read(sector_count << 12)
+                else:
+                    index_location_data += b"\x00" * 4
+                    timestamp_data += b"\x00" * 4
+        file.seek(0)
+        file.write(index_location_data + timestamp_data + chunks_data)
         file.close()
         
     def remove_chunk_data(self, x: int, z: int) -> None:
