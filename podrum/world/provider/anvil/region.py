@@ -45,8 +45,9 @@ class region:
         self.z: int = int(file_name_shards[2])
         self.format: str = file_name_shards[3]
         if not os.path.isfile(path):
-            file: object = open(path, "wb")
-            file.write(b"\x00" * 8192)
+            with open(path, "wb") as file:
+                file.write(b"\x00" * 8192)
+                file.close()
 
     @staticmethod
     def get_location(x: int, z: int) -> int:
