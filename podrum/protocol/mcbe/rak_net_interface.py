@@ -81,22 +81,22 @@ class rak_net_interface(Thread):
         max_float: float = 3.4028234663852886e+38
         self.server.players[connection.address.token].attributes: list = [
             {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"},
-            {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorbation"}
+            {"min": 0, "max": 20, "current": 20, "default": 20, "name": "minecraft:player.saturation"},
+            {"min": 0, "max": 5, "current": 0, "default": 0, "name": "minecraft:player.exhaustion"},
+            {"min": 0, "max": 1, "current": 0, "default": 0, "name": "minecraft:knockbask_resistance"},
+            {"min": 0, "max": 20, "current": 20, "default": 20, "name": "minecraft:health"},
+            {"min": 0, "max": max_float, "current": 0.10, "default": 0.10, "name": "minecraft:movement"},
+            {"min": 0, "max": 2048, "current": 16, "default": 16, "name": "minecraft:follow_range"},
+            {"min": 0, "max": 20, "current": 20, "default": 20, "name": "minecraft:player.hunger"},
+            {"min": 0, "max": max_float, "current": 1, "default": 1, "name": "minecraft:attack_damage"},
+            {"min": 0, "max": 24791, "current": 0, "default": 0, "name": "minecraft:player.level"},
+            {"min": 0, "max": 1, "current": 0, "default": 0, "name": "minecraft:player.experiance"},
+            {"min": 0, "max": max_float, "current": 0.02, "default": 0.02, "name": "minecraft:underwater_movement"},
+            {"min": -1024, "max": 1024, "current": 0, "default": 0, "name": "minecraft:luck"},
+            {"min": 0, "max": max_float, "current": 1, "default": 1, "name": "minecraft:fall_damage"},
+            {"min": 0, "max": 2, "current": 0.7, "default": 0.7, "name": "minecraft:horse.jump_strength"},
+            {"min": 0, "max": 1, "current": 0, "default": 0, "name": "minecraft:zombie.spawn_reinforcements"},
+            {"min": 0, "max": max_float, "current": 0.02, "default": 0.02, "name": "minecraft:lava_movement"}
         ]
         self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
