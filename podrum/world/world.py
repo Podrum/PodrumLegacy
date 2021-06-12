@@ -108,7 +108,7 @@ class world:
         self.provider.create_player_file(uuid)
         
     def has_player(self, uuid: str) -> bool:
-        self.provider.has_player_file(uuid)
+        return self.provider.has_player_file(uuid)
         
     def get_generator_name(self) -> str:
         return self.provider.get_generator_name()
