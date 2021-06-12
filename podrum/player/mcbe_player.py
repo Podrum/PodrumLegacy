@@ -48,6 +48,7 @@ from protocol.mcbe.packet.resource_pack_client_response_packet import resource_p
 from protocol.mcbe.packet.resource_pack_stack_packet import resource_pack_stack_packet
 from protocol.mcbe.packet.resource_packs_info_packet import resource_packs_info_packet
 from protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
+from protocol.mcbe.packet.set_entity_data_packet import set_entity_data_packet
 from protocol.mcbe.packet.start_game_packet import start_game_packet
 from protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
 from protocol.mcbe.type.login_status_type import login_status_type
@@ -285,6 +286,12 @@ class mcbe_player:
         packet.status: int = status
         packet.encode()
         self.send_packet(packet.data)
+        
+    def send_metadata(self, metadata) -> None:
+        packet: object = set_entity_data_packet()
+        packet.runtime_entity_id: int = self.entity_id
+        packet.metadata = metadata
+        packet.tick: int = 0
     
     def send_packet(self, data: bytes) -> None:
         new_packet: object = game_packet()
