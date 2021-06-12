@@ -150,7 +150,7 @@ class anvil:
                 stream.buffer: bytes = b""
                 stream.pos: int = 0
                 stream.write_root_tag(tag)
-                with file as open(os.path.join(self.world_dir, "level.dat"), "wb")
+                with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))
                     file.flush()
                     file.close()
@@ -267,8 +267,10 @@ class anvil:
             ], tag_ids.float_tag)
         ])
         stream.write_root_tag(tag)
-        file: object = open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb")
-        file.write(gzip.compress(stream.data))
+        with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb") as file:
+            file.write(gzip.compress(stream.data))
+            file.flush()
+            file.close()
     
     def create_options_file(self) -> None:
         stream: object = nbt_be_binary_stream()
@@ -297,5 +299,7 @@ class anvil:
             ])
         ])
         stream.write_root_tag(tag)
-        file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
-        file.write(gzip.compress(stream.data))
+        with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
+            file.write(gzip.compress(stream.data))
+            file.flush()
+            file.close()
