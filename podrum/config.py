@@ -42,8 +42,12 @@ class config:
         if not os.path.isfile(path):
             self.save()
         if extension == "json":
-            self.data: dict = json.load(open(path, "rt"))
+            with file as open(self.path, "rt"):
+                self.data: dict = json.load(file)
+                file.close()
             
     def save(self) -> None:
         if self.extension == "json":
-            json.dump(self.data, open(self.path, "wt"), indent = 4)
+            with file as open(self.path, "wt"):
+                json.dump(self.data, file, indent = 4)
+                file.close()
