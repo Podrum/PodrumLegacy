@@ -152,7 +152,6 @@ class anvil:
                 stream.write_root_tag(tag)
                 with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))
-                    file.flush()
                     file.close()
             
     def get_player_option(self, uuid: str, name: str) -> object:
@@ -176,7 +175,6 @@ class anvil:
                 stream.write_root_tag(tag)
                 with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))
-                    file.flush()
                     file.close()
             
     def get_spawn_position(self) -> object:
@@ -269,7 +267,6 @@ class anvil:
         stream.write_root_tag(tag)
         with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb") as file:
             file.write(gzip.compress(stream.data))
-            file.flush()
             file.close()
     
     def create_options_file(self) -> None:
@@ -301,5 +298,4 @@ class anvil:
         stream.write_root_tag(tag)
         with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
             file.write(gzip.compress(stream.data))
-            file.flush()
             file.close()
