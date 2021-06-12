@@ -99,7 +99,7 @@ class rak_net_interface(Thread):
             {"min": 0, "max": 1, "current": 0, "default": 0, "name": "minecraft:zombie.spawn_reinforcements"},
             {"min": 0, "max": max_float, "current": 0.02, "default": 0.02, "name": "minecraft:lava_movement"}
         ]
-        t: object = metadata_dictionary_type.
+        t: object = metadata_dictionary_type
         self.server.players[connection.address.token].metadata: dict = {
             t.key_player_index: {"type": t.type_long, "value": 0},
             t.max_air: {"type": t.type_short, "value": 400},
