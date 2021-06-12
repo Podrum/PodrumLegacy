@@ -70,7 +70,7 @@ class metadata_dictionary_type:
     key_interactive_tag: int = 39
     key_npc_skin_id: int = 40
     key_url_tag: int = 41
-    key_max_airdata_max_air: int = 42
+    key_max_air: int = 42
     key_mark_variant: int = 43
     key_container_type: int = 44
     key_container_base_size: int = 45
