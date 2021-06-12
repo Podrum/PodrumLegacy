@@ -31,6 +31,7 @@
 
 from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.game_packet import game_packet
+from protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 from player.mcbe_player import mcbe_player
 from rak_net.server import server as rak_net_server
 from threading import Thread
@@ -98,6 +99,16 @@ class rak_net_interface(Thread):
             {"min": 0, "max": 1, "current": 0, "default": 0, "name": "minecraft:zombie.spawn_reinforcements"},
             {"min": 0, "max": max_float, "current": 0.02, "default": 0.02, "name": "minecraft:lava_movement"}
         ]
+        t: object = metadata_dictionary_type.
+        self.server.players[connection.address.token].metadata: dict = {
+            t.key_player_index: {"type": t.type_long, "value": 0},
+            t.max_air: {"type": t.type_short, "value": 400},
+            t.key_lead_holder_eid: {"type": t.type_long, "value": -1},
+            t.key_scale: {"type": t.type_float, "value": 1},
+            t.key_boundingbox_width: {"type": t.type_float, "value": 0.6},
+            t.key_boundingbox_height: {"type": t.type_float, "value": 1.8},
+            t.key_air: {"type": t.type_short, "value": 0}
+        }
         self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} connected.")
