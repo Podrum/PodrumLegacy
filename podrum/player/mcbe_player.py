@@ -201,6 +201,7 @@ class mcbe_player:
             self.send_start_game()
             self.send_creative_content_packet()
             self.send_biome_definition_list_packet()
+            self.send_metadata({})
             #self.send_item_component_packet()
             #self.send_available_entity_identifiers_packet()
             
