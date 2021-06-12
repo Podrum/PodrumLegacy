@@ -130,42 +130,54 @@ class anvil:
         reg.put_chunk_data(chunk_index[0], chunk_index[1], anvil.to_anvil_chunk(chunk_in).nbt_serialize())
                                         
     def get_option(self, name: str) -> object:
-        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
-        tag: object = stream.read_root_tag()
-        return tag.get_tag("Data").get_tag(name).value
+        with open(os.path.join(self.world_dir, "level.dat"), "rb") as file:
+            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            file.close()
+            tag: object = stream.read_root_tag()
+            return tag.get_tag("Data").get_tag(name).value
                                         
     def set_option(self, name: str, value: object) -> None:
-        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, "level.dat"), "rb").read()))
-        tag: object = stream.read_root_tag()
-        data_tag: bytes = tag.get_tag("Data")
-        if data_tag.has_tag(name):
-            option_tag: object = data_tag.get_tag(name)
-            option_tag.value = value
-            data_tag.set_tag(option_tag)
-            tag.set_tag(data_tag)
-            stream.buffer: bytes = b""
-            stream.pos: int = 0
-            stream.write_root_tag(tag)
-            file: object = open(os.path.join(self.world_dir, "level.dat"), "wb")
-            file.write(gzip.compress(stream.data))
+        with open(os.path.join(self.world_dir, "level.dat"), "rb") as file:
+            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            file.close()
+            tag: object = stream.read_root_tag()
+            data_tag: bytes = tag.get_tag("Data")
+            if data_tag.has_tag(name):
+                option_tag: object = data_tag.get_tag(name)
+                option_tag.value = value
+                data_tag.set_tag(option_tag)
+                tag.set_tag(data_tag)
+                stream.buffer: bytes = b""
+                stream.pos: int = 0
+                stream.write_root_tag(tag)
+                with file as open(os.path.join(self.world_dir, "level.dat"), "wb")
+                    file.write(gzip.compress(stream.data))
+                    file.flush()
+                    file.close()
             
     def get_player_option(self, uuid: str, name: str) -> object:
-        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb").read()))
-        tag: object = stream.read_root_tag()
-        return tag.get_tag(name).value
+        with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb") as file:
+            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            file.close()
+            tag: object = stream.read_root_tag()
+            return tag.get_tag(name).value
     
     def set_player_option(self, uuid: str, name: str, value: object) -> None:
-        stream: object = nbt_be_binary_stream(gzip.decompress(open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb").read()))
-        tag: object = stream.read_root_tag()
-        if tag.has_tag(name):
-            option_tag: object = tag.get_tag(name)
-            option_tag.value = value
-            tag.set_tag(option_tag)
-            stream.buffer: bytes = b""
-            stream.pos: int = 0
-            stream.write_root_tag(tag)
-            file: object = open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb")
-            file.write(gzip.compress(stream.data))
+        with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb") as file:
+            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            file.close()
+            tag: object = stream.read_root_tag()
+            if tag.has_tag(name):
+                option_tag: object = tag.get_tag(name)
+                option_tag.value = value
+                tag.set_tag(option_tag)
+                stream.buffer: bytes = b""
+                stream.pos: int = 0
+                stream.write_root_tag(tag)
+                with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb") as file:
+                    file.write(gzip.compress(stream.data))
+                    file.flush()
+                    file.close()
             
     def get_spawn_position(self) -> object:
         return vector_3(self.get_option("SpawnX"), self.get_option("SpawnY"), self.get_option("SpawnZ"))
