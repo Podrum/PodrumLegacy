@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-class metadata_flags_1_type:
+class metadata_flags_type:
     flag_onfire: 0,
     flag_sneaking: 1,
     flag_riding: 2,
