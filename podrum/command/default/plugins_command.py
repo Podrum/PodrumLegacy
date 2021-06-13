@@ -30,10 +30,11 @@
 ################################################################################
 
 class plugins_command:
-    def __init__(self) -> None:
+    def __init__(self, server: object) -> None:
+        self.server: object = server
         self.name: str = "plugins"
         self.description: str = "plugins command"
         self.aliases: list = ["pl"]
     
-    def execute(self, args: list, sender: object, server: object) -> None:
-        sender.send_message(f"Plugins({len(server.plugin_manager.plugins)}): {', '.join(server.plugin_manager.plugins)}")
+    def execute(self, args: list, sender: object) -> None:
+        sender.send_message(f"Plugins({len(self.server.plugin_manager.plugins)}): {', '.join(self.server.plugin_manager.plugins)}")
