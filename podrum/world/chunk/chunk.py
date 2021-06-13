@@ -94,7 +94,7 @@ class chunk:
         stream_2.write_var_int(len(self.biomes))
         if cache_enabled:
             if len(biomes_blob) > 0:
-            stream.write_unsigned_long_le(xxhash.xxh64(biomes_blob).intdigest())
+                stream.write_unsigned_long_le(xxhash.xxh64(biomes_blob).intdigest())
         stream_2.write(biomes_blob)
         stream_2.write_unsigned_byte(0)
         stream.write_var_int(len(stream_2.data))
