@@ -31,6 +31,7 @@
 
 from binary_utils.binary_stream import binary_stream
 from world.chunk.sub_chunk import sub_chunk
+import xxhash
 
 class chunk:
     def __init__(self, x: int, z: int, sub_chunks: dict = {}, biomes: list = []) -> None:
