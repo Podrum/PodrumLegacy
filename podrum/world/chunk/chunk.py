@@ -78,7 +78,7 @@ class chunk:
             stream.write_unsigned_byte(biome)
         return stream.data
 
-    def network_serialize(self, cache_enabled: bool = True) -> bytes:
+    def network_serialize(self, cache_enabled: bool = False) -> bytes:
         stream: object = binary_stream()
         stream_2: object = binary_stream()
         stream.write_var_int(self.get_sub_chunk_send_count())
