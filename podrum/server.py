@@ -69,7 +69,7 @@ from world.world_manager import world_manager
 class server:
     def __init__(self) -> None:
         self.setup_config()
-        self.command_manager: object = command_manager(self)
+        self.command_manager: object = command_manager()
         self.command_interface: object = command_interface(self)
         self.event_manager: object = event_manager(self)
         self.block_manager: object = block_manager()
