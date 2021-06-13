@@ -71,12 +71,21 @@ class chunk:
                 return index + (i << 4)
         return -1
 
-    def network_serialize(self) -> object:
+    def network_serialize(self, cache_enabled: bool = True) -> object:
         stream: object = binary_stream()
+        stream_2: object = binary_stream()
+        stream.write_var_int(self.get_sub_chunk_send_count())
+        stream.write_bool(cache_enabled)
+        if cache_enabled:
+            stream.write_var_int(self.get_sub_chunk_send_count())
         for y in range(0, self.get_sub_chunk_send_count()):
-            self.sub_chunks[y].network_serialize(stream)
-        stream.write_var_int(len(self.biomes))
+            blob: bytes = self.sub_chunks[y].network_serialize(stream)
+            if cache_enabled:
+                stream.write_unsigned_long_le(xxhash.xxh64(blob).intdigest())
+            stream_2.write(blob)
+        stream_2.write_var_int(len(self.biomes))
         for biome in self.biomes:
-            stream.write_unsigned_byte(biome)
-        stream.write_unsigned_byte(0)
+            stream_2.write_unsigned_byte(biome)
+        stream_2.write_unsigned_byte(0)
+        stream.write_byte_array(stream_2.data)
         return stream.data
