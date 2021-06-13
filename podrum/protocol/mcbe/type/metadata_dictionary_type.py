@@ -148,8 +148,11 @@ class metadata_dictionary_type:
     key_nearby_cured_discount_timestamp: int = 117
     key_hitbox: int = 118
     key_is_buoyant: int = 119
-    key_buoyancy_data: int = 120
-    key_goat_horn_count: int = 121
+    key_base_runtime_id: int = 120
+    key_freezing_effect_strength: int = 121
+    key_buoyancy_data: int = 122
+    key_goat_horn_count: int = 123
+    key_update_properties: int = 124
     type_byte: int = 0
     type_short: int = 1
     type_int: int = 2
