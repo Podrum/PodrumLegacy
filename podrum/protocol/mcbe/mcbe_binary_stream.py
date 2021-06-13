@@ -188,6 +188,7 @@ class mcbe_binary_stream(binary_stream):
     def read_game_rule(self) -> dict:
         game_rule: dict = {
             "name": self.read_string(),
+            "editable": self.read_bool(),
             "type": self.read_var_int()
         }
         if game_rule["type"] == gamerule_type.type_bool:
@@ -200,6 +201,7 @@ class mcbe_binary_stream(binary_stream):
         
     def write_game_rule(self, value: dict) -> None:
         self.write_string(value["name"])
+        self.write_bool(value["editable"])
         self.write_var_int(value["type"])
         if value["type"] == gamerule_type.type_bool:
             self.write_bool(value["value"])
