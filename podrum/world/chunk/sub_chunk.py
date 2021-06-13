@@ -29,6 +29,7 @@
 #                                                                              #
 ################################################################################
 
+from binary_utils.binary_stream import binary_stream
 from world.chunk.block_storage import block_storage
 
 class sub_chunk:
