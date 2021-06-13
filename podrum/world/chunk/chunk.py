@@ -88,5 +88,6 @@ class chunk:
         for biome in self.biomes:
             stream_2.write_unsigned_byte(biome)
         stream_2.write_unsigned_byte(0)
-        stream.write_byte_array(stream_2.data)
+        stream.write_var_int(len(stream_2.data))
+        stream.write(stream_2.data)
         return stream.data
