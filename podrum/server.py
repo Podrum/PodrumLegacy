@@ -84,12 +84,12 @@ class server:
         self.start()
 
     def register_default_commands(self) -> None:
-        self.command_manager.register(help_command())
-        self.command_manager.register(plugins_command())
-        self.command_manager.register(reload_command())
-        self.command_manager.register(say_command())
-        self.command_manager.register(stop_command())
-        self.command_manager.register(version_command())
+        self.command_manager.register(help_command(self))
+        self.command_manager.register(plugins_command(self))
+        self.command_manager.register(reload_command(self))
+        self.command_manager.register(say_command(self))
+        self.command_manager.register(stop_command(self))
+        self.command_manager.register(version_command(self))
         
     def register_default_providers(self) -> None:
         self.provider_manager.register_provider(anvil)
