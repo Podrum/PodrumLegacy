@@ -71,24 +71,31 @@ class chunk:
             if index != -1:
                 return index + (i << 4)
         return -1
+    
+    def network_serialize_biomes(self) -> bytes:
+        stream: object = binary_stream()
+        for biome in self.biomes:
+            stream.write_unsigned_byte(biome)
+        return stream.data
 
-    def network_serialize(self, cache_enabled: bool = True) -> object:
+    def network_serialize(self, cache_enabled: bool = True) -> bytes:
         stream: object = binary_stream()
         stream_2: object = binary_stream()
         stream.write_var_int(self.get_sub_chunk_send_count())
         stream.write_bool(cache_enabled)
+        biomes_blob: bytes = self.network_serialize_biomes()
         if cache_enabled:
-            stream.write_var_int(self.get_sub_chunk_send_count() + len(self.biomes))
+            stream.write_var_int(self.get_sub_chunk_send_count() + (1 if len(biomes_blob) > 0 else 0))
         for y in range(0, self.get_sub_chunk_send_count()):
             blob: bytes = self.sub_chunks[y].network_serialize()
             if cache_enabled:
                 stream.write_unsigned_long_le(xxhash.xxh64(blob).intdigest())
             stream_2.write(blob)
         stream_2.write_var_int(len(self.biomes))
-        for biome in self.biomes:
-            if cache_enabled:
-                stream.write_unsigned_long_le(xxhash.xxh64(bytes([biome])).intdigest())
-            stream_2.write_unsigned_byte(biome)
+        if cache_enabled:
+            if len(biomes_blob) > 0:
+            stream.write_unsigned_long_le(xxhash.xxh64(biomes_blob).intdigest())
+        stream_2.write(biomes_blob)
         stream_2.write_unsigned_byte(0)
         stream.write_var_int(len(stream_2.data))
         stream.write(stream_2.data)
