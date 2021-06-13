@@ -32,12 +32,13 @@
 import os
 
 class stop_command:
-    def __init__(self) -> None:
+    def __init__(self, server: object) -> None:
+        self.server: object = server
         self.name: str = "stop"
         self.description: str = "stop command"
     
-    def execute(self, args: list, sender: object, server: object) -> None:
+    def execute(self, args: list, sender: object) -> None:
         sender.send_message("Stopping server...")
-        server.stop()
+        self.server.stop()
         sender.send_message("Server stopped.")
         os.kill(os.getpid(), 15)
