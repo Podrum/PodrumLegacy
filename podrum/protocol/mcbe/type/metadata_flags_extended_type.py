@@ -29,7 +29,7 @@
 #                                                                              #
 ################################################################################
 
-class metadata_flags_2_type:
+class metadata_flags_extended_type:
     flag_sneezing: 0,
     flag_trusting: 1,
     flag_rolling: 2,
