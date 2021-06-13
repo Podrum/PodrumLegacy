@@ -78,7 +78,7 @@ class chunk:
         stream.write_var_int(self.get_sub_chunk_send_count())
         stream.write_bool(cache_enabled)
         if cache_enabled:
-            stream.write_var_int(self.get_sub_chunk_send_count())
+            stream.write_var_int(self.get_sub_chunk_send_count() + len(self.biomes))
         for y in range(0, self.get_sub_chunk_send_count()):
             blob: bytes = self.sub_chunks[y].network_serialize()
             if cache_enabled:
@@ -86,6 +86,8 @@ class chunk:
             stream_2.write(blob)
         stream_2.write_var_int(len(self.biomes))
         for biome in self.biomes:
+            if cache_enabled:
+                stream.write_unsigned_long_le(xxhash.xxh64(bytes([biome])).intdigest())
             stream_2.write_unsigned_byte(biome)
         stream_2.write_unsigned_byte(0)
         stream.write_var_int(len(stream_2.data))
