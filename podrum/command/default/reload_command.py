@@ -30,11 +30,12 @@
 ################################################################################
 
 class reload_command:
-    def __init__(self) -> None:
+    def __init__(self, server: object) -> None:
+        self.server: object = server
         self.name: str = "reload"
         self.description: str = "reload command"
     
-    def execute(self, args: list, sender: object, server: object) -> None:
+    def execute(self, args: list, sender: object) -> None:
         sender.send_message("Reloading...")
-        server.plugin_manager.reload_all()
+        self.server.plugin_manager.reload_all()
         sender.send_message("Successfully reloaded.")
