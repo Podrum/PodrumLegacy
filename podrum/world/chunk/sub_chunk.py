@@ -29,7 +29,6 @@
 #                                                                              #
 ################################################################################
 
-from binary_utils.binary_stream import binary_stream
 from world.chunk.block_storage import block_storage
 
 class sub_chunk:
@@ -58,10 +57,8 @@ class sub_chunk:
     def get_highest_block_at(self, x: int, z: int, layer: int) -> int:
         return self.get_block_storage(layer).get_highest_block_at(x, z)
 
-    def network_serialize(self) -> bytes:
-        stream: object = binary_stream()
+    def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
         for storage in self.block_storages.values():
             storage.network_serialize(stream)
-        return stream.data
