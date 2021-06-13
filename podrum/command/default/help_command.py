@@ -30,12 +30,13 @@
 ################################################################################
 
 class help_command:
-    def __init__(self) -> None:
+    def __init__(self, server: object) -> None:
+        self.server: object = server
         self.name: str = "help"
         self.description: str = "help command"
         self.aliases: list = ["?"]
     
-    def execute(self, args: list, sender: object, server: object) -> None:
+    def execute(self, args: list, sender: object) -> None:
         sender.send_message("--- Showing help ---")
-        for command in server.command_manager.commands:
+        for command in self.server.command_manager.commands:
             sender.send_message(f"/{command.name}: {command.description}")
