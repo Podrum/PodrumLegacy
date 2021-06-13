@@ -30,8 +30,7 @@
 ################################################################################
 
 class command_manager:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+    def __init__(self) -> None:
         self.commands: list = []
 
     def register(self, command: object) -> None:
@@ -50,10 +49,10 @@ class command_manager:
     def execute(self, name: str, args: list, sender: object) -> None:
         for command in self.commands:
             if command.name == name:
-                command.execute(args, sender, self.server)
+                command.execute(args, sender)
                 break
             if hasattr(command, "aliases"):
                 for alias in command.aliases:
                     if alias == name:
-                        command.execute(args, sender, self.server)
+                        command.execute(args, sender)
                         break
