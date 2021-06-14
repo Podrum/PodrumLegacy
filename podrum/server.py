@@ -55,7 +55,7 @@ class server:
         self.setup_config()
         self.command_manager: object = command_manager()
         self.command_interface: object = command_interface(self)
-        self.event_manager: object = event_manager(self)
+        self.event_manager: object = event_manager()
         self.block_manager: object = block_manager()
         self.provider_manager: object = provider_manager()
         self.generator_manager: object = generator_manager()
