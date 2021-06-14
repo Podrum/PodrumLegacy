@@ -592,3 +592,25 @@ class mcbe_binary_stream(binary_stream):
             self.write_float_le(player_attribute["current"])
             self.write_float_le(player_attribute["default"])
             self.write_string(player_attribute["name"])
+            
+    def read_transaction_use_item(self) -> dict:
+        return {
+            "action_type": self.read_var_int(),
+            "block_position": self.read_vector_3_int(),
+            "face": self.read_var_int(),
+            "hotbar_slot": self.read_var_int(),
+            "held_item": self.read_item(),
+            "player_position": self.read_vector_3_float(),
+            "click_position": self.read_vector_3_float(),
+            "block_runtime_id": self.read_var_int()
+        }
+    
+    def write_transaction_use_item(self, value: dict) -> None:
+        self.write_var_int(value["action_type"])
+        self.write_vector_3_int(value["block_position"])
+        self.write_var_int(value["face"])
+        self.write_var_int(value["hotbar_slot"])
+        self.write_item(value["held_item"])
+        self.write_vector_3_float(value["player_position"])
+        self.write_vector_3_float(value["click_position"])
+        self.write_var_int(value["block_runtime_id"])
