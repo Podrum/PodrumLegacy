@@ -21,4 +21,4 @@ class plugins_command:
         self.aliases: list = ["pl"]
     
     def execute(self, args: list, sender: object) -> None:
-        sender.send_message(f"Plugins({len(self.server.plugin_manager.plugins)}): {', '.join(self.server.plugin_manager.plugins)}")
+        sender.send_message(f"Plugins({len(self.server.managers.plugin_manager.plugins)}): {', '.join(self.server.managers.plugin_manager.plugins)}")
