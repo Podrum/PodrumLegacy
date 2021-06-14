@@ -15,13 +15,13 @@
 
 class provider_manager:
     def __init__(self):
-        self._providers: dict = {}
+        self.providers: dict = {}
           
     def register_provider(self, provider: object) -> None:
-        self._providers[provider.provider_name]: object = provider
+        self.providers[provider.provider_name]: object = provider
           
     def get_provider(self, provider_name: str) -> object:
-        return self._providers[provider_name]
+        return self.providers[provider_name]
       
     def remove_provider(self, provider_name: str) -> None:
-        del self._providers[provider_name]
+        del self.providers[provider_name]
