@@ -113,7 +113,7 @@ class metadata_storage:
         else:
             flags: int = self.get_long(metadata_dictionary_type.key_flags_extended)
         if flags is not None:
-            return flags & (1 << flag)) > 0
+            return (flags & (1 << flag)) > 0
         
     def set_flag(self, flag: int, value: bool, extended: bool = False) -> None:
         current_value: bool = self.get_flag(flag, extended)
