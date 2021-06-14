@@ -83,16 +83,14 @@ class rak_net_interface(Thread):
             {"min": 0, "max": 1, "current": 0, "default": 0, "name": "minecraft:zombie.spawn_reinforcements"},
             {"min": 0, "max": max_float, "current": 0.02, "default": 0.02, "name": "minecraft:lava_movement"}
         ]
-        t: object = metadata_dictionary_type
-        self.server.players[connection.address.token].metadata: dict = {
-            t.key_flags: {"type": t.type_long, "value": 0 ^ (1 << (47 % 64)) ^ (1 << (48 % 64))},
-            t.key_max_air: {"type": t.type_short, "value": 400},
-            t.key_lead_holder_eid: {"type": t.type_long, "value": -1},
-            t.key_scale: {"type": t.type_float, "value": 1},
-            t.key_boundingbox_width: {"type": t.type_float, "value": 0.6},
-            t.key_boundingbox_height: {"type": t.type_float, "value": 1.8},
-            t.key_air: {"type": t.type_short, "value": 0}
-        }
+        self.server.players[connection.address.token].metadata_storage.set_short(metadata_dictionary_type.key_max_air, 400)
+        self.server.players[connection.address.token].metadata_storage.set_long(metadata_dictionary_type.key_lead_holder_eid, -1)
+        self.server.players[connection.address.token].metadata_storage.set_float(metadata_dictionary_type.key_scale, 1)
+        self.server.players[connection.address.token].metadata_storage.set_float(metadata_dictionary_type.key_boundingbox_width, 0.6)
+        self.server.players[connection.address.token].metadata_storage.set_float(metadata_dictionary_type.key_boundingbox_height, 1.8)
+        self.server.players[connection.address.token].metadata_storage.set_short(metadata_dictionary_type.key_air, 0)
+        self.server.players[connection.address.token].metadata_storage.set_flag(47, True)
+        self.server.players[connection.address.token].metadata_storage.set_flag(48, True)
         self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} connected.")
