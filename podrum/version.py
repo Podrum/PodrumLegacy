@@ -33,4 +33,4 @@ class version:
     podrum_version: str = "0.0.6"
     podrum_api_version: str = "0.0.1"
     podrum_codename: str = "Platinum"
-    podrum_license: str = "MIT"
+    podrum_license: str = "GPL v2.0"
