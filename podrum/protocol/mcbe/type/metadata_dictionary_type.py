@@ -143,6 +143,6 @@ class metadata_dictionary_type:
     type_float: int = 3
     type_string: int = 4
     type_compound: int = 5
-    type_vector_3_i: int = 6
+    type_vector_3_int: int = 6
     type_long: int = 7
-    type_vector_3_f: int = 8
+    type_vector_3_float: int = 8
