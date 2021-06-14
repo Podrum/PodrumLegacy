@@ -15,15 +15,15 @@
 
 class generator_manager:
     def __init__(self):
-        self._generators: dict = {}
+        self.generators: dict = {}
           
     def register_generator(self, generator: object) -> None:
-        self._generators[generator.generator_name]: object = generator
+        self.generators[generator.generator_name]: object = generator
           
     def get_generator(self, generator_name: str) -> object:
-        if generator_name in self._generators:
-            return self._generators[generator_name]
+        if generator_name in self.generators:
+            return self.generators[generator_name]
       
     def remove_generator(self, generator_name: str) -> None:
-        if generator_name in self._generators:
-            del self._generators[generator_name]
+        if generator_name in self.generators:
+            del self.generators[generator_name]
