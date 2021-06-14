@@ -13,18 +13,22 @@
 #                                                       #
 #########################################################
 
+from typing import Callable
+
 class event_manager:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+    def __init__(self) -> None:
         self.events: dict = {}
 
-    def register(self, event: str, function: object) -> None:
-        if event in self.events:
-            self.events[event].append(function)
-        else:
-            self.events[event]: list = [function]
+    def call_event(self, event_name: str, *args) -> None:
+        if event_name in self.events:
+            for event_entry in self.events[event_name]:
+                event_entry(*args)
 
-    def dispatch(self, event: str, *args) -> None:
-        if event in self.events:
-            for function in self.events[event]:
-                function(*args, self.server)
+    def register_event(self, event_name: str, event_entry: Callable) -> None:
+        if event_name in self._events:
+            self.events[event_name].append(event_entry)
+        else:
+            self.events[event_name]: list = [event_entry]
+                
+    def remove_event(self, event_name: str) -> None:
+        del self.events[event_name]
