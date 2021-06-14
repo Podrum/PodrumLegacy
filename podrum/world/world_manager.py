@@ -30,7 +30,7 @@ class world_manager:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_folder_name)
         world_obj: object = world(
-            self.server.provider_manager.get_provider(
+            self.server.managers.provider_manager.get_provider(
                 self.server.config.data["world_provider"]
             )
             (world_path),
