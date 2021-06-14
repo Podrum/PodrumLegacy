@@ -21,7 +21,9 @@ class provider_manager:
         self.providers[provider.provider_name]: object = provider
           
     def get_provider(self, provider_name: str) -> object:
-        return self.providers[provider_name]
+        if provider_name in self.providers:
+            return self.providers[provider_name]
       
     def remove_provider(self, provider_name: str) -> None:
-        del self.providers[provider_name]
+        if provider_name in self.providers:
+            del self.providers[provider_name]
