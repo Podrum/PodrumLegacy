@@ -20,14 +20,14 @@ class metadata_storage:
         self.metadata: dict = {}
           
     def get_entry(self, key: int) -> dict:
-        if key in metadata:
+        if key in self.metadata:
             return self.metadata[key]
           
     def set_entry(self, key: int, value: object, entry_type: int) -> None:
         self.metadata[key]: dict = {"value": value, "type": entry_type}
           
     def get_byte(self, key: int) -> int:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_byte:
                 return entry["value"]
@@ -36,7 +36,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_byte)
         
     def get_short(self, key: int) -> int:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_short:
                 return entry["value"]
@@ -45,7 +45,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_short)
         
     def get_int(self, key: int) -> int:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_int:
                 return entry["value"]
@@ -54,7 +54,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_int)
         
     def get_float(self, key: int) -> float:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_float:
                 return entry["value"]
@@ -63,7 +63,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_float)
         
     def get_string(self, key: int) -> str:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_string:
                 return entry["value"]
@@ -72,7 +72,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_string)
         
     def get_compound(self, key: int) -> object:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_compound:
                 return entry["value"]
@@ -81,7 +81,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_compound)
         
     def get_vector_3_int(self, key: int) -> object:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_vector_3_int:
                 return entry["value"]
@@ -90,7 +90,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_vector_3_int)
         
     def get_long(self, key: int) -> int:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_long:
                 return entry["value"]
@@ -99,7 +99,7 @@ class metadata_storage:
         self.set_entry(key, value, metadata_dictionary_type.type_long)
         
     def get_vector_3_float(self, key: int) -> object:
-        entry: dict = self.get_entry()
+        entry: dict = self.get_entry(key)
         if entry is not None:
             if entry["type"] == metadata_dictionary_type.type_vector_3_float:
                 return entry["value"]
