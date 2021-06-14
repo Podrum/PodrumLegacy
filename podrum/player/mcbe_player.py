@@ -49,7 +49,7 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.world: object = server.world
-        self.metadata_storage: object = metadata_storage
+        self.metadata_storage: object = metadata_storage()
         self.attributes: list = []
         
     def send_start_game(self) -> None:
