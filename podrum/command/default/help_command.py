@@ -22,5 +22,5 @@ class help_command:
     
     def execute(self, args: list, sender: object) -> None:
         sender.send_message("--- Showing help ---")
-        for command in self.server.command_manager.commands:
+        for command in self.server.managers.command_manager.commands:
             sender.send_message(f"/{command.name}: {command.description}")
