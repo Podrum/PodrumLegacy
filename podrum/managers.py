@@ -52,7 +52,7 @@ class managers:
         self.plugin_manager: object = plugin_manager(server)
         self.generator_manager: object = generator_manager()
         self.provider_manager: object = provider_manager()
-        self.world_manager: object = world_manager()
+        self.world_manager: object = world_manager(server)
         self.register_defaults()
             
     def register_default_blocks(self) -> None:
