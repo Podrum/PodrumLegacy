@@ -16,6 +16,7 @@
 from game_data.mcbe.item_id_map import item_id_map
 from geometry.vector_2 import vector_2
 from geometry.vector_3 import vector_3
+from protocol.mcbe.entity.metadata_storage import metadata_storage
 from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
 from protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
@@ -48,7 +49,7 @@ class mcbe_player:
         self.server: object = server
         self.entity_id: int = entity_id
         self.world: object = server.world
-        self.metadata: dict = {}
+        self.metadata_storage: object = metadata_storage
         self.attributes: list = []
         
     def send_start_game(self) -> None:
@@ -279,7 +280,7 @@ class mcbe_player:
     def send_metadata(self) -> None:
         packet: object = set_entity_data_packet()
         packet.runtime_entity_id: int = self.entity_id
-        packet.metadata: dict = self.metadata
+        packet.metadata: dict = self.metadata_storage.metadata
         packet.tick: int = 0
         packet.encode()
         self.send_packet(packet.data)
