@@ -106,3 +106,26 @@ class metadata_storage:
              
     def set_vector_3_float(self, key: int, value: object) -> None:
         self.set_entry(key, value, metadata_dictionary_type.type_vector_3_float)
+        
+    def get_flag(self, flag: int, extended: bool = False) -> bool:
+        if not extended:
+            flags: int = self.get_long(metadata_dictionary_type.key_flags)
+        else:
+            flags: int = self.get_long(metadata_dictionary_type.key_flags_extended)
+        if flags is not None:
+            return flags & (1 << flag)) > 0
+        
+    def set_flag(self, flag: int, value: bool, extended: bool = False) -> None:
+        current_value: bool = self.get_flag(flag, extended)
+        if current_value is None or current_value != value:
+            if current_value is None:
+                flags: int = 0
+            else:
+                if not extended:
+                    flags: int = self.get_long(metadata_dictionary_type.key_flags)
+                else:
+                    flags: int = self.get_long(metadata_dictionary_type.key_flags_extended)
+            if not extended:
+                self.set_long(metadata_dictionary_type.key_flags, flags ^ (1 << flag))
+            else:
+                self.set_long(metadata_dictionary_type.key_flags_extended, flags ^ (1 << flag))
