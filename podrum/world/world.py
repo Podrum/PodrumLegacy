@@ -25,7 +25,7 @@ class world:
     def load_chunk(self, x: int, z: int) -> None:
         chunk: object = self.provider.get_chunk(x, z)
         if chunk is None:
-            generator: object = self.server.generator_manager.get_generator(self.get_generator_name())
+            generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
             chunk: object = generator.generate(x, z, self)
         self.chunks[f"{x} {z}"]: object = chunk
             
@@ -46,7 +46,7 @@ class world:
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
         block_and_meta: tuple = block_map.get_name_and_meta(self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f))
-        return self.server.block_manager.get_block(block_and_meta[0], block_and_meta[1])
+        return self.server.managers.block_manager.get_block(block_and_meta[0], block_and_meta[1])
         
     def set_block(self, x: int, y: int, z: int, block: object) -> None:
         self.chunks[f"{x >> 4} {z >> 4}"].set_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, block.runtime_id)
