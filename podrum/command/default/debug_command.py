@@ -32,7 +32,7 @@ class debug_command:
         os_name: str = platform.system()
         ram_usage: int = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         if os_name == "Linux":
-            sender.send_message(f"Threre are {"%.3f" % (ram_usage * 0.001)}mb ram in use.")
+            sender.send_message(f"Threre are {(ram_usage * 0.001)}mb ram in use.")
         elif os_name == "Darwin":
-            sender.send_message(f"Threre are {"%.3f" % (ram_usage * 0.001 * 0.001)}mb ram in use.")
+            sender.send_message(f"Threre are {(ram_usage * 0.001 * 0.001)}mb ram in use.")
         
