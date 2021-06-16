@@ -27,6 +27,7 @@ from block.default.granite_smooth import granite_smooth
 from block.default.grass import grass
 from block.default.stone import stone
 from command.command_manager import command_manager
+from command.default.debug_command import debug_command
 from command.default.help_command import help_command
 from command.default.plugins_command import plugins_command
 from command.default.reload_command import reload_command
@@ -70,6 +71,7 @@ class managers:
         self.block_manager.register_block(stone())
             
     def register_default_commands(self) -> None:
+        self.command_manager.register(debug_command(self.server))
         self.command_manager.register(help_command(self.server))
         self.command_manager.register(plugins_command(self.server))
         self.command_manager.register(reload_command(self.server))
