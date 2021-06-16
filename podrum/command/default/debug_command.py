@@ -21,18 +21,18 @@ class debug_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "debug"
-        self.description: str = "debug command"
+        self.description: str = "Debug tool for Podrum"
     
     def execute(self, args: list, sender: object) -> None:
         thread_count: int = threading.active_count()
         if thread_count > 1:
-            sender.send_message(f"Threre are {thread_count} active threads.")
+            sender.send_message(f"There are {thread_count} active threads.")
         else:
             sender.send_message(f"Threre are {thread_count} active threads.")
         os_name: str = platform.system()
         ram_usage: int = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         if os_name == "Linux":
-            sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001)}mb ram in use.")
+            sender.send_message(f"There are {'%.2f' % (ram_usage * 0.001)}mb ram in use.")
         elif os_name == "Darwin":
-            sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001 * 0.001)}mb ram in use.")
+            sender.send_message(f"There are {'%.2f' % (ram_usage * 0.001 * 0.001)}mb ram in use.")
         
