@@ -26,9 +26,9 @@ class debug_command:
     def execute(self, args: list, sender: object) -> None:
         thread_count: int = threading.active_count()
         if thread_count > 1:
-            sender.send_message(f"Threre are {thread_count} active threads.")
+            sender.send_message(f"There are {thread_count} active threads.")
         else:
-            sender.send_message(f"Threre are {thread_count} active threads.")
+            sender.send_message(f"There are {thread_count} active threads.")
         process: object = psutil.Process(os.getpid())
         memory_usage: float = process.get_memory_info()[0] / 2 ** 20
-        sender.send_message(f"Threre are {'%.2f' % (memory_usage)}mb ram in use.")
+        sender.send_message(f"There are {'%.2f' % (memory_usage)}mb ram in use.")
