@@ -21,11 +21,9 @@ from managers import managers
 import os
 from protocol.mcbe.rak_net_interface import rak_net_interface
 import time
-import tracemalloc
 
 class server:
     def __init__(self) -> None:
-        tracemalloc.start()
         self.setup_config()
         block_map.load_map()
         self.managers: object = managers(self)
