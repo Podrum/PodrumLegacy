@@ -28,7 +28,7 @@ class debug_command:
             sender.send_message(f"Threre are {thread_count} active threads.")
         else:
             sender.send_message(f"Threre are {thread_count} active threads.")
-        snapshot = tracemalloc.take_snapshot()
-        top_stats = snapshot.statistics('lineno')
-        memory_usage: tuple = top_stats[0].size / 10 ** 6
+        tracemalloc.start()
+        memory_usage: tuple = tracemalloc.get_traced_memory()[0] / 10 ** 6
+        tracemalloc.stop()
         sender.send_message(f"Threre are {'%.2f' % (memory_usage)}mb ram in use.")
