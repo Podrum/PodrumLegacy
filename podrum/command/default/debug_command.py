@@ -14,7 +14,6 @@
 #########################################################
 
 import platform
-import resource
 import threading
 
 class debug_command:
@@ -30,9 +29,11 @@ class debug_command:
         else:
             sender.send_message(f"Threre are {thread_count} active threads.")
         os_name: str = platform.system()
-        ram_usage: int = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        if os_name == "Linux":
-            sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001)}mb ram in use.")
-        elif os_name == "Darwin":
-            sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001 * 0.001)}mb ram in use.")
+        if os_name not "Windows":
+            import resource
+            ram_usage: int = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            if os_name == "Linux":
+                sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001)}mb ram in use.")
+            elif os_name == "Darwin":
+                sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001 * 0.001)}mb ram in use.")
         
