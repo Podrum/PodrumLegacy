@@ -13,8 +13,8 @@
 #                                                       #
 #########################################################
 
-import platform
 import threading
+import tracemalloc
 
 class debug_command:
     def __init__(self, server: object) -> None:
@@ -28,12 +28,5 @@ class debug_command:
             sender.send_message(f"Threre are {thread_count} active threads.")
         else:
             sender.send_message(f"Threre are {thread_count} active threads.")
-        os_name: str = platform.system()
-        if os_name not "Windows":
-            import resource
-            ram_usage: int = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-            if os_name == "Linux":
-                sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001)}mb ram in use.")
-            elif os_name == "Darwin":
-                sender.send_message(f"Threre are {'%.2f' % (ram_usage * 0.001 * 0.001)}mb ram in use.")
-        
+        memory_usage: tuple = tracemalloc.get_traced_memory()
+        sender.send_message(f"Threre are {'%.2f' % (memory_usage[0] / 10**6)}mb ram in use.")
