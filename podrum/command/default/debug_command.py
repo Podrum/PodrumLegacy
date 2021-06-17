@@ -13,8 +13,9 @@
 #                                                       #
 #########################################################
 
+import os
+import psutil
 import threading
-import tracemalloc
 
 class debug_command:
     def __init__(self, server: object) -> None:
@@ -28,7 +29,6 @@ class debug_command:
             sender.send_message(f"Threre are {thread_count} active threads.")
         else:
             sender.send_message(f"Threre are {thread_count} active threads.")
-        tracemalloc.start()
-        memory_usage: tuple = tracemalloc.get_traced_memory()[0] / 10 ** 6
-        tracemalloc.stop()
+        process: object = psutil.Process(os.getpid())
+        memory_usage: float = process.get_memory_info()[0] / 2 ** 20
         sender.send_message(f"Threre are {'%.2f' % (memory_usage)}mb ram in use.")
