@@ -14,6 +14,8 @@
 #########################################################
 
 from block.block_map import block_map
+from threading import Thread
+from geometry.vector_2 import vector_2
 from queue import Queue
 
 class world:
@@ -24,6 +26,7 @@ class world:
         self.world_path: str = provider.world_dir
         self.load_chunk_queue: object = Queue()
         self.send_chunk_queue: object = Queue()
+        self.workers_running: int = False
             
     def load_chunk(self, x: int, z: int) -> None:
         chunk: object = self.provider.get_chunk(x, z)
@@ -40,6 +43,31 @@ class world:
         if f"{x} {z}" in self.chunks:
             return True
         return False
+
+    def load_chunk_worker(self) -> None:
+        while True:
+            pos_and_player: tuple = self.load_chunk_queue.get()
+            if not self.has_loaded_chunk(pos_and_player[0].x, pos_and_player[0].z):
+                self.load_chunk(pos_and_player[0].x, pos_and_player[0].z)
+            if pos_and_player[1] is not None:
+                self.send_chunk_queue.put(pos_and_player)
+
+    def send_chunk_worker(self) -> None:
+        while True:
+            pos_and_player: tuple = self.send_chunk_queue.get()
+            if self.has_loaded_chunk(pos_and_player[0].x, pos_and_player[0].z):
+                chunk: object = self.get_chunk(pos_and_player[0].x, pos_and_player[0].z)
+                pos_and_player[1].send_chunk(chunk)
+
+    def add_chunk_to_load_queue(self, x: int, z: int, player: object = None) -> None:
+        self.load_chunk_queue.put((vector_2(x, z), player))
+
+    def start_workers(self, workers_count: object) -> None:
+        for i in range(0, workers_count):
+            thread = Thread(target=self.load_chunk_worker)
+            thread.start()
+            thread = Thread(target=self.send_chunk_worker)
+            thread.start()
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
@@ -102,15 +130,3 @@ class world:
     
     def set_generator_name(self, generator_name: str) -> None:
         self.provider.set_generator_name(generator_name)
-        
-    def load_spawn_area(self) -> None:
-        radius: int = self.server.config.data["max_view_distance"]
-        spawn_position: object = self.get_spawn_position()
-        chunk_x_start: int = (int(spawn_position.x) >> 4) - radius
-        chunk_x_end: int = (int(spawn_position.x) >> 4) + radius
-        chunk_z_start: int = (int(spawn_position.z) >> 4) - radius
-        chunk_z_end: int = (int(spawn_position.z) >> 4) + radius
-        for chunk_x in range(chunk_x_start, chunk_x_end):
-            for chunk_z in range(chunk_z_start, chunk_z_end):
-                if not self.has_loaded_chunk(chunk_x, chunk_z):
-                    self.load_chunk(chunk_x, chunk_z)

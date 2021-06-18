@@ -16,6 +16,7 @@
 from game_data.mcbe.item_id_map import item_id_map
 from geometry.vector_2 import vector_2
 from geometry.vector_3 import vector_3
+import math
 from protocol.mcbe.entity.metadata_storage import metadata_storage
 from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
@@ -226,6 +227,8 @@ class mcbe_player:
     def handle_move_player_packet(self, data):
         packet: object = move_player_packet(data)
         packet.decode()
+        if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
+            self.send_chunks()
         self.position: object = packet.position
         
     def handle_packet(self, data: bytes) -> None:
@@ -248,9 +251,7 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                if not self.world.has_loaded_chunk(chunk_x, chunk_z):
-                    self.world.load_chunk(chunk_x, chunk_z)
-                self.send_chunk(self.world.get_chunk(chunk_x, chunk_z))
+                self.world.add_chunk_to_load_queue(chunk_x, chunk_z, self)
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
