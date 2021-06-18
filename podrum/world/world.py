@@ -14,6 +14,7 @@
 #########################################################
 
 from block.block_map import block_map
+from queue import Queue
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -21,6 +22,8 @@ class world:
         self.server: object = server
         self.chunks: dict = {}
         self.world_path: str = provider.world_dir
+        self.load_chunk_queue: object = Queue()
+        self.send_chunk_queue: object = Queue()
             
     def load_chunk(self, x: int, z: int) -> None:
         chunk: object = self.provider.get_chunk(x, z)
