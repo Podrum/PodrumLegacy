@@ -25,7 +25,6 @@ class text_format:
     dark_green: str = "\x1b[38;5;34m"
     dark_aqua: str = "\x1b[38;5;37m"
     dark_red: str = "\x1b[38;5;124m"
-    purple: str = "\x1b[38;5;127m"
     gold: str = "\x1b[38;5;214m"
     gray: str = "\x1b[38;5;145m"
     dark_gray: str = "\x1b[38;5;59m"
