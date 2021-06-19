@@ -35,7 +35,7 @@ class server:
         self.logger: object = logger()
         self.players: dict = {}
         self.current_entity_id: int = 1
-        self.start()
+        asyncio.run(self.start())
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -87,8 +87,8 @@ class server:
             await asyncio.sleep(0.0001)
 
     def stop(self) -> None:
+        self.ic_task.cancel()
         self.rak_net_interface.stop_interface()
-        self.command_interface.stop_interface()
         self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
 
