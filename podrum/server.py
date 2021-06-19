@@ -96,8 +96,7 @@ class server:
         self.logger.info(message)
         
     async def console_input_task(self) -> None:
-        orig_fl = fcntl.fcntl(sys.stdin, fcntl.F_GETFL)
-        fcntl.fcntl(sys.stdin, fcntl.F_SETFL, orig_fl | os.O_NONBLOCK)
+        fcntl.fcntl(sys.stdin, fcntl.F_SETFL, fcntl.fcntl(sys.stdin, fcntl.F_GETFL) | os.O_NONBLOCK)
         result: str = ""
         while True:
             result += sys.stdin.read(1)
