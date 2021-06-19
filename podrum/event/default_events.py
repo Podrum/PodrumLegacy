@@ -20,7 +20,6 @@ class default_events:
             split_input: list = user_input.split()
             command_name: str = split_input[0]
             command_args: list = split_input[1:]
-            commands: dict = command_manager.commands
             if command_manager.has_command(command_name):
                 command_manager.execute(command_name, command_args, sender)
             else:
