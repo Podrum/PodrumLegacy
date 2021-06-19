@@ -34,7 +34,8 @@ class server:
         self.players: dict = {}
         self.current_entity_id: int = 1
         self.event_loop: object = asyncio.get_event_loop()
-        self.event_loop.run_until_complete(self.start())
+        self.server_task: object = self.event_loop.create_task(self.start())
+        self.event_loop.run_forever()
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -90,8 +91,9 @@ class server:
         self.rak_net_interface.stop_interface()
         await self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
+        self.server_task.cancel()
+        self.event_loop.stop()
         self.logger.success("Server stopped.")
-        self.event_loop.close()
         os.kill(os.getpid(), 15)
 
     def send_message(self, message: str) -> None:
