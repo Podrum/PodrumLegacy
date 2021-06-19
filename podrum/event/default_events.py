@@ -15,16 +15,15 @@
 
 class default_events:
     @staticmethod
-    def execute_command_event(user_input: str, sender: object, command_manager: object) -> None:
+    def execute_command_event(user_input: str, sender: object, server: object) -> None:
         if len(user_input) > 0:
             split_input: list = user_input.split()
             command_name: str = split_input[0]
             command_args: list = split_input[1:]
-            if command_manager.has_command(command_name):
-                command_manager.execute(command_name, command_args, sender)
+            if server.managers.command_manager.has_command(command_name):
+                server.managers.command_manager.execute(command_name, command_args, sender)
             else:
-                from server import server
                 if isinstace(sender, server):
-                    sender.logger.error("Invalid command!")
+                    server.logger.error("Invalid command!")
                 else:
                     sender.send_message("Invalid command!")
