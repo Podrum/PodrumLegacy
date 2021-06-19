@@ -33,7 +33,8 @@ class server:
         self.logger: object = logger()
         self.players: dict = {}
         self.current_entity_id: int = 1
-        asyncio.run(self.start())
+        self.event_loop: object = asyncio.get_event_loop()
+        self.event_loop.run_until_complete(self.start())
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -76,7 +77,7 @@ class server:
         self.managers.world_manager.load_world(self.config.data["world_name"])
         self.world: object = self.managers.world_manager.get_world_from_folder_name(self.config.data["world_name"])
         self.rak_net_interface.start_interface()
-        self.ci_task: object = asyncio.create_task(self.console_input_task())
+        self.ci_task: object = self.event_loop.create_task(self.console_input_task())
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
@@ -89,6 +90,7 @@ class server:
         self.rak_net_interface.stop_interface()
         self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
+        self.event_loop.close()
 
     def send_message(self, message: str) -> None:
         self.logger.info(message)
