@@ -15,7 +15,6 @@
 
 import asyncio
 from block.block_map import block_map
-from command.command_interface import command_interface
 from config import config
 from console.logger import logger
 import fcntl
@@ -30,7 +29,6 @@ class server:
         self.setup_config()
         block_map.load_map()
         self.managers: object = managers(self)
-        self.command_interface: object = command_interface(self)
         self.rak_net_interface: object = rak_net_interface(self)
         self.logger: object = logger()
         self.players: dict = {}
