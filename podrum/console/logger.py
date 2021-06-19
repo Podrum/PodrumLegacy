@@ -38,7 +38,7 @@ class logger:
         elif log_type.lower() == "emergency":
             color: str = text_format.gold
         elif log_type.lower() == "alert":
-            color: str = text_format.purple
+            color: str = text_format.light_purple
         elif log_type.lower() == "notice":
             color: str = text_format.aqua
         elif log_type.lower() == "critical":
