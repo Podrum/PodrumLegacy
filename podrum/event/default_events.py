@@ -18,7 +18,7 @@ class default_events:
     def execute_command_event(user_input: str, sender: object, command_manager: object) -> None:
         if len(user_input) > 0:
             split_input: list = user_input.split()
-            command_name: str = split_input[0][1:]
+            command_name: str = split_input[0]
             command_args: list = split_input[1:]
             commands: dict = command_manager.commands
             if command_manager.has_command(command_name):
