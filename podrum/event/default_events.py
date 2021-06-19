@@ -23,7 +23,7 @@ class default_events:
             if server.managers.command_manager.has_command(command_name):
                 server.managers.command_manager.execute(command_name, command_args, sender)
             else:
-                if isinstance(sender, server):
+                if sender == server:
                     server.logger.error("Invalid command!")
                 else:
                     sender.send_message("Invalid command!")
