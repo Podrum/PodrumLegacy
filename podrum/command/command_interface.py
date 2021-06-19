@@ -20,17 +20,6 @@ class command_interface(Thread):
         super().__init__()
         self.server: object = server
 
-    def dispatch(self, user_input: str) -> None:
-        if len(user_input) > 0:
-            raw_command: list = user_input.split()
-            command_name: str = raw_command[0]
-            command_args: list = raw_command[1:]
-            commands: dict = self.server.managers.command_manager.commands
-            if self.server.managers.command_manager.has_command(command_name):
-                self.server.managers.command_manager.execute(command_name, command_args, self.server)
-            else:
-                self.server.logger.error("Invalid command!")
-
     def start_interface(self) -> None:
         self.stopped: bool = False
         self.start()
@@ -40,4 +29,4 @@ class command_interface(Thread):
 
     def run(self) -> None:
         while not self.stopped:
-            self.dispatch(input())
+            self.server.managers.event_manager.call_event("execute_command", input(), self.server, self.server.managers.command_manager)
