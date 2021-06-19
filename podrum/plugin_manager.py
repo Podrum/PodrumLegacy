@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import asyncio
 import importlib
 import json
 import os
@@ -49,12 +50,13 @@ class plugin_manager:
             self.plugins[plugin_info["name"]].on_load()
         self.server.logger.success(f"Successfully loaded {plugin_info['name']}.")
         
-    def load_all(self, path: str) -> None:
+    async def load_all(self, path: str) -> None:
         for top, dirs, files in os.walk(path):
             for file_name in files:
                 full_path: str = os.path.abspath(os.path.join(top, file_name))
                 if full_path.endswith(".pyz") or full_path.endswith(".zip"):
                     self.load(full_path)
+                asyncio.sleep(0.0001)
         
     def unload(self, name: str) -> None:
         if name in self.plugins:
@@ -63,9 +65,10 @@ class plugin_manager:
             del self.plugins[name]
             self.server.logger.info(f"Unloaded {name}.")
             
-    def unload_all(self) -> None:
+    async def unload_all(self) -> None:
         for name in dict(self.plugins):
             self.unload(name)
+            asyncio.sleep(0.0001)
                                    
     def reload(self, name: str) -> None:
         if name in self.plugins:
@@ -73,6 +76,7 @@ class plugin_manager:
             self.unload(name)
             self.load(path)
                                    
-    def reload_all(self) -> None:
+    async def reload_all(self) -> None:
         for name in dict(self.plugins):
             self.reload(name)
+            asyncio.sleep(0.0001)
