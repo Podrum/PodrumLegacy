@@ -86,7 +86,7 @@ class server:
             await asyncio.sleep(0.0001)
 
     async def stop(self) -> None:
-        self.ic_task.cancel()
+        self.ci_task.cancel()
         self.rak_net_interface.stop_interface()
         await self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
