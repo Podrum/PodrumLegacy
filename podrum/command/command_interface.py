@@ -29,4 +29,4 @@ class command_interface(Thread):
 
     def run(self) -> None:
         while not self.stopped:
-            self.server.managers.event_manager.call_event("execute_command", input(), self.server, self.server.managers.command_manager)
+            self.server.managers.event_manager.call_event("execute_command", input(), self.server, self.server)
