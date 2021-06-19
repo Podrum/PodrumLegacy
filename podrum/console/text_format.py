@@ -44,4 +44,3 @@ class text_format:
     @staticmethod
     def console_to_minecraft_colors(text: str) -> str:
         return text.replace(text_format.black, "§0").replace(text_format.dark_blue, "§1").replace(text_format.dark_green, "§2").replace(text_format.dark_aqua, "§3").replace(text_format.dark_red, "§4").replace(text_format.dark_red, "§5").replace(text_format.gold, "§6").replace(text_format.gray, "§7").replace(text_format.dark_gray, "§8").replace(text_format.blue, "§9").replace(text_format.green, "§a").replace(text_format.aqua, "§b").replace(text_format.red, "§c").replace(text_format.light_purple, "§d").replace(text_format.yellow, "§e").replace(text_format.white, "§f").replace(text_format.obfuscated, "§k").replace(text_format.bold, "§l").replace(text_format.strike_through, "§m").replace(text_format.underline, "§n").replace(text_format.italic, "§o").replace(text_format.reset, "§r")
-
