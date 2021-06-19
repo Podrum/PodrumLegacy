@@ -70,7 +70,7 @@ class server:
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
-        self.managers.plugin_manager.load_all(plugins_path)
+        await self.managers.plugin_manager.load_all(plugins_path)
         worlds_path: str = os.path.join(os.getcwd(), "worlds")
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
@@ -88,7 +88,7 @@ class server:
     def stop(self) -> None:
         self.ic_task.cancel()
         self.rak_net_interface.stop_interface()
-        self.managers.plugin_manager.unload_all()
+        await self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
         self.event_loop.close()
 
