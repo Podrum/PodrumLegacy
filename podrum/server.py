@@ -85,7 +85,7 @@ class server:
             # Add some sort of ticking?
             await asyncio.sleep(0.0001)
 
-    def stop(self) -> None:
+    async def stop(self) -> None:
         self.ic_task.cancel()
         self.rak_net_interface.stop_interface()
         await self.managers.plugin_manager.unload_all()
