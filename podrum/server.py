@@ -13,13 +13,16 @@
 #                                                       #
 #########################################################
 
+import asyncio
 from block.block_map import block_map
 from command.command_interface import command_interface
 from config import config
 from console.logger import logger
+import fcntl
 from managers import managers
 import os
 from protocol.mcbe.rak_net_interface import rak_net_interface
+import sys
 import time
 
 class server:
@@ -62,7 +65,7 @@ class server:
             self.config.data["world_name"]: int = "world"
         self.config.save()      
 
-    def start(self) -> None:
+    async def start(self) -> None:
         start_time: float = time.time()
         self.logger.info("Podrum is starting up...")
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
@@ -74,11 +77,14 @@ class server:
             os.mkdir(worlds_path)
         self.managers.world_manager.load_world(self.config.data["world_name"])
         self.world: object = self.managers.world_manager.get_world_from_folder_name(self.config.data["world_name"])
-        self.command_interface.start_interface()
         self.rak_net_interface.start_interface()
+        self.ci_task: object = asyncio.create_task(self.console_input_task())
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
+        while True:
+            # Add some sort of ticking?
+            await asyncio.sleep(0.0001)
 
     def stop(self) -> None:
         self.rak_net_interface.stop_interface()
@@ -88,3 +94,15 @@ class server:
 
     def send_message(self, message: str) -> None:
         self.logger.info(message)
+        
+    async def console_input_task(self) -> None:
+        orig_fl = fcntl.fcntl(sys.stdin, fcntl.F_GETFL)
+        fcntl.fcntl(sys.stdin, fcntl.F_SETFL, orig_fl | os.O_NONBLOCK)
+        result: str = ""
+        while True:
+            result += sys.stdin.read(1)
+            if result.endswith("\n"):
+                command: str = result[:-1]
+                self.managers.event_manager.call_event("execute_command", command, self, self)
+                result: str = ""
+            await asyncio.sleep(0.0001)
