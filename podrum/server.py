@@ -91,6 +91,8 @@ class server:
         await self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
         self.event_loop.close()
+        self.logger.success("Server stopped.")
+        os.kill(os.getpid(), 15)
 
     def send_message(self, message: str) -> None:
         self.logger.info(message)
