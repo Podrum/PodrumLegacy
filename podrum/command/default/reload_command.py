@@ -21,5 +21,5 @@ class reload_command:
     
     def execute(self, args: list, sender: object) -> None:
         sender.send_message("Reloading...")
-        self.server.managers.plugin_manager.reload_all()
+        self.server.event_loop.create_task(self.server.managers.plugin_manager.reload_all())
         sender.send_message("Successfully reloaded.")
