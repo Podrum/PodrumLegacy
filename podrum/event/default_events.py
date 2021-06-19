@@ -13,6 +13,8 @@
 #                                                       #
 #########################################################
 
+from server import server
+
 class default_events:
     @staticmethod
     def execute_command_event(user_input: str, sender: object, command_manager: object) -> None:
@@ -23,4 +25,7 @@ class default_events:
             if command_manager.has_command(command_name):
                 command_manager.execute(command_name, command_args, sender)
             else:
-                sender.send_message("Invalid command!")
+                if isinstace(sender, server):
+                    sender.logger.error("Invalid command!")
+                else:
+                    sender.send_message("Invalid command!")
