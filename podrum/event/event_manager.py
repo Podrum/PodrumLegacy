@@ -25,7 +25,7 @@ class event_manager:
                 event_entry(*args)
 
     def register_event(self, event_name: str, event_entry: Callable) -> None:
-        if event_name in self._events:
+        if event_name in self.events:
             self.events[event_name].append(event_entry)
         else:
             self.events[event_name]: list = [event_entry]
