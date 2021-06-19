@@ -78,7 +78,7 @@ class server:
         self.managers.world_manager.load_world(self.config.data["world_name"])
         self.world: object = self.managers.world_manager.get_world_from_folder_name(self.config.data["world_name"])
         self.rak_net_interface.start_interface()
-        self.ci_task: object = self.event_loop.create_task(self.console_input_task())
+        self.console_input_task: object = self.event_loop.create_task(self.console_input())
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
@@ -87,7 +87,7 @@ class server:
             await asyncio.sleep(0.0001)
 
     async def stop(self) -> None:
-        self.ci_task.cancel()
+        self.console_input_task.cancel()
         self.rak_net_interface.stop_interface()
         await self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
@@ -99,7 +99,7 @@ class server:
     def send_message(self, message: str) -> None:
         self.logger.info(message)
         
-    async def console_input_task(self) -> None:
+    async def console_input(self) -> None:
         fcntl.fcntl(sys.stdin, fcntl.F_SETFL, fcntl.fcntl(sys.stdin, fcntl.F_GETFL) | os.O_NONBLOCK)
         result: str = ""
         while True:
