@@ -34,6 +34,7 @@ from command.default.reload_command import reload_command
 from command.default.say_command import say_command
 from command.default.stop_command import stop_command
 from command.default.version_command import version_command
+from event.default_events import default_events
 from event.event_manager import event_manager
 from plugin_manager import plugin_manager
 from world.generator.flat import flat
@@ -79,6 +80,9 @@ class managers:
         self.command_manager.register(stop_command(self.server))
         self.command_manager.register(version_command(self.server))
         
+    def register_default_events(self) -> None:
+        self.event_manager.register_event("execute_command", default_events.execute_command_event)
+        
     def register_default_generators(self) -> None:
         self.generator_manager.register_generator(flat())
         self.generator_manager.register_generator(void())
@@ -90,5 +94,6 @@ class managers:
     def register_defaults(self) -> None:
         self.register_default_blocks()
         self.register_default_commands()
+        self.register_default_events()
         self.register_default_generators()
         self.register_default_providers()
