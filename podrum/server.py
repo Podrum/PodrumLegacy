@@ -19,6 +19,7 @@ from config import config
 from console.logger import logger
 from managers import managers
 import os
+import platform
 from protocol.mcbe.rak_net_interface import rak_net_interface
 import sys
 import time
