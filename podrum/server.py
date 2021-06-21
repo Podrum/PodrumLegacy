@@ -17,7 +17,6 @@ import asyncio
 from block.block_map import block_map
 from config import config
 from console.logger import logger
-import fcntl
 from managers import managers
 import os
 from protocol.mcbe.rak_net_interface import rak_net_interface
@@ -100,12 +99,32 @@ class server:
         self.logger.info(message)
         
     async def console_input(self) -> None:
-        fcntl.fcntl(sys.stdin, fcntl.F_SETFL, fcntl.fcntl(sys.stdin, fcntl.F_GETFL) | os.O_NONBLOCK)
+        if platform.system() == "Windows":
+            import msvcrt
+        else:
+            import fcntl
+            fcntl.fcntl(sys.stdin, fcntl.F_SETFL, fcntl.fcntl(sys.stdin, fcntl.F_GETFL) | os.O_NONBLOCK)
         result: str = ""
         while True:
-            result += sys.stdin.read(1)
-            if result.endswith("\n"):
-                command: str = result[:-1]
-                self.managers.event_manager.call_event("execute_command", command, self, self)
-                result: str = ""
+            if platform.system() == "Windows":
+                if msvcrt.kbhit():
+                    user_input: str = msvcrt.getch().decode()
+                    if user_input == "\b":
+                        result = result[0:-1]
+                    else:
+                        result += user_input
+                    if user_input == "\r":
+                        print("")
+                    else:
+                        print("\r\x1b[K" + result, end = "")
+                    if result.endswith("\r"):
+                        command: str = result[:-1]
+                        self.managers.event_manager.call_event("execute_command", command, self, self)
+                        result: str = ""
+            else:
+                result += sys.stdin.read(1)
+                if result.endswith("\n"):
+                    command: str = result[:-1]
+                    self.managers.event_manager.call_event("execute_command", command, self, self)
+                    result: str = ""
             await asyncio.sleep(0.0001)
