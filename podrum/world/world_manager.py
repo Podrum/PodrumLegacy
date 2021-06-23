@@ -39,7 +39,7 @@ class world_manager:
         world_name: str = world_obj.get_world_name()
         self.worlds[world_name] = world_obj
         self.path_to_world_name[world_path] = world_name
-        self.worlds[world_name].start_workers(self.server.config.data["max_view_distance"] * 16)
+        self.worlds[world_name].start_workers(8)
         self.server.logger.success(f"Loaded world -> {world_name}")
         
     def get_world(self, name: str) -> object:
