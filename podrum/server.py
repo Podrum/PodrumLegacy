@@ -67,6 +67,7 @@ class server:
         
     async def start(self) -> None:
         start_time: float = time.time()
+        version = "v1.17.0"
         hostname = socket.gethostname()
         server_ip = socket.gethostbyname(hostname)
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
@@ -85,6 +86,7 @@ class server:
         self.logger.info("Loading server.json...")
         self.logger.info("Podrum is starting up...")
         self.logger.info(f"Start server on {server_ip}")
+        self.logger.info(f"Starting Bedrock Edition server version {version}")
         self.logger.info(f"Podum is still under development, errors can exist")
         self.logger.info(f"Done in {startup_time}. Type help to view all available commands.")
         self.logger.info(f"If you want to help us to develop Podrum you can contribute on Github: https://github.com/Podrum/Podrum")
