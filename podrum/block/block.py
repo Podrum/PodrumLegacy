@@ -13,9 +13,9 @@
 #                                                       #
 #########################################################
 
-from block.block_map import block_map
-from block.tool import tool
-from game_data.mcbe.item_id_map import item_id_map
+from podrum.block.block_map import block_map
+from podrum.block.tool import tool
+from podrum.game_data.mcbe.item_id_map import item_id_map
 
 class block:
     def __init__(self, name: int, meta: int, hardness: float, blast_resistance: float) -> None:

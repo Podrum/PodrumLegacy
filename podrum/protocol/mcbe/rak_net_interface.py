@@ -13,10 +13,10 @@
 #                                                       #
 #########################################################
 
-from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
-from protocol.mcbe.packet.game_packet import game_packet
-from protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
-from player.mcbe_player import mcbe_player
+from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from podrum.protocol.mcbe.packet.game_packet import game_packet
+from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
+from podrum.player.mcbe_player import mcbe_player
 from rak_net.server import server as rak_net_server
 from threading import Thread
 
@@ -25,7 +25,7 @@ class rak_net_interface(Thread):
         super().__init__()
         self.server: object = server
         self.rak_net_server: object = rak_net_server(server.config.data["ip_address"]["hostname"], server.config.data["ip_address"]["port"])
-        self.rak_net_server.interface: object = self
+        self.rak_net_server.interface = self
         self.set_status(server.config.data["motd"], 0, server.config.data["max_players"])
 
     def get_count(self) -> int:
@@ -41,7 +41,7 @@ class rak_net_interface(Thread):
         return name[1]
 
     def set_status(self, motd: str, count: int, max_count: int) -> None:
-        self.rak_net_server.name: str = f"MCPE;{motd};{mcbe_protocol_info.mcbe_protocol_version};{mcbe_protocol_info.mcbe_version};{count};{max_count};0;"
+        self.rak_net_server.name = f"MCPE;{motd};{mcbe_protocol_info.mcbe_protocol_version};{mcbe_protocol_info.mcbe_version};{count};{max_count};0;"
 
     def set_motd(self, motd: str) -> None:
         self.set_status(motd, self.get_count(), self.get_max_count())
@@ -62,9 +62,9 @@ class rak_net_interface(Thread):
                     self.server.players[connection.address.token].handle_packet(batch)
             
     def on_new_incoming_connection(self, connection: object) -> None:
-        self.server.players[connection.address.token]: object = mcbe_player(connection, self.server, self.server.current_entity_id)
+        self.server.players[connection.address.token] = mcbe_player(connection, self.server, self.server.current_entity_id)
         max_float: float = 3.4028234663852886e+38
-        self.server.players[connection.address.token].attributes: list = [
+        self.server.players[connection.address.token].attributes = [
             {"min": 0, "max": max_float, "current": 0, "default": 0, "name": "minecraft:absorption"},
             {"min": 0, "max": 20, "current": 20, "default": 20, "name": "minecraft:player.saturation"},
             {"min": 0, "max": 5, "current": 0, "default": 0, "name": "minecraft:player.exhaustion"},

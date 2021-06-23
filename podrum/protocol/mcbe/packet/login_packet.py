@@ -14,10 +14,10 @@
 #########################################################
 
 from binary_utils.binary_stream import binary_stream
-from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
-from protocol.mcbe.packet.mcbe_packet import mcbe_packet
+from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from podrum.protocol.mcbe.packet.mcbe_packet import mcbe_packet
 import json
-from jwt import jwt
+from podrum.jwt import jwt
 
 class login_packet(mcbe_packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
@@ -37,7 +37,7 @@ class login_packet(mcbe_packet):
         self.write_unsigned_int_be(self.protocol_version)
         raw_chain_data: dict = {"chain": []}
         for chain in self.chain_data:
-            jwt_data: str = jwt.encode({"alg": "HS256", "typ": "JWT"}, chain, misc.mojang_public_key)
+            jwt_data: str = jwt.encode({"alg": "HS256", "typ": "JWT"}, chain, mcbe_protocol_info.mojang_public_key)
             raw_chain_data["chain"].append(jwt_data)
         temp_stream = binary_stream()
         json_data: str = json.dumps(raw_chain_data)

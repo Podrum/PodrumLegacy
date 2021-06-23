@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from server import server
+from podrum.server import server
 
 if __name__ == "__main__":
     server()

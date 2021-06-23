@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from world.chunk.block_storage import block_storage
+from podrum.world.chunk.block_storage import block_storage
 
 class sub_chunk:
     def __init__(self, block_storages: dict = {}) -> None:
@@ -26,7 +26,7 @@ class sub_chunk:
         if layer not in self.block_storages:
             for i in range(0, layer + 1):
                 if i not in self.block_storages:
-                    self.block_storages[i]: object = block_storage()
+                    self.block_storages[i] = block_storage()
         return self.block_storages[layer]
     
     def is_empty(self) -> bool:

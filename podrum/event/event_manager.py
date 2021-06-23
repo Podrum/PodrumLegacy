@@ -28,7 +28,7 @@ class event_manager:
         if event_name in self.events:
             self.events[event_name].append(event_entry)
         else:
-            self.events[event_name]: list = [event_entry]
+            self.events[event_name] = [event_entry]
                 
     def remove_event(self, event_name: str) -> None:
         del self.events[event_name]

@@ -18,7 +18,7 @@ class generator_manager:
         self.generators: dict = {}
           
     def register_generator(self, generator: object) -> None:
-        self.generators[generator.generator_name]: object = generator
+        self.generators[generator.generator_name] = generator
           
     def get_generator(self, generator_name: str) -> object:
         if generator_name in self.generators:

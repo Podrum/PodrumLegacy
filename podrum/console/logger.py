@@ -13,9 +13,9 @@
 #                                                       #
 #########################################################
 
-from console.text_format import text_format
 from datetime import datetime
 import inspect
+from podrum.console.text_format import text_format
 import sys
 
 class logger:

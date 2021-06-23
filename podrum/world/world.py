@@ -13,9 +13,9 @@
 #                                                       #
 #########################################################
 
-from block.block_map import block_map
+from podrum.block.block_map import block_map
+from podrum.geometry.vector_2 import vector_2
 from threading import Thread
-from geometry.vector_2 import vector_2
 from queue import Queue
 
 class world:
@@ -33,7 +33,7 @@ class world:
         if chunk is None:
             generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
             chunk: object = generator.generate(x, z, self)
-        self.chunks[f"{x} {z}"]: object = chunk
+        self.chunks[f"{x} {z}"] = chunk
             
     def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)

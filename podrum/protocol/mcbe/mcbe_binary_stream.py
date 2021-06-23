@@ -14,12 +14,12 @@
 #########################################################
 
 from binary_utils.binary_stream import binary_stream
-from geometry.vector_2 import vector_2
-from geometry.vector_3 import vector_3
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
-from protocol.mcbe.type.gamerule_type import gamerule_type
-from protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
+from podrum.geometry.vector_2 import vector_2
+from podrum.geometry.vector_3 import vector_3
+from podrum.protocol.mcbe.type.gamerule_type import gamerule_type
+from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 
 class mcbe_binary_stream(binary_stream):
     def read_string(self) -> str:
@@ -97,7 +97,7 @@ class mcbe_binary_stream(binary_stream):
                 "has_scripts": self.read_bool(),
                 "rtx_enabled": self.read_bool()
             })
-        return resource_pack_infos
+        return texture_pack_infos
             
     def write_texture_pack_infos(self, value: list) -> None:
         self.write_short_le(len(value))
@@ -176,11 +176,11 @@ class mcbe_binary_stream(binary_stream):
             "type": self.read_var_int()
         }
         if game_rule["type"] == gamerule_type.type_bool:
-            game_rule["value"]: bool = self.read_bool()
+            game_rule["value"] = self.read_bool()
         elif game_rule["type"] == gamerule_type.type_int:
-            game_rule["value"]: int = self.read_signed_var_int()
+            game_rule["value"] = self.read_signed_var_int()
         elif game_rule["type"] == gamerule_type.type_float:
-            game_rule["value"]: float = self.read_float_le()
+            game_rule["value"] = self.read_float_le()
         return game_rule
         
     def write_game_rule(self, value: dict) -> None:
@@ -237,7 +237,7 @@ class mcbe_binary_stream(binary_stream):
     def read_net_le_tag(self) -> object:
         stream: object = nbt_net_le_binary_stream(self.data, self.pos)
         tag: object = stream.read_root_tag()
-        stream.pos: int = pos
+        self.pos = stream.pos
         return tag
     
     def write_net_le_tag(self, value: object) -> None:
@@ -248,7 +248,7 @@ class mcbe_binary_stream(binary_stream):
     def read_le_tag(self) -> object:
         stream: object = nbt_le_binary_stream(self.data, self.pos)
         tag: object = stream.read_root_tag()
-        stream.pos: int = pos
+        self.pos = stream.pos
         return tag
     
     def write_le_tag(self, value: object) -> None:
@@ -273,19 +273,19 @@ class mcbe_binary_stream(binary_stream):
             
     def read_item_extra_data_with_blocking_tick(self) -> dict:
         result: dict = {}
-        result["has_nbt"]: bool = self.read_unsigned_short_le() > 0
+        result["has_nbt"] = self.read_unsigned_short_le() > 0
         if result["has_nbt"]:
-            result["version"]: int = self.read_unsigned_byte()
-            result["nbt"]: object = self.read_le_tag()
-        result["can_place_on"]: list = []
+            result["version"] = self.read_unsigned_byte()
+            result["nbt"] = self.read_le_tag()
+        result["can_place_on"] = []
         can_place_on_count: int = self.read_int_le()
         for i in range(0, can_place_on_count):
             result["can_place_on"].append(self.read_short_array())
-        result["can_destroy"]: list = []
+        result["can_destroy"] = []
         can_destroy_count: int = self.read_int_le()
         for i in range(0, can_destroy_count):
             result["can_destroy"].append(self.read_short_array())
-        result["blocking_tick"]: int = self.read_long_le()
+        result["blocking_tick"] = self.read_long_le()
         return result
     
     def write_item_extra_data_with_blocking_tick(self, value: dict) -> None:
@@ -305,15 +305,15 @@ class mcbe_binary_stream(binary_stream):
         
     def read_item_extra_data_without_blocking_tick(self) -> dict:
         result: dict = {}
-        result["has_nbt"]: bool = self.read_unsigned_short_le() > 0
+        result["has_nbt"] = self.read_unsigned_short_le() > 0
         if result["has_nbt"]:
-            result["version"]: int = self.read_unsigned_byte()
-            result["nbt"]: object = self.read_le_tag()
-        result["can_place_on"]: list = []
+            result["version"] = self.read_unsigned_byte()
+            result["nbt"] = self.read_le_tag()
+        result["can_place_on"] = []
         can_place_on_count: int = self.read_int_le()
         for i in range(0, can_place_on_count):
             result["can_place_on"].append(self.read_short_array())
-        result["can_destroy"]: list = []
+        result["can_destroy"] = []
         can_destroy_count: int = self.read_int_le()
         for i in range(0, can_destroy_count):
             result["can_destroy"].append(self.read_short_array())
@@ -338,10 +338,10 @@ class mcbe_binary_stream(binary_stream):
             "network_id": self.read_signed_var_int()
         }
         if result["network_id"] > 0:
-            result["count"]: int = self.read_long_le()
-            result["metadata"]: int = self.read_var_int()
-            result["block_runtime_id"]: int = self.read_signed_var_int()
-            result["extra"]: list = []
+            result["count"] = self.read_long_le()
+            result["metadata"] = self.read_var_int()
+            result["block_runtime_id"] = self.read_signed_var_int()
+            result["extra"] = []
             extra_count: int = self.read_var_int()
             for i in range(0, extra_count):
                 if result["network_id"] == 355:
@@ -368,13 +368,13 @@ class mcbe_binary_stream(binary_stream):
             "network_id": self.read_signed_var_int()
         }
         if result["network_id"] > 0:
-            result["count"]: int = self.read_long_le()
-            result["metadata"]: int = self.read_var_int()
-            result["has_stack_id"]: bool = self.read_bool()
+            result["count"] = self.read_long_le()
+            result["metadata"] = self.read_var_int()
+            result["has_stack_id"] = self.read_bool()
             if result["has_stack_id"]:
-                result["stack_id"]: int = self.read_signed_var_int()
-            result["block_runtime_id"]: int = self.read_signed_var_int()
-            result["extra"]: list = []
+                result["stack_id"] = self.read_signed_var_int()
+            result["block_runtime_id"] = self.read_signed_var_int()
+            result["extra"] = []
             extra_count: int = self.read_var_int()
             for i in range(0, extra_count):
                 if result["network_id"] == 355:
@@ -470,7 +470,7 @@ class mcbe_binary_stream(binary_stream):
                 metadata_value: int = self.read_vector_3_float()
             else:
                 raise Exception("Invalid metadata type")
-            metadata_dictionary[metadata_key]: dict = {"type": metadata_type, "value": metadata_value}
+            metadata_dictionary[metadata_key] = {"type": metadata_type, "value": metadata_value}
         return metadata_dictionary
     
     def write_metadata_dictionary(self, metadata_dictionary: dict) -> None:

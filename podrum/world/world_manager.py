@@ -13,8 +13,8 @@
 #                                                       #
 #########################################################
 
-from world.world import world
 import os
+from podrum.world.world import world
 
 class world_manager:
     def __init__(self, server: object) -> None:
@@ -37,8 +37,8 @@ class world_manager:
             self.server
         )
         world_name: str = world_obj.get_world_name()
-        self.worlds[world_name]: object = world_obj
-        self.path_to_world_name[world_path]: str = world_name
+        self.worlds[world_name] = world_obj
+        self.path_to_world_name[world_path] = world_name
         self.worlds[world_name].start_workers(self.server.config.data["max_view_distance"] * 16)
         self.server.logger.success(f"Loaded world -> {world_name}")
         

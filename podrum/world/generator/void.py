@@ -13,8 +13,8 @@
 #                                                       #
 #########################################################
 
-from block.default.stone import stone
-from world.chunk.chunk import chunk
+from podrum.block.default.stone import stone
+from podrum.world.chunk.chunk import chunk
 
 class void:
     generator_name: str = "void"
@@ -27,6 +27,6 @@ class void:
             for x in range(0, 16):
                 for z in range(0, 16):
                     result.set_block_runtime_id(x, 0, z, stone().runtime_id)
-            spawn_position.y: int = 1
+            spawn_position.y = 1
             world.set_spawn_position(spawn_position)
         return result

@@ -17,8 +17,8 @@ import asyncio
 import importlib
 import json
 import os
+from podrum.version import version
 import sys
-from version import version
 from zipfile import ZipFile
 
 class plugin_manager:
@@ -40,12 +40,12 @@ class plugin_manager:
         main: str = plugin_info["main"].rsplit(".", 1)
         module: object = importlib.import_module(main[0])
         main_class: object = getattr(module, main[1])
-        self.plugins[plugin_info["name"]]: object = main_class()
-        self.plugins[plugin_info["name"]].server: object = self.server
-        self.plugins[plugin_info["name"]].path: str = path
-        self.plugins[plugin_info["name"]].version: str = plugin_info["version"] if "version" in plugin_info else ""
-        self.plugins[plugin_info["name"]].description: str = plugin_info["description"] if "description" in plugin_info else ""
-        self.plugins[plugin_info["name"]].author: str = plugin_info["author"] if "author" in plugin_info else ""
+        self.plugins[plugin_info["name"]] = main_class()
+        self.plugins[plugin_info["name"]].server = self.server
+        self.plugins[plugin_info["name"]].path = path
+        self.plugins[plugin_info["name"]].version = plugin_info["version"] if "version" in plugin_info else ""
+        self.plugins[plugin_info["name"]].description = plugin_info["description"] if "description" in plugin_info else ""
+        self.plugins[plugin_info["name"]].author = plugin_info["author"] if "author" in plugin_info else ""
         if hasattr(main_class, "on_load"):
             self.plugins[plugin_info["name"]].on_load()
         self.server.logger.success(f"Successfully loaded {plugin_info['name']}.")

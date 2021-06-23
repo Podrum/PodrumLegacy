@@ -13,8 +13,8 @@
 #                                                       #
 #########################################################
 
-from block.block import block
-from block.tool import tool
+from podrum.block.block import block
+from podrum.block.tool import tool
 
 class cobblestone(block):
     def __init__(self) -> None:

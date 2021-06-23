@@ -14,9 +14,6 @@
 #########################################################
 
 import gzip
-from block.block_map import block_map
-from game_data.mcbe.block_id_map import block_id_map
-from geometry.vector_3 import vector_3
 from nbt_utils.tag_ids import tag_ids
 from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
@@ -31,15 +28,18 @@ from nbt_utils.tag.short_tag import short_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 import os
+from podrum.block.block_map import block_map
+from podrum.game_data.mcbe.block_id_map import block_id_map
+from podrum.geometry.vector_3 import vector_3
+from podrum.world.chunk.block_storage import block_storage
+from podrum.world.chunk.chunk import chunk as server_chunk
+from podrum.world.chunk.sub_chunk import sub_chunk
+from podrum.world.chunk_utils import chunk_utils
+from podrum.world.provider.anvil.chunk import chunk
+from podrum.world.provider.anvil.region import region
 import random
 import sys
 import time
-from world.chunk.block_storage import block_storage
-from world.chunk.chunk import chunk as server_chunk
-from world.chunk.sub_chunk import sub_chunk
-from world.chunk_utils import chunk_utils
-from world.provider.anvil.chunk import chunk
-from world.provider.anvil.region import region
 
 class anvil:
     provider_name: str = "anvil"
@@ -131,8 +131,8 @@ class anvil:
                 option_tag.value = value
                 data_tag.set_tag(option_tag)
                 tag.set_tag(data_tag)
-                stream.buffer: bytes = b""
-                stream.pos: int = 0
+                stream.buffer = b""
+                stream.pos = 0
                 stream.write_root_tag(tag)
                 with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))
@@ -154,8 +154,8 @@ class anvil:
                 option_tag: object = tag.get_tag(name)
                 option_tag.value = value
                 tag.set_tag(option_tag)
-                stream.buffer: bytes = b""
-                stream.pos: int = 0
+                stream.buffer = b""
+                stream.pos = 0
                 stream.write_root_tag(tag)
                 with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))

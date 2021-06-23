@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from block.default.stone import stone
+from podrum.block.default.stone import stone
 
 class andesite(stone):
     def __init__(self) -> None:

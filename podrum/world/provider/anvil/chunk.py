@@ -24,8 +24,8 @@ from nbt_utils.tag.list_tag import list_tag
 from nbt_utils.tag.long_tag import long_tag
 from nbt_utils.tag.string_tag import string_tag
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
-from world.chunk_utils import chunk_utils
-from world.provider.anvil.section import section
+from podrum.world.chunk_utils import chunk_utils
+from podrum.world.provider.anvil.section import section
 
 class chunk:
     def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: list = [], tile_entities: list = []) -> None:
@@ -34,9 +34,9 @@ class chunk:
         self.sections: dict = {}
         for i in range(0, 16):
             if i in sections:
-                self.sections[i]: object = sections[i]
+                self.sections[i] = sections[i]
             else:
-                self.sections[i]: object = section()
+                self.sections[i] = section()
         if len(height_map) == 256:
             self.height_map: list = height_map
         else:
@@ -78,7 +78,7 @@ class chunk:
         return self.biomes[(x << 4) + z]
     
     def set_biome(self, x: int, z: int, biome: int) -> None:
-        self.biomes[(x << 4) + z]: int = biome
+        self.biomes[(x << 4) + z] = biome
         
     def get_highest_block_at(self, x: int, z: int) -> int:
         for i in range(len(self.sections) - 1, -1, -1):
@@ -92,7 +92,7 @@ class chunk:
         for x in range(0, 16):
             for z in range(0, 16):
                 y: int = self.get_highest_block_at(x, z) + 1
-                self.height_map[(x << 4) + z]: int = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
+                self.height_map[(x << 4) + z] = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
                     
     def nbt_serialize(self) -> bytes:
         stream: object = nbt_be_binary_stream()
@@ -142,7 +142,7 @@ class chunk:
             self.light_populated: bool = False
         sections_tag: object = level_tag.get_tag("Sections")
         for section_tag in sections_tag.value:
-            self.sections[section_tag.get_tag("Y").value]: object = section(
+            self.sections[section_tag.get_tag("Y").value] = section(
                 section_tag.get_tag("Blocks").value,
                 section_tag.get_tag("Data").value,
                 section_tag.get_tag("BlockLight").value,

@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from version import version
+from podrum.version import version
 
 class version_command:
     def __init__(self, server: object) -> None:

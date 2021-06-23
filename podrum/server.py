@@ -14,13 +14,13 @@
 #########################################################
 
 import asyncio
-from block.block_map import block_map
-from config import config
-from console.logger import logger
-from managers import managers
 import os
 import platform
-from protocol.mcbe.rak_net_interface import rak_net_interface
+from podrum.block.block_map import block_map
+from podrum.config import config
+from podrum.console.logger import logger
+from podrum.managers import managers
+from podrum.protocol.mcbe.rak_net_interface import rak_net_interface
 import sys
 import time
 
@@ -48,21 +48,21 @@ class server:
         path: str = os.path.join(os.getcwd(), "server.json")
         self.config: object = config(path)
         if "ip_address" not in self.config.data:
-            self.config.data["ip_address"]: dict = {}
+            self.config.data["ip_address"] = {}
         if "hostname" not in self.config.data["ip_address"]:
-            self.config.data["ip_address"]["hostname"]: str = ".".join(["0"] * 4)
+            self.config.data["ip_address"]["hostname"] = ".".join(["0"] * 4)
         if "port" not in self.config.data["ip_address"]:
-            self.config.data["ip_address"]["port"]: int = 19132
+            self.config.data["ip_address"]["port"] = 19132
         if "motd" not in self.config.data:
-            self.config.data["motd"]: str = "Podrum Server"
+            self.config.data["motd"] = "Podrum Server"
         if "max_players" not in self.config.data:
-            self.config.data["max_players"]: int = 20
+            self.config.data["max_players"] = 20
         if "max_view_distance" not in self.config.data:
-            self.config.data["max_view_distance"]: int = 8
+            self.config.data["max_view_distance"] = 8
         if "world_provider" not in self.config.data:
-            self.config.data["world_provider"]: int = "anvil"
+            self.config.data["world_provider"] = "anvil"
         if "world_name" not in self.config.data:
-            self.config.data["world_name"]: int = "world"
+            self.config.data["world_name"] = "world"
         self.config.save()      
 
     async def start(self) -> None:

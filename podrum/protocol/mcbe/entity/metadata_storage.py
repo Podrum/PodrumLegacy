@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
+from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 
 class metadata_storage:
     def __init__(self) -> None:
@@ -24,7 +24,7 @@ class metadata_storage:
             return self.metadata[key]
           
     def set_entry(self, key: int, value: object, entry_type: int) -> None:
-        self.metadata[key]: dict = {"value": value, "type": entry_type}
+        self.metadata[key] = {"value": value, "type": entry_type}
           
     def get_byte(self, key: int) -> int:
         entry: dict = self.get_entry(key)

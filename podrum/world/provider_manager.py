@@ -18,7 +18,7 @@ class provider_manager:
         self.providers: dict = {}
           
     def register_provider(self, provider: object) -> None:
-        self.providers[provider.provider_name]: object = provider
+        self.providers[provider.provider_name] = provider
           
     def get_provider(self, provider_name: str) -> object:
         if provider_name in self.providers:

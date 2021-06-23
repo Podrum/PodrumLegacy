@@ -13,8 +13,8 @@
 #                                                       #
 #########################################################
 
-from block.default.air import air
 import math
+from podrum.block.default.air import air
 
 class block_storage:
     def __init__(self, blocks: list = [], palette: list = []) -> None:
@@ -46,7 +46,7 @@ class block_storage:
         block_storage.check_bounds(x, y, z)
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
-        self.blocks[block_storage.get_index(x, y, z)]: int = self.palette.index(runtime_id)
+        self.blocks[block_storage.get_index(x, y, z)] = self.palette.index(runtime_id)
             
     def get_highest_block_at(self, x: int, z: int) -> int:
         block_storage.check_bounds(x, 15, z)

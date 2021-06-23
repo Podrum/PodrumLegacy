@@ -13,13 +13,13 @@
 #                                                       #
 #########################################################
 
-from game_data.mcbe.block_states import block_states
+from podrum.game_data.mcbe.block_states import block_states
 
 class block_map:
     @staticmethod
     def load_map() -> None:
-        block_map.states_1: dict = {}
-        block_map.states_2: dict = {}
+        block_map.states_1 = {}
+        block_map.states_2 = {}
         meta: int = 0
         previous_state_name: str = ""
         for runtime_id, state in enumerate(block_states):
@@ -28,8 +28,8 @@ class block_map:
             else:
                 meta: int = 0
             previous_state_name: str = state["name"]
-            block_map.states_2[runtime_id]: tuple = (state["name"], meta)
-            block_map.states_1[f"""{state["name"]} {meta}"""]: int = runtime_id           
+            block_map.states_2[runtime_id] = (state["name"], meta)
+            block_map.states_1[f"""{state["name"]} {meta}"""] = runtime_id           
     
     @staticmethod
     def get_runtime_id(block_name: str, meta: int) -> int:

@@ -13,35 +13,35 @@
 #                                                       #
 #########################################################
 
-from game_data.mcbe.item_id_map import item_id_map
-from geometry.vector_2 import vector_2
-from geometry.vector_3 import vector_3
 import math
-from protocol.mcbe.entity.metadata_storage import metadata_storage
-from protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
-from protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
-from protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
-from protocol.mcbe.packet.chunk_radius_updated_packet import chunk_radius_updated_packet
-from protocol.mcbe.packet.game_packet import game_packet
-from protocol.mcbe.packet.creative_content_packet import creative_content_packet
-from protocol.mcbe.packet.item_component_packet import item_component_packet
-from protocol.mcbe.packet.level_chunk_packet import level_chunk_packet
-from protocol.mcbe.packet.login_packet import login_packet
-from protocol.mcbe.packet.move_player_packet import move_player_packet
-from protocol.mcbe.packet.network_chunk_publisher_update_packet import network_chunk_publisher_update_packet
-from protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
-from protocol.mcbe.packet.play_status_packet import play_status_packet
-from protocol.mcbe.packet.resource_pack_client_response_packet import resource_pack_client_response_packet
-from protocol.mcbe.packet.resource_pack_stack_packet import resource_pack_stack_packet
-from protocol.mcbe.packet.resource_packs_info_packet import resource_packs_info_packet
-from protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
-from protocol.mcbe.packet.set_entity_data_packet import set_entity_data_packet
-from protocol.mcbe.packet.start_game_packet import start_game_packet
-from protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
-from protocol.mcbe.type.login_status_type import login_status_type
-from protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
+from podrum.game_data.mcbe.item_id_map import item_id_map
+from podrum.geometry.vector_2 import vector_2
+from podrum.geometry.vector_3 import vector_3
+from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
+from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from podrum.protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
+from podrum.protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
+from podrum.protocol.mcbe.packet.chunk_radius_updated_packet import chunk_radius_updated_packet
+from podrum.protocol.mcbe.packet.game_packet import game_packet
+from podrum.protocol.mcbe.packet.creative_content_packet import creative_content_packet
+from podrum.protocol.mcbe.packet.item_component_packet import item_component_packet
+from podrum.protocol.mcbe.packet.level_chunk_packet import level_chunk_packet
+from podrum.protocol.mcbe.packet.login_packet import login_packet
+from podrum.protocol.mcbe.packet.move_player_packet import move_player_packet
+from podrum.protocol.mcbe.packet.network_chunk_publisher_update_packet import network_chunk_publisher_update_packet
+from podrum.protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
+from podrum.protocol.mcbe.packet.play_status_packet import play_status_packet
+from podrum.protocol.mcbe.packet.resource_pack_client_response_packet import resource_pack_client_response_packet
+from podrum.protocol.mcbe.packet.resource_pack_stack_packet import resource_pack_stack_packet
+from podrum.protocol.mcbe.packet.resource_packs_info_packet import resource_packs_info_packet
+from podrum.protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
+from podrum.protocol.mcbe.packet.set_entity_data_packet import set_entity_data_packet
+from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
+from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
+from podrum.protocol.mcbe.type.login_status_type import login_status_type
+from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
+from podrum.world.chunk.chunk import chunk
 from rak_net.protocol.frame import frame
-from world.chunk.chunk import chunk
 import zlib
 
 class mcbe_player:
@@ -59,65 +59,65 @@ class mcbe_player:
         self.position: object = self.world.get_player_position(self.identity)
         self.position.y += 1
         packet: object = start_game_packet()
-        packet.entity_id: int = self.entity_id
-        packet.entity_runtime_id: int = self.entity_id
-        packet.player_gamemode: int = 1
-        packet.spawn: object = self.position
-        packet.rotation: object = vector_2(0, 0)
-        packet.seed: int = 0
-        packet.spawn_biome_type: int = 0
-        packet.custom_biome_name: str = "plains"
-        packet.dimension: int = 0
-        packet.generator: int = 2
-        packet.world_gamemode: int = self.world.get_world_gamemode()
-        packet.difficulty: int = 0
-        packet.world_spawn: object = vector_3(0, 4.0, 0)
-        packet.disable_achivements: bool = False
-        packet.time: int = 0
-        packet.edu_offer: int = 0
-        packet.edu_features: bool = False
-        packet.edu_product_id: str = ""
-        packet.rain_level: float = 0
-        packet.lightning_level: float = 0
-        packet.confirmed_platform_locked: bool = False
-        packet.multiplayer_game: bool = True
-        packet.lan_broadcasting: bool = True
-        packet.xbox_live_broadcast_mode: int = 4
-        packet.platform_broadcast_mode: int = 4
-        packet.enable_commands: bool = True
-        packet.require_texture_pack: bool = False
-        packet.game_rules: dict = {}
-        packet.experiments: int = []
-        packet.has_used_experiments: bool = False
-        packet.bonus_chest: bool = False
-        packet.start_map: bool = False
-        packet.permission_level: int = 1
-        packet.chunk_tick_range: int = 0
-        packet.locked_behavior_pack: bool = False
-        packet.locked_texture_pack: bool = False
-        packet.from_locked_template: bool = False
-        packet.only_msa_gamer_tags: bool = False
-        packet.from_world_template: bool = False
-        packet.world_template_option_locked: bool = True
-        packet.only_old_villagers: bool = False
-        packet.game_version: str = mcbe_protocol_info.mcbe_version
-        packet.limited_world_width: int = 0
-        packet.limited_world_height: int = 0
-        packet.new_nether: bool = False
-        packet.experimental_gamplay: bool = False
-        packet.level_id: str = ""
-        packet.world_name: str = self.world.get_world_name()
-        packet.premium_world_template_id: str = ""
-        packet.trial: bool = False
-        packet.movement_type: int = 0
-        packet.movement_rewind_size: int = 0
-        packet.server_authoritative_block_breaking: bool = False
-        packet.current_tick: int = 0
-        packet.enchantment_seed: int = 0
-        packet.item_table: dict = item_id_map
-        packet.multiplayer_correlation_id: str = ""
-        packet.server_authoritative_inventories: bool = False
-        packet.server_engine: str = "Podrum"
+        packet.entity_id = self.entity_id
+        packet.entity_runtime_id = self.entity_id
+        packet.player_gamemode = 1
+        packet.spawn = self.position
+        packet.rotation = vector_2(0, 0)
+        packet.seed = 0
+        packet.spawn_biome_type = 0
+        packet.custom_biome_name = "plains"
+        packet.dimension = 0
+        packet.generator = 2
+        packet.world_gamemode = self.world.get_world_gamemode()
+        packet.difficulty = 0
+        packet.world_spawn = vector_3(0, 4.0, 0)
+        packet.disable_achivements = False
+        packet.time = 0
+        packet.edu_offer = 0
+        packet.edu_features = False
+        packet.edu_product_id = ""
+        packet.rain_level = 0
+        packet.lightning_level = 0
+        packet.confirmed_platform_locked = False
+        packet.multiplayer_game = True
+        packet.lan_broadcasting = True
+        packet.xbox_live_broadcast_mode = 4
+        packet.platform_broadcast_mode = 4
+        packet.enable_commands = True
+        packet.require_texture_pack = False
+        packet.game_rules = {}
+        packet.experiments = []
+        packet.has_used_experiments = False
+        packet.bonus_chest = False
+        packet.start_map = False
+        packet.permission_level = 1
+        packet.chunk_tick_range = 0
+        packet.locked_behavior_pack = False
+        packet.locked_texture_pack = False
+        packet.from_locked_template = False
+        packet.only_msa_gamer_tags = False
+        packet.from_world_template = False
+        packet.world_template_option_locked = True
+        packet.only_old_villagers = False
+        packet.game_version = mcbe_protocol_info.mcbe_version
+        packet.limited_world_width = 0
+        packet.limited_world_height = 0
+        packet.new_nether = False
+        packet.experimental_gamplay = False
+        packet.level_id = ""
+        packet.world_name = self.world.get_world_name()
+        packet.premium_world_template_id = ""
+        packet.trial = False
+        packet.movement_type = 0
+        packet.movement_rewind_size = 0
+        packet.server_authoritative_block_breaking = False
+        packet.current_tick = 0
+        packet.enchantment_seed = 0
+        packet.item_table = item_id_map
+        packet.multiplayer_correlation_id = ""
+        packet.server_authoritative_inventories = False
+        packet.server_engine = "Podrum"
         packet.encode()
         self.send_packet(packet.data)
         
@@ -153,10 +153,10 @@ class mcbe_player:
                 self.identity: str = chain["extraData"]["identity"]
         self.send_play_status(login_status_type.success)
         packet: object = resource_packs_info_packet()
-        packet.forced_to_accept: bool = False
-        packet.scripting_enabled: bool = False
-        packet.behavior_pack_infos: list = []
-        packet.texture_pack_infos: list = []
+        packet.forced_to_accept = False
+        packet.scripting_enabled = False
+        packet.behavior_pack_infos = []
+        packet.texture_pack_infos = []
         packet.encode()
         self.send_packet(packet.data)
         self.spawned: bool = False
@@ -167,22 +167,22 @@ class mcbe_player:
         packet.decode()
         if packet.status == resource_pack_client_response_type.none:
             packet: object = resource_pack_stack_packet()
-            packet.forced_to_accept: bool = False
-            packet.behavior_pack_id_versions: list = []
-            packet.texture_pack_id_versions: list = []
-            packet.game_version: str = mcbe_protocol_info.mcbe_version
-            packet.expirement_count: int = 0
-            packet.experimental: bool = False
+            packet.forced_to_accept = False
+            packet.behavior_pack_id_versions = []
+            packet.texture_pack_id_versions = []
+            packet.game_version = mcbe_protocol_info.mcbe_version
+            packet.expirement_count = 0
+            packet.experimental = False
             packet.encode()
             self.send_packet(packet.data)
         elif packet.status == resource_pack_client_response_type.has_all_packs:
             packet: object = resource_pack_stack_packet()
-            packet.forced_to_accept: bool = False
-            packet.behavior_pack_id_versions: list = []
-            packet.texture_pack_id_versions: list = []
-            packet.game_version: str = mcbe_protocol_info.mcbe_version
-            packet.experiment_count: int = 0
-            packet.experimental: bool = False
+            packet.forced_to_accept = False
+            packet.behavior_pack_id_versions = []
+            packet.texture_pack_id_versions = []
+            packet.game_version = mcbe_protocol_info.mcbe_version
+            packet.experiment_count = 0
+            packet.experimental = False
             packet.encode()
             self.send_packet(packet.data)
         elif packet.status == resource_pack_client_response_type.completed:
@@ -216,7 +216,7 @@ class mcbe_player:
         packet.decode()
         self.view_distance: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
         new_packet: object = chunk_radius_updated_packet()
-        new_packet.chunk_radius: int = self.view_distance
+        new_packet.chunk_radius = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
         self.send_chunks()
@@ -255,42 +255,42 @@ class mcbe_player:
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
-        new_packet.x: int = int(self.position.x)
-        new_packet.y: int = int(self.position.y)
-        new_packet.z: int = int(self.position.z)
-        new_packet.chunk_radius: int = self.view_distance * 16
+        new_packet.x = int(self.position.x)
+        new_packet.y = int(self.position.y)
+        new_packet.z = int(self.position.z)
+        new_packet.chunk_radius = self.view_distance * 16
         new_packet.encode()
         self.send_packet(new_packet.data)
     
     def send_chunk(self, send_chunk: object) -> None:
         packet: object = level_chunk_packet()
-        packet.chunk_x: int = send_chunk.x
-        packet.chunk_z: int = send_chunk.z
-        packet.sub_chunk_count: int = send_chunk.get_sub_chunk_send_count()
-        packet.cache_enabled: bool = False
-        packet.chunk_data: bytes = send_chunk.network_serialize()
+        packet.chunk_x = send_chunk.x
+        packet.chunk_z = send_chunk.z
+        packet.sub_chunk_count = send_chunk.get_sub_chunk_send_count()
+        packet.cache_enabled = False
+        packet.chunk_data = send_chunk.network_serialize()
         packet.encode()
         self.send_packet(packet.data)
 
     def send_play_status(self, status: int) -> None:
         packet: object = play_status_packet()
-        packet.status: int = status
+        packet.status = status
         packet.encode()
         self.send_packet(packet.data)
         
     def send_metadata(self) -> None:
         packet: object = set_entity_data_packet()
-        packet.runtime_entity_id: int = self.entity_id
-        packet.metadata: dict = self.metadata_storage.metadata
-        packet.tick: int = 0
+        packet.runtime_entity_id = self.entity_id
+        packet.metadata = self.metadata_storage.metadata
+        packet.tick = 0
         packet.encode()
         self.send_packet(packet.data)
             
     def send_attributes(self) -> None:
         packet: object = update_attributes_packet()
-        packet.runtime_entity_id: int = self.entity_id
-        packet.attributes: list = self.attributes
-        packet.tick: int = 0
+        packet.runtime_entity_id = self.entity_id
+        packet.attributes = self.attributes
+        packet.tick = 0
         packet.encode()
         self.send_packet(packet.data)
     
@@ -299,6 +299,6 @@ class mcbe_player:
         new_packet.write_packet_data(data)
         new_packet.encode()
         send_packet: object = frame()
-        send_packet.reliability: int = 0
-        send_packet.body: bytes = new_packet.data
+        send_packet.reliability = 0
+        send_packet.body = new_packet.data
         self.connection.add_to_queue(send_packet, False)

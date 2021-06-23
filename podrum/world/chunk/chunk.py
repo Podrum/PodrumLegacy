@@ -14,7 +14,7 @@
 #########################################################
 
 from binary_utils.binary_stream import binary_stream
-from world.chunk.sub_chunk import sub_chunk
+from podrum.world.chunk.sub_chunk import sub_chunk
 
 class chunk:
     def __init__(self, x: int, z: int, sub_chunks: dict = {}, biomes: list = []) -> None:
@@ -24,9 +24,9 @@ class chunk:
         self.sub_chunks: dict = {}
         for y in range(0, 16):
             if y in self.sub_chunks:
-                self.sub_chunks[y]: object = sub_chunks[y]
+                self.sub_chunks[y] = sub_chunks[y]
             else:
-                self.sub_chunks[y]: object = sub_chunk()
+                self.sub_chunks[y] = sub_chunk()
         if len(biomes) == 256:
             self.biomes: list = biomes
         else:

@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from world.chunk_utils import chunk_utils
+from podrum.world.chunk_utils import chunk_utils
 
 class section:
     def __init__(self, block_ids: list = [], data_entries: list = [], block_light_entries: list = [], sky_light_entries: list = []) -> None:
@@ -48,7 +48,7 @@ class section:
         return self.block_ids[section.get_index(x, y, z)]
         
     def set_block_id(self, x: int, y: int, z: int, block_id: int) -> None:
-        self.block_ids[section.get_index(x, y, z)]: int = block_id
+        self.block_ids[section.get_index(x, y, z)] = block_id
         
     def get_data(self, x: int, y: int, z: int) -> int:
         return chunk_utils.get_nibble_4(self.data_entries, section.get_index(x, y, z))

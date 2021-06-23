@@ -23,6 +23,6 @@ class chunk_utils:
     @staticmethod
     def set_nibble_4(items: list, index: int, value: int) -> list:
         if index % 2 == 0:
-            items[index >> 1]: int = chunk_utils.get_nibble_4(items, index - 1) << 4 | value
+            items[index >> 1] = chunk_utils.get_nibble_4(items, index - 1) << 4 | value
         else:
-            items[index >> 1]: int = value << 4 | chunk_utils.get_nibble_4(items, index + 1)
+            items[index >> 1] = value << 4 | chunk_utils.get_nibble_4(items, index + 1)

@@ -18,7 +18,7 @@ class block_manager:
         self.blocks: dict = {}
 
     def register_block(self, block_obj: object) -> None:
-        self.blocks[f"{block_obj.name} {block_obj.meta}"]: object = block_obj
+        self.blocks[f"{block_obj.name} {block_obj.meta}"] = block_obj
         
     def remove_block(self, name: str, meta: int) -> None:
         if f"{name} {meta}" in self.blocks:
