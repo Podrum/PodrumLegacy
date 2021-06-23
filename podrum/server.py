@@ -99,6 +99,7 @@ class server:
         self.managers.world_manager.unload_all()
         self.server_task.cancel()
         self.event_loop.stop()
+        self.logger.success(f"Worlds were unloaded: {os.listdir('worlds')}")
         self.logger.success("Server stopped.")
         os.kill(os.getpid(), 15)
 
