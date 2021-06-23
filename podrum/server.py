@@ -63,11 +63,12 @@ class server:
             self.config.data["world_provider"] = "anvil"
         if "world_name" not in self.config.data:
             self.config.data["world_name"] = "world"
-        self.config.save()      
-
+        self.config.save()
+        
     async def start(self) -> None:
         start_time: float = time.time()
-        self.logger.info("Podrum is starting up...")
+        hostname = socket.gethostname()
+        server_ip = socket.gethostbyname(hostname)
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
@@ -81,7 +82,12 @@ class server:
         self.console_input_task: object = self.event_loop.create_task(self.console_input())
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
-        self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
+        self.logger.info("Loading server.json...")
+        self.logger.info("Podrum is starting up...")
+        self.logger.info(f"Start server on {server_ip}")
+        self.logger.info(f"Podum is still under development, errors can exist")
+        self.logger.info(f"Done in {startup_time}. Type help to view all available commands.")
+        self.logger.info(f"If you want to help us to develop Podrum you can contribute on Github: https://github.com/Podrum/Podrum")
         while True:
             # Add some sort of ticking?
             await asyncio.sleep(0.0001)
