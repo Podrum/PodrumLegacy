@@ -122,10 +122,15 @@ class server:
                         command: str = result[:-1]
                         self.managers.event_manager.call_event("execute_command", command, self, self)
                         result: str = ""
+                else:
+                    await asyncio.sleep(0.0001)
             else:
-                result += sys.stdin.read(1)
-                if result.endswith("\n"):
-                    command: str = result[:-1]
-                    self.managers.event_manager.call_event("execute_command", command, self, self)
-                    result: str = ""
-            await asyncio.sleep(0.0001)
+                user_input: str = sys.stdin.read(1)
+                if len(user_input) > 0:
+                    result += user_input
+                    if result.endswith("\n"):
+                        command: str = result[:-1]
+                        self.managers.event_manager.call_event("execute_command", command, self, self)
+                        result: str = ""
+                else:
+                    await asyncio.sleep(0.0001)
