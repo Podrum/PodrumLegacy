@@ -23,6 +23,7 @@ It's still under active development, yet it has a few advantages:
  - [x] Commands
  - [x] MOTD
  - [x] Joinable
+ - [x] Plugin API
  - [ ] Mobs 
 
 ## Running:
