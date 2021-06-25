@@ -24,7 +24,7 @@ else:
 
 class console_utils:
     @staticmethod
-    async def ainput(self) -> None:
+    async def ainput() -> None:
         if platform.system() != "Windows":
             fcntl.fcntl(sys.stdin, fcntl.F_SETFL, fcntl.fcntl(sys.stdin, fcntl.F_GETFL) | os.O_NONBLOCK)
         out: object = asyncio.Future()
