@@ -75,14 +75,11 @@ class block_storage:
             word: int = 0
             for block in range(0, blocks_per_word):
                 if pos >= 4096:
-                    await asyncio.sleep(0.0001)
                     break
                 state: int = self.blocks[pos]
                 word |= state << (bits_per_block * block)
                 pos += 1
-                await asyncio.sleep(0.0001)
             stream.write_unsigned_int_le(word)
         stream.write_signed_var_int(len(self.palette))
         for runtime_id in self.palette:
             stream.write_signed_var_int(runtime_id)
-            await asyncio.sleep(0.0001)

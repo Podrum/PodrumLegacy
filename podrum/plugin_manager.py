@@ -56,7 +56,6 @@ class plugin_manager:
                 full_path: str = os.path.abspath(os.path.join(top, file_name))
                 if full_path.endswith(".pyz") or full_path.endswith(".zip"):
                     self.load(full_path)
-                asyncio.sleep(0.0001)
         
     def unload(self, name: str) -> None:
         if name in self.plugins:
@@ -68,7 +67,6 @@ class plugin_manager:
     async def unload_all(self) -> None:
         for name in dict(self.plugins):
             self.unload(name)
-            asyncio.sleep(0.0001)
                                    
     def reload(self, name: str) -> None:
         if name in self.plugins:
@@ -79,4 +77,3 @@ class plugin_manager:
     async def reload_all(self) -> None:
         for name in dict(self.plugins):
             self.reload(name)
-            asyncio.sleep(0.0001)

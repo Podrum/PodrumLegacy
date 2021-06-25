@@ -33,7 +33,6 @@ class flat:
                 result.set_block_runtime_id(x, 1, z, dirt().runtime_id)
                 result.set_block_runtime_id(x, 2, z, dirt().runtime_id)
                 result.set_block_runtime_id(x, 3, z, grass().runtime_id)
-                await asyncio.sleep(0.0001)
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 4
             world.set_spawn_position(spawn_position)

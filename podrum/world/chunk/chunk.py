@@ -64,8 +64,6 @@ class chunk:
         stream.write_var_int(len(self.biomes))
         for biome in self.biomes:
             stream.write_unsigned_byte(biome)
-            await asyncio.sleep(0.0001)
         stream.write_unsigned_byte(0)
         out.set_result(stream.data)
-        print("Good")
         return out

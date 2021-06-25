@@ -29,7 +29,6 @@ class void:
             for x in range(0, 16):
                 for z in range(0, 16):
                     result.set_block_runtime_id(x, 0, z, stone().runtime_id)
-                    await asyncio.sleep(0.0001)
             spawn_position.y = 1
             world.set_spawn_position(spawn_position)
         out.set_result(result)
