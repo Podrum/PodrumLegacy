@@ -42,7 +42,6 @@ class console_utils:
                     else:
                         print("\r\x1b[K" + result, end = "")
                     if result.endswith("\r"):
-                        command: str = result[:-1]
                         break
                 else:
                     await asyncio.sleep(0.0001)
@@ -51,9 +50,8 @@ class console_utils:
                 if len(user_input) > 0:
                     result += user_input
                     if result.endswith("\n"):
-                        command: str = result[:-1]
                         break
                 else:
                     await asyncio.sleep(0.0001)
-        out.set_result(result)
+        out.set_result(result[:-1])
         return out
