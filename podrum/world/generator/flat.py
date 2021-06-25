@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import asyncio
 from podrum.block.default.bedrock import bedrock
 from podrum.block.default.dirt import dirt
 from podrum.block.default.grass import grass
@@ -22,7 +23,8 @@ class flat:
     generator_name: str = "flat"
     
     @staticmethod
-    def generate(chunk_x: int, chunk_z: int, world: object) -> object:
+    async def generate(chunk_x: int, chunk_z: int, world: object) -> object:
+        out: object = asyncio.Future()
         result: object = chunk(chunk_x, chunk_z)
         spawn_position: object = world.get_spawn_position()
         for x in range(0, 16):
@@ -31,7 +33,9 @@ class flat:
                 result.set_block_runtime_id(x, 1, z, dirt().runtime_id)
                 result.set_block_runtime_id(x, 2, z, dirt().runtime_id)
                 result.set_block_runtime_id(x, 3, z, grass().runtime_id)
+                await asyncio.sleep(0.0001)
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 4
             world.set_spawn_position(spawn_position)
-        return result
+        out.set_result(result)
+        return out

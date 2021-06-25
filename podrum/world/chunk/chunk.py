@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import asyncio
 from binary_utils.binary_stream import binary_stream
 from podrum.world.chunk.sub_chunk import sub_chunk
 
@@ -55,12 +56,16 @@ class chunk:
                 return index + (i << 4)
         return -1
 
-    def network_serialize(self) -> object:
+    async def network_serialize(self) -> object:
+        out: object = asyncio.Future()
         stream: object = binary_stream()
         for y in range(0, self.get_sub_chunk_send_count()):
-            self.sub_chunks[y].network_serialize(stream)
+            await self.sub_chunks[y].network_serialize(stream)
         stream.write_var_int(len(self.biomes))
         for biome in self.biomes:
             stream.write_unsigned_byte(biome)
+            await asyncio.sleep(0.0001)
         stream.write_unsigned_byte(0)
-        return stream.data
+        out.set_result(stream.data)
+        print("Good")
+        return out

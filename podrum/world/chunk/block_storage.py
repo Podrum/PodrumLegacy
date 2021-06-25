@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import asyncio
 import math
 from podrum.block.default.air import air
 
@@ -58,7 +59,7 @@ class block_storage:
                 return y
         return -1
 
-    def network_serialize(self, stream: object):
+    async def network_serialize(self, stream: object):
         bits_per_block: int = math.ceil(math.log2(len(self.palette)))
         if bits_per_block == 0:
             bits_per_block: int = 1
@@ -74,11 +75,14 @@ class block_storage:
             word: int = 0
             for block in range(0, blocks_per_word):
                 if pos >= 4096:
+                    await asyncio.sleep(0.0001)
                     break
                 state: int = self.blocks[pos]
                 word |= state << (bits_per_block * block)
                 pos += 1
+                await asyncio.sleep(0.0001)
             stream.write_unsigned_int_le(word)
         stream.write_signed_var_int(len(self.palette))
         for runtime_id in self.palette:
             stream.write_signed_var_int(runtime_id)
+            await asyncio.sleep(0.0001)

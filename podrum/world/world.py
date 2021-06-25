@@ -15,8 +15,6 @@
 
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
-from threading import Thread
-from queue import Queue
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -24,19 +22,16 @@ class world:
         self.server: object = server
         self.chunks: dict = {}
         self.world_path: str = provider.world_dir
-        self.load_chunk_queue: object = Queue()
-        self.send_chunk_queue: object = Queue()
-        self.workers_running: int = False
             
-    def load_chunk(self, x: int, z: int) -> None:
-        chunk: object = self.provider.get_chunk(x, z)
-        if chunk is None:
+    async def load_chunk(self, x: int, z: int) -> None:
+        chunk: object = await self.provider.get_chunk(x, z)
+        if chunk.result() is None:
             generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-            chunk: object = generator.generate(x, z, self)
-        self.chunks[f"{x} {z}"] = chunk
+            chunk: object = await generator.generate(x, z, self)
+        self.chunks[f"{x} {z}"] = chunk.result()
             
-    def unload_chunk(self, x: int, z: int) -> None:
-        self.provider.save_chunk(x, z)
+    async def unload_chunk(self, x: int, z: int) -> None:
+        await self.provider.save_chunk(x, z)
         del self.chunks[f"{x} {z}"]
         
     def has_loaded_chunk(self, x: int, z: int) -> bool:
@@ -44,36 +39,18 @@ class world:
             return True
         return False
 
-    def load_chunk_worker(self) -> None:
-        while True:
-            pos_and_player: tuple = self.load_chunk_queue.get()
-            if not self.has_loaded_chunk(pos_and_player[0].x, pos_and_player[0].z):
-                self.load_chunk(pos_and_player[0].x, pos_and_player[0].z)
-            if pos_and_player[1] is not None:
-                self.send_chunk_queue.put(pos_and_player)
-
-    def send_chunk_worker(self) -> None:
-        while True:
-            pos_and_player: tuple = self.send_chunk_queue.get()
-            if self.has_loaded_chunk(pos_and_player[0].x, pos_and_player[0].z):
-                chunk: object = self.get_chunk(pos_and_player[0].x, pos_and_player[0].z)
-                pos_and_player[1].send_chunk(chunk)
-
-    def add_chunk_to_load_queue(self, x: int, z: int, player: object = None) -> None:
-        self.load_chunk_queue.put((vector_2(x, z), player))
-
-    def start_workers(self, workers_count: object) -> None:
-        for i in range(0, workers_count):
-            thread = Thread(target=self.load_chunk_worker)
-            thread.start()
-            thread = Thread(target=self.send_chunk_worker)
-            thread.start()
+    async def send_chunk_task(self, x: int, z: int, player: object = None) -> None:
+        if not self.has_loaded_chunk(x, z):
+            await self.load_chunk(x, z)
+        chunk: object = self.get_chunk(x, z)
+        await player.send_chunk(chunk)
+        print("Finally")
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
         
-    def save_chunk(self, x: int, z: int) -> None:
-        self.provider.set_chunk(self.get_chunk(x, z))
+    async def save_chunk(self, x: int, z: int) -> None:
+        await self.provider.set_chunk(self.get_chunk(x, z))
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
         block_and_meta: tuple = block_map.get_name_and_meta(self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f))
@@ -85,9 +62,9 @@ class world:
     def get_highest_block_at(self, x: int, z: int) -> int:
         return self.chunks[f"{x >> 4} {z >> 4}"].get_highest_block_at(x & 0x0f, z & 0x0f)
         
-    def save(self) -> None:
+    async def save(self) -> None:
         for chunk in self.chunks.values():
-            self.save_chunk(chunk.x, chunk.z)
+            await self.save_chunk(chunk.x, chunk.z)
             
     def get_world_name(self) -> str:
         return self.provider.get_world_name()

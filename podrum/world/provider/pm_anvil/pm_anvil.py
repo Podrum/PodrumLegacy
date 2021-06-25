@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import asyncio
 import gzip
 import os
 from podrum.block.block_map import block_map
@@ -30,7 +31,8 @@ class pm_anvil(anvil):
     region_file_extension: str = "mcapm"
     
     @staticmethod
-    def to_server_chunk(chunk_in: object) -> object:
+    async def to_server_chunk(chunk_in: object) -> object:
+        out: object = asyncio.Future()
         cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
         for x in range(0, 16):
             for z in range(0, 16):
@@ -43,10 +45,13 @@ class pm_anvil(anvil):
                     except KeyError:
                         runtime_id: int = block_map.get_runtime_id(block_name, 0)
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
-        return cnv_chunk
+                    await asyncio.sleep(0.0001)
+        out.set_result(cnv_chunk)
+        return out
     
     @staticmethod
-    def to_anvil_chunk(chunk_in: object) -> object:
+    async def to_anvil_chunk(chunk_in: object) -> object:
+        out: object = asyncio.Future()
         cnv_chunk: object = chunk(chunk_in.x, chunk_in.z)
         for x in range(0, 16):
             for z in range(0, 16):
@@ -56,9 +61,12 @@ class pm_anvil(anvil):
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)
                     cnv_chunk.set_block_id(x, y, z, block)
                     cnv_chunk.set_data(x, y, z, meta)
-        return cnv_chunk
+                    await asyncio.sleep(0.0001)
+        out.set_result(cnv_chunk)
+        return out
     
-    def get_chunk(self, x: int, z: int) -> object:
+    async def get_chunk(self, x: int, z: int) -> object:
+        out: object = asyncio.Future()
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
@@ -67,11 +75,15 @@ class pm_anvil(anvil):
         if len(chunk_data) > 0:
             result: object = chunk(x, z)
             result.nbt_deserialize(chunk_data)
-            return anvil.to_server_chunk(result)
-        
-    def set_chunk(self, chunk_in: object) -> None:
+            out: object = await anvil.to_server_chunk(result)
+        else:
+            out.set_result(None)
+        return out
+                                        
+    async def set_chunk(self, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(chunk_in.x, chunk_in.z)
         chunk_index: tuple = anvil.rc_index(chunk_in.x, chunk_in.z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
-        reg.put_chunk_data(chunk_index[0], chunk_index[1], anvil.to_anvil_chunk(chunk_in).nbt_serialize())
+        chunk_result: object = await anvil.to_anvil_chunk(chunk_in)
+        reg.put_chunk_data(chunk_index[0], chunk_index[1], chunk_result.result().nbt_serialize())

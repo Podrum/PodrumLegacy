@@ -91,7 +91,7 @@ class server:
         self.console_input_task.cancel()
         self.rak_net_interface.stop_interface()
         await self.managers.plugin_manager.unload_all()
-        self.managers.world_manager.unload_all()
+        await self.managers.world_manager.unload_all()
         self.server_task.cancel()
         self.event_loop.stop()
         self.logger.success("Server stopped.")

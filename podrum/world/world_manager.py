@@ -39,7 +39,6 @@ class world_manager:
         world_name: str = world_obj.get_world_name()
         self.worlds[world_name] = world_obj
         self.path_to_world_name[world_path] = world_name
-        self.worlds[world_name].start_workers(1)
         self.server.logger.success(f"Loaded world -> {world_name}")
         
     def get_world(self, name: str) -> object:
@@ -51,10 +50,10 @@ class world_manager:
         world_path: str = os.path.join(worlds_path, world_folder_name)
         return self.get_world(self.path_to_world_name[world_path])
         
-    def unload_world(self, world_name: str) -> None:
-        self.worlds[world_name].save()
+    async def unload_world(self, world_name: str) -> None:
+        await self.worlds[world_name].save()
         del self.worlds[world_name]
 
-    def unload_all(self) -> None:
+    async def unload_all(self) -> None:
         for world_name in dict(self.worlds):
-            self.unload_world(world_name)
+            await self.unload_world(world_name)
