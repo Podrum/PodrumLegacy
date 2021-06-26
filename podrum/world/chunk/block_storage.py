@@ -13,7 +13,6 @@
 #                                                       #
 #########################################################
 
-import asyncio
 import math
 from podrum.block.default.air import air
 
@@ -59,7 +58,7 @@ class block_storage:
                 return y
         return -1
 
-    async def network_serialize(self, stream: object):
+    def network_serialize(self, stream: object):
         bits_per_block: int = math.ceil(math.log2(len(self.palette)))
         if bits_per_block == 0:
             bits_per_block: int = 1

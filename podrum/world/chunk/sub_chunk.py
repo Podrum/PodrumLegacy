@@ -41,8 +41,8 @@ class sub_chunk:
     def get_highest_block_at(self, x: int, z: int, layer: int) -> int:
         return self.get_block_storage(layer).get_highest_block_at(x, z)
 
-    async def network_serialize(self, stream: object) -> None:
+    def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
         for storage in self.block_storages.values():
-            await storage.network_serialize(stream)
+            storage.network_serialize(stream)
