@@ -23,15 +23,15 @@ class world:
         self.chunks: dict = {}
         self.world_path: str = provider.world_dir
             
-    async def load_chunk(self, x: int, z: int) -> None:
-        chunk: object = await self.provider.get_chunk(x, z)
-        if chunk.result() is None:
+    def load_chunk(self, x: int, z: int) -> None:
+        chunk: object = self.provider.get_chunk(x, z)
+        if chunk is None:
             generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-            chunk: object = await generator.generate(x, z, self)
-        self.chunks[f"{x} {z}"] = chunk.result()
+            chunk: object = generator.generate(x, z, self)
+        self.chunks[f"{x} {z}"] = chunk
             
-    async def unload_chunk(self, x: int, z: int) -> None:
-        await self.provider.save_chunk(x, z)
+    def unload_chunk(self, x: int, z: int) -> None:
+        self.provider.save_chunk(x, z)
         del self.chunks[f"{x} {z}"]
         
     def has_loaded_chunk(self, x: int, z: int) -> bool:
@@ -39,17 +39,17 @@ class world:
             return True
         return False
 
-    async def send_chunk_task(self, x: int, z: int, player: object = None) -> None:
+    def send_chunk_task(self, x: int, z: int, player: object = None) -> None:
         if not self.has_loaded_chunk(x, z):
-            await self.load_chunk(x, z)
+            self.load_chunk(x, z)
         chunk: object = self.get_chunk(x, z)
-        await player.send_chunk(chunk)
+        player.send_chunk(chunk)
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
         
-    async def save_chunk(self, x: int, z: int) -> None:
-        await self.provider.set_chunk(self.get_chunk(x, z))
+    def save_chunk(self, x: int, z: int) -> None:
+        self.provider.set_chunk(self.get_chunk(x, z))
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
         block_and_meta: tuple = block_map.get_name_and_meta(self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f))
@@ -61,9 +61,9 @@ class world:
     def get_highest_block_at(self, x: int, z: int) -> int:
         return self.chunks[f"{x >> 4} {z >> 4}"].get_highest_block_at(x & 0x0f, z & 0x0f)
         
-    async def save(self) -> None:
+    def save(self) -> None:
         for chunk in self.chunks.values():
-            await self.save_chunk(chunk.x, chunk.z)
+            self.save_chunk(chunk.x, chunk.z)
             
     def get_world_name(self) -> str:
         return self.provider.get_world_name()
