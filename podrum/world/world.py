@@ -24,11 +24,11 @@ class world:
         self.world_path: str = provider.world_dir
             
     async def load_chunk(self, x: int, z: int) -> None:
-        chunk: object = await self.provider.get_chunk(x, z)
-        if chunk.result() is None:
+        chunk: object = await self.server.event_loop.run_in_executor(None, self.provider.get_chunk, x, z)
+        if chunk is None:
             generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-            chunk: object = await generator.generate(x, z, self)
-        self.chunks[f"{x} {z}"] = chunk.result()
+            chunk: object = await self.server.event_loop.run_in_executor(None, generator.generate, x, z, self)
+        self.chunks[f"{x} {z}"] = chunk
             
     async def unload_chunk(self, x: int, z: int) -> None:
         await self.provider.save_chunk(x, z)
@@ -43,13 +43,13 @@ class world:
         if not self.has_loaded_chunk(x, z):
             await self.load_chunk(x, z)
         chunk: object = self.get_chunk(x, z)
-        await player.send_chunk(chunk)
+        await self.server.event_loop.run_in_executor(None, player.send_chunk, chunk)
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
         
     async def save_chunk(self, x: int, z: int) -> None:
-        await self.provider.set_chunk(self.get_chunk(x, z))
+        await self.server.event_loop.run_in_executor(None, self.provider.set_chunk, self.get_chunk(x, z))
         
     def get_block(self, x: int, y: int, z: int, block: object) -> None:
         block_and_meta: tuple = block_map.get_name_and_meta(self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f))
