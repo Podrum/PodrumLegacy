@@ -245,7 +245,6 @@ class mcbe_player:
             self.handle_move_player_packet(data)
             
     def send_chunks(self) -> None:
-        self.send_network_chunk_publisher_update()
         chunk_x_start: int = (int(self.position.x) >> 4) - self.view_distance
         chunk_x_end: int = (int(self.position.x) >> 4) + self.view_distance
         chunk_z_start: int = (int(self.position.z) >> 4) - self.view_distance
