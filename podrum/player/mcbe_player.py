@@ -251,7 +251,7 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                self.server.event_loop.create_task(self.world.send_chunk_task(chunk_x, chunk_z, self))
+                self.world.send_chunk_task(chunk_x, chunk_z, self)
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
@@ -262,14 +262,13 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
     
-    async def send_chunk(self, send_chunk: object) -> None:
+    def send_chunk(self, send_chunk: object) -> None:
         packet: object = level_chunk_packet()
         packet.chunk_x = send_chunk.x
         packet.chunk_z = send_chunk.z
         packet.sub_chunk_count = send_chunk.get_sub_chunk_send_count()
         packet.cache_enabled = False
-        chunk_data: object = await send_chunk.network_serialize()
-        packet.chunk_data = chunk_data.result()
+        packet.chunk_data = send_chunk.network_serialize()
         packet.encode()
         self.send_packet(packet.data)
 
