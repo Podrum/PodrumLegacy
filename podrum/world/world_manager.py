@@ -50,10 +50,10 @@ class world_manager:
         world_path: str = os.path.join(worlds_path, world_folder_name)
         return self.get_world(self.path_to_world_name[world_path])
         
-    async def unload_world(self, world_name: str) -> None:
-        await self.worlds[world_name].save()
+    def unload_world(self, world_name: str) -> None:
+        self.worlds[world_name].save()
         del self.worlds[world_name]
 
-    async def unload_all(self) -> None:
+    def unload_all(self) -> None:
         for world_name in dict(self.worlds):
-            await self.unload_world(world_name)
+            self.unload_world(world_name)
