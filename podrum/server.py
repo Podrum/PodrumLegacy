@@ -13,7 +13,6 @@
 #                                                       #
 #########################################################
 
-import asyncio
 import os
 import platform
 from podrum.block.block_map import block_map
@@ -34,9 +33,6 @@ class server:
         self.logger: object = logger()
         self.players: dict = {}
         self.current_entity_id: int = 1
-        self.event_loop: object = asyncio.get_event_loop()
-        self.server_task: object = self.event_loop.create_task(self.start())
-        self.event_loop.run_forever()
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -66,13 +62,13 @@ class server:
             self.config.data["world_name"] = "world"
         self.config.save()      
 
-    async def start(self) -> None:
+    def start(self) -> None:
         start_time: float = time.time()
         self.logger.info("Podrum is starting up...")
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
-        await self.managers.plugin_manager.load_all(plugins_path)
+        self.managers.plugin_manager.load_all(plugins_path)
         worlds_path: str = os.path.join(os.getcwd(), "worlds")
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
@@ -85,22 +81,19 @@ class server:
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
         while True:
             # Add some sort of ticking?
-            await asyncio.sleep(0.0001)
+            time.sleep(0.0001)
 
-    async def stop(self) -> None:
-        self.console_input_task.cancel()
+    def stop(self) -> None:
         self.rak_net_interface.stop_interface()
-        await self.managers.plugin_manager.unload_all()
-        await self.managers.world_manager.unload_all()
-        self.server_task.cancel()
-        self.event_loop.stop()
+        self.managers.plugin_manager.unload_all()
+        self.managers.world_manager.unload_all()
         self.logger.success("Server stopped.")
         os.kill(os.getpid(), 15)
 
     def send_message(self, message: str) -> None:
         self.logger.info(message)
         
-    async def console_input(self) -> None:
+    def console_input(self) -> None:
         while True:
-            command: object = await console_utils.ainput()
+            command: object = input()
             self.managers.event_manager.call_event("execute_command", command.result(), self, self)
