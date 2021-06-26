@@ -44,6 +44,7 @@ class world:
             self.load_chunk(x, z)
         chunk: object = self.get_chunk(x, z)
         player.send_chunk(chunk)
+        player.send_network_chunk_publisher_update()
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
