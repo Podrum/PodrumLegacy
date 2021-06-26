@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import asyncio
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
 
