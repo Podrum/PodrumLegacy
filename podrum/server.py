@@ -21,6 +21,7 @@ from podrum.console.console_utils import console_utils
 from podrum.console.logger import logger
 from podrum.managers import managers
 from podrum.protocol.mcbe.rak_net_interface import rak_net_interface
+from podrum.task.repeating_task import repeating_task
 import sys
 import time
 
@@ -33,6 +34,7 @@ class server:
         self.logger: object = logger()
         self.players: dict = {}
         self.current_entity_id: int = 1
+        self.is_ticking: bool = True
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -75,25 +77,27 @@ class server:
         self.managers.world_manager.load_world(self.config.data["world_name"])
         self.world: object = self.managers.world_manager.get_world_from_folder_name(self.config.data["world_name"])
         self.rak_net_interface.start_interface()
-        self.console_input_task: object = self.event_loop.create_task(self.console_input())
+        self.console_input_task: object = repeating_task(self.console_input)
+        self.console_input_task.start()
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
-        while True:
+        while self.is_ticking:
             # Add some sort of ticking?
             time.sleep(0.0001)
 
     def stop(self) -> None:
+        self.console_input_task.stop()
         self.rak_net_interface.stop_interface()
         self.managers.plugin_manager.unload_all()
         self.managers.world_manager.unload_all()
         self.logger.success("Server stopped.")
+        self.is_ticking = False
         os.kill(os.getpid(), 15)
 
     def send_message(self, message: str) -> None:
         self.logger.info(message)
         
     def console_input(self) -> None:
-        while True:
-            command: object = input()
-            self.managers.event_manager.call_event("execute_command", command.result(), self, self)
+        command: object = input()
+        self.managers.event_manager.call_event("execute_command", command.result(), self, self)
