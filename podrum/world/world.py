@@ -62,8 +62,10 @@ class world:
         return self.chunks[f"{x >> 4} {z >> 4}"].get_highest_block_at(x & 0x0f, z & 0x0f)
         
     async def save(self) -> None:
+        tasks: list = []
         for chunk in self.chunks.values():
-            await self.save_chunk(chunk.x, chunk.z)
+            tasks.append(self.server.event_loop.create_task(self.save_chunk(chunk.x, chunk.z)))
+        asyncio.wait(tasks)
             
     def get_world_name(self) -> str:
         return self.provider.get_world_name()
