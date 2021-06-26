@@ -66,7 +66,7 @@ class world:
         tasks: list = []
         for chunk in self.chunks.values():
             tasks.append(self.server.event_loop.create_task(self.save_chunk(chunk.x, chunk.z)))
-        asyncio.wait(tasks)
+        await asyncio.wait(tasks)
             
     def get_world_name(self) -> str:
         return self.provider.get_world_name()
