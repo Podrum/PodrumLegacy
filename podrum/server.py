@@ -34,6 +34,7 @@ class server:
         self.players: dict = {}
         self.current_entity_id: int = 1
         self.is_ticking: bool = True
+        self.start()
 
     def get_plugin_main(self, name):
         if name in self.plugin_manager.plugins:
@@ -99,4 +100,4 @@ class server:
         
     def console_input(self) -> None:
         command: object = input()
-        self.managers.event_manager.call_event("execute_command", command.result(), self, self)
+        self.managers.event_manager.call_event("execute_command", command, self, self)
