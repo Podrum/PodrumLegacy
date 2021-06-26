@@ -262,14 +262,13 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
     
-    async def send_chunk(self, send_chunk: object) -> None:
+    def send_chunk(self, send_chunk: object) -> None:
         packet: object = level_chunk_packet()
         packet.chunk_x = send_chunk.x
         packet.chunk_z = send_chunk.z
         packet.sub_chunk_count = send_chunk.get_sub_chunk_send_count()
         packet.cache_enabled = False
-        chunk_data: object = await send_chunk.network_serialize()
-        packet.chunk_data = chunk_data.result()
+        packet.chunk_data = send_chunk.network_serialize()
         packet.encode()
         self.send_packet(packet.data)
 
