@@ -50,7 +50,7 @@ class plugin_manager:
             self.plugins[plugin_info["name"]].on_load()
         self.server.logger.success(f"Successfully loaded {plugin_info['name']}.")
         
-    async def load_all(self, path: str) -> None:
+    def load_all(self, path: str) -> None:
         for top, dirs, files in os.walk(path):
             for file_name in files:
                 full_path: str = os.path.abspath(os.path.join(top, file_name))
@@ -64,7 +64,7 @@ class plugin_manager:
             del self.plugins[name]
             self.server.logger.info(f"Unloaded {name}.")
             
-    async def unload_all(self) -> None:
+    def unload_all(self) -> None:
         for name in dict(self.plugins):
             self.unload(name)
                                    
@@ -74,6 +74,6 @@ class plugin_manager:
             self.unload(name)
             self.load(path)
                                    
-    async def reload_all(self) -> None:
+    def reload_all(self) -> None:
         for name in dict(self.plugins):
             self.reload(name)
