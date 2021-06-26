@@ -13,7 +13,6 @@
 #                                                       #
 #########################################################
 
-import asyncio
 from podrum.block.default.stone import stone
 from podrum.world.chunk.chunk import chunk
 
@@ -21,8 +20,7 @@ class void:
     generator_name: str = "void"
     
     @staticmethod
-    async def generate(chunk_x: int, chunk_z: int, world: object) -> object:
-        out: object = asyncio.Future()
+    def generate(chunk_x: int, chunk_z: int, world: object) -> object:
         result: object = chunk(chunk_x, chunk_z)
         spawn_position: object = world.get_spawn_position()
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
@@ -31,5 +29,4 @@ class void:
                     result.set_block_runtime_id(x, 0, z, stone().runtime_id)
             spawn_position.y = 1
             world.set_spawn_position(spawn_position)
-        out.set_result(result)
-        return out
+        return result
