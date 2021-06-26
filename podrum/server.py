@@ -17,7 +17,6 @@ import os
 import platform
 from podrum.block.block_map import block_map
 from podrum.config import config
-from podrum.console.console_utils import console_utils
 from podrum.console.logger import logger
 from podrum.managers import managers
 from podrum.protocol.mcbe.rak_net_interface import rak_net_interface
