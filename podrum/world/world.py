@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+from collections import deque
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
 
@@ -21,14 +22,21 @@ class world:
         self.provider: object = provider
         self.server: object = server
         self.chunks: dict = {}
+        self.mark_as_loading: object = deque()
         self.world_path: str = provider.world_dir
             
     def load_chunk(self, x: int, z: int) -> None:
-        chunk: object = self.provider.get_chunk(x, z)
-        if chunk is None:
-            generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-            chunk: object = generator.generate(x, z, self)
-        self.chunks[f"{x} {z}"] = chunk
+        if f"{x} {z}" not in self.mark_as_loading:
+            self.mark_as_loading.append(f"{x} {z}")
+            chunk: object = self.provider.get_chunk(x, z)
+            if chunk is None:
+                generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
+                chunk: object = generator.generate(x, z, self)
+            self.chunks[f"{x} {z}"] = chunk
+            self.mark_as_loading.remove(f"{x} {z}")
+        else:
+            while f"{x} {z}" in self.mark_as_loading:
+                pass
             
     def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)
