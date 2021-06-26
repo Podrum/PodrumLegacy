@@ -40,6 +40,7 @@ from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
+from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
 from rak_net.protocol.frame import frame
 import zlib
@@ -251,7 +252,8 @@ class mcbe_player:
         chunk_z_end: int = (int(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                self.world.send_chunk_task(chunk_x, chunk_z, self)
+                chunk_task: object = immediate_task(self.world.send_chunk_task, [chunk_x, chunk_z, self])
+                chunk_task.start()
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
