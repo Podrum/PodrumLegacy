@@ -37,4 +37,15 @@ class text_packet(mcbe_packet):
                 self.parameters.append(self.read_string())
  
     def encode_payload(self) -> None:
-        pass
+        self.write_unsigned_byte(self.type)
+        self.write_bool(self.needs_translation)
+        if self.type == text_type.chat or self.type == text_type.whisper or self.type == text_type.announcement:
+            self.write_string(self.source_name)
+            self.write_string(self.message)
+        elif self.type == text_type.raw or self.type == text_type.tip or self.type == text_type.system or self.type == text_type.json or self.type == text_type.json_whisper:
+            self.write_string(self.message)
+        elif self.type == text_type.translation or self.type == text_type.popup or self.type == text_type.jukebox_popup:
+            self.write_string(self.message)
+            self.write_var_int(len(self.parameters))
+            for parameter in self.parameters:
+                self.write_string(parameter)
