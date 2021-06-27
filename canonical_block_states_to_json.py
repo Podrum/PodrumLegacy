@@ -26,9 +26,13 @@ while not stream.feos():
     name: str = root_tag.get_tag("name").value
     states: list = root_tag.get_tag("states").value
     version: int = root_tag.get_tag("version").value
-    parsed_states: dict = {}
+    parsed_states: list = []
     for state in states:
-        parsed_states[state.name] = state.value
+        parsed_states.append({
+            "name": state.name,
+            "type": state.id,
+            "value": state.value
+        })
     block_states.append({
         "name": name,
         "states": parsed_states,
