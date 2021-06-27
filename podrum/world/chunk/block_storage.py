@@ -59,13 +59,11 @@ class block_storage:
         return -1
 
     def network_serialize(self, stream: object):
-        bits_per_block: int = math.ceil(math.log2(len(self.palette)))
-        if bits_per_block == 0:
-            bits_per_block: int = 1
-        elif bits_per_block == 7:
-            bits_per_block: int = 8
-        elif bits_per_block > 8:
-            bits_per_block: int = 16
+        bits_per_block: int = max(math.ceil(math.log2(len(self.palette))), 1)
+        for bits in [1, 2, 3, 4, 5, 6, 8, 16]:
+            if bits >= bitsPerBlock:
+                bitsPerBlock: int = bits
+                break
         stream.write_unsigned_byte((bits_per_block << 1) | 1)
         blocks_per_word: int = math.floor(32 / bits_per_block)
         words_per_chunk: int = math.ceil(4096 / blocks_per_word)
