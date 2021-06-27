@@ -23,5 +23,5 @@ class text_type:
     system: int = 6
     whisper: int = 7
     announcement: int = 8
-    object: int = 9
-    object_whisper: int = 10
+    json: int = 9
+    json_whisper: int = 10
