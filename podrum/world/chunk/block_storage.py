@@ -61,8 +61,8 @@ class block_storage:
     def network_serialize(self, stream: object):
         bits_per_block: int = max(math.ceil(math.log2(len(self.palette))), 1)
         for bits in [1, 2, 3, 4, 5, 6, 8, 16]:
-            if bits >= bitsPerBlock:
-                bitsPerBlock: int = bits
+            if bits >= bits_per_block:
+                bits_per_block: int = bits
                 break
         stream.write_unsigned_byte((bits_per_block << 1) | 1)
         blocks_per_word: int = math.floor(32 / bits_per_block)
