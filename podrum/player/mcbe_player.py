@@ -37,9 +37,11 @@ from podrum.protocol.mcbe.packet.resource_packs_info_packet import resource_pack
 from podrum.protocol.mcbe.packet.request_chunk_radius_packet import request_chunk_radius_packet
 from podrum.protocol.mcbe.packet.set_entity_data_packet import set_entity_data_packet
 from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
+from podrum.protocol.mcbe.packet.text_packet import text_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
+from podrum.protocol.mcbe.type.text_type import text_type
 from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
 from rak_net.protocol.frame import frame
@@ -231,6 +233,9 @@ class mcbe_player:
         if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
             self.send_chunks()
         self.position: object = packet.position
+            
+    def handle_text_packet(self, data):
+        pass
         
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
@@ -243,6 +248,8 @@ class mcbe_player:
             self.handle_request_chunk_radius_packet(data)
         elif data[0] == mcbe_protocol_info.move_player_packet:
             self.handle_move_player_packet(data)
+        elif data[0] == mcbe_protocol_info.text_packet:
+            self.handle_text_packet(data)
             
     def send_chunks(self) -> None:
         self.send_network_chunk_publisher_update()
