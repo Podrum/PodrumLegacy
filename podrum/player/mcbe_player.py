@@ -238,7 +238,6 @@ class mcbe_player:
         new_packet: object = text_packet()
         new_packet.type = text_type.system
         new_packet.needs_translation = False
-        new_packet.source_name = self.username
         new_packet.message = message
         new_packet.xuid = self.xuid
         new_packet.platform_chat_id = ""
