@@ -635,3 +635,13 @@ class mcbe_binary_stream(binary_stream):
                 legacy_transactions.append(legacy_transaction)
             transaction_legacy["legacy_transactions"] = legacy_transactions
         return transaction_legacy
+    
+    def write_transaction_legacy(self, transaction_legacy: dict) -> None:
+        self.write_signed_var_int(transaction_legacy["legacy_request_id"])
+        if transaction_legacy["legacy_request_id"] > 0:
+            self.write_var_int(len(transaction_legacy["legacy_transactions"]))
+            for legacy_transaction in transaction_legacy["legacy_transactions"]:
+                self.write_unsigned_byte(legacy_transaction["container_id"])
+                self.write_var_int(len(legacy_transaction["changed_slots"]))
+                for changed_slot in legacy_transaction["changed_slots"]:
+                    self.write_unsigned_byte(changed_slot)
