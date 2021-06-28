@@ -234,8 +234,23 @@ class mcbe_player:
             self.send_chunks()
         self.position: object = packet.position
             
+    def send_message(self, message: str) -> None:
+        new_packet: object = text_packet()
+        new_packet.type = text_type.chat
+        new_packet.source_name = self.username
+        new_packet.message = message
+        new_packet.xuid = self.xuid
+        new_packet.platform_chat_id = ""
+        new_packet.encode()
+        self.send_packet(new_packet.data)
+            
     def handle_text_packet(self, data):
-        pass
+        packet: object = text_packet(data)
+        packet.decode()
+        if packet.type == text_type.chat:
+            self.server.send_message(f"[{packet.source_name}] > {packet.message}")
+            for p in self.server.players.values():
+                p.send_message(f"[{packet.source_name}] > {packet.message}")
         
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
