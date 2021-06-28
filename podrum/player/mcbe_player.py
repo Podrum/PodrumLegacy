@@ -55,6 +55,7 @@ class mcbe_player:
         self.world: object = server.world
         self.metadata_storage: object = metadata_storage()
         self.attributes: list = []
+        self.message_format: str = "<%username> %message"
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
@@ -234,26 +235,26 @@ class mcbe_player:
             self.send_chunks()
         self.position: object = packet.position
             
-    def send_message(self, message: str) -> None:
+    def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = text_packet()
-        new_packet.type = text_type.system
-        new_packet.needs_translation = False
+        new_packet.type = text_type.raw
+        new_packet.needs_translation = needs_translation
         new_packet.message = message
-        new_packet.xuid = self.xuid
+        new_packet.xuid = xuid
         new_packet.platform_chat_id = ""
         new_packet.encode()
         self.send_packet(new_packet.data)
         
-    def broadcast_message(self, message: str) -> None:
+    def broadcast_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         self.server.send_message(message)
         for p in self.server.players.values():
-            p.send_message(message)
+            p.send_message(message, xuid, needs_translation)
             
     def handle_text_packet(self, data):
         packet: object = text_packet(data)
         packet.decode()
         if packet.type == text_type.chat:
-            self.broadcast_message(f"<{self.username}> {packet.message}")
+            self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", packet.message), self.xuid)
         
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
