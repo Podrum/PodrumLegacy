@@ -21,6 +21,7 @@ from podrum.geometry.vector_3 import vector_3
 from podrum.protocol.mcbe.type.gamerule_type import gamerule_type
 from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 from podrum.protocol.mcbe.type.transaction_actions_type import transaction_actions_type
+from podrum.protocol.mcbe.type.transaction_type import transaction_type
 
 class mcbe_binary_stream(binary_stream):
     def read_string(self) -> str:
@@ -597,11 +598,11 @@ class mcbe_binary_stream(binary_stream):
         for i in range(0, self.read_var_int()):
             transaction_action: dict = {}
             transaction_action["source_type"] = self.read_var_int()
-            if transaction_action["source_type"] == transaction_actions_type.container or transaction_action["source_type"] == transaction_actions_type.craft:
+            if transaction_action["source_type"] == transaction_actions_type.type_container or transaction_action["source_type"] == transaction_actions_type.type_craft:
                 transaction_action["inventory_id"] = self.read_var_int()
-            if transaction_action["source_type"] == transaction_actions_type.world_interaction:
+            if transaction_action["source_type"] == transaction_actions_type.type_world_interaction:
                 transaction_action["flags"] = self.read_var_int()
-            if transaction_action["source_type"] == transaction_actions_type.craft_slot or transaction_action["source_type"] == transaction_actions_type.craft:
+            if transaction_action["source_type"] == transaction_actions_type.type_craft_slot or transaction_action["source_type"] == transaction_actions_type.type_craft:
                 transaction_action["action"] = self.read_var_int()
             transaction_action["old_item"] = self.read_item()
             transaction_action["new_item"] = self.read_item()
@@ -612,11 +613,11 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(transaction_actions))
         for transaction_action in transaction_actions:
             self.write_var_int(transaction_action["source_type"])
-            if transaction_action["source_type"] == transaction_actions_type.container or transaction_action["source_type"] == transaction_actions_type.craft:
+            if transaction_action["source_type"] == transaction_actions_type.type_container or transaction_action["source_type"] == transaction_actions_type.type_craft:
                 self.write_var_int(transaction_action["inventory_id"])
-            if transaction_action["source_type"] == transaction_actions_type.world_interaction:
+            if transaction_action["source_type"] == transaction_actions_type.type_world_interaction:
                 self.write_var_int(transaction_action["flags"])
-            if transaction_action["source_type"] == transaction_actions_type.craft_slot or transaction_action["source_type"] == transaction_actions_type.craft:
+            if transaction_action["source_type"] == transaction_actions_type.type_craft_slot or transaction_action["source_type"] == transaction_actions_type.type_craft:
                 self.write_var_int(transaction_action["action"])
             self.write_item(transaction_action["old_item"])
             self.write_item(transaction_action["new_item"])
@@ -651,4 +652,18 @@ class mcbe_binary_stream(binary_stream):
         transaction["legacy"] = self.read_transaction_legacy()
         transaction["transaction_type"] = self.read_var_int()
         transaction["actions"] = self.read_transaction_actions()
-        
+        if transaction["transaction_type"] == transaction_type.type_item_use:
+            transaction["transaction_data"] = self.read_transaction_use_item()
+        if transaction["transaction_type"] == transaction_type.type_item_use_on_entity:
+            transaction["transaction_data"] = {
+                "entity_runtime_id": self.read_var_long(),
+                "action_type": self.read_var_int()
+            }
+        if transaction["transaction_type"] == transaction_type.type_item_release:
+            transaction["transaction_data"] = {
+                "action_type": self.read_var_int(),
+                "hotbar_slot": self.read_signed_var_int(),
+                "held_item": self.read_item(),
+                "head_pos": self.read_vector_3_float()
+            }
+        return transaction
