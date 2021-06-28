@@ -614,3 +614,9 @@ class mcbe_binary_stream(binary_stream):
         self.write_vector_3_float(value["player_position"])
         self.write_vector_3_float(value["click_position"])
         self.write_var_int(value["block_runtime_id"])
+        
+    def read_transaction_actions(self) -> list:
+        pass
+    
+    def write_transaction_actions(self, transaction_actions: list) -> None:
+        pass
