@@ -780,7 +780,7 @@ class mcbe_binary_stream(binary_stream):
                 recipe["output"] = []
                 for i in range(0, self.read_var_int()):
                     recipe["output"].append(self.read_item_legacy())
-                recipe["uuid"] = self.read_string()
+                recipe["uuid"] = self.read_uuid()
                 recipe["block"] = self.read_string()
                 recipe["priority"] = self.read_signed_var_int()
                 recipe["network_id"] = self.read_var_int()
