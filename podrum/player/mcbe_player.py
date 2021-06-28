@@ -236,7 +236,8 @@ class mcbe_player:
             
     def send_message(self, message: str) -> None:
         new_packet: object = text_packet()
-        new_packet.type = text_type.chat
+        new_packet.type = text_type.system
+        new_packet.needs_translation = False
         new_packet.source_name = self.username
         new_packet.message = message
         new_packet.xuid = self.xuid
