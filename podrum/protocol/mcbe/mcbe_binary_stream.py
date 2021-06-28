@@ -739,7 +739,7 @@ class mcbe_binary_stream(binary_stream):
                 "ingredient_id": self.read_signed_var_int(),
                 "output_item_id": self.read_signed_var_int()
             })
-        return potion_type_recipes
+        return potion_container_change_recipes
         
     def write_potion_container_change_recipes(self, potion_container_change_recipes: list) -> None:
         self.write_var_int(len(potion_container_change_recipes))
