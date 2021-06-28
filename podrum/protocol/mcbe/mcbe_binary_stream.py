@@ -645,3 +645,10 @@ class mcbe_binary_stream(binary_stream):
                 self.write_var_int(len(legacy_transaction["changed_slots"]))
                 for changed_slot in legacy_transaction["changed_slots"]:
                     self.write_unsigned_byte(changed_slot)
+                    
+    def read_transaction(self) -> dict:
+        transaction: dict = {}
+        transaction["legacy"] = self.read_transaction_legacy()
+        transaction["transaction_type"] = self.read_var_int()
+        transaction["actions"] = self.read_transaction_actions()
+        
