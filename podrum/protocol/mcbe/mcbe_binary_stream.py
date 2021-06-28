@@ -755,7 +755,17 @@ class mcbe_binary_stream(binary_stream):
             recipe: dict = {}
             recipe["type"] = self.read_signed_var_int()
             if recipe["type"] == recipes_type.type_shapeless or recipe["type"] == recipes_type.type_shulker_box or recipe["type"] == recipes_type.type_shapeless_chemistry:
-                pass
+                recipe["recipe_id"] = self.read_string()
+                recipe["input"] = []
+                for i in range(0, self.read_var_int()):
+                    recipe["input"].append(self.read_recipe_ingredient())
+                recipe["output"] = []
+                for i in range(0, self.read_var_int()):
+                    recipe["output"].append(self.read_item_legacy())
+                recipe["uuid"] = self.read_string()
+                recipe["block"] = self.read_string()
+                recipe["priority"] = self.read_signed_var_int()
+                recipe["network_id"] = self.read_var_int()
             if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
                 pass
             if recipe["type"] == recipes_type.type_furnace:
