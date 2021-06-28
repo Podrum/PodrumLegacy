@@ -245,7 +245,7 @@ class mcbe_player:
         self.send_packet(new_packet.data)
         
     def broadcast_message(self, message: str) -> None:
-        self.server.send_message(f"[{packet.source_name}] > {packet.message}")
+        self.server.send_message(message)
         for p in self.server.players.values():
             p.send_message(message)
             
