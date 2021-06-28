@@ -30,13 +30,13 @@ class mcbe_binary_stream(binary_stream):
         stream: object = binary_stream()
         for i in range(0, 4):
             stream.write_int_be(self.read_int_le())
-        return "-".join([
+        return b"-".join([
             binascii.hexlify(stream.read(4)),
             binascii.hexlify(stream.read(2)),
             binascii.hexlify(stream.read(2)),
             binascii.hexlify(stream.read(2)),
             binascii.hexlify(stream.read(6))
-        ])
+        ]).decode()
     
     def write_uuid(self, uuid: str) -> None:
         stream: object = binary_stream(binascii.unhexlify(uuid.replace("-", "")))
