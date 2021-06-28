@@ -20,6 +20,7 @@ from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.protocol.mcbe.type.gamerule_type import gamerule_type
 from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
+from podrum.protocol.mcbe.type.recipes_type import recipes_type
 from podrum.protocol.mcbe.type.transaction_actions_type import transaction_actions_type
 from podrum.protocol.mcbe.type.transaction_type import transaction_type
 
@@ -747,3 +748,9 @@ class mcbe_binary_stream(binary_stream):
             self.write_signed_var_int(potion_container_change_recipe["input_item_id"])
             self.write_signed_var_int(potion_container_change_recipe["ingredient_id"])
             self.write_signed_var_int(potion_container_change_recipe["output_item_id"])
+
+    def read_recipes(self) -> list:
+        pass
+    
+    def write_recipes(self, recipes: list) -> None:
+        pass
