@@ -707,3 +707,26 @@ class mcbe_binary_stream(binary_stream):
         if recipe_ingredient["network_id"] > 0:
             self.write_signed_var_int(recipe_ingredient["network_data"])
             self.write_signed_var_int(recipe_ingredient["count"])
+            
+    def read_potion_type_recipes(self) -> list:
+        potion_type_recipes: list = []
+        for i in range(0, self.read_var_int()):
+            potion_type_recipes.append({
+                "input_item_id": self.read_signed_var_int(),
+                "input_item_meta": self.read_signed_var_int(),
+                "ingredient_id": self.read_signed_var_int(),
+                "ingredient_meta": self.read_signed_var_int(),
+                "output_item_id": self.read_signed_var_int(),
+                "output_item_meta": self.read_signed_var_int(),
+            })
+        return potion_type_recipes
+        
+    def write_potion_type_recipes(self, potion_type_recipes: list) -> None:
+        self.write_var_int(len(potion_type_recipes))
+        for potion_type_recipe in potion_type_recipes:
+            self.write_signed_var_int(potion_type_recipe["input_item_id"])
+            self.write_signed_var_int(potion_type_recipe["input_item_meta"])
+            self.write_signed_var_int(potion_type_recipe["ingredient_id"])
+            self.write_signed_var_int(potion_type_recipe["ingredient_meta"])
+            self.write_signed_var_int(potion_type_recipe["output_item_id"])
+            self.write_signed_var_int(potion_type_recipe["output_item_meta"])
