@@ -667,3 +667,18 @@ class mcbe_binary_stream(binary_stream):
                 "head_pos": self.read_vector_3_float()
             }
         return transaction
+    
+    def write_transaction(self, transaction: dict) -> None:
+        self.write_transaction_legacy(transaction["legacy"])
+        self.write_var_int(transaction["transaction_type"])
+        self.write_transaction_actions(transaction["actions"])
+        if transaction["transaction_type"] == transaction_type.type_item_use:
+            self.write_transaction_use_item(transaction["transaction_data"])
+        if transaction["transaction_type"] == transaction_type.type_item_use_on_entity:
+            self.write_var_long(transaction["transaction_data"]["entity_runtime_id"])
+            self.write_var_int(transaction["transaction_data"]["action_type"])
+        if transaction["transaction_type"] == transaction_type.type_item_release:
+            self.write_var_int(transaction["transaction_data"]["action_type"])
+            self.write_signed_var_int(transaction["transaction_data"]["hotbar_slot"])
+            self.write_item(transaction["transaction_data"]["held_item"])
+            self.write_vector_3_float(transaction["transaction_data"]["head_pos"])
