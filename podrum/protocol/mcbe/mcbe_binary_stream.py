@@ -60,8 +60,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_behavior_pack_infos(self) -> list:
         behavior_pack_infos: list = []
-        length: int = self.read_short_le()
-        for i in range(0, length):
+        for i in range(0, self.read_short_le()):
             behavior_pack_infos.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
@@ -86,8 +85,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_texture_pack_infos(self) -> list:
         texture_pack_infos: list = []
-        length: int = self.read_short_le()
-        for i in range(0, length):
+        for i in range(0, self.read_short_le()):
             texture_pack_infos.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
@@ -114,8 +112,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_resource_pack_id_versions(self) -> list:
         resource_pack_id_versions: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             resource_pack_id_versions.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
@@ -132,8 +129,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_resource_pack_ids(self) -> list:
         resource_pack_ids: list = []
-        length: int = self.read_short_le()
-        for i in range(0, length):
+        for i in range(0, self.read_short_le()):
             resource_pack_ids.append(self.read_string())
         return resource_pack_ids
         
@@ -154,8 +150,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_experiments(self) -> list:
         experiments: list = []
-        length: int = self.read_int_le()
-        for i in range(0, length):
+        for i in range(0, self.read_int_le()):
             experiments.append(self.read_experiment())
         return experiments
         
@@ -191,8 +186,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_game_rules(self) -> list:
         game_rules: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             game_rules.append(self.read_game_rule())
         return game_rules
         
@@ -213,8 +207,7 @@ class mcbe_binary_stream(binary_stream):
 
     def read_item_states(self) -> list:
         item_states: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             item_states.append({
                 "name": self.read_string(),
                 "runtime_id": self.read_short_le(),
@@ -253,8 +246,7 @@ class mcbe_binary_stream(binary_stream):
 
     def read_block_properties(self) -> list:
         block_properties: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             block_properties.append({
                 "name": self.read_string(),
                 "nbt": self.read_net_le_tag()
@@ -273,12 +265,10 @@ class mcbe_binary_stream(binary_stream):
             result["version"] = self.read_unsigned_byte()
             result["nbt"] = self.read_le_tag()
         result["can_place_on"] = []
-        can_place_on_count: int = self.read_int_le()
-        for i in range(0, can_place_on_count):
+        for i in range(0, self.read_int_le()):
             result["can_place_on"].append(self.read_short_array())
         result["can_destroy"] = []
-        can_destroy_count: int = self.read_int_le()
-        for i in range(0, can_destroy_count):
+        for i in range(0, self.read_int_le()):
             result["can_destroy"].append(self.read_short_array())
         result["blocking_tick"] = self.read_long_le()
         return result
@@ -305,12 +295,10 @@ class mcbe_binary_stream(binary_stream):
             result["version"] = self.read_unsigned_byte()
             result["nbt"] = self.read_le_tag()
         result["can_place_on"] = []
-        can_place_on_count: int = self.read_int_le()
-        for i in range(0, can_place_on_count):
+        for i in range(0, self.read_int_le()):
             result["can_place_on"].append(self.read_short_array())
         result["can_destroy"] = []
-        can_destroy_count: int = self.read_int_le()
-        for i in range(0, can_destroy_count):
+        for i in range(0, self.read_int_le()):
             result["can_destroy"].append(self.read_short_array())
         return result
     
@@ -337,8 +325,7 @@ class mcbe_binary_stream(binary_stream):
             result["metadata"] = self.read_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
             result["extra"] = []
-            extra_count: int = self.read_var_int()
-            for i in range(0, extra_count):
+            for i in range(0, self.read_var_int()):
                 if result["network_id"] == 355:
                     result["extra"].append(self.read_item_extra_data_with_blocking_tick())
                 else:
@@ -370,8 +357,7 @@ class mcbe_binary_stream(binary_stream):
                 result["stack_id"] = self.read_signed_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
             result["extra"] = []
-            extra_count: int = self.read_var_int()
-            for i in range(0, extra_count):
+            for i in range(0, self.read_var_int()):
                 if result["network_id"] == 355:
                     result["extra"].append(self.read_item_extra_data_with_blocking_tick())
                 else:
@@ -441,8 +427,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_metadata_dictionary(self) -> dict:
         metadata_dictionary: dict = {}
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             metadata_key: int = self.read_var_int()
             metadata_type: int = self.read_var_int()
             if metadata_type == metadata_dictionary_type.type_byte:
@@ -512,8 +497,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_links(self) -> list:
         links: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             links.append(self.read_link())
         return links
         
@@ -524,8 +508,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_entity_attributes(self) -> list:
         entity_attributes: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             entity_attributes.append({
                 "name": self.read_string(),
                 "min": self.read_float_le(),
@@ -568,8 +551,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_player_attributes(self) -> list:
         player_attributes: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             player_attributes.append({
                 "min": self.read_float_le(),
                 "max": self.read_float_le(),
@@ -612,8 +594,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_transaction_actions(self) -> list:
         transaction_actions: list = []
-        length: int = self.read_var_int()
-        for i in range(0, length):
+        for i in range(0, self.read_var_int()):
             transaction_action: dict = {}
             transaction_action["source_type"] = self.read_var_int()
             if transaction_action["source_type"] == transaction_actions_type.container or transaction_action["source_type"] == transaction_actions_type.craft:
@@ -639,3 +620,18 @@ class mcbe_binary_stream(binary_stream):
                 self.write_var_int(transaction_action["action"])
             self.write_item(transaction_action["old_item"])
             self.write_item(transaction_action["new_item"])
+            
+    def read_transaction_legacy(self) -> dict:
+        transaction_legacy: dict = {}
+        transaction_legacy["legacy_request_id"] = self.read_signed_var_int()
+        if transaction_legacy["legacy_request_id"] > 0:
+            legacy_transactions: list = []
+            for i in range(0, self.read_var_int()):
+                legacy_transaction: dict = {}
+                legacy_transaction["container_id"] = self.read_unsigned_byte()
+                legacy_transaction["changed_slots"] = []
+                for i in range(0, self.read_var_int()):
+                    legacy_transaction["changed_slots"].append(self.read_unsigned_byte())
+                legacy_transactions.append(legacy_transaction)
+            transaction_legacy["legacy_transactions"] = legacy_transactions
+        return transaction_legacy
