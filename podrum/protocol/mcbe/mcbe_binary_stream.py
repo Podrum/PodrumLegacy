@@ -750,7 +750,20 @@ class mcbe_binary_stream(binary_stream):
             self.write_signed_var_int(potion_container_change_recipe["output_item_id"])
 
     def read_recipes(self) -> list:
-        pass
+        recipes: list = []
+        for i in range(0, self.read_var_int()):
+            recipe: dict = {}
+            recipe["type"] = self.read_signed_var_int()
+            if recipe["type"] == recipes_type.type_shapeless or recipe["type"] == recipes_type.type_shulker_box or recipe["type"] == recipes_type.type_shapeless_chemistry:
+                pass
+            if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
+                pass
+            if recipe["type"] == recipes_type.type_furnace:
+                pass
+            if recipe["type"] == recipes_type.type_furnace_with_metadata:
+                pass
+            if recipe["type"] == recipes_type.type_multi:
+                pass
     
     def write_recipes(self, recipes: list) -> None:
         pass
