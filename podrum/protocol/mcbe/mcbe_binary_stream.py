@@ -20,6 +20,7 @@ from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.protocol.mcbe.type.gamerule_type import gamerule_type
 from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
+from podrum.protocol.mcbe.type.transaction_actions_type import transaction_actions_type
 
 class mcbe_binary_stream(binary_stream):
     def read_string(self) -> str:
@@ -162,12 +163,6 @@ class mcbe_binary_stream(binary_stream):
         self.write_int_le(len(value))
         for experiment in value:
             self.write_experiment(experiment)
-            
-    def read_gamemode(self) -> int:
-        return self.read_signed_var_int()
-        
-    def write_gamemode(self, value: int) -> None:
-        self.write_signed_var_int(value)
         
     def read_game_rule(self) -> dict:
         game_rule: dict = {
@@ -616,7 +611,14 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(value["block_runtime_id"])
         
     def read_transaction_actions(self) -> list:
-        pass
+        transaction_actions: list = []
+        length: int = self.read_var_int()
+        for i in range(0, length):
+            transaction_action: dict = {}
+            transaction_action["source_type"] = self.read_var_int()
+            if transaction_action["source_type"] == transaction_actions_type.container or transaction_action["source_type"] == transaction_actions_type.craft:
+                transaction_action["inventory_id"] = self.read_var_int()
+        
     
     def write_transaction_actions(self, transaction_actions: list) -> None:
         pass
