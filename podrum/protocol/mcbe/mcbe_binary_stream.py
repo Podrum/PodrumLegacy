@@ -693,3 +693,17 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(value))
         for item_stack in value:
             self.write_item(item_stack)
+            
+    def read_recipe_ingredient(self) -> dict:
+        recipe_ingredient: dict = {}
+        recipe_ingredient["network_id"] = self.read_signed_var_int()
+        if recipe_ingredient["network_id"] > 0:
+            recipe_ingredient["network_data"] = self.read_signed_var_int()
+            recipe_ingredient["count"] = self.read_signed_var_int()
+        return recipe_ingredient
+    
+    def write_recipe_ingredient(self, recipe_ingredient: dict) -> None:
+        self.write_signed_var_int(recipe_ingredient["network_id"])
+        if recipe_ingredient["network_id"] > 0:
+            self.write_signed_var_int(recipe_ingredient["network_data"])
+            self.write_signed_var_int(recipe_ingredient["count"])
