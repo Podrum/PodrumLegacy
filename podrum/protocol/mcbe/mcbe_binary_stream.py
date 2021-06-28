@@ -618,7 +618,14 @@ class mcbe_binary_stream(binary_stream):
             transaction_action["source_type"] = self.read_var_int()
             if transaction_action["source_type"] == transaction_actions_type.container or transaction_action["source_type"] == transaction_actions_type.craft:
                 transaction_action["inventory_id"] = self.read_var_int()
-        
+            if transaction_action["source_type"] == transaction_actions_type.world_interaction:
+                transaction_action["flags"] = self.read_var_int()
+            if transaction_action["source_type"] == transaction_actions_type.craft_slot or transaction_action["source_type"] == transaction_actions_type.craft:
+                transaction_action["action"] = self.read_var_int()
+            transaction_action["old_item"] = self.read_item()
+            transaction_action["new_item"] = self.read_item()
+            transaction_actions.append(transaction_action)
+        return transaction_actions
     
     def write_transaction_actions(self, transaction_actions: list) -> None:
         pass
