@@ -27,7 +27,7 @@ class start_game_packet(mcbe_packet):
     def encode_payload(self):
         self.write_signed_var_long(self.entity_id)
         self.write_var_long(self.entity_runtime_id)
-        self.write_gamemode(self.player_gamemode)
+        self.write_signed_var_int(self.player_gamemode)
         self.write_vector_3_float(self.spawn)
         self.write_vector_2_float(self.rotation)
         self.write_signed_var_int(self.seed)
@@ -35,7 +35,7 @@ class start_game_packet(mcbe_packet):
         self.write_string(self.custom_biome_name)
         self.write_signed_var_int(self.dimension)
         self.write_signed_var_int(self.generator)
-        self.write_gamemode(self.world_gamemode)
+        self.write_signed_var_int(self.world_gamemode)
         self.write_signed_var_int(self.difficulty)
         self.write_block_coordinates(self.world_spawn)
         self.write_byte(self.disable_achivements)
