@@ -717,7 +717,7 @@ class mcbe_binary_stream(binary_stream):
                 "ingredient_id": self.read_signed_var_int(),
                 "ingredient_meta": self.read_signed_var_int(),
                 "output_item_id": self.read_signed_var_int(),
-                "output_item_meta": self.read_signed_var_int(),
+                "output_item_meta": self.read_signed_var_int()
             })
         return potion_type_recipes
         
@@ -730,3 +730,20 @@ class mcbe_binary_stream(binary_stream):
             self.write_signed_var_int(potion_type_recipe["ingredient_meta"])
             self.write_signed_var_int(potion_type_recipe["output_item_id"])
             self.write_signed_var_int(potion_type_recipe["output_item_meta"])
+            
+    def read_potion_container_change_recipes(self) -> list:
+        potion_container_change_recipes: list = []
+        for i in range(0, self.read_var_int()):
+            potion_container_change_recipes.append({
+                "input_item_id": self.read_signed_var_int(),
+                "ingredient_id": self.read_signed_var_int(),
+                "output_item_id": self.read_signed_var_int()
+            })
+        return potion_type_recipes
+        
+    def write_potion_container_change_recipes(self, potion_container_change_recipes: list) -> None:
+        self.write_var_int(len(potion_container_change_recipes))
+        for potion_container_change_recipe in potion_container_change_recipes:
+            self.write_signed_var_int(potion_container_change_recipe["input_item_id"])
+            self.write_signed_var_int(potion_container_change_recipe["ingredient_id"])
+            self.write_signed_var_int(potion_container_change_recipe["output_item_id"])
