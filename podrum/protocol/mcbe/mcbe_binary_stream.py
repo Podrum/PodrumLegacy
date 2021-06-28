@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+import binascii
 from binary_utils.binary_stream import binary_stream
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
@@ -25,6 +26,23 @@ from podrum.protocol.mcbe.type.transaction_actions_type import transaction_actio
 from podrum.protocol.mcbe.type.transaction_type import transaction_type
 
 class mcbe_binary_stream(binary_stream):
+    def read_uuid(self) -> str:
+        stream: object = binary_stream()
+        for i in range(0, 4):
+            stream.write_int_be(self.read_int_le())
+        return "-".join([
+            binascii.hexlify(stream.read(4)),
+            binascii.hexlify(stream.read(2)),
+            binascii.hexlify(stream.read(2)),
+            binascii.hexlify(stream.read(2)),
+            binascii.hexlify(stream.read(6))
+        ])
+    
+    def write_uuid(self, uuid: str) -> None:
+        stream: object = binary_stream(binascii.unhexlify(uuid.replace("-", "")))
+        for i in range(0, 4):
+            self.write_int_le(stream.read_int_be())
+    
     def read_string(self) -> str:
         return self.read(self.read_var_int()).decode()
     
