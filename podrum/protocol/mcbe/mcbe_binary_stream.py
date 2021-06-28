@@ -682,3 +682,14 @@ class mcbe_binary_stream(binary_stream):
             self.write_signed_var_int(transaction["transaction_data"]["hotbar_slot"])
             self.write_item(transaction["transaction_data"]["held_item"])
             self.write_vector_3_float(transaction["transaction_data"]["head_pos"])
+            
+    def read_item_stacks(self) -> list:
+        item_stacks: list = []
+        for i in range(0, self.read_var_int()):
+            item_stacks.append(self.read_item())
+        return item_stacks
+        
+    def write_item_stacks(self, value: list) -> None:
+        self.write_var_int(len(value))
+        for item_stack in value:
+            self.write_item(item_stack)
