@@ -22,7 +22,7 @@ class add_player_packet(mcbe_packet):
         self.packet_id: int = mcbe_protocol_info.add_player_packet
  
     def decode_payload(self) -> None:
-        self.uuid: str = self.read_string()
+        self.uuid: str = self.read_uuid()
         self.username: str = self.read_string()
         self.entity_id_self: int = self.read_signed_var_long()
         self.runtime_entity_id: int = self.read_var_long()
