@@ -785,7 +785,10 @@ class mcbe_binary_stream(binary_stream):
                 recipe["priority"] = self.read_signed_var_int()
                 recipe["network_id"] = self.read_var_int()
             if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
-                pass
+                recipe["recipe_id"] = self.read_string()
+                recipe["width"] = self.read_signed_var_int()
+                recipe["height"] = self.read_signed_var_int()
+                
             if recipe["type"] == recipes_type.type_furnace:
                 pass
             if recipe["type"] == recipes_type.type_furnace_with_metadata:
