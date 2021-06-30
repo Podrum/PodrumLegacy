@@ -86,8 +86,18 @@ class server:
             # Add some sort of ticking?
             time.sleep(0.0001)
             
-    def dispatch_command(self, command: str, sender: object) -> None:
-        self.managers.event_manager.call_event("execute_command", command, sender, self)
+    def dispatch_command(self, user_input: str, sender: object) -> None:
+        if len(user_input) > 0:
+            split_input: list = user_input.split()
+            command_name: str = split_input[0]
+            command_args: list = split_input[1:]
+            if self.managers.command_manager.has_command(command_name):
+                self.managers.command_manager.execute(command_name, command_args, sender)
+            else:
+                if sender == self:
+                    self.logger.error("Invalid command!")
+                else:
+                    sender.send_message("Invalid command!")
 
     def stop(self) -> None:
         self.console_input_task.stop()
