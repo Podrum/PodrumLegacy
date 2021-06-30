@@ -256,7 +256,6 @@ class mcbe_player:
         packet.decode()
         if packet.type == text_type.chat:
             self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", packet.message), self.xuid)
-            self.server.managers.event_manager.call_event("on_player_message", self, packet.message)
         
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
