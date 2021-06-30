@@ -22,5 +22,16 @@ class creative_content_packet(mcbe_packet):
         super().__init__(data, pos)
         self.packet_id: int = mcbe_protocol_info.creative_content_packet
         
+    def decode_payload(self) -> None:
+        self.entries: list = []
+        for i in range(0, self.read_var_int()):
+            self.entries.append({
+                "entry_id": self.read_var_int(),
+                "item": self.read_item_legacy()
+            })
+        
     def encode_payload(self) -> None:
-        self.write_var_int(0)
+        self.write_var_int(len(self.entries))
+        for entry in self.entries:
+            self.write_var_int(entry["entry_id"])
+            self.write_item_legacy(entry["item"])
