@@ -34,3 +34,4 @@ class item:
         }
         for extra in self.extra:
             result["extra"].append(extra.prepare_for_network())
+        return result
