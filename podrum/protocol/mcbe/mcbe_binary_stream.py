@@ -911,3 +911,37 @@ class mcbe_binary_stream(binary_stream):
             skin["piece_tint_colors"].append(piece_tint_color)
         return skin
         
+    def write_skin(self, skin: dict) -> None:
+        self.write_string(skin["skin_id"])
+        self.write_string(skin["play_fab_id"])
+        self.write_string(skin["skin_resource_pack"])
+        self.write_skin_image(skin["skin_data"])
+        self.write_int_le(len(skin["animations"]))
+        for animation in skin["animations"]:
+            self.write_skin_image(animation["skin_image"])
+            self.write_int_le(animation["animation_type"])
+            self.write_int_le(animation["animation_frames"])
+            self.write_int_le(animation["expression_type"])
+        self.write_skin_image(skin["cape_data"])
+        self.write_string(skin["geometry_data"])
+        self.write_string(skin["animation_data"])
+        self.write_bool(skin["premium"])
+        self.write_bool(skin["persona"])
+        self.write_bool(skin["cape_on_classic"])
+        self.write_string(skin["cape_id"])
+        self.write_string(skin["full_skin_id"])
+        self.write_string(skin["arm_size"])
+        self.write_string(skin["skin_color"])
+        self.write_int_le(len(skin["persona_pieces"]))
+        for persona_piece in skin["persona_pieces"]:
+            self.write_string(persona_piece["piece_id"])
+            self.write_string(persona_piece["piece_type"])
+            self.write_string(persona_piece["pack_id"])
+            self.write_bool(persona_piece["is_default_piece"])
+            self.write_string(persona_piece["product_id"])
+        self.write_int_le(len(skin["piece_tint_colors"]))
+        for piece_tint_color in skin["piece_tint_colors"]:
+            self.write_string(piece_tint_color["piece_type"])
+            self.write_int_le(len(piece_tint_color["colors"]))
+            for color in piece_tint_color["colors"]:
+                self.write_string(color)
