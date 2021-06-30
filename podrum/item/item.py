@@ -24,7 +24,7 @@ class item:
         self.is_creative_item: bool = False
         self.entry_id: int = 0
           
-    def prepair_for_network(self) -> dict:
+    def prepare_for_network(self) -> dict:
         return {
             "network_id": self.network_id,
             "count": self.count,
