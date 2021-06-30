@@ -867,3 +867,47 @@ class mcbe_binary_stream(binary_stream):
         self.write_int_le(skin_image["width"])
         self.write_int_le(skin_image["height"])
         self.write_byte_array(skin_image["data"])
+
+    def read_skin(self) -> dict:
+        skin: dict = {}
+        skin["skin_id"] = self.read_string()
+        skin["play_fab_id"] = self.read_string()
+        skin["skin_resource_pack"] = self.read_string()
+        skin["skin_data"] = self.read_skin_image()
+        skin["animations"] = []
+        for i in range(0, self.read_int_le()):
+            animation: dict = {}
+            animation["skin_image"] = self.read_skin_image()
+            animation["animation_type"] = self.read_int_le()
+            animation["animation_frames"] = self.read_int_le()
+            animation["expression_type"] = self.read_int_le()
+            skin["animations"].append(animation)
+        skin["cape_data"] = self.read_skin_image()
+        skin["geometry_data"] = self.read_string()
+        skin["animation_data"] = self.read_string()
+        skin["premium"] = self.read_bool()
+        skin["persona"] = self.read_bool()
+        skin["cape_on_classic"] = self.read_bool()
+        skin["cape_id"] = self.read_string()
+        skin["full_skin_id"] = self.read_string()
+        skin["arm_size"] = self.read_string()
+        skin["skin_color"] = self.read_string()
+        skin["persona_pieces"] = []
+        for i in range(0, self.read_int_le()):
+            persona_piece: dict = {}
+            persona_piece["piece_id"] = self.read_string()
+            persona_piece["piece_type"] = self.read_string()
+            persona_piece["pack_id"] = self.read_string()
+            persona_piece["is_default_piece"] = self.read_bool()
+            persona_piece["product_id"] = self.read_string()
+            skin["persona_pieces"].append(persona_piece)
+        skin["piece_tint_colors"] = []
+        for i in range(0, self.read_int_le()):
+            piece_tint_color: dict = {}
+            piece_tint_color["piece_type"] = self.read_string()
+            piece_tint_color["colors"] = []
+            for i in range(0, self.read_int_le()):
+                piece_tint_color["colors"].append(self.read_string())
+            skin["piece_tint_colors"].append(piece_tint_color)
+        return skin
+        
