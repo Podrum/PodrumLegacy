@@ -788,16 +788,29 @@ class mcbe_binary_stream(binary_stream):
                 recipe["recipe_id"] = self.read_string()
                 recipe["width"] = self.read_signed_var_int()
                 recipe["height"] = self.read_signed_var_int()
-                recipe["input"] = {}
+                recipe["input"] = [[0 for i in range(recipe["height"])] for j in range(recipe["width"])]
                 for z in range(0, width):
                     for x in range(0, height):
-                        recipe["input"][f"{x} {z}"] = self.read_recipe_ingredient()
+                        recipe["input"][z][x] = self.read_recipe_ingredient()
+                recipe["output"] = []
+                for i in range(0, self.read_var_int()):
+                    recipe["output"].append(self.read_item_legacy())
+                recipe["uuid"] = self.read_uuid()
+                recipe["block"] = self.read_string()
+                recipe["priority"] = self.read_signed_var_int()
+                recipe["network_id"] = self.read_var_int()
             if recipe["type"] == recipes_type.type_furnace:
-                pass
+                recipe["input_id"] = self.read_signed_var_int()
+                recipe["output"] = self.read_item_legacy()
+                recipe["block"] = self.read_string()
             if recipe["type"] == recipes_type.type_furnace_with_metadata:
-                pass
+                recipe["input_id"] = self.read_signed_var_int()
+                recipe["input_meta"] = self.read_signed_var_int()
+                recipe["output"] = self.read_item_legacy()
+                recipe["block"] = self.read_string()
             if recipe["type"] == recipes_type.type_multi:
-                pass
+                recipe["uuid"] = self.read_uuid()
+                recipe["network_id"] = self.read_var_int()
     
     def write_recipes(self, recipes: list) -> None:
         pass
