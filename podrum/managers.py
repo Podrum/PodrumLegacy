@@ -36,6 +36,8 @@ from podrum.command.default.stop_command import stop_command
 from podrum.command.default.version_command import version_command
 from podrum.event.default_events import default_events
 from podrum.event.event_manager import event_manager
+from podrum.item.default.stone import stone as stone_item
+from podrum.item.item_manager import item_manager
 from podrum.plugin_manager import plugin_manager
 from podrum.world.generator.flat import flat
 from podrum.world.generator.void import void
@@ -51,6 +53,7 @@ class managers:
         self.block_manager: object = block_manager()
         self.command_manager: object = command_manager()
         self.event_manager: object = event_manager()
+        self.item_manager: object = item_manager()
         self.plugin_manager: object = plugin_manager(server)
         self.generator_manager: object = generator_manager()
         self.provider_manager: object = provider_manager()
@@ -83,6 +86,9 @@ class managers:
     def register_default_events(self) -> None:
         self.event_manager.register_event("execute_command", default_events.execute_command_event)
         
+    def register_default_items(self) -> None:
+        self.item_manager.register_item(stone_item())
+        
     def register_default_generators(self) -> None:
         self.generator_manager.register_generator(flat())
         self.generator_manager.register_generator(void())
@@ -95,5 +101,6 @@ class managers:
         self.register_default_blocks()
         self.register_default_commands()
         self.register_default_events()
+        self.register_default_items()
         self.register_default_generators()
         self.register_default_providers()
