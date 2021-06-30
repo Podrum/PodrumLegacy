@@ -132,6 +132,7 @@ class mcbe_player:
         
     def send_creative_content_packet(self) -> None:
         packet: object = creative_content_packet()
+        packet.entries = []
         packet.encode()
         self.send_packet(packet.data)
              
