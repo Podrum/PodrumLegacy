@@ -85,6 +85,9 @@ class server:
         while self.is_ticking:
             # Add some sort of ticking?
             time.sleep(0.0001)
+            
+    def dispatch_command(self, command: str, sender: object) -> None:
+        self.managers.event_manager.call_event("execute_command", command, sender, self)
 
     def stop(self) -> None:
         self.console_input_task.stop()
@@ -100,4 +103,4 @@ class server:
         
     def console_input(self) -> None:
         command: object = input()
-        self.managers.event_manager.call_event("execute_command", command, self, self)
+        self.dispatch_command(command, self)
