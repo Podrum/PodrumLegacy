@@ -19,3 +19,7 @@ class transaction_type:
     type_item_use: int = 2
     type_item_use_on_entity: int = 3
     type_item_release: int = 4
+    type_action_interact: int = 0
+    type_action_attack: int = 1   
+    type_action_release: int = 0
+    type_action_consume: int = 1
