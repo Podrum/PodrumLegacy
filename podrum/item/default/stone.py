@@ -22,3 +22,5 @@ class stone(item):
         super().__init__("minecraft:stone", item_id_map["minecraft:stone"], 0)
         self.block_runtime_id: int = block_map.get_runtime_id("minecraft:stone", self.meta)
         self.count: int = count
+        self.is_creative_item: bool = True
+        self.entry_id: int = 0
