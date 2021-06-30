@@ -101,6 +101,6 @@ class managers:
         self.register_default_blocks()
         self.register_default_commands()
         self.register_default_events()
-        self.register_default_items()
+        #self.register_default_items()
         self.register_default_generators()
         self.register_default_providers()
