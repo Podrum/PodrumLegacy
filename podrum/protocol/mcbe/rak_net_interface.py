@@ -13,10 +13,10 @@
 #                                                       #
 #########################################################
 
+from podrum.protocol.mcbe.mcbe_player import mcbe_player
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.game_packet import game_packet
 from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
-from podrum.player.mcbe_player import mcbe_player
 from rak_net.server import server as rak_net_server
 from threading import Thread
 
