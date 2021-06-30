@@ -21,7 +21,7 @@ class item_manager:
     def register_item(self, item_obj: object) -> None:
         self.items[f"{item_obj.name} {item_obj.meta}"] = item_obj
         if item_obj.is_creative_item:
-            self.creative_items[f"{item_obj.name} {item_obj.meta}"] = {"entry_id": item_obj.entry_id, "item": item_obj.prepair_for_network()}
+            self.creative_items[f"{item_obj.name} {item_obj.meta}"] = {"entry_id": item_obj.entry_id, "item": item_obj.prepare_for_network()}
         
     def remove_item(self, name: str, meta: int) -> None:
         if f"{name} {meta}" in self.items:
