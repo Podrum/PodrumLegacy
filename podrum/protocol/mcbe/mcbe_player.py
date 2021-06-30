@@ -284,10 +284,10 @@ class mcbe_player:
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
-        new_packet.x = int(self.position.x)
-        new_packet.y = int(self.position.y)
-        new_packet.z = int(self.position.z)
-        new_packet.chunk_radius = self.view_distance * 16
+        new_packet.x = math.floor(self.position.x)
+        new_packet.y = math.floor(self.position.y)
+        new_packet.z = math.floor(self.position.z)
+        new_packet.chunk_radius = self.view_distance << 4
         new_packet.encode()
         self.send_packet(new_packet.data)
     
