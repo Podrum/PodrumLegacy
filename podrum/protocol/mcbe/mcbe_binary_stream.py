@@ -789,8 +789,8 @@ class mcbe_binary_stream(binary_stream):
                 recipe["width"] = self.read_signed_var_int()
                 recipe["height"] = self.read_signed_var_int()
                 recipe["input"] = [[0 for i in range(recipe["height"])] for j in range(recipe["width"])]
-                for z in range(0, width):
-                    for x in range(0, height):
+                for z in range(0, recipe["width"]):
+                    for x in range(0, recipe["height"]):
                         recipe["input"][z][x] = self.read_recipe_ingredient()
                 recipe["output"] = []
                 for i in range(0, self.read_var_int()):
@@ -811,6 +811,47 @@ class mcbe_binary_stream(binary_stream):
             if recipe["type"] == recipes_type.type_multi:
                 recipe["uuid"] = self.read_uuid()
                 recipe["network_id"] = self.read_var_int()
+        return recipes
     
     def write_recipes(self, recipes: list) -> None:
-        pass
+        self.write_var_int(len(recipes))
+        for recipe in recipes:
+            self.write_signed_var_int(recipe["type"])
+            if recipe["type"] == recipes_type.type_shapeless or recipe["type"] == recipes_type.type_shulker_box or recipe["type"] == recipes_type.type_shapeless_chemistry:
+                self.write_string(recipe["recipe_id"])
+                self.write_var_int(len(recipe["input"]))
+                for recipe_input in recipe["input"]:
+                    self.write_recipe_ingredient(recipe_input)
+                self.write_var_int(len(recipe["output"]))
+                for recipe_output in recipe["output"]:
+                    self.write_item_legacy(recipe["output"])
+                self.write_uuid(recipe["uuid"])
+                self.write_stringrecipe["block"])
+                self.write_signed_var_int(recipe["priority"])
+                self.write_var_int(recipe["network_id"])
+            if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
+                self.write_string(recipe["recipe_id"])
+                self.write_signed_var_int(recipe["width"])
+                self.write_signed_var_int(recipe["height"])
+                for z in range(0, recipe["width"]):
+                    for x in range(0, recipe["height"]):
+                        self.write_recipe_ingredient(recipe["input"][z][x])
+                self.write_var_int(len(recipe["output"]))
+                for recipe_output in recipe["output"]:
+                    self.write_item_legacy(recipe["output"])
+                self.write_uuid(recipe["uuid"])
+                self.write_stringrecipe["block"])
+                self.write_signed_var_int(recipe["priority"])
+                self.write_var_int(recipe["network_id"])
+            if recipe["type"] == recipes_type.type_furnace:
+                self.write_signed_var_int(recipe["input_id"])
+                self.write_item_legacy(recipe["output"])
+                self.write_string(recipe["block"])
+            if recipe["type"] == recipes_type.type_furnace_with_metadata:
+                self.write_signed_var_int(recipe["input_id"])
+                self.write_signed_var_int(recipe["input_meta"])
+                self.write_item_legacy(recipe["output"])
+                self.write_string(recipe["block"])
+            if recipe["type"] == recipes_type.type_multi:
+                self.write_uuid(recipe["uuid"])
+                self.write_var_int(recipe["network_id"])
