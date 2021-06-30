@@ -32,7 +32,7 @@ class plugin_manager:
             self.server.logger.alert(f"A plugin with the name {plugin_info['name']} already exists.")
             return
         if plugin_info["api_version"] != version.podrum_api_version:
-            self.server.logger.alert(f"A plugin with the name {plugin_info['name']} could not be loaded due to incompatible api version ({plugin_info['api_version']}).")
+            self.server.logger.alert(f"A plugin with the name {plugin_info['name']} could not be loaded due to incompatible api version ({plugin_info['api_version']}). Neweset Podrum API version is {version.podrum_api_version}")
             return
         self.server.logger.info(f"Loading {plugin_info['name']}...")
         sys.path.append(path)
