@@ -826,7 +826,7 @@ class mcbe_binary_stream(binary_stream):
                 for recipe_output in recipe["output"]:
                     self.write_item_legacy(recipe["output"])
                 self.write_uuid(recipe["uuid"])
-                self.write_stringrecipe["block"])
+                self.write_string(recipe["block"])
                 self.write_signed_var_int(recipe["priority"])
                 self.write_var_int(recipe["network_id"])
             if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
@@ -840,7 +840,7 @@ class mcbe_binary_stream(binary_stream):
                 for recipe_output in recipe["output"]:
                     self.write_item_legacy(recipe["output"])
                 self.write_uuid(recipe["uuid"])
-                self.write_stringrecipe["block"])
+                self.write_string(recipe["block"])
                 self.write_signed_var_int(recipe["priority"])
                 self.write_var_int(recipe["network_id"])
             if recipe["type"] == recipes_type.type_furnace:
