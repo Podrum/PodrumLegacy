@@ -16,10 +16,10 @@
 from nbt_utils.tag.compound_tag import compound_tag
 
 class item_extra:
-    def __init__(self, nbt: object = compound_tag(), can_place_on: list = [], can_break: list = [], blocking_tick: int = None) -> None:
+    def __init__(self, nbt: object = compound_tag(), can_place_on: list = [], can_destroy: list = [], blocking_tick: int = None) -> None:
         self.nbt: object = nbt
         self.can_place_on: list = can_place_on
-        self.can_break: list = can_break
+        self.can_destroy: list = can_destroy
         self.blocking_tick: int = blocking_tick
           
     def prepare_for_network(self) -> dict:
@@ -31,7 +31,7 @@ class item_extra:
         else:
             result["has_nbt"] = False
         result["can_place_on"] = self.can_place_on
-        result["can_break"] = self.can_break
+        result["can_destroy"] = self.can_destroy
         if self.blocking_tick is not None:
             result["blocking_tick"] = self.blocking_tick
         return result
