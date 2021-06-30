@@ -855,3 +855,15 @@ class mcbe_binary_stream(binary_stream):
             if recipe["type"] == recipes_type.type_multi:
                 self.write_uuid(recipe["uuid"])
                 self.write_var_int(recipe["network_id"])
+                
+    def read_skin_image(self) -> dict:
+        skin_image: dict = {}
+        skin_image["width"] = self.read_int_le()
+        skin_image["height"] = self.read_int_le()
+        skin_image["data"] = self.read_byte_array()
+        return skin_image
+        
+    def write_skin_image(self, skin_image: dict) -> None:
+        self.write_int_le(skin_image["width"])
+        self.write_int_le(skin_image["height"])
+        self.write_byte_array(skin_image["data"])
