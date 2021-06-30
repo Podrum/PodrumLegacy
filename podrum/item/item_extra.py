@@ -34,3 +34,4 @@ class item_extra:
         result["can_break"] = self.can_break
         if self.blocking_tick is not None:
             result["blocking_tick"] = self.blocking_tick
+        return result
