@@ -67,7 +67,7 @@ class pm_anvil(anvil):
         if len(chunk_data) > 0:
             result: object = chunk(x, z)
             result.nbt_deserialize(chunk_data)
-            return result
+            return pm_anvil.to_server_chunk(result)
                                         
     def set_chunk(self, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(chunk_in.x, chunk_in.z)
