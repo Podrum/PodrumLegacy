@@ -68,8 +68,7 @@ class block_storage:
             for block in range(0, blocks_per_word):
                 if pos >= 4096:
                     break
-                prt: int = word & ((1 << bits_per_block) - 1)
-                state: int = prt >> (bits_per_block * block)
+                state: int = (word >> (bits_per_block * block)) & ((1 << bits_per_block) - 1)
                 self.blocks[pos] = state
                 pos += 1
         self.palette: list = []
