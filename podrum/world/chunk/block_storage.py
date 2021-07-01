@@ -57,8 +57,26 @@ class block_storage:
             if runtime_id != air().runtime_id:
                 return y
         return -1
+    
+    def network_deserialize(self, stream: object) -> None:
+        bits_per_block: int = self.read_unsigned_byte() >> 1
+        blocks_per_word: int = math.floor(32 / bits_per_block)
+        words_per_chunk: int = math.ceil(4096 / blocks_per_word)
+        pos: int = 0
+        for chunk in range(0, words_per_chunk):
+            word: int = self.read_unsigned_int_le()
+            for block in range(0, blocks_per_word):
+                if pos >= 4096:
+                    break
+                prt: int = 0 # Todo
+                state: int = prt >> (bits_per_block * block)
+                self.blocks[pos] = state
+                pos += 1
+        self.palette: list = []
+        for i in range(0, self.read_signed_var_int()):
+            self.palette.append(self.read_signed_var_int())
 
-    def network_serialize(self, stream: object):
+    def network_serialize(self, stream: object) -> None:
         bits_per_block: int = max(math.ceil(math.log2(len(self.palette))), 1)
         for bits in [1, 2, 3, 4, 5, 6, 8, 16]:
             if bits >= bits_per_block:
