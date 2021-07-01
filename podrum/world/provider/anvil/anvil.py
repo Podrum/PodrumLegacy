@@ -102,7 +102,7 @@ class anvil:
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         if len(chunk_data) > 0:
-            result: object = chunk(x, z)
+            result: object = server_chunk(x, z)
             result.nbt_deserialize(chunk_data)
             return result
                                         
