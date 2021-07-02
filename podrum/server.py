@@ -115,6 +115,9 @@ class server:
         self.send_message(message)
         for player in self.players.values():
             player.send_message(message)
+            
+    def send_chat_message(self, message: str) -> None:
+        self.broadcast_message(f"[Server] {message}")
         
     def console_input(self) -> None:
         command: object = input()
