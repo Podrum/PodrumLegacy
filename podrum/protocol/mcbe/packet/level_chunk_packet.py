@@ -24,13 +24,9 @@ class level_chunk_packet(mcbe_packet):
     def decode_payload(self) -> None:
         self.chunk_x: int = self.read_signed_var_int()
         self.chunk_z: int = self.read_signed_var_int()
-        self.sub_chunk_count: int = self.read_var_int()
-        self.cache_enabled: bool = self.read_bool()
-        self.chunk_data: bytes = self.read_byte_array()
+        self.chunk_data: bytes = self.read_remaining()
  
     def encode_payload(self) -> None:
         self.write_signed_var_int(self.chunk_x)
         self.write_signed_var_int(self.chunk_z)
-        self.write_var_int(self.sub_chunk_count)
-        self.write_bool(self.cache_enabled)
-        self.write_byte_array(self.chunk_data)
+        self.write(self.chunk_data)
