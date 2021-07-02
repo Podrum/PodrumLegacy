@@ -16,7 +16,7 @@
 
 from typing import Callable
 
-class event_handler:
+class event_manager:
     events: dict = {}
   
     @staticmethod
