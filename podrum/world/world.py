@@ -53,7 +53,7 @@ class world:
             task.join()
             
     def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
-        self.load_radius()
+        self.load_radius(x, z, radius)
         chunk_x_start: int = (math.floor(x) >> 4) - radius
         chunk_x_end: int = (math.floor(x) >> 4) + radius
         chunk_z_start: int = (math.floor(z) >> 4) - radius
