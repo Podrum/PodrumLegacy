@@ -97,11 +97,11 @@ class rak_net_interface(Thread):
         self.server.logger.info(f"{connection.address.token} connected.")
                    
     def on_disconnect(self, connection: object) -> None:
+        quit_event: object = player_quit_event(self.server.players[connection.address.token])
+        quit_event.call()
         del self.server.players[connection.address.token]
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} disconnected.")
-        quit_event: object = player_quit_event(self)
-        quit_event.call()
         
 
     def start_interface(self) -> None:
