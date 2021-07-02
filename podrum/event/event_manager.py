@@ -28,7 +28,7 @@ class event_manager:
         event_handler.events[event.__name__].remove(listener)
         
     @staticmethod
-    def get_listeners(event: object) -> list
+    def get_listeners(event: object) -> list:
         return event_handler.events[event.__name__]
     
     @staticmethod
