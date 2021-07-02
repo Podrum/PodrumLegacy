@@ -41,6 +41,16 @@ class sub_chunk:
     def get_highest_block_at(self, x: int, z: int, layer: int) -> int:
         return self.get_block_storage(layer).get_highest_block_at(x, z)
 
+    def network_deserialize(self, stream: object) -> None:
+        version: int = stream.read_unsigned_byte()
+        if version != 8:
+            raise Exception("Unsupported SubChunk version.")
+        self.block_storages: dict = {}
+        for i in range(0, stream.read_unsigned_byte()):
+            storage: object = block_storage()
+            storage.network_deserialize(stream)
+            self.block_storages[i] = storage
+    
     def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
