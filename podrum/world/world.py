@@ -55,7 +55,6 @@ class world:
     def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
         self.load_radius(x, z, radius)
         tasks: list = []
-        player.send_network_chunk_publisher_update()
         chunk_x_start: int = (math.floor(x) >> 4) - radius
         chunk_x_end: int = (math.floor(x) >> 4) + radius
         chunk_z_start: int = (math.floor(z) >> 4) - radius
@@ -69,6 +68,7 @@ class world:
                     tasks.append(send_task)
         for task in tasks:
             task.join()
+        player.send_network_chunk_publisher_update()
             
     def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)
@@ -96,8 +96,13 @@ class world:
         return self.chunks[f"{x >> 4} {z >> 4}"].get_highest_block_at(x & 0x0f, z & 0x0f)
         
     def save(self) -> None:
+        tasks: list = []
         for chunk in self.chunks.values():
-            self.save_chunk(chunk.x, chunk.z)
+            chunk_task: object = immediate_task(self.save_chunk, [chunk.x, chunk.z])
+            chunk_task.start()
+            tasks.append(chunk_task)
+        for task in tasks:
+            task.join()
             
     def get_world_name(self) -> str:
         return self.provider.get_world_name()
