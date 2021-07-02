@@ -30,14 +30,14 @@ It's still under active development, yet it has a few advantages:
 Linux and MacOS (Unix systems):
 ```sh
 pip3 install -r ./requirements.txt
-python3 podrum
+python3 __main__.py
 ```
 Or you can use Powershell.
 
 Windows:
 ```batch
 pip install -r ./requirements.txt
-python podrum
+python __main__.py
 ```
 
 # FAQ:
