@@ -35,6 +35,7 @@ from podrum.command.default.say_command import say_command
 from podrum.command.default.stop_command import stop_command
 from podrum.command.default.version_command import version_command
 from podrum.event.default.player.player_join_event import player_join_event
+from podrum.event.default.player.player_move_event import player_move_event
 from podrum.event.default.player.player_quit_event import player_quit_event
 from podrum.event.event_manager import event_manager
 from podrum.item.default.stone import stone as stone_item
@@ -86,6 +87,7 @@ class managers:
         
     def register_default_events(self) -> None:
         event_manager.register_event(player_join_event)
+        event_manager.register_event(player_move_event)
         event_manager.register_event(player_quit_event)
         
     def register_default_items(self) -> None:
