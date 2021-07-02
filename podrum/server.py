@@ -113,7 +113,7 @@ class server:
         
     def broadcast_message(self, message: str) -> None:
         self.send_message(message)
-        for player in self.players:
+        for player in self.players.values():
             player.send_message(message)
         
     def console_input(self) -> None:
