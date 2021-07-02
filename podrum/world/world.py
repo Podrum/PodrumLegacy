@@ -55,7 +55,7 @@ class world:
     def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
         self.load_radius(x, z, radius)
         chunk_data_dictionary: dict = {}
-        add_chunk_data: object = lambda chunk: chunk_data_dictionary.update({f"{chunk.x} {chunk.z}": chunk.network_serialize()})
+        add_chunk_data: object = lambda chunk: chunk_data_dictionary[f"{chunk.x} {chunk.z}"] = chunk.network_serialize()
         tasks: list = []
         chunk_x_start: int = (math.floor(x) >> 4) - radius
         chunk_x_end: int = (math.floor(x) >> 4) + radius
