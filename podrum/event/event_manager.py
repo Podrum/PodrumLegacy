@@ -21,19 +21,19 @@ class event_manager:
   
     @staticmethod
     def register_listener(event: object, listener: Callable) -> None:
-        event_handler.events[event.__name__].append(listener)
+        event_manager.events[event.__name__].append(listener)
         
     @staticmethod
     def remove_listener(event: object, listener: Callable) -> None:
-        event_handler.events[event.__name__].remove(listener)
+        event_manager.events[event.__name__].remove(listener)
         
     @staticmethod
     def get_listeners(event: object) -> list:
-        return event_handler.events[event.__name__]
+        return event_manager.events[event.__name__]
     
     @staticmethod
     def register_event(event: object) -> None:
-        event_handler.events[event.__name__] = []
+        event_manager.events[event.__name__] = []
         
     @staticmethod
     def remove_event(event: object) -> None:
