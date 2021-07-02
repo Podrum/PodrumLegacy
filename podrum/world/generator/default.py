@@ -22,7 +22,8 @@ import random, math
 
 class Perlin:
     # probably redo this and move this to geometry/maths folder
-    def __call__(self,x,y): return int(sum(self.noise(x*s,y*s)*h for s,h in self.perlins)*self.avg)
+    def __call__(self,x,y): 
+        return int(sum(self.noise(x*s,y*s)*h for s,h in self.perlins)*self.avg)
     def __init__(self, seed):
         self.m = 60000 # 100-70000 are most stable values
         p = list(range(self.m))
@@ -31,10 +32,13 @@ class Perlin:
         p = self.perlins = tuple((1/i,i) for i in (16,20,22,31,32,64,512) for j in range(2))
         self.avg = 8*len(p)/sum(f+i for f,i in p)
 
-    def fade(self,t): return t*t*t*(t*(t*6-15)+10)
-    def lerp(self,t,a,b): return a+t*(b-a)
+    def fade(self,t): 
+        return t*t*t*(t*(t*6-15)+10)
+    def lerp(self,t,a,b): 
+        return a+t*(b-a)
     def grad(self,hash,x,y,z):
-        h = hash&15; u = y if h&8 else x
+        h = hash&15
+        u = y if h&8 else x
         v = (x if h==12 or h==14 else z) if h&12 else y
         return (u if h&1 else -u)+(v if h&2 else -v)
 
@@ -71,10 +75,14 @@ class default:
 
                 # fills in gaps underneath grass
                 for i in range(sea_level+y+1):
-                    if (sea_level + (y-i)) == 0: result.set_block_runtime_id(x, (sea_level + (y - i)), z, bedrock().runtime_id)
-                    elif (sea_level + (y-i)) <= 2: result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([bedrock().runtime_id, stone().runtime_id]))
-                    elif (i <= 2): result.set_block_runtime_id(x, (sea_level + (y-i))-1, z, dirt().runtime_id)
-                    else: result.set_block_runtime_id(x, (sea_level + (y-i))-1, z, stone().runtime_id)
+                    if (sea_level + (y-i)) == 0: 
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, bedrock().runtime_id)
+                    elif (sea_level + (y-i)) <= 2: 
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([bedrock().runtime_id, stone().runtime_id]))
+                    elif (i <= 2): 
+                        result.set_block_runtime_id(x, (sea_level + (y-i))-1, z, dirt().runtime_id)
+                    else: 
+                        result.set_block_runtime_id(x, (sea_level + (y-i))-1, z, stone().runtime_id)
 
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 256
