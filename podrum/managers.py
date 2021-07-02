@@ -38,6 +38,7 @@ from podrum.item.default.stone import stone as stone_item
 from podrum.item.item_manager import item_manager
 from podrum.plugin_manager import plugin_manager
 from podrum.world.generator.flat import flat
+from podrum.world.generator.default import default
 from podrum.world.generator.void import void
 from podrum.world.generator_manager import generator_manager
 from podrum.world.provider.anvil.anvil import anvil
@@ -86,6 +87,7 @@ class managers:
     def register_default_generators(self) -> None:
         self.generator_manager.register_generator(flat())
         self.generator_manager.register_generator(void())
+        self.generator_manager.register_generator(default())
         
     def register_default_providers(self) -> None:
         self.provider_manager.register_provider(anvil)
