@@ -301,8 +301,6 @@ class mcbe_player:
         packet: object = level_chunk_packet()
         packet.chunk_x = send_chunk.x
         packet.chunk_z = send_chunk.z
-        packet.sub_chunk_count = send_chunk.get_sub_chunk_send_count()
-        packet.cache_enabled = False
         packet.chunk_data = send_chunk.network_serialize()
         packet.encode()
         self.send_packet(packet.data)
