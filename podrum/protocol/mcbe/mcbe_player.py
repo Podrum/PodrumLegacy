@@ -254,11 +254,14 @@ class mcbe_player:
         for p in self.server.players.values():
             p.send_message(message, xuid, needs_translation)
             
+    def send_chat_message(self, message: str) -> None:
+        self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", message), self.xuid)
+            
     def handle_text_packet(self, data):
         packet: object = text_packet(data)
         packet.decode()
         if packet.type == text_type.chat:
-            self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", packet.message), self.xuid)
+            self.send_chat_message(packet.message)
         
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
