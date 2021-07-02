@@ -58,7 +58,6 @@ class mcbe_player:
         self.metadata_storage: object = metadata_storage()
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
-        self.sent_chunks: list = []
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
