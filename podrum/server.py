@@ -111,6 +111,11 @@ class server:
     def send_message(self, message: str) -> None:
         self.logger.info(message)
         
+    def broadcast_message(self, message: str) -> None:
+        self.send_message(message)
+        for player in self.players:
+            player.send_message(message)
+        
     def console_input(self) -> None:
         command: object = input()
         self.dispatch_command(command, self)
