@@ -68,6 +68,11 @@ class server:
         start_time: float = time.time()
         self.logger.info("Podrum is starting up...")
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
+        if not os.path.isfile(os.getcwd() + "/start.cmd"):
+            createstart = open(os.getcwd() + "/start.cmd", "a")
+            createstart.write("@echo off\nTITLE Podrum\nif exist podrum (\n	python podrum\n) else (\n	echo Podrum folder not found\n	echo Download Podrum at https://github.com/Podrum/Podrum\n	pause\n	exit 1)")
+            createstart.close()
+            self.logger.info("Created start.cmd")
         if not os.path.isfile(plugins_path) and not os.path.isdir(plugins_path):
             os.mkdir(plugins_path)
         self.managers.plugin_manager.load_all(plugins_path)
@@ -121,7 +126,7 @@ class server:
             
     def send_chat_message(self, message: str) -> None:
         self.broadcast_message(f"[Server] {message}")
-        
+
     def console_input(self) -> None:
         command: object = input()
         self.dispatch_command(command, self)
