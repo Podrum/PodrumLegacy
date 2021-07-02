@@ -55,6 +55,7 @@ class world:
     def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
         self.load_radius(x, z, radius)
         tasks: list = []
+        player.send_network_chunk_publisher_update()
         chunk_x_start: int = (math.floor(x) >> 4) - radius
         chunk_x_end: int = (math.floor(x) >> 4) + radius
         chunk_z_start: int = (math.floor(z) >> 4) - radius
