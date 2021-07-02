@@ -18,7 +18,7 @@ from podrum.event.event import event
 
 
 class player_move_event(event):
-    def __init__(self, player: object, toXYZ: Union[list,None]) -> None:
+    def __init__(self, player: object, toXYZ: Union[list, None]) -> None:
         self.player: object = player
         self.toX = toXYZ[0]
         self.toY = toXYZ[1]
