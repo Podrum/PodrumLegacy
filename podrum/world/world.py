@@ -61,13 +61,11 @@ class world:
         chunk_z_end: int = (math.floor(z) >> 4) + radius
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                if f"{chunk_x} {chunk_z}" not in player.sent_chunks:
-                    if self.has_loaded_chunk(chunk_x, chunk_z):
-                        chunk: object = self.get_chunk(chunk_x, chunk_z)
-                        send_task: object = immediate_task(player.send_chunk, [chunk])
-                        send_task.start()
-                        player.sent_chunks.append(f"{chunk_x} {chunk_z}")
-                        tasks.append(send_task)
+                if self.has_loaded_chunk(chunk_x, chunk_z):
+                    chunk: object = self.get_chunk(chunk_x, chunk_z)
+                    send_task: object = immediate_task(player.send_chunk, [chunk])
+                    send_task.start()
+                    tasks.append(send_task)
         for task in tasks:
             task.join()
         player.send_network_chunk_publisher_update()
