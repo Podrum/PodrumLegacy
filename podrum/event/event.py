@@ -13,11 +13,11 @@
 #                                                       #
 #########################################################
 
-from podrum.event.event_handler import event_handler
+from podrum.event.event_manager import event_manager
 
 class event:
     canceled = False
   
     def call(self) -> None:
-        for listener in event_handler.get_listeners(self.__class__.__name__):
+        for listener in event_manager.get_listeners(self.__class__.__name__):
             listener(self)
