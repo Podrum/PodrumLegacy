@@ -40,6 +40,9 @@ class world_manager:
         world_name: str = world_obj.get_world_name()
         self.worlds[world_name] = world_obj
         self.path_to_world_name[world_path] = world_name
+        spawn_pos: object = self.worlds[world_name].get_spawn_position()
+        self.server.logger.info(f"Loading world -> {world_name}")
+        self.worlds[world_name].load_radius(spawn_pos.x, spawn_pos.z, self.server.config.data["max_view_distance"])
         self.server.logger.success(f"Loaded world -> {world_name}")
         
     def get_world(self, name: str) -> object:
