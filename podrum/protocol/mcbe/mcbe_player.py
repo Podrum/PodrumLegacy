@@ -14,6 +14,7 @@
 #########################################################
 
 import math
+from podrum.event.default.player.player_join_event import player_join_event
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
@@ -227,7 +228,9 @@ class mcbe_player:
         self.send_chunks()
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
-            self.spawned: bool = True
+            self.spawned: bool = True  
+            join_event: object = player_join_event()
+            join_event.call()
                 
     def handle_move_player_packet(self, data):
         packet: object = move_player_packet(data)
