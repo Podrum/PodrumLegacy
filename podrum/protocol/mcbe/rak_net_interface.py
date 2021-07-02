@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from podrum.event.default.player.player_join_event import player_join_event
+from podrum.event.default.player.player_quit_event import player_quit_event
 from podrum.protocol.mcbe.mcbe_player import mcbe_player
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.game_packet import game_packet
