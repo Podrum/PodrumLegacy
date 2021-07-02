@@ -27,7 +27,7 @@ class plugin_manager:
         
     def load(self, path: str) -> None:
         plugin_file = ZipFile(path, "r")
-        plugin_info: dict = json.loads(plugin_file.read("info.json"))
+        plugin_info: dict = json.loads(plugin_file.read("plugin.json"))
         if plugin_info["name"] in self.plugins:
             self.server.logger.alert(f"A plugin with the name {plugin_info['name']} already exists.")
             return
