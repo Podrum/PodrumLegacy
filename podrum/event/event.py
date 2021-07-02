@@ -19,5 +19,5 @@ class event:
     canceled = False
   
     def call(self) -> None:
-        for listener in event_handler.get_listeners():
+        for listener in event_handler.get_listeners(self):
             listener(self)
