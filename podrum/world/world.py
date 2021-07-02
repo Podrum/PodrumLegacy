@@ -54,8 +54,6 @@ class world:
             
     def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
         self.load_radius(x, z, radius)
-        chunk_data_dictionary: dict = {}
-        add_chunk_data: object = lambda chunk: chunk_data_dictionary[f"{chunk.x} {chunk.z}"] = chunk.network_serialize()
         tasks: list = []
         chunk_x_start: int = (math.floor(x) >> 4) - radius
         chunk_x_end: int = (math.floor(x) >> 4) + radius
@@ -65,14 +63,11 @@ class world:
             for chunk_z in range(chunk_z_start, chunk_z_end):
                 if self.has_loaded_chunk(chunk_x, chunk_z):
                     chunk: object = self.get_chunk(chunk_x, chunk_z)
-                    send_task: object = immediate_task(add_chunk_data, [chunk])
+                    send_task: object = immediate_task(player.send_chunk, [chunk])
                     send_task.start()
                     tasks.append(send_task)
         for task in tasks:
             task.join()
-        for chunk_hash, chunk_data in chunk_data_dictionary.items():
-            coords: tuple = chunk_hash.split(" ")
-            player.send_chunk_data(int(coords[0]), int(coords[1]), chunk_data)
         player.send_network_chunk_publisher_update()
             
     def unload_chunk(self, x: int, z: int) -> None:
