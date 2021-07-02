@@ -274,7 +274,7 @@ class anvil:
                 long_tag("RandomSeed", random.randint(0, sys.maxsize)),
                 long_tag("SizeOnDisk", 0),
                 long_tag("Time", 0),
-                string_tag("generatorName", "flat"),
+                string_tag("generatorName", "default"),
                 string_tag("LevelName", "world"),
                 compound_tag("GameRules", [])
             ])
