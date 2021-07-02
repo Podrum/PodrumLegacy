@@ -89,8 +89,12 @@ class server:
     def dispatch_command(self, user_input: str, sender: object) -> None:
         if len(user_input) > 0:
             split_input: list = user_input.split()
-            command_name: str = split_input[0]
-            command_args: list = split_input[1:]
+            try:
+                command_name: str = split_input[0]
+                command_args: list = split_input[1:]
+            except Exception as e:
+                command_name: str = ""
+                command_args: list = []
             if self.managers.command_manager.has_command(command_name):
                 self.managers.command_manager.execute(command_name, command_args, sender)
             else:
