@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+from podrum.event.default.player.player_move_event import player_move_event
 from podrum.block.block_manager import block_manager
 from podrum.block.default.air import air
 from podrum.block.default.andesite import andesite
@@ -85,6 +86,7 @@ class managers:
         
     def register_default_events(self) -> None:
         event_manager.register_event(player_join_event)
+        event_manager.register_event(player_move_event)
         
     def register_default_items(self) -> None:
         self.item_manager.register_item(stone_item())

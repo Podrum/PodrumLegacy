@@ -14,6 +14,7 @@
 #########################################################
 
 import math
+from podrum.event.default.player.player_move_event import player_move_event
 from podrum.event.default.player.player_join_event import player_join_event
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
@@ -238,6 +239,9 @@ class mcbe_player:
         if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
             self.send_chunks()
         self.position: object = packet.position
+        move_event: object = player_move_event(self,[packet.position.x,packet.position.y,packet.position.z])
+        move_event.call()
+
             
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = text_packet()
