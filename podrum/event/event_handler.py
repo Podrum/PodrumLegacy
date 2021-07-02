@@ -34,3 +34,7 @@ class event_handler:
     @staticmethod
     def register_event(event: object) -> None:
         event_handler.events[event.__name__] = []
+        
+    @staticmethod
+    def remove_event(event: object) -> None:
+        del event_handler.events[event.__name__]
