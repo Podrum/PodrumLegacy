@@ -61,9 +61,12 @@ class chunk:
         stream.read_bool() # Chunk Caching
         data_stream: object = binary_stream(stream.read(stream.read_var_int()))
         for y in range(0, sub_chunk_count):
-            self.sub_chunks[y].network_deserialize(data_stream)
+            sc: object = sub_chunk()
+            sc.network_deserialize(data_stream)
+            self.sub_chunks[y] = sc
+        self.biomes: list = []
         for i in range(0, data_stream.read_var_int()):
-            self.biomes[i] = data_stream.read_unsigned_byte()
+            self.biomes.append(data_stream.read_unsigned_byte())
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
