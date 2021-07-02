@@ -37,4 +37,4 @@ class event_manager:
         
     @staticmethod
     def remove_event(event: object) -> None:
-        del event_handler.events[event.__name__]
+        del event_manager.events[event.__name__]
