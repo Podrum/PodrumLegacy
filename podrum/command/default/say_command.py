@@ -21,7 +21,7 @@ class say_command:
     
     def execute(self, args: list, sender: object) -> None:
         if len(args) > 0:
-            if sender == server:
+            if sender == self.server:
                 sender.broadcast_message("[Server] " + " ".join(args))
             else:
                 sender.send_chat_message(" ".join(args))
