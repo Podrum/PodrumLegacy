@@ -14,8 +14,10 @@
 #########################################################
 
 from collections import deque
+import math
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
+from podrum.task.immediate_task import immediate_task
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -34,9 +36,37 @@ class world:
                 chunk: object = generator.generate(x, z, self)
             self.chunks[f"{x} {z}"] = chunk
             self.mark_as_loading.remove(f"{x} {z}")
-        else:
-            while f"{x} {z}" in self.mark_as_loading:
-                pass
+            
+    def load_radius(self, x: int, z: int, radius: int) -> None:
+        tasks: list = []
+        chunk_x_start: int = (math.floor(x) >> 4) - radius
+        chunk_x_end: int = (math.floor(x) >> 4) + radius
+        chunk_z_start: int = (math.floor(z) >> 4) - radius
+        chunk_z_end: int = (math.floor(z) >> 4) + radius
+        for chunk_x in range(chunk_x_start, chunk_x_end):
+            for chunk_z in range(chunk_z_start, chunk_z_end):
+                if not self.has_loaded_chunk(chunk_x, chunk_z):
+                    chunk_task: object = immediate_task(self.load_chunk, [chunk_x, chunk_z])
+                    chunk_task.start()
+                    tasks.append(chunk_task)
+        for task in tasks:
+            task.join()
+            
+    def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
+        self.load_radius()
+        chunk_x_start: int = (math.floor(x) >> 4) - radius
+        chunk_x_end: int = (math.floor(x) >> 4) + radius
+        chunk_z_start: int = (math.floor(z) >> 4) - radius
+        chunk_z_end: int = (math.floor(z) >> 4) + radius
+        for chunk_x in range(chunk_x_start, chunk_x_end):
+            for chunk_z in range(chunk_z_start, chunk_z_end):
+                if not self.has_loaded_chunk(chunk_x, chunk_z):
+                    chunk: object = self.get_chunk(x, z)
+                    send_task: object = immediate_task(player.send_chunk, [chunk])
+                    send_task.start()
+                    tasks.append(send_task)
+        for task in tasks:
+            task.join()
             
     def unload_chunk(self, x: int, z: int) -> None:
         self.provider.save_chunk(x, z)
@@ -46,12 +76,6 @@ class world:
         if f"{x} {z}" in self.chunks:
             return True
         return False
-
-    def send_chunk_task(self, x: int, z: int, player: object = None) -> None:
-        if not self.has_loaded_chunk(x, z):
-            self.load_chunk(x, z)
-        chunk: object = self.get_chunk(x, z)
-        player.send_chunk(chunk)
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
