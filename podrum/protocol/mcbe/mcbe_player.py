@@ -229,7 +229,7 @@ class mcbe_player:
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
             self.spawned: bool = True  
-            join_event: object = player_join_event()
+            join_event: object = player_join_event(self)
             join_event.call()
                 
     def handle_move_player_packet(self, data):
