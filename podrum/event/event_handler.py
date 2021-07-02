@@ -20,13 +20,17 @@ class event_handler:
     events: dict = {}
   
     @staticmethod
-    def register_listener(event_name: str, listener: Callable) -> None:
-        event_handler.events[event_name].append(listener)
+    def register_listener(event: object, listener: Callable) -> None:
+        event_handler.events[event.__name__].append(listener)
         
     @staticmethod
-    def remove_listener(listener: Callable) -> None:
-        event_handler.events[event_name].remove(listener)
+    def remove_listener(event: object, listener: Callable) -> None:
+        event_handler.events[event.__name__].remove(listener)
         
     @staticmethod
-    def get_listeners(event_name: str) -> list
-        return event_handler.events[event_name]
+    def get_listeners(event: object) -> list
+        return event_handler.events[event.__name__]
+    
+    @staticmethod
+    def register_event(event: object) -> None:
+        event_handler.events[event.__name__] = []
