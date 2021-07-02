@@ -297,11 +297,11 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
     
-    def send_chunk_data(self, x: int, z: int, chunk_data: bytes) -> None:
+    def send_chunk(self, send_chunk: object) -> None:
         packet: object = level_chunk_packet()
-        packet.chunk_x = x
-        packet.chunk_z = z
-        packet.chunk_data = chunk_data
+        packet.chunk_x = send_chunk.x
+        packet.chunk_z = send_chunk.z
+        packet.chunk_data = send_chunk.network_serialize()
         packet.encode()
         self.send_packet(packet.data)
 
