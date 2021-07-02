@@ -92,7 +92,7 @@ class server:
             try:
                 command_name: str = split_input[0]
                 command_args: list = split_input[1:]
-            except:
+            except Exception as e:
                 command_name: str = ""
                 command_args: list = []
             if self.managers.command_manager.has_command(command_name):
