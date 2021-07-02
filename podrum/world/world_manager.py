@@ -15,6 +15,7 @@
 
 import os
 from podrum.world.world import world
+from podrum.task.immediate_task import immediate_task
 
 class world_manager:
     def __init__(self, server: object) -> None:
@@ -55,5 +56,10 @@ class world_manager:
         del self.worlds[world_name]
 
     def unload_all(self) -> None:
+        tasks: list = []
         for world_name in dict(self.worlds):
-            self.unload_world(world_name)
+            unload_task: object = immediate_task(self.unload_world, [world_name])
+            unload_task.start()
+            tasks.append(unload_task)
+        for task in tasks:
+            task.join()
