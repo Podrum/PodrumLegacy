@@ -72,24 +72,24 @@ class default:
         seed: int = 2151901553968352745
 
         # generates perlin noise
-        perlin = Perlin(seed=seed)
+        perlin = Perlin(seed = seed)
 
         # chunk generation
         for x in range(0, 16):
             for z in range(0, 16):
-                y = perlin((chunk_x*16)+x, (chunk_z*16)+z)
-                result.set_block_runtime_id(x, sea_level+y, z, grass().runtime_id)
+                y = perlin((chunk_x << 4) + x, (chunk_z << 4) + z)
+                result.set_block_runtime_id(x, sea_level + y, z, grass().runtime_id)
 
                 # fills in gaps underneath grass
-                for i in range(sea_level+y+1):
-                    if (sea_level + (y-i)) == 0: 
+                for i in range(sea_level + y + 1):
+                    if (sea_level + (y - i)) == 0: 
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, bedrock().runtime_id)
-                    elif (sea_level + (y-i)) <= 2: 
+                    elif (sea_level + (y - i)) <= 2: 
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([bedrock().runtime_id, stone().runtime_id]))
                     elif (i <= 2): 
-                        result.set_block_runtime_id(x, (sea_level + (y-i))-1, z, dirt().runtime_id)
+                        result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, dirt().runtime_id)
                     else: 
-                        result.set_block_runtime_id(x, (sea_level + (y-i))-1, z, stone().runtime_id)
+                        result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, stone().runtime_id)
 
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 256
