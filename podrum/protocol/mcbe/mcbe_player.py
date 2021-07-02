@@ -278,7 +278,6 @@ class mcbe_player:
             self.handle_text_packet(data)
             
     def send_chunks(self) -> None:
-        self.send_network_chunk_publisher_update()
         chunk_task: object = immediate_task(self.world.send_radius, [self.position.x, self.position.z, self.view_distance, self])
         chunk_task.start()
             
