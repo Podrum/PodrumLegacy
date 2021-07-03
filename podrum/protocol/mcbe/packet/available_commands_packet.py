@@ -115,3 +115,16 @@ class available_commands_packet(mcbe_packet):
                     self.write_unsigned_short_le(overload_entry["enum_type"])
                     self.write_bool(overload_entry["optional"])
                     self.write_unsigned_byte(overload_entry["options"])
+        self.write_var_int(len(self.dynamic_enums))
+        for dynamic_enum in self.dynamic_enums:
+            self.write_string(dynamic_enum["name"])
+            self.write_var_int(len(dynamic_enum["values"]))
+            for value in dynamic_enum["values"]:
+                self.write_string(value)
+        self.write_var_int(len(self.enum_constraints))
+        for enum_constraint in self.enum_constraints:
+            self.write_int_le(enum_constraint["value_index"])
+            self.write_int_le(enum_constraint["enum_index"])
+            self.write_var_int(len(enum_constraint["constraints"]))
+            for constraint in enum_constraint["constraints"]:
+                self.write_unsigned_byte(constraint)
