@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+from concurrent.futures import ProcessPoolExecutor
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
 
@@ -24,14 +25,16 @@ class world:
         self.world_path: str = provider.world_dir
             
     async def load_chunk(self, x: int, z: int) -> None:
-        chunk: object = await self.provider.get_chunk(x, z)
-        if chunk.result() is None:
+        executor = ProcessPoolExecutor()
+        chunk: object = await self.server.event_loop.run_in_executor(executor, self.provider.get_chunk, *[x, z])
+        if chunk is None:
             generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-            chunk: object = await generator.generate(x, z, self)
-        self.chunks[f"{x} {z}"] = chunk.result()
+            chunk: object = await self.server.event_loop.run_in_executor(executor, generator.generate, *[x, z, self])
+        self.chunks[f"{x} {z}"] = chunk
             
     async def unload_chunk(self, x: int, z: int) -> None:
-        await self.provider.save_chunk(x, z)
+        executor = ProcessPoolExecutor()
+        await self.server.event_loop.run_in_executor(executor, self.provider.save_chunk, *[x, z])
         del self.chunks[f"{x} {z}"]
         
     def has_loaded_chunk(self, x: int, z: int) -> bool:
@@ -43,7 +46,8 @@ class world:
         if not self.has_loaded_chunk(x, z):
             await self.load_chunk(x, z)
         chunk: object = self.get_chunk(x, z)
-        await player.send_chunk(chunk)
+        executor = ProcessPoolExecutor()
+        await self.server.event_loop.run_in_executor(executor, player.send_chunk, chunk)
             
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
