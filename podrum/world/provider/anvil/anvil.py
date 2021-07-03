@@ -69,8 +69,7 @@ class anvil:
         return x - ((x >> 5) << 5), z - ((z >> 5) << 5)
     
     @staticmethod
-    async def to_server_chunk(chunk_in: object) -> object:
-        out: object = asyncio.Future()
+    def to_server_chunk(chunk_in: object) -> object:
         cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
         for x in range(0, 16):
             for z in range(0, 16):
@@ -83,12 +82,10 @@ class anvil:
                     except KeyError:
                         runtime_id: int = block_map.get_runtime_id(block_name, 0)
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
-        out.set_result(cnv_chunk)
-        return out
+        return cnv_chunk
     
     @staticmethod
-    async def to_anvil_chunk(chunk_in: object) -> object:
-        out: object = asyncio.Future()
+    def to_anvil_chunk(chunk_in: object) -> object:
         cnv_chunk: object = chunk(chunk_in.x, chunk_in.z)
         for x in range(0, 16):
             for z in range(0, 16):
@@ -98,11 +95,9 @@ class anvil:
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)
                     cnv_chunk.set_block_id(x, y, z, block)
                     cnv_chunk.set_data(x, y, z, meta)
-        out.set_result(cnv_chunk)
-        return out
+        return cnv_chunk
     
-    async def get_chunk(self, x: int, z: int) -> object:
-        out: object = asyncio.Future()
+    def get_chunk(self, x: int, z: int) -> object:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
@@ -111,22 +106,19 @@ class anvil:
             chunk_data: bytes = await asyncio.get_event_loop().run_in_executor(executor, reg.get_chunk_data, *[chunk_index[0], chunk_index[1]])
         if len(chunk_data) > 0:
             result: object = chunk(x, z)
-            with ThreadPoolExecutor(1) as executor:
-                await asyncio.get_event_loop().run_in_executor(executor, result.nbt_deserialize, chunk_data)
-            out: object = await anvil.to_server_chunk(result)
+            result.nbt_deserialize(chunk_data)
+            return anvil.to_server_chunk(result)
         else:
-            out.set_result(None)
-        return out
+            return None
                                         
-    async def set_chunk(self, chunk_in: object) -> None:
+    def set_chunk(self, chunk_in: object) -> None:
         region_index: tuple = anvil.cr_index(chunk_in.x, chunk_in.z)
         chunk_index: tuple = anvil.rc_index(chunk_in.x, chunk_in.z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_result: object = await anvil.to_anvil_chunk(chunk_in)
         with ThreadPoolExecutor(1) as executor:
-            chunk_data: bytes =  await asyncio.get_event_loop().run_in_executor(executor, chunk_result.result().nbt_serialize)
-            await asyncio.get_event_loop().run_in_executor(executor, reg.put_chunk_data, *[chunk_index[0], chunk_index[1], chunk_data])    
+            reg.put_chunk_data(chunk_index[0], chunk_index[1], chunk_result.nbt_serialize())    
                                         
     def get_option(self, name: str) -> object:
         with open(os.path.join(self.world_dir, "level.dat"), "rb") as file:
