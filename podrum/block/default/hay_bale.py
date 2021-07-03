@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -14,8 +14,11 @@
 #########################################################
 
 from podrum.block.block import block
-from podrum.block.block_manager import block_manager
+from podrum.block.tool import tool
 
-class air(block):
+class hay_bale(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:air", 0, 0, 0)
+        super().__init__("minecraft:hay_block", 0, 0.5, 0.5)
+        self.stack_size: int = 64
+        self.tool: int = tool.none
+        self.flammable: bool = True
