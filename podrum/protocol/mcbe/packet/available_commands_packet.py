@@ -65,7 +65,26 @@ class available_commands_packet(mcbe_packet):
                     overload_entry["value_type"] = self.read_unsigned_short_le()
                     overload_entry["enum_type"] = self.read_unsigned_short_le()
                     overload_entry["optional"] = self.read_bool()
-                    overload_entry["options"] = 0 # Need protocol info
+                    overload_entry["options"] = self.read_unsigned_byte()
+                    overload.append(overload_entry)
+                command["overloads"].append(overload)
+        self.dynamic_enums: list = []
+        for i in range(0, self.read_var_int()):
+            dynamic_enum: dict = {}
+            dynamic_enum["name"] = self.read_string()
+            dynamic_enum["values"] = []
+            for i in range(0, self.read_var_int()):
+                dynamic_enum["values"].append(self.read_string())
+            self.dynamic_enums.append(dynamic_enum)
+        self.enum_constraints: list = []
+        for i in range(0, self.read_var_int()):
+            enum_constraint: dict = {}
+            enum_constraint["value_index"] = self.read_int_le()
+            enum_constraint["enum_index"] = self.read_int_le()
+            enum_constraint["constraints"] = []
+            for i in range(0, self.read_var_int()):
+                enum_constraint["constraints"].append(self.read_unsigned_byte())
+            self.enum_constraints.append(enum_constraint)
             
     def encode_payload(self) -> None:
         pass
