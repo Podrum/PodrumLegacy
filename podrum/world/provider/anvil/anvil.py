@@ -100,9 +100,8 @@ class anvil:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
-        with ThreadPoolExecutor(1) as executor:
-            reg: object = await asyncio.get_event_loop().run_in_executor(executor, region, region_path)
-            chunk_data: bytes = await asyncio.get_event_loop().run_in_executor(executor, reg.get_chunk_data, *[chunk_index[0], chunk_index[1]])
+        reg: object = region(region_path)
+        chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         if len(chunk_data) > 0:
             result: object = chunk(x, z)
             result.nbt_deserialize(chunk_data)
@@ -115,7 +114,7 @@ class anvil:
         chunk_index: tuple = anvil.rc_index(chunk_in.x, chunk_in.z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
-        chunk_result: object = await anvil.to_anvil_chunk(chunk_in)
+        chunk_result: object = anvil.to_anvil_chunk(chunk_in)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], chunk_result.nbt_serialize())    
                                         
     def get_option(self, name: str) -> object:
