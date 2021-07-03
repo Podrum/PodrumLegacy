@@ -17,7 +17,8 @@ from collections import deque
 import math
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
-from podrum.task.immediate_task import immediate_task
+from threading import Thread
+from queue import Queue
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -26,58 +27,47 @@ class world:
         self.chunks: dict = {}
         self.mark_as_loading: object = deque()
         self.world_path: str = provider.world_dir
+        self.load_queue: object = Queue()
     
     # [load_chunk]
     # :return: = None
     # Loads a chunk.
     def load_chunk(self, x: int, z: int) -> None:
-        if f"{x} {z}" not in self.mark_as_loading:
-            self.mark_as_loading.append(f"{x} {z}")
-            chunk: object = self.provider.get_chunk(x, z)
-            if chunk is None:
-                generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-                chunk: object = generator.generate(x, z, self)
-            self.chunks[f"{x} {z}"] = chunk
-            self.mark_as_loading.remove(f"{x} {z}")
-    
-    # [load_radius]
+        if not self.has_loaded_chunk(x, z):
+            if f"{x} {z}" not in self.mark_as_loading:
+                self.mark_as_loading.append(f"{x} {z}")
+                chunk: object = self.provider.get_chunk(x, z)
+                if chunk is None:
+                    generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
+                    chunk: object = generator.generate(x, z, self)
+                self.chunks[f"{x} {z}"] = chunk
+                self.mark_as_loading.remove(f"{x} {z}")
+       
+    # [load_worker]
+    # :return: -> None
+    # The worker that loads chunks
+    def load_worker(self) -> None:
+        while True:
+            if not self.load_queue.empty():
+                item: tuple = self.load_queue.get()
+                if item is None:
+                    break
+                self.load_chunk(item[0], item[1])
+        
+    # [start_load_workers]
     # :return: = None
-    # Loads a radius.
-    def load_radius(self, x: int, z: int, radius: int) -> None:
-        tasks: list = []
-        chunk_x_start: int = (math.floor(x) >> 4) - radius
-        chunk_x_end: int = (math.floor(x) >> 4) + radius
-        chunk_z_start: int = (math.floor(z) >> 4) - radius
-        chunk_z_end: int = (math.floor(z) >> 4) + radius
-        for chunk_x in range(chunk_x_start, chunk_x_end):
-            for chunk_z in range(chunk_z_start, chunk_z_end):
-                if not self.has_loaded_chunk(chunk_x, chunk_z):
-                    chunk_task: object = immediate_task(self.load_chunk, [chunk_x, chunk_z])
-                    chunk_task.start()
-                    tasks.append(chunk_task)
-        for task in tasks:
-            task.join()
-    
-    # [send_radius]
+    # Starts a give amount of load workers.
+    def start_load_workers(self, count: int) -> None:
+        self.load_worker_count: int = count
+        for i in range(0, count):
+            Thread(target = self.load_worker).start()
+          
+    # [stop_load_workers
     # :return: = None
-    # Sends a radius to a player.
-    def send_radius(self, x: int, z: int, radius: int, player: object) -> None:
-        self.load_radius(x, z, radius)
-        tasks: list = []
-        chunk_x_start: int = (math.floor(x) >> 4) - radius
-        chunk_x_end: int = (math.floor(x) >> 4) + radius
-        chunk_z_start: int = (math.floor(z) >> 4) - radius
-        chunk_z_end: int = (math.floor(z) >> 4) + radius
-        for chunk_x in range(chunk_x_start, chunk_x_end):
-            for chunk_z in range(chunk_z_start, chunk_z_end):
-                if self.has_loaded_chunk(chunk_x, chunk_z):
-                    chunk: object = self.get_chunk(chunk_x, chunk_z)
-                    send_task: object = immediate_task(player.send_chunk, [chunk])
-                    send_task.start()
-                    tasks.append(send_task)
-        for task in tasks:
-            task.join()
-        player.send_network_chunk_publisher_update()
+    # Stops the load workers
+    def stop_load_workers(self) -> None:
+        for i in range(0, self.load_worker_count):
+            self.load_queue.put(None)
     
     # [unload_chunk]
     # :return: = None
