@@ -23,8 +23,7 @@ class flat:
     generator_name: str = "flat"
     
     @staticmethod
-    async def generate(chunk_x: int, chunk_z: int, world: object) -> object:
-        out: object = asyncio.Future()
+    def generate(chunk_x: int, chunk_z: int, world: object) -> object:
         result: object = chunk(chunk_x, chunk_z)
         spawn_position: object = world.get_spawn_position()
         for x in range(0, 16):
@@ -36,5 +35,4 @@ class flat:
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 4
             world.set_spawn_position(spawn_position)
-        out.set_result(result)
-        return out
+        return result
