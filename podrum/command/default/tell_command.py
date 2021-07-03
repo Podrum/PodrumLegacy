@@ -24,7 +24,7 @@ class tell_command:
             if not self.server.find_player(args[0]):
                 sender.send_message("This player is not online")
                 return
-            if sender.username == args[0]:
+            if getattr(sender, 'username', None) == args[0]:
                 sender.send_message("You can not message yourself")
             player = self.server.find_player(args[0])
             player_name = player.username
