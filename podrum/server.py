@@ -125,3 +125,12 @@ class server:
     def console_input(self) -> None:
         command: object = input()
         self.dispatch_command(command, self)
+
+    def find_player(self, username: str):
+        usernames = [player.username for player in self.players.values()]
+        players = [player for player in self.players.values()]
+        if username in usernames:
+            return players[usernames.index(username)]
+        else:
+            return False
+
