@@ -27,6 +27,7 @@ from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
 from podrum.protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
 from podrum.protocol.mcbe.packet.chunk_radius_updated_packet import chunk_radius_updated_packet
+from podrum.protocol.mcbe.packet.command_request_packet import command_request_packet
 from podrum.protocol.mcbe.packet.game_packet import game_packet
 from podrum.protocol.mcbe.packet.creative_content_packet import creative_content_packet
 from podrum.protocol.mcbe.packet.item_component_packet import item_component_packet
@@ -285,11 +286,18 @@ class mcbe_player:
     def send_chat_message(self, message: str) -> None:
         self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", message), self.xuid)
             
-    def handle_text_packet(self, data):
+    def handle_text_packet(self, data: bytes) -> None:
         packet: object = text_packet(data)
         packet.decode()
         if packet.type == text_type.chat:
             self.send_chat_message(packet.message)
+            
+    def handle_command_request_packet(self, data: bytes) -> None:
+        packet: object = command_request_packet(data)
+        packet.decode()
+        if packet.origin == 0:
+            command_task: object = immediate_task(self.server.dispatch_command, [packet.command, self])
+            command_task.start()
 
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
@@ -306,6 +314,8 @@ class mcbe_player:
             self.handle_text_packet(data)
         elif data[0] == mcbe_protocol_info.player_action_packet:
             self.handle_player_action_packet(data)
+        elif data[0] == mcbe_protocol_info.command_request_packet:
+            self.handle_command_request_packet(data)
 
     def send_chunks(self) -> None:
         chunk_task: object = immediate_task(self.world.send_radius, [self.position.x, self.position.z, self.view_distance, self])
