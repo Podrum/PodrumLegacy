@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -16,5 +16,8 @@
 from podrum.event.event import event
 
 class player_quit_event(event):
+
+    # Gets called when a player quits.
+
     def __init__(self, player: object) -> None:
         self.player: object = player

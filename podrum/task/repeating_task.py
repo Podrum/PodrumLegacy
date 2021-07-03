@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -25,13 +25,22 @@ class repeating_task(Thread):
         self.interval: int = interval
         self.interval_before: bool = interval_before
 
+    # [start]
+    # :return: = None
+    # Starts the task
     def start(self) -> None:
         self.is_running: bool = True
         super().start()
 
+    # [stop]
+    # :return:
+    # Stops the thread
     def stop(self) -> None:
         self.is_running: bool = False
 
+    # [run]
+    # :return: = None
+    # The main function of the thread.
     def run(self) -> None:
         while self.is_running:
             if self.interval_before:

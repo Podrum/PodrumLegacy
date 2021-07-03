@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -269,6 +269,9 @@ class mcbe_player:
         elif packet.action == action_type.jump:
             jump_event: object = player_jump_event(self)
             jump_event.call()
+        elif packet.action == action_type.start_sleeping:
+            start_sleeping_event: object = player_start_sleeping_event(self)
+            start_sleeping_event.call()
 
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = text_packet()
@@ -347,6 +350,7 @@ class mcbe_player:
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
+        
         new_packet.x = math.floor(self.position.x)
         new_packet.y = math.floor(self.position.y)
         new_packet.z = math.floor(self.position.z)

@@ -16,6 +16,9 @@
 from podrum.event.event import event
 
 class player_sneak_event(event):
+
+    # Gets called when a player sneak.
+
     def __init__(self, player: object, sneaking: bool) -> None:
         self.player: object = player
         self.sneaking: bool = sneaking

@@ -13,14 +13,8 @@
 #                                                       #
 #########################################################
 
-from podrum.block.block_map import block_map
-from podrum.game_data.mcbe.item_id_map import item_id_map
-from podrum.item.item import item
+from podrum.event.event import event
 
-class stone(item):
-    def __init__(self, count: int = 1):
-        super().__init__("minecraft:stone", item_id_map["minecraft:stone"], 0)
-        self.block_runtime_id: int = block_map.get_runtime_id("minecraft:stone", self.meta)
-        self.count: int = count
-        self.is_creative_item: bool = True
-        self.entry_id: int = 0
+class player_start_sleeping_event(event):
+    def __init__(self, player: object) -> None:
+        self.player = player

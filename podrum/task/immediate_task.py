@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -25,6 +25,9 @@ class immediate_task(Thread):
         self.interval: int = interval
         self.interval_before: bool = interval_before
 
+    # [run]
+    # :return: = None
+    # The main function of the thread.
     def run(self) -> None:
         if self.interval_before:
             sleep(self.interval)

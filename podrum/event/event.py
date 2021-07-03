@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -17,7 +17,10 @@ from podrum.event.event_manager import event_manager
 
 class event:
     canceled = False
-  
+    
+    # [call]
+    # :return: = None
+    # Calls a event
     def call(self) -> None:
         for listener in event_manager.get_listeners(self.__class__):
             listener(self)

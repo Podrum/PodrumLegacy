@@ -106,7 +106,3 @@ from podrum.block.default.sugar_cane import sugar_cane
 from podrum.block.default.tnt import tnt
 from podrum.block.default.wooden_planks import wooden_planks
 from podrum.block.default.wool import wool
-
-class Blocks:
-    def __init__(self):
-        pass

@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -22,10 +22,16 @@ class world_manager:
         self.server: object = server
         self.worlds: dict = {}
         self.path_to_world_name = {}
-        
+    
+    # [get_default_world_path]
+    # :return: = str
+    # Gets the path of the default world
     def get_default_world_path(self) -> str:
         return os.path.join(os.getcwd(), "worlds")
         
+    # [load_world]
+    # :return: = None
+    # Loads a world from the file location.
     def load_world(self, world_folder_name: str, worlds_path: str = "") -> None:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
@@ -44,20 +50,32 @@ class world_manager:
         self.server.logger.info(f"Loading world -> {world_name}")
         self.worlds[world_name].load_radius(spawn_pos.x, spawn_pos.z, self.server.config.data["max_view_distance"])
         self.server.logger.success(f"Loaded world -> {world_name}")
-        
+    
+    # [get_world]
+    # :return: = object
+    # Gets a world by name
     def get_world(self, name: str) -> object:
         return self.worlds[name]
     
-    def get_world_from_folder_name(self, world_folder_name: str, worlds_path: str = "") -> None:
+    # [get_world_from_folder_name]
+    # :return: = object
+    # Gets a world by folder name
+    def get_world_from_folder_name(self, world_folder_name: str, worlds_path: str = "") -> object:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_folder_name)
         return self.get_world(self.path_to_world_name[world_path])
-        
+    
+    # [unload_world]
+    # :return: = None
+    # Unloads a world
     def unload_world(self, world_name: str) -> None:
         self.worlds[world_name].save()
         del self.worlds[world_name]
 
+    # [unload_all]
+    # :return: = None
+    # Unloads all worlds
     def unload_all(self) -> None:
         tasks: list = []
         for world_name in dict(self.worlds):

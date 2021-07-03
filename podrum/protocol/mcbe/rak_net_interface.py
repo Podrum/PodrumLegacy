@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -29,30 +29,56 @@ class rak_net_interface(Thread):
         self.rak_net_server.interface = self
         self.set_status(server.config.data["motd"], 0, server.config.data["max_players"])
 
+    # [get_count]
+    # :return: = int
+    # Get the current player count.
     def get_count(self) -> int:
         name: str = self.rak_net_server.name.split(";")
         return int(name[4])
 
+    # [get_max_count]
+    # :return: = int
+    # Gets the max count
     def get_max_count(self) -> int:
         name: str = self.rak_net_server.name.split(";")
         return int(name[5])
 
+    # [get_motd]
+    # :return: = str
+    # Gets the server message of the day.
     def get_motd(self) -> str:
         name: str = self.rak_net_server.name.split(";")
         return name[1]
 
+    # [set_status]
+    # :return: = None
+    # Sets the full offline status that the player
+    # sees in the server list.
     def set_status(self, motd: str, count: int, max_count: int) -> None:
         self.rak_net_server.name = f"MCPE;{motd};{mcbe_protocol_info.mcbe_protocol_version};{mcbe_protocol_info.mcbe_version};{count};{max_count};0;"
 
+    # [set_motd]
+    # :return: = None
+    # Sets the server message of the day.
     def set_motd(self, motd: str) -> None:
         self.set_status(motd, self.get_count(), self.get_max_count())
 
+    # [set_count]
+    # :return: = None
+    # Sets the current player count.
     def set_count(self, count: int) -> None:
         self.set_status(self.get_motd(), count, self.get_max_count())
 
+    # [set_max_count]
+    # :return: = None
+    # Sets the max player count.
     def set_max_count(self, max_count: int) -> None:
         self.set_status(self.get_motd(), self.get_count(), max_count)
 
+    # [on_frame]
+    # :return: = None
+    # Handles the game packets and passes
+    # them decoded to the player's handler.
     def on_frame(self, packet: object, connection: object) -> None:
         if connection.address.token in self.server.players:
             if packet.body[0] == 0xfe:
@@ -62,6 +88,10 @@ class rak_net_interface(Thread):
                 for batch in packets:
                     self.server.players[connection.address.token].handle_packet(batch)
             
+    # [on_new_incoming_connection]
+    # :return: = None
+    # Adds the player when he logs in
+    # and sets the default values to him.
     def on_new_incoming_connection(self, connection: object) -> None:
         self.server.players[connection.address.token] = mcbe_player(connection, self.server, self.server.current_entity_id)
         max_float: float = 3.4028234663852886e+38
@@ -95,22 +125,33 @@ class rak_net_interface(Thread):
         self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} connected.")
-                   
+
+    # [on_disconnect]
+    # :return: = None
+    # Handles when a player disconnects.   
     def on_disconnect(self, connection: object) -> None:
         quit_event: object = player_quit_event(self.server.players[connection.address.token])
         quit_event.call()
         del self.server.players[connection.address.token]
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} disconnected.")
-        
-
+    
+    # [start_interface]
+    # :return: = None
+    # Starts the interface
     def start_interface(self) -> None:
         self.stopped: bool = False
         self.start()
 
+    # [stop_interface]
+    # :return: = None
+    # Stops the interface
     def stop_interface(self) -> None:
         self.stopped: bool = True
 
+    # [run]
+    # :return: = None
+    # The main function of the thread.
     def run(self):
         while not self.stopped:
             self.rak_net_server.handle()

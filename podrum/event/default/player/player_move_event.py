@@ -16,6 +16,9 @@
 from podrum.event.event import event
 
 class player_move_event(event):
+
+    # Gets called when a player move.
+
     def __init__(self, player: object, position: object) -> None:
         self.player: object = player
         self.position: object = position

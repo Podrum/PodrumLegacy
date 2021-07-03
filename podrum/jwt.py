@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -19,6 +19,11 @@ import hmac
 import json
 
 class jwt:
+
+    # [decode]
+    # :return: = dict
+    # Decodes json web tokens to
+    # a json string
     @staticmethod
     def decode(token: str) -> dict:
         header, payload, verifySigniture = token.split(".")
@@ -26,6 +31,11 @@ class jwt:
         json_data: str = base64.b64decode(payload.replace("-_", "+/").encode())
         return json.loads(json_data)
   
+    # [encode]
+    # :return: = str
+    # Encodes a the json web token
+    # header, json string and signiture 
+    # back to a encoded json web token
     @staticmethod
     def encode(header: dict, payload: dict, verifySigniture: str) -> str:
         body: list = []

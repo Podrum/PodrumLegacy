@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -16,7 +16,15 @@
 import json
 import os
 
+# :config:
+# A class made to create and
+# edit configuration files.
 class config:
+    
+    # [__init__]
+    # :return: = None
+    # Initialize the configuration
+    # With a specific file path.
     def __init__(self, path: str) -> None:
         self.path: str = os.path.abspath(path)
         self.data: dict = {}
@@ -29,7 +37,10 @@ class config:
             with open(self.path, "rt") as file:
                 self.data: dict = json.load(file)
                 file.close()
-            
+    
+    # [save]
+    # :return: = None
+    # Saves the Config
     def save(self) -> None:
         if self.extension == "json":
             with open(self.path, "wt") as file:

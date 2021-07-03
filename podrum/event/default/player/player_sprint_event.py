@@ -16,6 +16,9 @@
 from podrum.event.event import event
 
 class player_sprint_event(event):
+
+    # Gets called when a player sprint.
+
     def __init__(self, player: object, sprinting: bool) -> None:
         self.player: object = player
         self.sprinting: bool = sprinting

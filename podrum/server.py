@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -23,7 +23,6 @@ from podrum.protocol.mcbe.rak_net_interface import rak_net_interface
 from podrum.task.repeating_task import repeating_task
 import sys
 import time
-from typing import Optional
 
 class server:
     def __init__(self) -> None:
@@ -127,9 +126,8 @@ class server:
         command: object = input()
         self.dispatch_command(command, self)
 
-    def find_player(self, username: str) -> Optional[object]:
+    def find_player(self, username: str):
         usernames = [player.username for player in self.players.values()]
         players = [player for player in self.players.values()]
         if username in usernames:
             return players[usernames.index(username)]
-        return None
