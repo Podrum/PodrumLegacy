@@ -232,20 +232,18 @@ class mcbe_player:
             self.spawned: bool = True  
             join_event: object = player_join_event(self)
             join_event.call()
-                
+
     def handle_move_player_packet(self, data):
         packet: object = move_player_packet(data)
         packet.decode()
+        move_event: object = player_move_event(self, packet.position)
+        move_event.call()
+        if move_event.cancelled:
+            return
         if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
             self.send_chunks()
-        old_position: object = self.position
         self.position: object = packet.position
-        move_event: object = player_move_event(self, self.position)
-        move_event.call()
-        if move_event.canceled:
-            self.position: object = old_position
-            # Todo
-            
+
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = text_packet()
         new_packet.type = text_type.raw
