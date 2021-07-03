@@ -15,6 +15,7 @@
 
 import math
 from podrum.event.default.player.player_join_event import player_join_event
+from podrum.event.server.packet_receive_event import packet_receive_event
 from podrum.event.default.player.player_move_event import player_move_event
 from podrum.event.default.player.player_sneak_event import player_sneak_event
 from podrum.event.default.player.player_sprint_event import player_sprint_event
