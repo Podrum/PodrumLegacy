@@ -207,7 +207,7 @@ class mcbe_player:
             self.send_biome_definition_list_packet()
             self.send_metadata()
             self.send_attributes()
-            #self.send_available_commands()
+            self.send_available_commands()
             self.send_item_component_packet()
             self.send_available_entity_identifiers_packet()
             
@@ -326,7 +326,7 @@ class mcbe_player:
         
     def send_available_commands(self) -> None:
         new_packet: object = available_commands_packet()
-        new_packet.values_len = 0
+        new_packet.values_len = 1
         new_packet.enum_values = []
         new_packet.suffixes = []
         new_packet.enums = []
