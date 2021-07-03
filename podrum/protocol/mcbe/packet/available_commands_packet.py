@@ -88,3 +88,14 @@ class available_commands_packet(mcbe_packet):
         self.write_var_int(len(self.suffixes))
         for suffix in self.suffixes:
             self.write_string(suffix)
+        self.write_var_int(len(self.enums))
+        for enum in self.enums:
+            self.write_string(enum["name"])
+            self.write_var_int(len(enum["values"]))
+            for value in enum["values"]:
+                if self.values_len < 0xff:
+                    self.write_unsigned_byte(value)
+                elif self.values_len < 0xffff:
+                    self.write_unsigned_short_le(value)
+                elif self.values_len < 0xffffff:
+                    self.write_unsigned_int_le(value)
