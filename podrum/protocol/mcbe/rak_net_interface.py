@@ -29,57 +29,88 @@ class rak_net_interface(Thread):
         self.rak_net_server.interface = self
         self.set_status(server.config.data["motd"], 0, server.config.data["max_players"])
 
-    # [get_count]
-    # :return: = int
-    # Get the current player count.
     def get_count(self) -> int:
+        r"""
+        Get the current player count.
+        
+        :return: The number of players online.
+        :rtype: int
+        """
         name: str = self.rak_net_server.name.split(";")
         return int(name[4])
 
-    # [get_max_count]
-    # :return: = int
-    # Gets the max count
     def get_max_count(self) -> int:
+        r"""
+        Get the maximum player count.
+        
+        :return: The maximum player count.
+        :rtype: int
+        """
         name: str = self.rak_net_server.name.split(";")
         return int(name[5])
 
-    # [get_motd]
-    # :return: = str
-    # Gets the server message of the day.
     def get_motd(self) -> str:
+        r"""
+        Gets the server's MOTD (message of the day)
+        
+        :return: The server's MOTD
+        :rtype: str
+        """
         name: str = self.rak_net_server.name.split(";")
         return name[1]
 
-    # [set_status]
-    # :return: = None
-    # Sets the full offline status that the player
-    # sees in the server list.
     def set_status(self, motd: str, count: int, max_count: int) -> None:
+        r"""
+        Sets the full offline status that the player
+        sees in the server list.
+        
+        :param motd: The server's MOTD.
+        :type motd: str
+        
+        :param count: The server's player count.
+        :type count: int
+        
+        :param max_count: The server's max players.
+        :type max_count: int
+        """
         self.rak_net_server.name = f"MCPE;{motd};{mcbe_protocol_info.mcbe_protocol_version};{mcbe_protocol_info.mcbe_version};{count};{max_count};0;"
 
-    # [set_motd]
-    # :return: = None
-    # Sets the server message of the day.
     def set_motd(self, motd: str) -> None:
+        r"""
+        Sets the server's MOTD (message of the day).
+        
+        :param motd: The new MOTD.
+        :type motd: str
+        """
         self.set_status(motd, self.get_count(), self.get_max_count())
 
-    # [set_count]
-    # :return: = None
-    # Sets the current player count.
     def set_count(self, count: int) -> None:
+        r"""
+        Sets the server's current player count.
+        
+        :param count: The server's player count.
+        :type count: int
+        """
         self.set_status(self.get_motd(), count, self.get_max_count())
 
-    # [set_max_count]
-    # :return: = None
-    # Sets the max player count.
     def set_max_count(self, max_count: int) -> None:
+        r"""
+        Sets the server's maximum player count.
+        
+        :param max_count: The new maximum player count.
+        :type max_count: int
+        """
         self.set_status(self.get_motd(), self.get_count(), max_count)
 
-    # [on_frame]
-    # :return: = None
-    # Handles the game packets and passes
-    # them decoded to the player's handler.
     def on_frame(self, packet: object, connection: object) -> None:
+        r"""
+        Handles the game packets and passes
+        them decoded to the player's handler.
+        
+        :param packet: The recieved packet.
+        
+        :type connection: rak_net.connection
+        """
         if connection.address.token in self.server.players:
             if packet.body[0] == 0xfe:
                 new_packet: object = game_packet(packet.body)
@@ -88,11 +119,13 @@ class rak_net_interface(Thread):
                 for batch in packets:
                     self.server.players[connection.address.token].handle_packet(batch)
             
-    # [on_new_incoming_connection]
-    # :return: = None
-    # Adds the player when he logs in
-    # and sets the default values to him.
     def on_new_incoming_connection(self, connection: object) -> None:
+        r"""
+        Adds the player when they log in
+        and sets the default values.
+        
+        :type connection: rak_net.connection
+        """
         self.server.players[connection.address.token] = mcbe_player(connection, self.server, self.server.current_entity_id)
         max_float: float = 3.4028234663852886e+38
         self.server.players[connection.address.token].attributes = [
@@ -126,32 +159,34 @@ class rak_net_interface(Thread):
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} connected.")
 
-    # [on_disconnect]
-    # :return: = None
-    # Handles when a player disconnects.   
     def on_disconnect(self, connection: object) -> None:
+        r"""
+        Handles when a player disconnects.   
+        
+        :type connection: rak_net.connection
+        """
         quit_event: object = player_quit_event(self.server.players[connection.address.token])
         quit_event.call()
         del self.server.players[connection.address.token]
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} disconnected.")
     
-    # [start_interface]
-    # :return: = None
-    # Starts the interface
     def start_interface(self) -> None:
+        r"""
+        Starts the interface.
+        """
         self.stopped: bool = False
         self.start()
 
-    # [stop_interface]
-    # :return: = None
-    # Stops the interface
     def stop_interface(self) -> None:
+        r"""
+        Stops the interface.
+        """
         self.stopped: bool = True
 
-    # [run]
-    # :return: = None
-    # The main function of the thread.
     def run(self):
+        r"""
+        The main function of the thread.
+        """
         while not self.stopped:
             self.rak_net_server.handle()
