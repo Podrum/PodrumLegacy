@@ -21,3 +21,9 @@ class event:
     def call(self) -> None:
         for listener in event_manager.get_listeners(self.__class__):
             listener(self)
+
+    def is_cancelled(self) -> bool:
+        return self.cancelled
+
+    def set_cancelled(self, value: bool = True) -> None:
+        self.cancelled = value
