@@ -69,7 +69,7 @@ class mcbe_player:
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
         self.chunk_send_queue: object = Queue()
-        self.start_chunk_send_workers(20)
+        self.start_chunk_send_workers(100)
             
     def chunk_send_worker(self) -> None:
         while True:
