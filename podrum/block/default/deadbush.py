@@ -1,4 +1,4 @@
-#########################################################                        
+#########################################################
 #  ____           _                                     #
 # |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
 # | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
@@ -14,8 +14,13 @@
 #########################################################
 
 from podrum.block.block import block
-from podrum.block.block_manager import block_manager
+from podrum.block.tool import tool
 
-class air(block):
+class deadbush(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:air", 0, 0, 0)
+        super().__init__("minecraft:deadbush", 0, 0, 0)
+        self.stack_size: int = 64
+        self.tool: int = tool.shears
+        self.transparent: bool = True
+        self.flammable: bool = True
+        self.catches_fire_from_lava: bool = True

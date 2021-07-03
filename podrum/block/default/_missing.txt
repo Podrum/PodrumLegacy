@@ -1,0 +1,73 @@
+anvil variants
+activator rails
+rails
+bed variants
+brown mushroom block variants
+furnace variants
+button variants
+cake variants
+carpet variants
+crop variants (wheat, potato, carrot, beetroot)
+chest/double chests
+cobble stairs
+cobble walls
+cocoa plant
+concrete
+concrete powder
+detector rail
+door
+tall grass
+slab variants
+stair variants
+end portal frame
+end rod
+ender chest
+fence variants
+fence gate variants
+glazed terracotta
+glowing redstone ore
+iron door
+door variants
+iron trap door
+trap door variants
+item frame
+ladder
+leaves variant
+lit redstone lamp
+melon stem
+nether bricks variant (added nether bricks)
+nether reactor core variants
+nether wart crop
+planks variants (added oak planks)
+powered rails
+prismarine variants (added prismarine)
+carved pumpkin
+pumpkin stem
+purpur stairs, slabs, and block variants (added purpur)
+quartz stairs, slabs, and block variants (added quartz block)
+red mushroom block variants
+red sandstone, stairs, slabs, and block variants (added red sandstone)
+redstone torch
+red sand
+sand stone stairs, slabs, and block variants (added sandstone)
+saplings
+sign variants
+skulls
+snow layers
+wet sponge
+stained clay
+stained glass
+stain glass panes
+banners
+still lava/water
+stone brick stairs, slabs, block variants
+pressure plates
+buttons
+stone cutter
+torch
+trapped chest
+tripwire
+tripwire hooks
+vines
+lily pads
+wool colors

@@ -12,20 +12,8 @@
 # of the source code. If not you may not use this file. #
 #                                                       #
 #########################################################
-
 from podrum.block.block_manager import block_manager
-from podrum.block.default.air import air
-from podrum.block.default.andesite import andesite
-from podrum.block.default.andesite_smooth import andesite_smooth
-from podrum.block.default.bedrock import bedrock
-from podrum.block.default.cobblestone import cobblestone
-from podrum.block.default.diorite import diorite
-from podrum.block.default.diorite_smooth import diorite_smooth
-from podrum.block.default.dirt import dirt
-from podrum.block.default.granite import granite
-from podrum.block.default.granite_smooth import granite_smooth
-from podrum.block.default.grass import grass
-from podrum.block.default.stone import stone
+import podrum.block.blocks as block
 from podrum.command.command_manager import command_manager
 from podrum.command.default.debug_command import debug_command
 from podrum.command.default.help_command import help_command
@@ -63,18 +51,98 @@ class managers:
         self.register_defaults()
             
     def register_default_blocks(self) -> None:
-        self.block_manager.register_block(air())
-        self.block_manager.register_block(andesite())
-        self.block_manager.register_block(andesite_smooth())
-        self.block_manager.register_block(bedrock())
-        self.block_manager.register_block(cobblestone())
-        self.block_manager.register_block(diorite())
-        self.block_manager.register_block(diorite_smooth())
-        self.block_manager.register_block(dirt())
-        self.block_manager.register_block(granite())
-        self.block_manager.register_block(granite_smooth())
-        self.block_manager.register_block(grass())
-        self.block_manager.register_block(stone())
+        self.block_manager.register_block(block.air())
+        self.block_manager.register_block(block.andesite())
+        self.block_manager.register_block(block.andesite_smooth())
+        self.block_manager.register_block(block.bedrock())
+        self.block_manager.register_block(block.bone_block())
+        self.block_manager.register_block(block.bookshelf())
+        self.block_manager.register_block(block.brewing_stand())
+        self.block_manager.register_block(block.brown_mushroom())
+        self.block_manager.register_block(block.cactus())
+        self.block_manager.register_block(block.clay())
+        self.block_manager.register_block(block.coal_block())
+        self.block_manager.register_block(block.coal_ore())
+        self.block_manager.register_block(block.cobblestone())
+        self.block_manager.register_block(block.cobweb())
+        self.block_manager.register_block(block.crafting_table())
+        self.block_manager.register_block(block.dandelion())
+        self.block_manager.register_block(block.daylight_sensor())
+        self.block_manager.register_block(block.deadbush())
+        #self.block_manager.register_block(block.deepslate_gold_ore())
+        #self.block_manager.register_block(block.deepslate_redstone_ore())
+        #self.block_manager.register_block(block.deepslate_lapis_ore())
+        #self.block_manager.register_block(block.deepslate_iron_ore())
+        #self.block_manager.register_block(block.deepslate_coal_ore())
+        #self.block_manager.register_block(block.deepslate_diamond_ore())
+        #self.block_manager.register_block(block.deepslate_emerald_ore())
+        self.block_manager.register_block(block.diamond_block())
+        self.block_manager.register_block(block.diamond_ore())
+        self.block_manager.register_block(block.diorite())
+        self.block_manager.register_block(block.diorite_smooth())
+        self.block_manager.register_block(block.dirt())
+        self.block_manager.register_block(block.emerald_block())
+        self.block_manager.register_block(block.emerald_ore())
+        self.block_manager.register_block(block.end_stone())
+        #self.block_manager.register_block(block.end_stone_brick())
+        self.block_manager.register_block(block.enchanting_table())
+        self.block_manager.register_block(block.flower_pot())
+        self.block_manager.register_block(block.farmland())
+        self.block_manager.register_block(block.fire())
+        self.block_manager.register_block(block.glass())
+        self.block_manager.register_block(block.glass_pane())
+        #self.block_manager.register_block(block.glowing_obsidian())
+        self.block_manager.register_block(block.gold_block())
+        self.block_manager.register_block(block.gold_ore())
+        self.block_manager.register_block(block.granite())
+        self.block_manager.register_block(block.granite_smooth())
+        self.block_manager.register_block(block.grass())
+        self.block_manager.register_block(block.gravel())
+        self.block_manager.register_block(block.hardened_clay())
+        self.block_manager.register_block(block.hay_bale())
+        self.block_manager.register_block(block.ice())
+        #self.block_manager.register_block(block.invisible_bedrock())
+        self.block_manager.register_block(block.iron_bars())
+        self.block_manager.register_block(block.iron_block())
+        self.block_manager.register_block(block.iron_ore())
+        self.block_manager.register_block(block.lapis_block())
+        self.block_manager.register_block(block.lapis_ore())
+        self.block_manager.register_block(block.lava())
+        self.block_manager.register_block(block.lit_pumpkin())
+        self.block_manager.register_block(block.magma())
+        self.block_manager.register_block(block.monster_spawner())
+        self.block_manager.register_block(block.melon())
+        self.block_manager.register_block(block.mossy_cobblestone())
+        self.block_manager.register_block(block.mycelium())
+        self.block_manager.register_block(block.nether_wart_block())
+        self.block_manager.register_block(block.nether_brick_block())
+        self.block_manager.register_block(block.nether_quartz_ore())
+        self.block_manager.register_block(block.netherrack())
+        self.block_manager.register_block(block.noteblock())
+        self.block_manager.register_block(block.obsidian())
+        self.block_manager.register_block(block.packed_ice())
+        self.block_manager.register_block(block.podzol())
+        self.block_manager.register_block(block.prismarine())
+        self.block_manager.register_block(block.pumpkin())
+        self.block_manager.register_block(block.purpur())
+        self.block_manager.register_block(block.quartz_block())
+        self.block_manager.register_block(block.red_mushroom())
+        self.block_manager.register_block(block.red_sandstone())
+        self.block_manager.register_block(block.redstone_block())
+        self.block_manager.register_block(block.redstone_lamp())
+        self.block_manager.register_block(block.redstone_ore())
+        self.block_manager.register_block(block.sand())
+        self.block_manager.register_block(block.sandstone())
+        #self.block_manager.register_block(block.sea_lantern())
+        self.block_manager.register_block(block.snow_block())
+        self.block_manager.register_block(block.soul_sand())
+        self.block_manager.register_block(block.sponge())
+        self.block_manager.register_block(block.stone())
+        self.block_manager.register_block(block.stone_bricks())
+        #self.block_manager.register_block(block.sugar_cane())
+        self.block_manager.register_block(block.tnt())
+        self.block_manager.register_block(block.wooden_planks())
+        self.block_manager.register_block(block.wool())
             
     def register_default_commands(self) -> None:
         self.command_manager.register(debug_command(self.server))
