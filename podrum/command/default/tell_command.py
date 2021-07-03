@@ -22,19 +22,18 @@ class tell_command:
     def execute(self, args: list, sender: object) -> None:
         if len(args) > 1:
             if not self.server.find_player(args[0]):
-                sender.send_message("This player is not online")
+                sender.send_message("This player is not online.")
                 return
             player = self.server.find_player(args[0])
-            player_name = player.username
             args.remove(args[0])
             if sender in self.server.players.values():
-                if sender.username == player_name:
-                    sender.send_message("You can not message yourself")
+                if sender.username == player.username:
+                    sender.send_message("You can not message yourself.")
                     return
-                sender.send_message(f"[" + sender.username + " -> " + player_name + "] " + " ".join(args))
-                player.send_message(f"[" + sender.username + " -> " + player_name + "] " + " ".join(args))
+                sender.send_message(f"[{sender.username} -> {player.username}] {' '.join(args)}")
+                player.send_message(f"[{sender.username} -> {player.username}] {' '.join(args)}")
             else:
-                sender.send_message(f"[Server -> " + player_name + "] " + " ".join(args))
-                player.send_message(f"[Server -> " + player_name + "] " + " ".join(args))
+                sender.send_message(f"[Server -> {player.username}] {' '.join(args)}")
+                player.send_message(f"[Server -> {player.username}] {' '.join(args)}")
         else:
             sender.send_message("tell <player> <message>")
