@@ -117,8 +117,7 @@ class anvil:
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_result: object = await anvil.to_anvil_chunk(chunk_in)
-        with ThreadPoolExecutor(1) as executor:
-            reg.put_chunk_data(chunk_index[0], chunk_index[1], chunk_result.nbt_serialize())    
+        reg.put_chunk_data(chunk_index[0], chunk_index[1], chunk_result.nbt_serialize())    
                                         
     def get_option(self, name: str) -> object:
         with open(os.path.join(self.world_dir, "level.dat"), "rb") as file:
