@@ -35,4 +35,3 @@ class player_action_packet(mcbe_packet):
         self.write_var_int(self.action)
         self.write_block_coordinates(self.read_block_coordinates())
         self.write_var_int(self.face)
-
