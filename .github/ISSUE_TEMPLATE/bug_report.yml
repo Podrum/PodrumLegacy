@@ -1,0 +1,63 @@
+name: Bug Report
+description: Something not working properly? Tell us about it!
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Thanks for taking the time to fill out this bug report.
+        If you want real-time support, consider joining our Discord at https://discord.gg/qfZVTbNkMg instead.
+
+        Please note that this form is for bugs only!
+  - type: input
+    attributes:
+      label: Summary
+      description: > 
+        A simple summary of your bug report
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction Steps
+      description: >
+         What you did to make it happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Results
+      description: >
+        What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual Results
+      description: >
+        What actually happened?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: System Information
+      description: >
+        Start your server and run the `/version` command, then paste the output below.
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      description: >
+        Let's make sure you've properly done due dilligence when reporting this issue!
+      options:
+        - label: I have searched the open issues for duplicates.
+          required: true
+        - label: I have shown the entire traceback, if possible.
+          required: true
+        - label: I have removed my token from display, if visible.
+          required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: If there is anything else to say, please do so here.
