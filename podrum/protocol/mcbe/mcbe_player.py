@@ -302,8 +302,7 @@ class mcbe_player:
         packet: object = command_request_packet(data)
         packet.decode()
         if packet.origin == command_origin_type.player:
-            command_task: object = immediate_task(self.server.dispatch_command, [packet.command[1:], self])
-            command_task.start()
+            self.server.dispatch_command(packet.command[1:], self)
 
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
