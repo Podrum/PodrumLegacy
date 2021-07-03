@@ -56,7 +56,7 @@ from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
 from queue import Queue
 from rak_net.protocol.frame import frame
-from threading import Thread
+from multiprocessing import Process
 import zlib
 
 class mcbe_player:
@@ -69,7 +69,7 @@ class mcbe_player:
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
         self.chunk_send_queue: object = Queue()
-        self.start_chunk_send_workers(5)
+        self.start_chunk_send_workers(20)
             
     def chunk_send_worker(self) -> None:
         while True:
@@ -86,7 +86,7 @@ class mcbe_player:
     def start_chunk_send_workers(self, count: int) -> None:
         self.chunk_send_worker_count: int = count
         for i in range(0, count):
-            Thread(target = self.chunk_send_worker).start()
+            Process(target = self.chunk_send_worker).start()
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
