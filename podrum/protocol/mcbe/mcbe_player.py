@@ -295,8 +295,6 @@ class mcbe_player:
             self.handle_text_packet(data)
         elif data[0] == mcbe_protocol_info.player_action_packet:
             self.handle_player_action_packet(data)
-
-
             
     def send_chunks(self) -> None:
         chunk_task: object = immediate_task(self.world.send_radius, [self.position.x, self.position.z, self.view_distance, self])
