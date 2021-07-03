@@ -46,7 +46,7 @@ class world_manager:
         world_name: str = world_obj.get_world_name()
         self.worlds[world_name] = world_obj
         self.path_to_world_name[world_path] = world_name
-        spawn_pos: object = self.worlds[world_name].get_spawn_position()
+        self.worlds[world_name].start_load_workers(12)
         self.server.logger.success(f"Loaded world -> {world_name}")
     
     # [get_world]
@@ -68,6 +68,7 @@ class world_manager:
     # :return: = None
     # Unloads a world
     def unload_world(self, world_name: str) -> None:
+        self.worlds[world_name].stop_load_workers()
         self.worlds[world_name].save()
         del self.worlds[world_name]
 
