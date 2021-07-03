@@ -56,6 +56,16 @@ class available_commands_packet(mcbe_packet):
             command["flags"] = self.read_unsigned_byte()
             command["permission_level"] = self.read_unsigned_byte()
             command["alias"] = self.read_int_le()
+            command["overloads"] = []
+            for i in range(0, self.read_var_int()):
+                overload: list = []
+                for i in range(0, self.read_var_int()):
+                    overload_entry: dict = {}
+                    overload_entry["paramater_name"] = self.read_string()
+                    overload_entry["value_type"] = self.read_unsigned_short_le()
+                    overload_entry["enum_type"] = self.read_unsigned_short_le()
+                    overload_entry["optional"] = self.read_bool()
+                    overload_entry["options"] = 0 # Need protocol info
             
     def encode_payload(self) -> None:
         pass
