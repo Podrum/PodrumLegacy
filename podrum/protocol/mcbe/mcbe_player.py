@@ -358,4 +358,3 @@ class mcbe_player:
         send_packet.reliability = 0
         send_packet.body = new_packet.data
         self.connection.add_to_queue(send_packet, False)
-
