@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
 
