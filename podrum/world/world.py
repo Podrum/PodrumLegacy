@@ -25,7 +25,7 @@ class world:
         self.world_path: str = provider.world_dir
             
     async def load_chunk(self, x: int, z: int) -> None:
-        executor = ProcessPoolExecutor()
+        executor = ThreadPoolExecutor()
         chunk: object = await self.server.event_loop.run_in_executor(executor, self.provider.get_chunk, *[x, z])
         if chunk is None:
             generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
@@ -33,7 +33,7 @@ class world:
         self.chunks[f"{x} {z}"] = chunk
             
     async def unload_chunk(self, x: int, z: int) -> None:
-        executor = ProcessPoolExecutor()
+        executor = ThreadPoolExecutor()
         await self.server.event_loop.run_in_executor(executor, self.provider.save_chunk, *[x, z])
         del self.chunks[f"{x} {z}"]
         
@@ -46,7 +46,7 @@ class world:
         if not self.has_loaded_chunk(x, z):
             await self.load_chunk(x, z)
         chunk: object = self.get_chunk(x, z)
-        executor = ProcessPoolExecutor()
+        executor = ThreadPoolExecutor()
         await self.server.event_loop.run_in_executor(executor, player.send_chunk, chunk)
             
     def get_chunk(self, x: int, z: int) -> object:
