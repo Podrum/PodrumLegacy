@@ -22,9 +22,9 @@ from podrum.event.default.player.player_jump_event import player_jump_event
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
-from podrum.protocol.mcbe.available_commands_packet import available_commands_packet
 from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
+from podrum.protocol.mcbe.packet.available_commands_packet import available_commands_packet
 from podrum.protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
 from podrum.protocol.mcbe.packet.biome_definition_list_packet import biome_definition_list_packet
 from podrum.protocol.mcbe.packet.chunk_radius_updated_packet import chunk_radius_updated_packet
