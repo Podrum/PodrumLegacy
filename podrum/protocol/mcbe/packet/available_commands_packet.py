@@ -100,7 +100,7 @@ class available_commands_packet(mcbe_packet):
                 elif self.values_len < 0xffffff:
                     self.write_unsigned_int_le(value)
         self.write_var_int(len(self.command_data))
-        for command in command_data:
+        for command in self.command_data:
             self.write_string(command["name"])
             self.write_string(command["description"])
             self.write_unsigned_byte(command["flags"])
