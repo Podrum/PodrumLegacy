@@ -20,6 +20,7 @@ from podrum.command.default.help_command import help_command
 from podrum.command.default.plugins_command import plugins_command
 from podrum.command.default.reload_command import reload_command
 from podrum.command.default.say_command import say_command
+from podrum.command.default.tell_command import tell_command
 from podrum.command.default.stop_command import stop_command
 from podrum.command.default.version_command import version_command
 
@@ -156,6 +157,7 @@ class managers:
         self.command_manager.register(plugins_command(self.server))
         self.command_manager.register(reload_command(self.server))
         self.command_manager.register(say_command(self.server))
+        self.command_manager.register(tell_command(self.server))
         self.command_manager.register(stop_command(self.server))
         self.command_manager.register(version_command(self.server))
         
