@@ -131,6 +131,3 @@ class server:
         players = [player for player in self.players.values()]
         if username in usernames:
             return players[usernames.index(username)]
-        else:
-            return False
-
