@@ -13,7 +13,6 @@
 #                                                       #
 #########################################################
 
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import gzip
 from nbt_utils.tag_ids import tag_ids
