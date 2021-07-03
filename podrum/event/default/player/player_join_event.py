@@ -20,9 +20,3 @@ class player_join_event(event):
     def __init__(self, player: object) -> None:
         self.player: object = player
         self.join_message: str = f"{player.username} joined the server"
-
-    def set_join_message(self, joinmessage: str) -> None:
-        self.join_message: str = joinmessage
-
-    def get_join_message(self):
-        return self.join_message
