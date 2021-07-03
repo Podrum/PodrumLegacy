@@ -25,8 +25,8 @@ class player_action_packet(mcbe_packet):
     def decode_payload(self) -> None:
         self.runtime_entity_id: int = self.read_var_long()
         self.action: int = self.read_signed_var_int()
-        self.position: int = self.read_block_coordinates()
-        self.face: dict = self.read_signed_var_int()
+        self.position: object = self.read_block_coordinates()
+        self.face: int = self.read_signed_var_int()
         
     def encode_payload(self) -> None:
         self.write_var_long(self.runtime_entity_id)
