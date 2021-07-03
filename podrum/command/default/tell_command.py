@@ -26,6 +26,7 @@ class tell_command:
                 return
             if getattr(sender, 'username', None) == args[0]:
                 sender.send_message("You can not message yourself")
+                return
             player = self.server.find_player(args[0])
             player_name = player.username
             args.remove(args[0])
