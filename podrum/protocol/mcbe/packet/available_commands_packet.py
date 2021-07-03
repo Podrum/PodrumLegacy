@@ -23,12 +23,6 @@ class available_commands_packet(mcbe_packet):
  
     def decode_payload(self) -> None:
         self.values_len: int = self.read_var_int()
-        if self.values_len < 0xff:
-            self.enum_type: str = "byte"
-        elif values_len < 0xffff:
-            self.enum_type: str = "short"
-        elif values_len < 0xffffff:
-            self.enum_type: str = "int"
         self.enum_values: list = []
         for i in range(0, self.values_len):
             self.enum_values.append(self.read_string())
@@ -41,11 +35,11 @@ class available_commands_packet(mcbe_packet):
             enum["name"] = self.read_string()
             enum["values"] = []
             for i in range(0, self.read_var_int()):
-                if self.enum_type == "byte":
+                if self.values_len < 0xff:
                     enum["values"].append(self.read_unsigned_byte())
-                elif self.enum_type == "short":
+                elif self.values_len < 0xffff:
                     enum["values"].append(self.read_unsigned_short_le())
-                elif self.enum_type == "int":
+                elif self.values_len < 0xffffff:
                     enum["values"].append(self.read_unsigned_int_le())
             self.enums.append(enum)
         self.command_data: list = []
