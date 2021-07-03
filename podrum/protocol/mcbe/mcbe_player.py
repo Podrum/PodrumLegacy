@@ -256,7 +256,7 @@ class mcbe_player:
         new_packet.chunk_radius = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
-        self.send_chunks()
+        Thread(target = self.send_chunks).start()
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
             self.spawned: bool = True  
@@ -268,7 +268,7 @@ class mcbe_player:
         packet: object = move_player_packet(data)
         packet.decode()
         if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
-            self.send_chunks()
+            Thread(target = self.send_chunks).start()
         old_position: object = self.position
         self.position: object = packet.position
         move_event: object = player_move_event(self, self.position)
