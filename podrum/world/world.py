@@ -17,7 +17,7 @@ from collections import deque
 import math
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
-from multiprocessing import Process
+from threading import Thread
 from queue import Queue
 
 class world:
@@ -60,7 +60,7 @@ class world:
     def start_load_workers(self, count: int) -> None:
         self.load_worker_count: int = count
         for i in range(0, count):
-            Process(target = self.load_worker).start()
+            Thread(target = self.load_worker).start()
           
     # [stop_load_workers
     # :return: = None
