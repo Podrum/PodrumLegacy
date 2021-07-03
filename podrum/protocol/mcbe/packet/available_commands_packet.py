@@ -106,3 +106,12 @@ class available_commands_packet(mcbe_packet):
             self.write_unsigned_byte(command["flags"])
             self.write_unsigned_byte(command["permission_level"])
             self.write_int_le(command["alias"])
+            self.write_var_int(len(command["overloads"]))
+            for overload in command["overloads"]:
+                self.write_var_int(len(overload))
+                for overload_entry in overload:
+                    self.write_string(overload_entry["paramater_name"])
+                    self.write_unsigned_short_le(overload_entry["value_type"])
+                    self.write_unsigned_short_le(overload_entry["enum_type"])
+                    self.write_bool(overload_entry["optional"])
+                    self.write_unsigned_byte(overload_entry["options"])
