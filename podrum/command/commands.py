@@ -19,4 +19,5 @@ from podrum.command.default.plugins_command import plugins_command
 from podrum.command.default.reload_command import reload_command
 from podrum.command.default.say_command import say_command
 from podrum.command.default.stop_command import stop_command
+from podrum.command.default.tell_command import tell_command
 from podrum.command.default.version_command import version_command
