@@ -16,6 +16,9 @@
 import math
 from podrum.event.default.player.player_join_event import player_join_event
 from podrum.event.default.player.player_move_event import player_move_event
+from podrum.event.default.player.player_sneak_event import player_sneak_event
+from podrum.event.default.player.player_sprint_event import player_sprint_event
+from podrum.event.default.player.player_jump_event import player_jump_event
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
@@ -30,6 +33,7 @@ from podrum.protocol.mcbe.packet.item_component_packet import item_component_pac
 from podrum.protocol.mcbe.packet.level_chunk_packet import level_chunk_packet
 from podrum.protocol.mcbe.packet.login_packet import login_packet
 from podrum.protocol.mcbe.packet.move_player_packet import move_player_packet
+from podrum.protocol.mcbe.packet.player_action_packet import player_action_packet
 from podrum.protocol.mcbe.packet.network_chunk_publisher_update_packet import network_chunk_publisher_update_packet
 from podrum.protocol.mcbe.packet.packet_violation_warning_packet import packet_violation_warning_packet
 from podrum.protocol.mcbe.packet.play_status_packet import play_status_packet
@@ -44,6 +48,7 @@ from podrum.protocol.mcbe.packet.update_attributes_packet import update_attribut
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
 from podrum.protocol.mcbe.type.text_type import text_type
+from podrum.protocol.mcbe.type.action_type import action_type
 from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
 from rak_net.protocol.frame import frame
@@ -229,10 +234,9 @@ class mcbe_player:
         self.send_chunks()
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
-            self.spawned: bool = True
+            self.spawned: bool = True  
             join_event: object = player_join_event(self)
             join_event.call()
-            self.server.broadcast_message(player_join_event(self).join_message)
                 
     def handle_move_player_packet(self, data):
         packet: object = move_player_packet(data)
@@ -246,7 +250,21 @@ class mcbe_player:
         if move_event.canceled:
             self.position: object = old_position
             # Todo
-            
+
+    def handle_player_action_packet(self, data): # probably not cancelable
+        packet: object = player_action_packet(data)
+        packet.decode()
+        # for some reason packet.action is *2 of its original value
+        if packet.action in [action_type.start_sneak, action_type.stop_sneak]:
+            sneak_event: object = player_sneak_event(self, False if packet.action == action_type.stop_sneak else True)
+            sneak_event.call()
+        elif packet.action in [action_type.start_sprint, action_type.stop_sprint]:
+            sprint_event: object = player_sprint_event(self, False if packet.action == action_type.stop_sprint else True)
+            sprint_event.call()
+        elif packet.action == action_type.jump:
+            jump_event: object = player_jump_event(self)
+            jump_event.call()
+
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = text_packet()
         new_packet.type = text_type.raw
@@ -261,7 +279,8 @@ class mcbe_player:
         self.server.send_message(message)
         for p in self.server.players.values():
             p.send_message(message, xuid, needs_translation)
-            
+
+
     def send_chat_message(self, message: str) -> None:
         self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", message), self.xuid)
             
@@ -270,7 +289,7 @@ class mcbe_player:
         packet.decode()
         if packet.type == text_type.chat:
             self.send_chat_message(packet.message)
-        
+
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
             self.handle_login_packet(data)
@@ -284,7 +303,9 @@ class mcbe_player:
             self.handle_move_player_packet(data)
         elif data[0] == mcbe_protocol_info.text_packet:
             self.handle_text_packet(data)
-            
+        elif data[0] == mcbe_protocol_info.player_action_packet:
+            self.handle_player_action_packet(data)
+
     def send_chunks(self) -> None:
         chunk_task: object = immediate_task(self.world.send_radius, [self.position.x, self.position.z, self.view_distance, self])
         chunk_task.start()
@@ -336,3 +357,4 @@ class mcbe_player:
         send_packet.reliability = 0
         send_packet.body = new_packet.data
         self.connection.add_to_queue(send_packet, False)
+
