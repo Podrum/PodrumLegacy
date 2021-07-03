@@ -46,6 +46,7 @@ from podrum.protocol.mcbe.packet.set_entity_data_packet import set_entity_data_p
 from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
 from podrum.protocol.mcbe.packet.text_packet import text_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
+from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
 from podrum.protocol.mcbe.type.text_type import text_type
@@ -295,7 +296,7 @@ class mcbe_player:
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = command_request_packet(data)
         packet.decode()
-        if packet.origin == 0:
+        if packet.origin == command_origin_type.player:
             command_task: object = immediate_task(self.server.dispatch_command, [packet.command[1:], self])
             command_task.start()
 
