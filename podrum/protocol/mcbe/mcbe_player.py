@@ -22,6 +22,7 @@ from podrum.event.default.player.player_jump_event import player_jump_event
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
+from podrum.protocol.mcbe.available_commands_packet import available_commands_packet
 from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.available_entity_identifiers_packet import available_entity_identifiers_packet
@@ -321,6 +322,27 @@ class mcbe_player:
     def send_chunks(self) -> None:
         chunk_task: object = immediate_task(self.world.send_radius, [self.position.x, self.position.z, self.view_distance, self])
         chunk_task.start()
+        
+    def send_available_commands(self) -> None:
+        new_packet: object = available_commands_packet()
+        new_packet.values_len = 0
+        new_packet.enum_values = []
+        new_packet.suffixes = []
+        new_packet.enums = []
+        new_packet.command_data = []
+        for command in self.server.managers.command_manager.commands:
+            new_packet.command_data.append({
+                "name": command.name,
+                "description": command.description,
+                "flags": 0,
+                "permission_level": 0,
+                "alias": 0,
+                "overloads": []
+            })
+        new_packet.dynamic_enums = []
+        new_packet.enum_constraints = []
+        new_packet.encode()
+        self.send_packet(new_packet.data)
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
