@@ -29,10 +29,6 @@ class tell_command:
             player = self.server.find_player(args[0])
             player_name = player.username
             args.remove(args[0])
-            # sender.send_chat_message(" ".join(args))
-            # if not sender == self.server.find_player():
-            #     print("Console")
-            #if self.server.is_player(sender)
             if sender in self.server.players.values():
                 sender.send_message(f"[" + sender.username + " -> " + player_name + "] " + " ".join(args))
                 player.send_message(f"[" + sender.username + " -> " + player_name + "] " + " ".join(args))
