@@ -20,12 +20,17 @@ import json
 
 class jwt:
 
-    # [decode]
-    # :return: = dict
-    # Decodes json web tokens to
-    # a json string
     @staticmethod
     def decode(token: str) -> dict:
+        r"""
+        Decodes json web tokens to
+        a json string
+        :param token: The token to decode.
+        :type token: str
+
+        :return: The decoded token.
+        :rtype: dict
+        """
         header, payload, verifySigniture = token.split(".")
         payload += "=="
         json_data: str = base64.b64decode(payload.replace("-_", "+/").encode())
