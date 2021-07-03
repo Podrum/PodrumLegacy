@@ -22,13 +22,19 @@ from podrum.command.default.reload_command import reload_command
 from podrum.command.default.say_command import say_command
 from podrum.command.default.stop_command import stop_command
 from podrum.command.default.version_command import version_command
+
 from podrum.event.default.player.player_join_event import player_join_event
 from podrum.event.default.player.player_move_event import player_move_event
 from podrum.event.default.player.player_quit_event import player_quit_event
+from podrum.event.default.player.player_sneak_event import player_sneak_event
+from podrum.event.default.player.player_sprint_event import player_sprint_event
+from podrum.event.default.player.player_jump_event import player_jump_event
 from podrum.event.event_manager import event_manager
+
 from podrum.item.default.stone import stone as stone_item
 from podrum.item.item_manager import item_manager
 from podrum.plugin_manager import plugin_manager
+
 from podrum.world.generator.flat import flat
 from podrum.world.generator.default import default
 from podrum.world.generator.void import void
@@ -157,6 +163,9 @@ class managers:
         event_manager.register_event(player_join_event)
         event_manager.register_event(player_move_event)
         event_manager.register_event(player_quit_event)
+        event_manager.register_event(player_sneak_event)
+        event_manager.register_event(player_sprint_event)
+        event_manager.register_event(player_jump_event)
         
     def register_default_items(self) -> None:
         self.item_manager.register_item(stone_item())
