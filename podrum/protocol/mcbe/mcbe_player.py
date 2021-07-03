@@ -207,7 +207,7 @@ class mcbe_player:
             self.send_biome_definition_list_packet()
             self.send_metadata()
             self.send_attributes()
-            self.send_available_commands()
+            #self.send_available_commands()
             self.send_item_component_packet()
             self.send_available_entity_identifiers_packet()
             
