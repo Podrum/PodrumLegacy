@@ -54,7 +54,9 @@ from podrum.protocol.mcbe.type.text_type import text_type
 from podrum.protocol.mcbe.type.action_type import action_type
 from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
+from queue import Queue
 from rak_net.protocol.frame import frame
+from threading import Thread
 import zlib
 
 class mcbe_player:
@@ -66,6 +68,25 @@ class mcbe_player:
         self.metadata_storage: object = metadata_storage()
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
+        self.chunk_send_queue: object = Queue()
+        self.start_chunk_send_workers(5)
+            
+    def chunk_send_worker(self) -> None:
+        while True:
+            if not self.chunk_send_queue.empty():
+                item: tuple = self.chunk_send_queue.get()
+                if item is None:
+                    break
+                if not self.world.has_loaded_chunk(item[0], item[1]):
+                    self.chunk_send_queue.put(item)
+                else:
+                    c: object = self.world.get_chunk(item[0], item[1])
+                    self.send_chunk(c)
+                    
+    def start_chunk_send_workers(self, count: int) -> None:
+        self.chunk_send_worker_count: int = count
+        for i in range(0, count):
+            Thread(target = self.chunk_send_worker).start()
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
@@ -329,7 +350,8 @@ class mcbe_player:
         chunk_z_end: int = (math.floor(self.position.z) >> 4) + self.view_distance
         for chunk_x in range(chunk_x_start, chunk_x_end):
             for chunk_z in range(chunk_z_start, chunk_z_end):
-                pass
+                self.world.load_queue.put((chunk_x, chunk_z))
+                self.chunk_send_queue.put((chunk_x, chunk_z))
         self.send_network_chunk_publisher_update()
         
     def send_available_commands(self) -> None:
