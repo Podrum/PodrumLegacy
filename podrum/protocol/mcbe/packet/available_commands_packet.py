@@ -83,3 +83,8 @@ class available_commands_packet(mcbe_packet):
     def encode_payload(self) -> None:
         self.write_var_int(self.values_len)
         self.write_var_int(len(self.enum_values))
+        for enum_value in self.enum_values:
+            self.write_string(enum_value)
+        self.write_var_int(len(self.suffixes))
+        for suffix in self.suffixes:
+            self.write_string(suffix)
