@@ -87,4 +87,5 @@ class available_commands_packet(mcbe_packet):
             self.enum_constraints.append(enum_constraint)
             
     def encode_payload(self) -> None:
-        pass
+        self.write_var_int(self.values_len)
+        self.write_var_int(len(self.enum_values))
