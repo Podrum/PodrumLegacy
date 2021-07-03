@@ -237,6 +237,7 @@ class mcbe_player:
             self.spawned: bool = True  
             join_event: object = player_join_event(self)
             join_event.call()
+            self.server.broadcast_message(player_join_event(self).join_message)
                 
     def handle_move_player_packet(self, data):
         packet: object = move_player_packet(data)
