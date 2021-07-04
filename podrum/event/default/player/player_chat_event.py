@@ -13,10 +13,15 @@
 #                                                       #
 #########################################################
 
-from podrum.event.default.player.player_join_event import player_join_event
-from podrum.event.default.player.player_move_event import player_move_event
-from podrum.event.default.player.player_quit_event import player_quit_event
-from podrum.event.default.player.player_sneak_event import player_sneak_event
-from podrum.event.default.player.player_sprint_event import player_sprint_event
-from podrum.event.default.player.player_jump_event import player_jump_event
-from podrum.event.default.player.player_chat_event import player_chat_event
+from podrum.event.event import event
+
+class player_chat_event(event):
+    def __init__(self, player: object, message: str) -> None:
+        self.player: object = player
+        self.message: str = message
+
+    def get_message(self) -> str:
+        return self.message
+
+    def set_message(self, message: str) -> None:
+        self.message = message
