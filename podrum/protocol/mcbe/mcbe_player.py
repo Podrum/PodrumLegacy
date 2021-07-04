@@ -392,7 +392,6 @@ class mcbe_player:
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
-        
         new_packet.x = math.floor(self.position.x)
         new_packet.y = math.floor(self.position.y)
         new_packet.z = math.floor(self.position.z)
@@ -404,6 +403,8 @@ class mcbe_player:
         packet: object = level_chunk_packet()
         packet.chunk_x = send_chunk.x
         packet.chunk_z = send_chunk.z
+        packet.sub_chunk_count = send_chunk.get_sub_chunk_send_count()
+        packet.use_caching = False
         packet.chunk_data = send_chunk.network_serialize()
         packet.encode()
         self.send_packet(packet.data)
