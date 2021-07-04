@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class sea_lantern(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:sealantern", 0, 0.3, 0.3)
+        super().__init__("minecraft:seaLantern", 0, 0.3, 0.3)
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.luminant: bool = True
