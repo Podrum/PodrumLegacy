@@ -47,6 +47,7 @@ from podrum.protocol.mcbe.packet.set_entity_data_packet import set_entity_data_p
 from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
 from podrum.protocol.mcbe.packet.text_packet import text_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
+from podrum.protocol.mcbe.packet.disconnect_packet import disconnect_packet
 from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
@@ -374,6 +375,13 @@ class mcbe_player:
         new_packet.enum_constraints = []
         new_packet.encode()
         self.send_packet(new_packet.data)
+        
+    def disconnect(self, message: str = "Disconnected from server.", *, hide_disconnect_screen: bool = False) -> None:
+        packet: object = disconnect_packet()
+        packet.message = message
+        packet.hide_disconnect_screen = hide_disconnect_screen
+        packet.encode()
+        self.send_packet(packet.data)
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
