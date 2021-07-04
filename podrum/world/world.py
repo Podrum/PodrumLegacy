@@ -27,8 +27,11 @@ class world:
         self.server: object = server
         self.chunks: dict = {}
         self.mark_as_loading: object = deque()
+        self.mark_as_saving: object = deque()
+        self.mark_as_unloading: object = deque()
         self.world_path: str = provider.world_dir
         self.load_queue: object = Queue()
+        self.unload_queue: object = Queue()
     
     # [load_chunk]
     # :return: = None
@@ -43,7 +46,30 @@ class world:
                     chunk: object = generator.generate(x, z, self)
                 self.chunks[f"{x} {z}"] = chunk
                 self.mark_as_loading.remove(f"{x} {z}")
-       
+                
+    # [save_chunk]
+    # :return: = None
+    # Saves a chunk to its file.
+    def save_chunk(self, x: int, z: int) -> None:
+        if self.has_loaded_chunk(x, z):
+            if f"{x} {z}" not in self.mark_as_saving:
+                self.mark_as_saving.append(f"{x} {z}")
+                self.provider.set_chunk(self.get_chunk(x, z))
+                self.mark_as_saving.remove(f"{x} {z}")
+         
+    # [unload_chunk]
+    # :return: = None
+    # Saves and unloads a chunk.
+    def unload_chunk(self, x: int, z: int) -> None:
+        if f"{x} {z}" not in self.unloading:
+            self.mark_as_unloading.append(f"{x} {z}")
+            if f"{x} {z}" in self.mark_as_saving:
+                self.save_chunk(x, z)
+            while f"{x} {z}" in self.mark_as_saving:
+                pass
+            del self.chunks[f"{x} {z}"]
+            self.mark_as_unloading.remove(f"{x} {z}")
+            
     # [load_worker]
     # :return: -> None
     # The worker that loads chunks
@@ -69,13 +95,12 @@ class world:
     def stop_load_workers(self) -> None:
         for i in range(0, self.load_worker_count):
             self.load_queue.put(None)
-    
-    # [unload_chunk]
-    # :return: = None
-    # Unloads a chunk.
-    def unload_chunk(self, x: int, z: int) -> None:
-        self.provider.save_chunk(x, z)
-        del self.chunks[f"{x} {z}"]
+       
+    # [unload_worker]
+    # :return: -> None
+    # The worker that unloads chunks
+    def unload_worker(self) -> None:
+        pass
 
     # [has_loaded_chunk]
     # :return: = bool
@@ -90,12 +115,6 @@ class world:
     # Gets a chunk.
     def get_chunk(self, x: int, z: int) -> object:
         return self.chunks[f"{x} {z}"]
-        
-    # [save_chunk]
-    # :return: = None
-    # Saves a chunk to its file.
-    def save_chunk(self, x: int, z: int) -> None:
-        self.provider.set_chunk(self.get_chunk(x, z))
     
     # [get_block]
     # :return: = None
