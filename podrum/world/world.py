@@ -18,6 +18,7 @@ import math
 from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
 from threading import Thread
+from time import sleep
 from queue import Queue
 from podrum.task.immediate_task import immediate_task
 
@@ -80,6 +81,8 @@ class world:
                 if item is None:
                     break
                 self.load_chunk(item[0], item[1])
+            else:
+                sleep(0.05)
         
     # [start_load_workers]
     # :return: = None
@@ -110,6 +113,8 @@ class world:
                 if item is None:
                     break
                 self.unload_chunk(item[0], item[1])
+            else:
+                sleep(0.05)
                 
     # [start_load_workers]
     # :return: = None
