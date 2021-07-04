@@ -59,6 +59,7 @@ from podrum.world.chunk.chunk import chunk
 from queue import Queue
 from rak_net.protocol.frame import frame
 from threading import Thread
+from time import sleep
 import zlib
 
 class mcbe_player:
@@ -84,6 +85,8 @@ class mcbe_player:
                 else:
                     c: object = self.world.get_chunk(item[0], item[1])
                     self.send_chunk(c)
+            else:
+                sleep(0.05)
                     
     def start_chunk_send_workers(self, count: int) -> None:
         self.chunk_send_worker_count: int = count
