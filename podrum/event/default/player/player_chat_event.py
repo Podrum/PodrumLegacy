@@ -20,8 +20,8 @@ class player_chat_event(event):
         self.player: object = player
         self.message: str = message
 
-    def get_message(self):
+    def get_message(self) -> str:
         return self.message
 
-    def set_message(self, message: str):
+    def set_message(self, message: str) -> None:
         self.message = message
