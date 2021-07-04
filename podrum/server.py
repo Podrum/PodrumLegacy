@@ -82,9 +82,12 @@ class server:
         finish_time: float = time.time()
         startup_time: float = "%.3f" % (finish_time - start_time)
         self.logger.success(f"Done in {startup_time}. Type help to view all available commands.")
-        while self.is_ticking:
-            # Add some sort of ticking?
-            time.sleep(0.0001)
+        try:
+            while self.is_ticking:
+                # Add some sort of ticking?
+                time.sleep(0.0001)
+        except KeyboardInterrupt:
+            self.stop()
             
     def dispatch_command(self, user_input: str, sender: object) -> None:
         if len(user_input) > 0:
