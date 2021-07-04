@@ -341,6 +341,8 @@ class mcbe_player:
     def handle_packet(self, data: bytes) -> None:
         while True:
             with self.packet_queue.get() as data:
+                if data is None:
+                    break
                 if data[0] == mcbe_protocol_info.login_packet:
                     self.handle_login_packet(data)
                 elif data[0] == mcbe_protocol_info.resource_pack_client_response_packet:
