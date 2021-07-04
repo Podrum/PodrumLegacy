@@ -152,7 +152,7 @@ class world:
     # [get_block]
     # :return: = None
     # Gets a block.
-    def get_block(self, x: int, y: int, z: int, block: object) -> None:
+    def get_block(self, x: int, y: int, z: int) -> None:
         block_and_meta: tuple = block_map.get_name_and_meta(self.chunks[f"{x >> 4} {z >> 4}"].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f))
         return self.server.managers.block_manager.get_block(block_and_meta[0], block_and_meta[1])
     
