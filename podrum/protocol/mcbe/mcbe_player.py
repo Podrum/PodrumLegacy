@@ -199,6 +199,13 @@ class mcbe_player:
         self.spawned: bool = False
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
 
+    def handle_disconnect_packet(self, data: bytes, message: str = "Disconnected from server.", *, hide_disconnect_screen: bool = False) -> None:
+        packet: object = disconnect_packet()
+        packet.message = message
+        packet.hide_disconnect_screen = hide_disconnect_screen
+        packet.encode()
+        self.send_packet(packet.data)
+
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
         packet: object = resource_pack_client_response_packet(data)
         packet.decode()
@@ -265,7 +272,7 @@ class mcbe_player:
             join_event.call()
             self.server.broadcast_message(player_join_event(self).join_message)
                 
-    def handle_move_player_packet(self, data):
+    def handle_move_player_packet(self, data: bytes):
         packet: object = move_player_packet(data)
         packet.decode()
         if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
@@ -278,7 +285,7 @@ class mcbe_player:
             self.position: object = old_position
             # Todo
 
-    def handle_player_action_packet(self, data): # probably not cancelable
+    def handle_player_action_packet(self, data: bytes): # probably not cancelable
         packet: object = player_action_packet(data)
         packet.decode()
         # for some reason packet.action is *2 of its original value
@@ -375,13 +382,6 @@ class mcbe_player:
         new_packet.enum_constraints = []
         new_packet.encode()
         self.send_packet(new_packet.data)
-        
-    def disconnect(self, message: str = "Disconnected from server.", *, hide_disconnect_screen: bool = False) -> None:
-        packet: object = disconnect_packet()
-        packet.message = message
-        packet.hide_disconnect_screen = hide_disconnect_screen
-        packet.encode()
-        self.send_packet(packet.data)
             
     def send_network_chunk_publisher_update(self) -> None:
         new_packet: object = network_chunk_publisher_update_packet()
