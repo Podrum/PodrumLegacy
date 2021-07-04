@@ -86,7 +86,8 @@ class rak_net_interface(Thread):
                 new_packet.decode()
                 packets: list = new_packet.read_packets_data()
                 for batch in packets:
-                    self.server.players[connection.address.token].handle_packet(batch)
+                    if batch is not None:
+                        self.server.players[connection.address.token].packet_queue.put(batch)
             
     # [on_new_incoming_connection]
     # :return: = None
@@ -124,17 +125,19 @@ class rak_net_interface(Thread):
         self.server.players[connection.address.token].metadata_storage.set_flag(48, True)
         self.server.current_entity_id += 1
         self.set_count(len(self.server.players))
+        Thread(target = self.server.players[connection.address.token].handle_packet).start()
         self.server.logger.info(f"{connection.address.token} connected.")
 
     # [on_disconnect]
     # :return: = None
     # Handles when a player disconnects.   
     def on_disconnect(self, connection: object) -> None:
-        quit_event: object = player_quit_event(self.server.players[connection.address.token])
-        quit_event.call()
+        self.server.players[connection.address.token].packet_queue.put(None)
         del self.server.players[connection.address.token]
         self.set_count(len(self.server.players))
         self.server.logger.info(f"{connection.address.token} disconnected.")
+        quit_event: object = player_quit_event(self.server.players[connection.address.token])
+        quit_event.call()
     
     # [start_interface]
     # :return: = None
