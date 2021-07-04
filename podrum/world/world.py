@@ -169,7 +169,7 @@ class world:
     def save(self) -> None:
         tasks: list = []
         for chunk in self.chunks.values():
-            chunk_task: object = immediate_task(self.save_chunk, [chunk.x, chunk.z])
+            chunk_task: object = Thread(target = self.save_chunk, args = [chunk.x, chunk.z])
             chunk_task.start()
             tasks.append(chunk_task)
         for task in tasks:
