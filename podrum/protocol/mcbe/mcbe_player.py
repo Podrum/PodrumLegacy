@@ -199,7 +199,7 @@ class mcbe_player:
         self.spawned: bool = False
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
 
-    def handle_disconnect_packet(self, data: bytes, message: str = "Disconnected from server.", *, hide_disconnect_screen: bool = False) -> None:
+    def disconnect(self, data: bytes, message: str = "Disconnected from server.", *, hide_disconnect_screen: bool = False) -> None:
         packet: object = disconnect_packet()
         packet.message = message
         packet.hide_disconnect_screen = hide_disconnect_screen
