@@ -148,6 +148,7 @@ class managers:
         event_manager.register_event(events.player_sneak_event)
         event_manager.register_event(events.player_sprint_event)
         event_manager.register_event(events.player_jump_event)
+        event_manager.register_event(events.player_chat_event)
     
     # [register_default_items]
     # :return: = None
