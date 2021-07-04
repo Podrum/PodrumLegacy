@@ -326,9 +326,10 @@ class mcbe_player:
         packet: object = text_packet(data)
         packet.decode()
         if packet.type == text_type.chat:
-            self.send_chat_message(packet.message)
             chat_event: object = player_chat_event(self, packet.message)
             chat_event.call()
+            if not chat_event.canceled:
+                 self.send_chat_message(packet.message)
             
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = command_request_packet(data)
