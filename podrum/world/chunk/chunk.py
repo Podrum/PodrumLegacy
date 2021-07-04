@@ -55,31 +55,22 @@ class chunk:
                 return index + (i << 4)
         return -1
     
-    def network_deserialize(self, data: bytes) -> None:
+    def network_deserialize(self, data: bytes, sub_chunk_count: int = 16) -> None:
         stream: object = binary_stream(data)
-        sub_chunk_count: int = stream.read_var_int()
-        stream.read_bool() # Chunk Caching
-        data_stream: object = binary_stream(stream.read(stream.read_var_int()))
         for y in range(0, sub_chunk_count):
             sc: object = sub_chunk()
-            sc.network_deserialize(data_stream)
+            sc.network_deserialize(stream)
             self.sub_chunks[y] = sc
         self.biomes: list = []
-        for i in range(0, data_stream.read_var_int()):
-            self.biomes.append(data_stream.read_unsigned_byte())
+        for i in range(0, stream.read_var_int()):
+            self.biomes.append(stream.read_unsigned_byte())
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
-        sub_chunk_count: int = self.get_sub_chunk_send_count()
-        stream.write_var_int(sub_chunk_count)
-        stream.write_bool(False) # Chunk Caching
-        data_stream: object = binary_stream()
-        for y in range(0, sub_chunk_count):
-            self.sub_chunks[y].network_serialize(data_stream)
-        data_stream.write_var_int(len(self.biomes))
+        for y in range(0, self.get_sub_chunk_send_count()):
+            self.sub_chunks[y].network_serialize(stream)
+        stream.write_var_int(len(self.biomes))
         for biome in self.biomes:
-            data_stream.write_unsigned_byte(biome)
-        data_stream.write_unsigned_byte(0)
-        stream.write_var_int(len(data_stream.data))
-        stream.write(data_stream.data)
+            stream.write_unsigned_byte(biome)
+        stream.write_unsigned_byte(0)
         return stream.data
