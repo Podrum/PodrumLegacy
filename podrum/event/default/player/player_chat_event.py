@@ -16,6 +16,9 @@
 from podrum.event.event import event
 
 class player_chat_event(event):
+    
+    # gets called when a player sends a message
+    
     def __init__(self, player: object, message: str) -> None:
         self.player: object = player
         self.message: str = message
