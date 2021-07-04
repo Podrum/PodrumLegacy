@@ -338,7 +338,7 @@ class mcbe_player:
         if packet.origin == command_origin_type.player:
             self.server.dispatch_command(packet.command[1:], self)
 
-    def handle_packet(self, data: bytes) -> None:
+    def handle_packet(self) -> None:
         while True:
             with self.packet_queue.get() as data:
                 if data is None:
