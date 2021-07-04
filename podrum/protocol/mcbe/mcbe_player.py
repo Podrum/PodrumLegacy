@@ -71,6 +71,7 @@ class mcbe_player:
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
         self.chunk_send_queue: object = Queue()
+        self.packet_queue: object = Queue()
         self.start_chunk_send_workers(5)
             
     def chunk_send_worker(self) -> None:
@@ -338,22 +339,24 @@ class mcbe_player:
             self.server.dispatch_command(packet.command[1:], self)
 
     def handle_packet(self, data: bytes) -> None:
-        if data[0] == mcbe_protocol_info.login_packet:
-            self.handle_login_packet(data)
-        elif data[0] == mcbe_protocol_info.resource_pack_client_response_packet:
-            self.handle_resource_pack_client_response_packet(data)
-        elif data[0] == mcbe_protocol_info.packet_violation_warning_packet:
-            self.handle_packet_violation_warning_packet(data)
-        elif data[0] == mcbe_protocol_info.request_chunk_radius_packet:
-            self.handle_request_chunk_radius_packet(data)
-        elif data[0] == mcbe_protocol_info.move_player_packet:
-            self.handle_move_player_packet(data)
-        elif data[0] == mcbe_protocol_info.text_packet:
-            self.handle_text_packet(data)
-        elif data[0] == mcbe_protocol_info.player_action_packet:
-            self.handle_player_action_packet(data)
-        elif data[0] == mcbe_protocol_info.command_request_packet:
-            self.handle_command_request_packet(data)
+        while True:
+            with self.packet_queue.get() as data:
+                if data[0] == mcbe_protocol_info.login_packet:
+                    self.handle_login_packet(data)
+                elif data[0] == mcbe_protocol_info.resource_pack_client_response_packet:
+                    self.handle_resource_pack_client_response_packet(data)
+                elif data[0] == mcbe_protocol_info.packet_violation_warning_packet:
+                    self.handle_packet_violation_warning_packet(data)
+                elif data[0] == mcbe_protocol_info.request_chunk_radius_packet:
+                    self.handle_request_chunk_radius_packet(data)
+                elif data[0] == mcbe_protocol_info.move_player_packet:
+                    self.handle_move_player_packet(data)
+                elif data[0] == mcbe_protocol_info.text_packet:
+                    self.handle_text_packet(data)
+                elif data[0] == mcbe_protocol_info.player_action_packet:
+                    self.handle_player_action_packet(data)
+                elif data[0] == mcbe_protocol_info.command_request_packet:
+                    self.handle_command_request_packet(data)
 
     def send_chunks(self) -> None:
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
