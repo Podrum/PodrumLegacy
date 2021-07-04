@@ -19,3 +19,4 @@ from podrum.event.default.player.player_quit_event import player_quit_event
 from podrum.event.default.player.player_sneak_event import player_sneak_event
 from podrum.event.default.player.player_sprint_event import player_sprint_event
 from podrum.event.default.player.player_jump_event import player_jump_event
+from podrum.event.default.player.player_chat_event import player_chat_event
