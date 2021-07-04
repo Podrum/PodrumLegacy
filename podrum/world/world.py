@@ -85,7 +85,7 @@ class world:
                 sleep(0.05)
         
     # [start_load_workers]
-    # :return: = None
+    # :return: = list
     # Starts a give amount of load workers.
     def start_load_workers(self, count: int) -> list:
         workers: list = []
@@ -117,7 +117,7 @@ class world:
                 sleep(0.05)
                 
     # [start_load_workers]
-    # :return: = None
+    # :return: = list
     # Starts a give amount of load workers.
     def start_unload_workers(self, count: int) -> list:
         workers: list = []

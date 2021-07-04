@@ -14,7 +14,6 @@
 #########################################################
 
 import os
-#import psutil
 import threading
 
 class debug_command:
@@ -29,6 +28,3 @@ class debug_command:
             sender.send_message(f"There are {thread_count} active threads.")
         else:
             sender.send_message(f"There are {thread_count} active threads.")
-        #process: object = psutil.Process(os.getpid())
-        #memory_usage: float = process.memory_info()[0] / 2 ** 20
-        #sender.send_message(f"There are {'%.2f' % (memory_usage)}mb ram in use.")
