@@ -84,10 +84,14 @@ class world:
     # [start_load_workers]
     # :return: = None
     # Starts a give amount of load workers.
-    def start_load_workers(self, count: int) -> None:
+    def start_load_workers(self, count: int) -> list:
+        workers: list = []
         self.load_worker_count: int = count
         for i in range(0, count):
-            Thread(target = self.load_worker).start()
+            worker: object = Thread(target = self.load_worker)
+            worker.start()
+            workers.append(worker)
+        return workers
           
     # [stop_load_workers
     # :return: = None
@@ -100,7 +104,31 @@ class world:
     # :return: -> None
     # The worker that unloads chunks
     def unload_worker(self) -> None:
-        pass
+        while True:
+            if not self.unload_queue.empty():
+                item: tuple = self.unload_queue.get()
+                if item is None:
+                    break
+                self.unload_chunk(item[0], item[1])
+                
+    # [start_load_workers]
+    # :return: = None
+    # Starts a give amount of load workers.
+    def start_unload_workers(self, count: int) -> list:
+        workers: list = []
+        self.unload_worker_count: int = count
+        for i in range(0, count):
+            worker: object = Thread(target = self.unload_worker)
+            worker.start()
+            workers.append(worker)
+        return workers
+          
+    # [stop_load_workers
+    # :return: = None
+    # Stops the load workers
+    def stop_unload_workers(self) -> None:
+        for i in range(0, self.unload_worker_count):
+            self.unload_queue.put(None)
 
     # [has_loaded_chunk]
     # :return: = bool
