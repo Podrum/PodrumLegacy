@@ -14,6 +14,7 @@
 #########################################################
 
 import math
+from podrum.event.default.player.player_chat_event import player_chat_event
 from podrum.event.default.player.player_join_event import player_join_event
 from podrum.event.default.player.player_move_event import player_move_event
 from podrum.event.default.player.player_sneak_event import player_sneak_event
@@ -317,6 +318,8 @@ class mcbe_player:
         packet: object = text_packet(data)
         packet.decode()
         if packet.type == text_type.chat:
+            chat_event: object = player_chat_event(self, packet.message)
+            chat_event.call()
             self.send_chat_message(packet.message)
             
     def handle_command_request_packet(self, data: bytes) -> None:
