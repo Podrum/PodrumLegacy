@@ -126,7 +126,10 @@ class server:
         self.broadcast_message(f"[Server] {message}")
         
     def console_input(self) -> None:
-        command: object = input()
+        try:
+            command: object = input()
+        except EOFError:
+            return
         self.dispatch_command(command, self)
 
     def find_player(self, username: str):
