@@ -17,12 +17,12 @@ class chunk_utils:
     @staticmethod
     def get_nibble_4(items: list, index: int) -> int:
         if index % 2 == 0:
-            return (items[index >> 1] >> 4) & 0x0f
-        return items[index >> 1] & 0x0f
+            return items[index >> 1] & 0x0f
+        return (items[index >> 1] >> 4) & 0x0f
         
     @staticmethod
     def set_nibble_4(items: list, index: int, value: int) -> list:
         if index % 2 == 0:
-            items[index >> 1] = value << 4 | chunk_utils.get_nibble_4(items, index + 1)
-        else:
             items[index >> 1] = chunk_utils.get_nibble_4(items, index - 1) << 4 | value
+        else:
+            items[index >> 1] = value << 4 | chunk_utils.get_nibble_4(items, index + 1)
