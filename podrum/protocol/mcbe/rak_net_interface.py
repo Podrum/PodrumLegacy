@@ -132,12 +132,12 @@ class rak_net_interface(Thread):
     # :return: = None
     # Handles when a player disconnects.   
     def on_disconnect(self, connection: object) -> None:
+        quit_event: object = player_quit_event(self.server.players[connection.address.token])
+        quit_event.call()
         self.server.players[connection.address.token].packet_queue.put(None)
         del self.server.players[connection.address.token]
         self.set_count(len(self.server.players))
-        self.server.logger.info(f"{connection.address.token} disconnected.")
-        quit_event: object = player_quit_event(self.server.players[connection.address.token])
-        quit_event.call()
+        self.server.logger.info(f"{connection.address.token} disconnected.")        
     
     # [start_interface]
     # :return: = None
