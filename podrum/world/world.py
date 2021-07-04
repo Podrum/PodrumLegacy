@@ -19,6 +19,7 @@ from podrum.block.block_map import block_map
 from podrum.geometry.vector_2 import vector_2
 from threading import Thread
 from queue import Queue
+from podrum.task.immediate_task import immediate_task
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -117,7 +118,7 @@ class world:
     
     # [save]
     # :return: = None
-    # idk here lol
+    # Saves the world.
     def save(self) -> None:
         tasks: list = []
         for chunk in self.chunks.values():
