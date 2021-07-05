@@ -124,7 +124,6 @@ class managers:
         self.block_manager.register_block(blocks.tnt())
         self.block_manager.register_block(blocks.wooden_planks())
         self.block_manager.register_block(blocks.wool())
-        self.block_manager.register_block(blocks.water())
     
     # [register_default_commands]
     # :return: = None
@@ -151,6 +150,7 @@ class managers:
         event_manager.register_event(events.player_sprint_event)
         event_manager.register_event(events.player_jump_event)
         event_manager.register_event(events.player_chat_event)
+        event_manager.register_event(events.player_form_response_event)
     
     # [register_default_items]
     # :return: = None
