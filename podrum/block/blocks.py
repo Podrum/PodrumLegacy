@@ -107,3 +107,12 @@ from podrum.block.default.tnt import tnt
 from podrum.block.default.wooden_planks import wooden_planks
 from podrum.block.default.wool import wool
 from podrum.block.default.water import water
+from podrum.block.default.tallgrass import tallgrass
+from podrum.block.default.yellow_flower import yellow_flower
+from podrum.block.default.red_flower import red_flower
+from podrum.block.default.double_plant import double_plant
+from podrum.block.default.anvil import anvil
+from podrum.block.default.concrete import concrete
+from podrum.block.default.concrete_powder import concrete_powder
+from podrum.block.default.lily_pad import lily_pad
+from podrum.block.default.deepslate import deepslate

@@ -124,6 +124,18 @@ class managers:
         self.block_manager.register_block(blocks.tnt())
         self.block_manager.register_block(blocks.wooden_planks())
         self.block_manager.register_block(blocks.wool())
+        self.block_manager.register_block(blocks.water())
+        self.block_manager.register_block(blocks.tallgrass())
+        self.block_manager.register_block(blocks.sugar_cane())
+        self.block_manager.register_block(blocks.glowing_obsidian())
+        self.block_manager.register_block(blocks.yellow_flower())
+        self.block_manager.register_block(blocks.red_flower())
+        self.block_manager.register_block(blocks.double_plant())
+        self.block_manager.register_block(blocks.anvil())
+        self.block_manager.register_block(blocks.concrete())
+        self.block_manager.register_block(blocks.lily_pad())
+        self.block_manager.register_block(blocks.end_stone_brick())
+
     
     # [register_default_commands]
     # :return: = None
