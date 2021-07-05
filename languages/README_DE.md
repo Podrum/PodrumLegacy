@@ -57,7 +57,7 @@ python __main__.py
  > Jede version über 3.5 funktioniert aber wir empfehlen dir die neuste.
  - Ist es kostenlos?
  > Yep.
- - Is this for Minecraft Java or Bedrock?
+ - Ist sie für Minecraft java oder bedrock?
  > Es ist immoment nur für bedrock aber villeicht wird es ja ein Plugin mal für die java geben.
  - Kann ich es jetzt schon verwenden?
  > Wir empfehlen es dir noch nicht für ernste projekte.
