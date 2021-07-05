@@ -15,23 +15,22 @@
 import random
 import math
 
-
 class Perlin:
-    def __call__(self, x, z, scale: float = 1, octaves: int = 1, persistence: float = 0.5, lacunarity: float = 2):
+    def __call__(self, x, z, r=1, scale: float = 1, octaves: int = 1, persistence: float = 0.2, lacunarity: float = 2):
         amp: float = 1
         freq: float = 1
         height: float = 0
 
         for i in range(0, octaves):
-            sample_x: float = x / scale * freq
-            sample_z: float = z / scale * freq
+            sample_x: float = x / scale * freq * (i+1)
+            sample_z: float = z / scale * freq * (i+1)
 
-            height += int(sum((self.noise(sample_x*s, sample_z*s) * amp)*h for s, h in self.perlins)*self.avg)
+            height += int(sum((self.noise(sample_x*s, sample_z*s) * amp)*h for s, h in self.perlins)*self.avg * 1/(i+1))
 
             amp *= persistence
             freq *= lacunarity
 
-        return height
+        return math.ceil(math.pow(height if height > 0 else -height, r)) * (1 if height > 0 else -1)
 
     def __init__(self, seed):
         self.m = 60000  # 100-70000 are most stable values
@@ -74,3 +73,4 @@ class Perlin:
                             lerp(u, grad(p[AB], x, y - 1, z), grad(p[BB], x - 1, y - 1, z))),
                     lerp(v, lerp(u, grad(p[AA + 1], x, y, z - 1), grad(p[BA + 1], x - 1, y, z - 1)),
                          lerp(u, grad(p[AB + 1], x, y - 1, z - 1), grad(p[BB + 1], x - 1, y - 1, z - 1))))
+
