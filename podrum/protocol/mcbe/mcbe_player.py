@@ -14,12 +14,14 @@
 #########################################################
 
 import math
+import json
 from podrum.event.default.player.player_chat_event import player_chat_event
 from podrum.event.default.player.player_join_event import player_join_event
 from podrum.event.default.player.player_move_event import player_move_event
 from podrum.event.default.player.player_sneak_event import player_sneak_event
 from podrum.event.default.player.player_sprint_event import player_sprint_event
 from podrum.event.default.player.player_jump_event import player_jump_event
+from podrum.event.default.player.player_form_response_event import player_form_response_event
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
@@ -49,6 +51,8 @@ from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
 from podrum.protocol.mcbe.packet.text_packet import text_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
 from podrum.protocol.mcbe.packet.disconnect_packet import disconnect_packet
+from podrum.protocol.mcbe.packet.modal_form_request_packet import modal_form_request_packet
+from podrum.protocol.mcbe.packet.modal_form_response_packet import modal_form_response_packet
 from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
@@ -210,6 +214,22 @@ class mcbe_player:
         packet.encode()
         self.send_packet(packet.data)
 
+    def send_form(self, form_id: int, form: object) -> None:
+        packet: object = modal_form_request_packet()
+        packet.form_id = form_id
+        data = form.to_dict()
+        packet.form_data = json.dumps(data)
+        packet.encode()
+        self.send_packet(packet.data) 
+
+    def handle_modal_form_response_packet(self, data: bytes):
+        packet: object = modal_form_response_packet(data)
+        packet.decode()
+        data = json.loads(packet.form_data)
+        form_event: object = player_form_response_event(packet.form_id, data, self)
+        form_event.call()
+
+
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
         packet: object = resource_pack_client_response_packet(data)
         packet.decode()
@@ -357,6 +377,8 @@ class mcbe_player:
             self.handle_player_action_packet(data)
         elif data[0] == mcbe_protocol_info.command_request_packet:
             self.handle_command_request_packet(data)
+        elif data[0] == mcbe_protocol_info.modal_form_response_packet:
+            self.handle_modal_form_response_packet(data)
 
     def send_chunks(self) -> None:
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
