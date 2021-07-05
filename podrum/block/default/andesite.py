@@ -13,9 +13,10 @@
 #                                                       #
 #########################################################
 
-from podrum.block.default.stone import stone
+from podrum.block.block import block
 
 class andesite(stone):
     def __init__(self) -> None:
-        super().__init__()
-        self.meta: int = 5
+        super().__init__("minecraft:stone", 5, 1.5, 6)
+        self.stack_size: int = 64
+        self.tool: int = tool.pickaxe
