@@ -14,8 +14,6 @@
 #########################################################
 
 from podrum.block.default.air import air
-from podrum.block.default.andesite import andesite
-from podrum.block.default.andesite_smooth import andesite_smooth
 from podrum.block.default.bedrock import bedrock
 from podrum.block.default.bone_block import bone_block
 from podrum.block.default.bookshelf import bookshelf
@@ -33,8 +31,6 @@ from podrum.block.default.daylight_sensor import daylight_sensor
 from podrum.block.default.deadbush import deadbush
 from podrum.block.default.diamond_block import diamond_block
 from podrum.block.default.diamond_ore import diamond_ore
-from podrum.block.default.diorite import diorite
-from podrum.block.default.diorite_smooth import diorite_smooth
 from podrum.block.default.dirt import dirt
 from podrum.block.default.emerald_block import emerald_block
 from podrum.block.default.emerald_ore import emerald_ore
@@ -50,8 +46,6 @@ from podrum.block.default.glowing_obsidian import glowing_obsidian
 from podrum.block.default.glowstone import glowstone
 from podrum.block.default.gold_block import gold_block
 from podrum.block.default.gold_ore import gold_ore
-from podrum.block.default.granite import granite
-from podrum.block.default.granite_smooth import granite_smooth
 from podrum.block.default.grass import grass
 from podrum.block.default.gravel import gravel
 from podrum.block.default.hardened_clay import hardened_clay
