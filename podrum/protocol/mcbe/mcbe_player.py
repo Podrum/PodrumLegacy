@@ -285,10 +285,11 @@ class mcbe_player:
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
         packet.decode()
-        if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
-            Thread(target = self.send_chunks).start()
+        #if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
+            #Thread(target = self.send_chunks).start()
         old_position: object = self.position
         self.position: object = packet.position
+        if old_position.x >> 4 != self.position.x >> 4 or old_position.z >> 4 != self.position.z >> 4
         move_event: object = player_move_event(self, self.position)
         move_event.call()
         if move_event.canceled:
