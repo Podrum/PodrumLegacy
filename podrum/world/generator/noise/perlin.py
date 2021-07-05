@@ -16,7 +16,15 @@ import random
 import math
 
 class Perlin:
-    def __call__(self, x, z, r=1, scale: float = 1, octaves: int = 1, persistence: float = 0.2, lacunarity: float = 2):
+    def __init__(self, seed):
+        self.m = 60000  # 100-70000 are most stable values
+        p = list(range(self.m))
+        random.Random(seed).shuffle(p)  # seeded shuffle
+        self.p = p + p
+        p = self.perlins = tuple((1 / i, i) for i in (16, 20, 22, 31, 32, 64, 512) for j in range(2))
+        self.avg = 8 * len(p) / sum(f + i for f, i in p)
+
+    def __call__(self, x, z, r=1, scale: float = 1, octaves: int = 1, persistence: float = 0.2, lacunarity: float = 2) -> int:
         amp: float = 1
         freq: float = 1
         height: float = 0
@@ -32,30 +40,23 @@ class Perlin:
 
         return math.ceil(math.pow(height if height > 0 else -height, r)) * (1 if height > 0 else -1)
 
-    def __init__(self, seed):
-        self.m = 60000  # 100-70000 are most stable values
-        p = list(range(self.m))
-        random.Random(seed).shuffle(p)  # seeded shuffle
-        self.p = p + p
-        p = self.perlins = tuple((1 / i, i) for i in (16, 20, 22, 31, 32, 64, 512) for j in range(2))
-        self.avg = 8 * len(p) / sum(f + i for f, i in p)
-
     @staticmethod
-    def fade(t):
+    def fade(t) -> float:
         return t * t * t * (t * (t * 6 - 15) + 10)
 
     @staticmethod
-    def lerp(t, a, b):
+    def lerp(t, a, b) -> float:
         return a + t * (b - a)
 
     @staticmethod
-    def grad(_hash, x, y, z):
+    def grad(_hash, x, y, z) -> float:
         h = _hash & 15
         u = y if h & 8 else x
         v = (x if h == 12 or h == 14 else z) if h & 12 else y
+        print((u if h & 1 else -u) + (v if h & 2 else -v))
         return (u if h & 1 else -u) + (v if h & 2 else -v)
 
-    def noise(self, x, y, z=0):
+    def noise(self, x, y, z=0) -> float:
         p, fade, lerp, grad = self.p, self.fade, self.lerp, self.grad
         xf, yf, zf = math.floor(x), math.floor(y), math.floor(z)
         X, Y, Z = xf % self.m, yf % self.m, zf % self.m
