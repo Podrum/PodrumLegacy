@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 from podrum.game_data.mcbe.item_id_map import item_id_map
 
 class block:
-    def __init__(self, name: int, meta: int, hardness: float, blast_resistance: float) -> None:
+    def __init__(self, name: str, meta: int, hardness: float, blast_resistance: float) -> None:
         self.name: str = name
         self.meta: int = meta
         self.hardness: float = hardness
