@@ -13,9 +13,9 @@
 
 <p align="center">README aussi disponible en:</p>
 <div align="center">
-  <a href="README.md">English🇺🇸</a>
-  <a href="#">Français🇫🇷</a>
-  <a href="README_DE.md">Deutsch🇩🇪</a>
+  <a href="../README.md">English🇺🇸</a>
+  <a href="./README_FR.md">Français🇫🇷</a>
+  <a href="./README_DE.md">Deutsch🇩🇪</a>
  </div>
 <br>
 
