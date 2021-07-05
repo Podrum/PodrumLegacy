@@ -10,6 +10,12 @@
 <hr/>
 
 # Podrum
+
+<p align="center">Doc also available in:</p>
+<div align="center">
+  <a href="#">English🇺🇸</a>
+  <a href="languages/README_FR.md">Français🇫🇷</a></div>
+<br>
 Is a Minecraft Bedrock Edition server software written in Python.
 It's still under active development, yet it has a few advantages:
 
