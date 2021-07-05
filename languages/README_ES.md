@@ -13,10 +13,10 @@
 
 <p align="center">README también disponible en:</p>
 <div align="center">
-  <a href="./README.md">Inglés🇺🇸</a>
-  <a href="languages/README_FR.md">Francés🇫🇷</a>
-  <a href="languages/README_DE.md">Alemán🇩🇪</a>
-  <a href="languages/README_ES.md">Español🇪🇸</a>
+  <a href="../README.md">Inglés🇺🇸</a>
+  <a href="./README_FR.md">Francés🇫🇷</a>
+  <a href="./README_DE.md">Alemán🇩🇪</a>
+  <a href="./README_ES.md">Español🇪🇸</a>
 </div>
 <br>
 
