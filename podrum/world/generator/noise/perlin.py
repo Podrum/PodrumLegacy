@@ -53,7 +53,6 @@ class Perlin:
         h = _hash & 15
         u = y if h & 8 else x
         v = (x if h == 12 or h == 14 else z) if h & 12 else y
-        print((u if h & 1 else -u) + (v if h & 2 else -v))
         return (u if h & 1 else -u) + (v if h & 2 else -v)
 
     def noise(self, x, y, z=0) -> float:
