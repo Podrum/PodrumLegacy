@@ -12,7 +12,7 @@
 # Podrum
 
 <div align="center">
-  <a href="#">English🇺🇸</a>
+  <a href="README.md">English🇺🇸</a>
   <a href="languages/README_FR.md">Français🇫🇷</a></div>
 <br>
 
