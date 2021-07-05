@@ -29,12 +29,14 @@ from podrum.protocol.mcbe import packets
 from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.game_packet import game_packet
+from podrum.protocol.mcbe.type.action_type import action_type
 from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
 from podrum.protocol.mcbe.type.interact_type import interact_type
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
 from podrum.protocol.mcbe.type.text_type import text_type
-from podrum.protocol.mcbe.type.action_type import action_type
+from podrum.protocol.mcbe.type.window_id_type import window_id_type
+from podrum.protocol.mcbe.type.window_type import window_type
 from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
 from queue import Queue
@@ -341,7 +343,14 @@ class mcbe_player:
         packet: object = packets.interact_packet(data)
         packet.decode()
         if packet.action_id == interact_type.open_inventory:
-            pass # Open Inventory
+            new_packet: object = packets.container_open_packet()
+            new_packet.window_id = window_id_type.creative
+            new_packet.window_type = window_type.inventory
+            new_packet.coordinates = self.position
+            new_packet.runtime_entity_id = self.entity_id
+            new_packet.encode()
+            self.send_packet(new_packet.data)
+            
             
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = packets.command_request_packet(data)
