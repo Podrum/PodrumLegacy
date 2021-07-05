@@ -16,7 +16,7 @@
 from podrum.block.block import block
 
 class diorite(block):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("minecraft:stone", 3, 1.5, 6)
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
