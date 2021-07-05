@@ -51,6 +51,7 @@ from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
 from podrum.protocol.mcbe.packet.text_packet import text_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
 from podrum.protocol.mcbe.packet.disconnect_packet import disconnect_packet
+from podrum.protocol.mcbe.packet.transfer_packet import transfer_packet
 from podrum.protocol.mcbe.packet.modal_form_request_packet import modal_form_request_packet
 from podrum.protocol.mcbe.packet.modal_form_response_packet import modal_form_response_packet
 from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
@@ -211,6 +212,13 @@ class mcbe_player:
         packet: object = disconnect_packet()
         packet.message = message
         packet.hide_disconnect_screen = hide_disconnect_screen
+        packet.encode()
+        self.send_packet(packet.data)
+        
+    def transfer(self, address: str, port: int = 19132) -> None:
+        packet: object = transfer_packet()
+        packet.address = address
+        packet.port = port
         packet.encode()
         self.send_packet(packet.data)
 
