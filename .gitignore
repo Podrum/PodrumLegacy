@@ -20,6 +20,5 @@ src/pyraklib/server/__pycache__
 *.exe
 
 # Tests files
-start.cmdb
 server.json
 .gitignore
