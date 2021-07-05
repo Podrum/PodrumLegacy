@@ -15,7 +15,7 @@
 
 from podrum.block.block import block
 
-class andesite(stone):
+class andesite(block):
     def __init__(self) -> None:
         super().__init__("minecraft:stone", 5, 1.5, 6)
         self.stack_size: int = 64
