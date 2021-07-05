@@ -27,7 +27,7 @@ Il est encore un développement actif mais a ses petits avantages:
 **2.** Écrit en Pythhon ce qui veut dire que les plugins sont faciles à écrire.
 ## Fonctionnalitées:
  - [x] Génération du monde
- - [x] Connection
+ - [x] Connexion
  - [x] Commandes
  - [x] MOTD
  - [x] Joignable
