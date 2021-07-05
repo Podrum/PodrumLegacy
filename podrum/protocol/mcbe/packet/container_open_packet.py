@@ -22,13 +22,13 @@ class container_open_packet(mcbe_packet):
         self.packet_id: int = mcbe_protocol_info.container_open_packet
         
     def decode_payload(self) -> None:
-        self.window_id: int = self.read_var_int()
-        self.window_type: int = self.read_var_int()
+        self.window_id: int = self.read_byte()
+        self.window_type: int = self.read_byte()
         self.coordinates: object = self.read_block_coordinates()
         self.runtime_entity_id: int = self.read_signed_var_long()
         
     def encode_payload(self) -> None:
-        self.write_var_int(self.window_id)
-        self.write_var_int(self.window_type)
+        self.write_byte(self.window_id)
+        self.write_byte(self.window_type)
         self.write_block_coordinates(self.coordinates)
         self.write_signed_var_long(self.runtime_entity_id)
