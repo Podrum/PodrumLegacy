@@ -31,13 +31,6 @@ from podrum.block.default.crafting_table import crafting_table
 from podrum.block.default.dandelion import dandelion
 from podrum.block.default.daylight_sensor import daylight_sensor
 from podrum.block.default.deadbush import deadbush
-from podrum.block.default.deepslate_coal_ore import deepslate_coal_ore
-from podrum.block.default.deepslate_diamond_ore import deepslate_diamond_ore
-from podrum.block.default.deepslate_emerald_ore import deepslate_emerald_ore
-from podrum.block.default.deepslate_gold_ore import deepslate_gold_ore
-from podrum.block.default.deepslate_iron_ore import deepslate_iron_ore
-from podrum.block.default.deepslate_lapis_ore import deepslate_lapis_ore
-from podrum.block.default.deepslate_redstone_ore import deepslate_redstone_ore
 from podrum.block.default.diamond_block import diamond_block
 from podrum.block.default.diamond_ore import diamond_ore
 from podrum.block.default.diorite import diorite
@@ -115,4 +108,3 @@ from podrum.block.default.anvil import anvil
 from podrum.block.default.concrete import concrete
 from podrum.block.default.concrete_powder import concrete_powder
 from podrum.block.default.lily_pad import lily_pad
-from podrum.block.default.deepslate import deepslate
