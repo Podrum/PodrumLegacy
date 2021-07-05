@@ -29,17 +29,17 @@ class default:
         # Default: 62, Reduced to 20 for faster load time
         sea_level: int = 62
         seed: int = 10569509
-        chunk_type = "normal"
+        chunk_type: str = "normal"
 
         # generates perlin noise
-        perlin = Perlin(seed=seed)
+        perlin: object = Perlin(seed=seed)
 
         # chunk generation
         for x in range(0, 16):
             for z in range(0, 16):
-                y = perlin((chunk_x << 4) + x, (chunk_z << 4) + z, r=0.6, scale=1, octaves=2, lacunarity=0.25, persistence=0.5)
+                y: int = perlin((chunk_x << 4) + x, (chunk_z << 4) + z, r=0.6, scale=1, octaves=2, lacunarity=0.25, persistence=0.5)
                 if sea_level + y <= sea_level and not chunk_type == "water":
-                    chunk_type = "water"
+                    chunk_type: str = "water"
 
                 # top layer, decides grass or sand if its a water chunk
                 result.set_block_runtime_id(x, sea_level + y, z, blocks.grass().runtime_id if not chunk_type == "water" else blocks.sand().runtime_id)
