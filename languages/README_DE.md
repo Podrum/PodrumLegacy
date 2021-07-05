@@ -11,7 +11,16 @@
 
 # Podrum
 
-Ist eine Minecraft Server software geschrieben in Python.
+<p align="center">README aussi disponible en:</p>
+<div align="center">
+  <a href="../README.md">English🇺🇸</a>
+  <a href="./README_FR.md">Français🇫🇷</a>
+  <a href="./README_DE.md">Deutsch🇩🇪</a>
+ </div>
+<br>
+
+
+Podrum ist eine Minecraft Server software geschrieben in Python.
 Es ist unter aktiver Entwicklung und hat bis jetzt paar vorteile:
 
 **1.** Einfach zu verwenden,
