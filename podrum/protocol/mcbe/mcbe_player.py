@@ -295,7 +295,6 @@ class mcbe_player:
     def handle_player_action_packet(self, data: bytes): # probably not cancelable
         packet: object = packets.player_action_packet(data)
         packet.decode()
-        # for some reason packet.action is *2 of its original value
         if packet.action in [action_type.start_sneak, action_type.stop_sneak]:
             sneak_event: object = player_sneak_event(self, False if packet.action == action_type.stop_sneak else True)
             sneak_event.call()
