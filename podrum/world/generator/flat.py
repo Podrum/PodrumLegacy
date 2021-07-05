@@ -13,9 +13,7 @@
 #                                                       #
 #########################################################
 
-from podrum.block.default.bedrock import bedrock
-from podrum.block.default.dirt import dirt
-from podrum.block.default.grass import grass
+from podrum.block import blocks
 from podrum.world.chunk.chunk import chunk
 
 class flat:
@@ -27,10 +25,10 @@ class flat:
         spawn_position: object = world.get_spawn_position()
         for x in range(0, 16):
             for z in range(0, 16):
-                result.set_block_runtime_id(x, 0, z, bedrock().runtime_id)
-                result.set_block_runtime_id(x, 1, z, dirt().runtime_id)
-                result.set_block_runtime_id(x, 2, z, dirt().runtime_id)
-                result.set_block_runtime_id(x, 3, z, grass().runtime_id)
+                result.set_block_runtime_id(x, 0, z, blocks.bedrock().runtime_id)
+                result.set_block_runtime_id(x, 1, z, blocks.dirt().runtime_id)
+                result.set_block_runtime_id(x, 2, z, blocks.dirt().runtime_id)
+                result.set_block_runtime_id(x, 3, z, blocks.grass().runtime_id)
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 4
             world.set_spawn_position(spawn_position)
