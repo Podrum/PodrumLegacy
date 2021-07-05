@@ -13,8 +13,6 @@
 #                                                       #
 #########################################################
 
-
-import binascii
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.mcbe_packet import mcbe_packet
 
