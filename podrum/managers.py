@@ -45,8 +45,6 @@ class managers:
     # Register the default blocks.
     def register_default_blocks(self) -> None:
         self.block_manager.register_block(blocks.air())
-        self.block_manager.register_block(blocks.andesite())
-        self.block_manager.register_block(blocks.andesite_smooth())
         self.block_manager.register_block(blocks.bedrock())
         self.block_manager.register_block(blocks.bone_block())
         self.block_manager.register_block(blocks.bookshelf())
@@ -64,8 +62,6 @@ class managers:
         self.block_manager.register_block(blocks.deadbush())
         self.block_manager.register_block(blocks.diamond_block())
         self.block_manager.register_block(blocks.diamond_ore())
-        self.block_manager.register_block(blocks.diorite())
-        self.block_manager.register_block(blocks.diorite_smooth())
         self.block_manager.register_block(blocks.dirt())
         self.block_manager.register_block(blocks.emerald_block())
         self.block_manager.register_block(blocks.emerald_ore())
@@ -78,8 +74,6 @@ class managers:
         self.block_manager.register_block(blocks.glass_pane())
         self.block_manager.register_block(blocks.gold_block())
         self.block_manager.register_block(blocks.gold_ore())
-        self.block_manager.register_block(blocks.granite())
-        self.block_manager.register_block(blocks.granite_smooth())
         self.block_manager.register_block(blocks.grass())
         self.block_manager.register_block(blocks.gravel())
         self.block_manager.register_block(blocks.hardened_clay())
@@ -119,11 +113,9 @@ class managers:
         self.block_manager.register_block(blocks.snow_block())
         self.block_manager.register_block(blocks.soul_sand())
         self.block_manager.register_block(blocks.sponge())
-        self.block_manager.register_block(blocks.stone())
         self.block_manager.register_block(blocks.stone_bricks())
         self.block_manager.register_block(blocks.tnt())
         self.block_manager.register_block(blocks.wooden_planks())
-        self.block_manager.register_block(blocks.wool())
         self.block_manager.register_block(blocks.water())
         self.block_manager.register_block(blocks.tallgrass())
         self.block_manager.register_block(blocks.sugar_cane())
@@ -132,11 +124,13 @@ class managers:
         self.block_manager.register_block(blocks.red_flower())
         self.block_manager.register_block(blocks.double_plant())
         self.block_manager.register_block(blocks.anvil())
-        self.block_manager.register_block(blocks.concrete())
         self.block_manager.register_block(blocks.lily_pad())
         self.block_manager.register_block(blocks.end_stone_brick())
         self.block_manager.register_block(blocks.sea_lantern())
         self.block_manager.register_block(blocks.invisible_bedrock())
+        blocks.concrete.register(blocks.concrete())
+        blocks.wool.register(blocks.wool())
+        blocks.stone.register(blocks.stone())
 
     
     # [register_default_commands]
