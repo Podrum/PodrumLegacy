@@ -30,6 +30,7 @@ from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.game_packet import game_packet
 from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
+from podrum.protocol.mcbe.type.interact_type import interact_type
 from podrum.protocol.mcbe.type.login_status_type import login_status_type
 from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
 from podrum.protocol.mcbe.type.text_type import text_type
@@ -336,10 +337,11 @@ class mcbe_player:
             if not chat_event.canceled:
                  self.send_chat_message(packet.message)
                     
-    def handle_inventory_transaction_packet(self, data: bytes) -> None:
-        packet: object = packets.inventory_transaction_packet(data)
+    def handle_interact_packet(self, data: bytes) -> None:
+        packet: object = packets.interact_packet(data)
         packet.decode()
-        # Todo: Check if the inventory opened
+        if packet.action_id == interact_type.open_inventory:
+            pass # Open Inventory
             
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = packets.command_request_packet(data)
@@ -366,8 +368,8 @@ class mcbe_player:
             self.handle_command_request_packet(data)
         elif data[0] == mcbe_protocol_info.modal_form_response_packet:
             self.handle_modal_form_response_packet(data)
-        elif data[0] == mcbe_protocol_info.inventory_transaction_packet:
-            self.handle_inventory_transaction_packet(data)
+        elif data[0] == mcbe_protocol_info.interact_packet:
+            self.handle_interact_packet(data)
 
     def send_chunks(self) -> None:
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
