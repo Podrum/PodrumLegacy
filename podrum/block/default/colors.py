@@ -13,11 +13,8 @@
 #                                                       #
 #########################################################
 
-from podrum.block.block import block
-from podrum.block.tool import tool
-
-class concrete_powder(block):
-    def __init__(self) -> None:
-        super().__init__("minecraft:concretePowder", 0, 0.5, 0.5)
-        self.stack_size: int = 64
-        self.tool: int = tool.shovel
+class colors:
+    def __init__(self, color="white"):
+        color = (str(color).lower()).replace(" ", "_")
+        self.types = {"white": 0, "orange": 1, "magenta": 2, "light_blue": 3, "yellow": 4, "lime": 5, "pink": 6, "gray": 7, "light_gray": 7, "cyan": 9, "purple": 10, "blue": 11, "brown": 12, "green": 13, "red": 14, "black": 15}
+        self.color = self.types[color] if color in self.types else 0

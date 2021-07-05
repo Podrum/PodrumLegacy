@@ -15,9 +15,15 @@
 
 from podrum.block.block import block
 from podrum.block.tool import tool
+from podrum.block.block_manager import block_manager
+from podrum.block.default.colors import colors
 
 class concrete(block):
-    def __init__(self) -> None:
-        super().__init__("minecraft:concrete", 0, 1.8, 1.8)
+    def __init__(self, meta="white") -> None:
+        super().__init__("minecraft:concrete", colors(meta).color, 1.8, 1.8)
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
+
+    def register(self) -> None:
+        for i in range(0, len(colors().types)):
+            block_manager.register_block(block_manager(), concrete(i))

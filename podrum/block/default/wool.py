@@ -15,11 +15,17 @@
 
 from podrum.block.block import block
 from podrum.block.tool import tool
+from podrum.block.block_manager import block_manager
+from podrum.block.default.colors import colors
 
 class wool(block):
-    def __init__(self) -> None:
-        super().__init__("minecraft:wool", 0, 0.8, 0.8)
+    def __init__(self, meta="white") -> None:
+        super().__init__("minecraft:wool", colors(meta).color if isinstance(meta, str) else meta, 0.8, 0.8)
         self.stack_size: int = 64
         self.tool: int = tool.shears
         self.flammable: bool = True
         self.catches_fire_from_lava: bool = True
+
+    def register(self) -> None:
+        for i in range(0, len(colors().types)):
+            block_manager.register_block(block_manager(), wool(i))
