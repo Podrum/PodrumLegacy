@@ -349,7 +349,7 @@ class mcbe_player:
             new_packet.coordinates = self.position
             new_packet.runtime_entity_id = self.entity_id
             new_packet.encode()
-            self.send_packet(new_packet.data)
+            #self.send_packet(new_packet.data)
             
             
     def handle_command_request_packet(self, data: bytes) -> None:
