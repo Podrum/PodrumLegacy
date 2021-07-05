@@ -15,7 +15,7 @@
 <div align="center">
   <a href="README.md">English🇺🇸</a>
   <a href="#">Français🇫🇷</a>
-  <a href="#">Deutsch🇩🇪</a>
+  <a href="README_DE.md">Deutsch🇩🇪</a>
  </div>
 <br>
 
