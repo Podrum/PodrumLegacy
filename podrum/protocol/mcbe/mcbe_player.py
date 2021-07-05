@@ -289,7 +289,7 @@ class mcbe_player:
             #Thread(target = self.send_chunks).start()
         old_position: object = self.position
         self.position: object = packet.position
-        if old_position.x >> 4 != self.position.x >> 4 or old_position.z >> 4 != self.position.z >> 4:
+        if math.floor(old_position.x) >> 4 != math.floor(self.position.x) >> 4 or math.floor(old_position.z) >> 4 != math.floor(self.position.z) >> 4:
             Thread(target = self.send_chunks).start()
         move_event: object = player_move_event(self, self.position)
         move_event.call()
