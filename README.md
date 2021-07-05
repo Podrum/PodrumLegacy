@@ -41,7 +41,6 @@ Linux and MacOS (Unix systems):
 pip3 install -r ./requirements.txt
 python3 __main__.py
 ```
-Or you can use Powershell.
 
 Windows:
 ```batch
