@@ -13,9 +13,10 @@
 #                                                       #
 #########################################################
 
-from podrum.block.default.stone import stone
+from podrum.block.block import block
 
-class granite_smooth(stone):
+class granite_smooth(block):
     def __init__(self) -> None:
-        super().__init__()
-        self.meta: int = 2
+        super().__init__("minecraft:stone", 2, 1.5, 6)
+        self.stack_size: int = 64
+        self.tool: int = tool.pickaxe
