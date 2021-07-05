@@ -11,6 +11,7 @@
 
 # Podrum
 
+<p align="center">README aussi disponible en:</p>
 <div align="center">
   <a href="README.md">English🇺🇸</a>
   <a href="languages/README_FR.md">Français🇫🇷</a></div>
