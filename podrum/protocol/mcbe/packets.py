@@ -23,6 +23,7 @@ from podrum.protocol.mcbe.packet.container_close_packet import container_close_p
 from podrum.protocol.mcbe.packet.container_open_packet import container_open_packet
 from podrum.protocol.mcbe.packet.creative_content_packet import creative_content_packet
 from podrum.protocol.mcbe.packet.disconnect_packet import disconnect_packet
+from podrum.protocol.mcbe.packet.interact_packet import interact_packet
 from podrum.protocol.mcbe.packet.inventory_content_packet import inventory_content_packet
 from podrum.protocol.mcbe.packet.inventory_slot_packet import inventory_slot_packet
 from podrum.protocol.mcbe.packet.inventory_transaction_packet import inventory_transaction_packet
