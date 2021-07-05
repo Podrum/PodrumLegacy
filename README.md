@@ -13,9 +13,12 @@
 
 <p align="center">README also available in:</p>
 <div align="center">
-  <a href="#">English🇺🇸</a>
-  <a href="languages/README_FR.md">Français🇫🇷</a></div>
+  <a href="./README.md">English🇺🇸</a>
+  <a href="languages/README_FR.md">Français🇫🇷</a>
+  <a href="languages/README_DE.md">Deutsch🇩🇪</a>
+</div>
 <br>
+
 Is a Minecraft Bedrock Edition server software written in Python.
 It's still under active development, yet it has a few advantages:
 
