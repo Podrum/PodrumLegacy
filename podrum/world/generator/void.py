@@ -13,7 +13,7 @@
 #                                                       #
 #########################################################
 
-from podrum.block.default.stone import stone
+from podrum.block import blocks
 from podrum.world.chunk.chunk import chunk
 
 class void:
@@ -26,7 +26,7 @@ class void:
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             for x in range(0, 16):
                 for z in range(0, 16):
-                    result.set_block_runtime_id(x, 0, z, stone().runtime_id)
+                    result.set_block_runtime_id(x, 0, z, blocks.stone().runtime_id)
             spawn_position.y = 1
             world.set_spawn_position(spawn_position)
         return result
