@@ -135,6 +135,8 @@ class managers:
         self.block_manager.register_block(blocks.concrete())
         self.block_manager.register_block(blocks.lily_pad())
         self.block_manager.register_block(blocks.end_stone_brick())
+        self.block_manager.register_block(blocks.sea_lantern())
+        self.block_manager.register_block(blocks.invisible_bedrock())
 
     
     # [register_default_commands]
