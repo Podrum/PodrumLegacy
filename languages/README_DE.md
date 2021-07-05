@@ -28,7 +28,7 @@ Es ist unter aktiver Entwicklung und hat bis jetzt paar vorteile:
  - [ ] Mobs 
 
 ## Ausführen:
-Linux and MacOS (Unix systems):
+Linux und MacOS (Unix/Unixiode Systeme):
 ```sh
 pip3 install -r ./requirements.txt
 python3 __main__.py
