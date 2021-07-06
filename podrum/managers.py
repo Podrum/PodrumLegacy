@@ -274,6 +274,7 @@ class managers:
         self.block_manager.register_block(blocks.lit_deepslate_redstone_ore())
         self.block_manager.register_block(blocks.deepslate_diamond_ore())
         self.block_manager.register_block(blocks.deepslate_emerald_ore())
+        self.block_manager.register_block(blocks.lit_redstone_ore())
 
     # [register_default_commands]
     # :return: = None
