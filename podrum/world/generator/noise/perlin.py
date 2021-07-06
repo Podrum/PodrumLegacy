@@ -12,14 +12,15 @@
 # of the source code. If not you may not use this file. #
 #                                                       #
 #########################################################
-import random
+# import random
 import math
+import numpy as np
 
 class Perlin:
     def __init__(self, seed):
         self.m = 60000  # 100-70000 are most stable values
         p = list(range(self.m))
-        random.Random(seed).shuffle(p)  # seeded shuffle
+        np.random.RandomState(seed).shuffle(p)  # seeded shuffle
         self.p = p + p
         p = self.perlins = tuple((1 / i, i) for i in (16, 20, 22, 31, 32, 64, 512) for j in range(2))
         self.avg = 8 * len(p) / sum(f + i for f, i in p)
