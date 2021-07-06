@@ -258,6 +258,7 @@ class managers:
         self.block_manager.register_block(blocks.red_stained_glass_pane())
         self.block_manager.register_block(blocks.black_stained_glass_pane())
         self.block_manager.register_block(blocks.fern())
+        self.block_manager.register_block(blocks.wet_sponge())
 
     # [register_default_commands]
     # :return: = None
