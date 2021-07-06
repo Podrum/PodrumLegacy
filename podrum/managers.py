@@ -177,11 +177,23 @@ class managers:
         self.block_manager.register_block(blocks.green_concrete_powder())
         self.block_manager.register_block(blocks.red_concrete_powder())
         self.block_manager.register_block(blocks.black_concrete_powder())
+        self.block_manager.register_block(blocks.white_concrete())
+        self.block_manager.register_block(blocks.magenta_concrete())
+        self.block_manager.register_block(blocks.light_blue_concrete())
+        self.block_manager.register_block(blocks.lime_concrete())
+        self.block_manager.register_block(blocks.pink_concrete())
+        self.block_manager.register_block(blocks.orange_concrete())
+        self.block_manager.register_block(blocks.yellow_concrete())
+        self.block_manager.register_block(blocks.gray_concrete())
+        self.block_manager.register_block(blocks.light_gray_concrete())
+        self.block_manager.register_block(blocks.cyan_concrete())
+        self.block_manager.register_block(blocks.purple_concrete())
+        self.block_manager.register_block(blocks.blue_concrete())
+        self.block_manager.register_block(blocks.brown_concrete())
+        self.block_manager.register_block(blocks.green_concrete())
+        self.block_manager.register_block(blocks.red_concrete())
+        self.block_manager.register_block(blocks.black_concrete())
 
-
-        blocks.concrete.register(blocks.concrete())
-
-    
     # [register_default_commands]
     # :return: = None
     # Registers the default commands.
