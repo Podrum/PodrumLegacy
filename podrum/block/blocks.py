@@ -92,7 +92,6 @@ from podrum.block.default.stone_bricks import stone_bricks
 from podrum.block.default.sugar_cane import sugar_cane
 from podrum.block.default.tnt import tnt
 from podrum.block.default.wooden_planks import wooden_planks
-from podrum.block.default.wool import wool
 from podrum.block.default.water import water
 from podrum.block.default.tallgrass import tallgrass
 from podrum.block.default.yellow_flower import yellow_flower
@@ -102,3 +101,26 @@ from podrum.block.default.anvil import anvil
 from podrum.block.default.concrete import concrete
 from podrum.block.default.concrete_powder import concrete_powder
 from podrum.block.default.lily_pad import lily_pad
+from podrum.block.default.white_wool import white_wool
+from podrum.block.default.orange_wool import orange_wool
+from podrum.block.default.magenta_wool import magenta_wool
+from podrum.block.default.yellow_wool import yellow_wool
+from podrum.block.default.light_blue_wool import light_blue_wool
+from podrum.block.default.lime_wool import lime_wool
+from podrum.block.default.pink_wool import pink_wool
+from podrum.block.default.gay_wool import gray_wool
+from podrum.block.default.light_gray_wool import light_gray_wool
+from podrum.block.default.cyan_wool import cyan_wool
+from podrum.block.default.purple_wool import purple_wool
+from podrum.block.default.blue_wool import blue_wool
+from podrum.block.default.brown_wool import brown_wool
+from podrum.block.default.green_wool import green_wool
+from podrum.block.default.red_wool import red_wool
+from podrum.block.default.black_wool import black_wool
+
+from podrum.block.default.granite import granite
+from podrum.block.default.polished_granite import polished_granite
+from podrum.block.default.diorite import diorite
+from podrum.block.default.polished_diorite import polished_diorite
+from podrum.block.default.andesite import andesite
+from podrum.block.default.polished_andesite import polished_andesite
