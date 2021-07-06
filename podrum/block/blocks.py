@@ -244,4 +244,5 @@ from podrum.block.default.deepslate_redstone_ore import deepslate_redstone_ore
 from podrum.block.default.lit_deepslate_redstone_ore import lit_deepslate_redstone_ore
 from podrum.block.default.deepslate_diamond_ore import deepslate_diamond_ore
 from podrum.block.default.deepslate_emerald_ore import deepslate_emerald_ore
+from podrum.block.default.lit_redstone_ore import lit_redstone_ore
 
