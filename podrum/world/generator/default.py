@@ -56,8 +56,12 @@ class default:
                 for i in range(sea_level + y + 1):
                     if (sea_level + (y - i)) == 0: 
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.bedrock().runtime_id)
-                    elif (sea_level + (y - i)) <= 2: 
-                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.bedrock().runtime_id, blocks.stone().runtime_id]))
+                    elif (sea_level + (y - i)) <= 2:
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.bedrock().runtime_id, blocks.deepslate().runtime_id]))
+                    elif (sea_level + (y - i)) <= 4:
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.deepslate().runtime_id)
+                    elif (sea_level + (y - i)) <= 6:
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.stone().runtime_id, blocks.deepslate().runtime_id]))
                     elif (i <= 2): 
                         result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, blocks.dirt().runtime_id if not chunk_type == "water" else blocks.sand().runtime_id)
                     else: 
