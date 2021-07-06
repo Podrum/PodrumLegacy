@@ -161,6 +161,23 @@ class managers:
         self.block_manager.register_block(blocks.cornflower())
         self.block_manager.register_block(blocks.lily_of_the_valley())
         self.block_manager.register_block(blocks.allium())
+        self.block_manager.register_block(blocks.white_concrete_powder())
+        self.block_manager.register_block(blocks.magenta_concrete_powder())
+        self.block_manager.register_block(blocks.light_blue_concrete_powder())
+        self.block_manager.register_block(blocks.lime_concrete_powder())
+        self.block_manager.register_block(blocks.pink_concrete_powder())
+        self.block_manager.register_block(blocks.orange_concrete_powder())
+        self.block_manager.register_block(blocks.yellow_concrete_powder())
+        self.block_manager.register_block(blocks.gray_concrete_powder())
+        self.block_manager.register_block(blocks.light_gray_concrete_powder())
+        self.block_manager.register_block(blocks.cyan_concrete_powder())
+        self.block_manager.register_block(blocks.purple_concrete_powder())
+        self.block_manager.register_block(blocks.blue_concrete_powder())
+        self.block_manager.register_block(blocks.brown_concrete_powder())
+        self.block_manager.register_block(blocks.green_concrete_powder())
+        self.block_manager.register_block(blocks.red_concrete_powder())
+        self.block_manager.register_block(blocks.black_concrete_powder())
+
 
         blocks.concrete.register(blocks.concrete())
 
