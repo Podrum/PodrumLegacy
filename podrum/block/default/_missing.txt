@@ -1,4 +1,3 @@
-flowers (red and yellow were added)
 anvil variants
 activator rails
 rails
@@ -17,7 +16,7 @@ concrete (colors)
 concrete powder
 detector rail
 door
-tall grass
+double tall grass
 slab variants
 stair variants
 end portal frame
