@@ -28,7 +28,7 @@ class default:
         spawn_position: object = world.get_spawn_position()
         # Default: 62, Reduced to 20 for faster load time
         sea_level: int = 62
-        seed: int = 10569509
+        seed: int = 421086205
         chunk_type: str = "normal"
 
         # generates perlin noise
@@ -37,7 +37,7 @@ class default:
         # chunk generation
         for x in range(0, 16):
             for z in range(0, 16):
-                y: int = perlin((chunk_x << 4) + x, (chunk_z << 4) + z, r=0.6, scale=1, octaves=2, lacunarity=0.25, persistence=0.5)
+                y: int = perlin((chunk_x << 4) + x, (chunk_z << 4) + z)
                 if sea_level + y <= sea_level and not chunk_type == "water":
                     chunk_type: str = "water"
 
@@ -47,7 +47,7 @@ class default:
                 # decorate land
                 if not chunk_type == "water":
                     if random.uniform(0, 1) > 0.85:
-                        block_list = random.choices([blocks.yellow_flower().runtime_id, blocks.tallgrass().runtime_id, blocks.red_flower().runtime_id, None], weights=(1, 4, 1, 4), k=10)
+                        block_list = random.choices([blocks.yellow_flower().runtime_id, blocks.tallgrass().runtime_id, blocks.red_flower(random.choice(list(blocks.red_flower().types.keys()))).runtime_id, None], weights=(1, 4, 1, 4), k=10)
                         block = max(set(block_list), key=block_list.count)
                         if block is not None:
                             result.set_block_runtime_id(x, sea_level + y + 1, z, block)
