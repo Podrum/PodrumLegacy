@@ -245,4 +245,11 @@ from podrum.block.default.lit_deepslate_redstone_ore import lit_deepslate_redsto
 from podrum.block.default.deepslate_diamond_ore import deepslate_diamond_ore
 from podrum.block.default.deepslate_emerald_ore import deepslate_emerald_ore
 from podrum.block.default.lit_redstone_ore import lit_redstone_ore
+from podrum.block.default.oak_sapling import oak_sapling
+from podrum.block.default.spruce_sapling import spruce_sapling
+from podrum.block.default.birch_sapling import birch_sapling
+from podrum.block.default.jungle_sapling import jungle_sapling
+from podrum.block.default.acacia_sapling import acacia_sapling
+from podrum.block.default.dark_oak_sapling import dark_oak_sapling
+
 
