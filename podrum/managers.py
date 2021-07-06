@@ -193,6 +193,22 @@ class managers:
         self.block_manager.register_block(blocks.green_concrete())
         self.block_manager.register_block(blocks.red_concrete())
         self.block_manager.register_block(blocks.black_concrete())
+        self.block_manager.register_block(blocks.white_glazed_terracotta())
+        self.block_manager.register_block(blocks.magenta_glazed_terracotta())
+        self.block_manager.register_block(blocks.light_blue_glazed_terracotta())
+        self.block_manager.register_block(blocks.lime_glazed_terracotta())
+        self.block_manager.register_block(blocks.pink_glazed_terracotta())
+        self.block_manager.register_block(blocks.orange_glazed_terracotta())
+        self.block_manager.register_block(blocks.yellow_glazed_terracotta())
+        self.block_manager.register_block(blocks.gray_glazed_terracotta())
+        self.block_manager.register_block(blocks.silver_glazed_terracotta())
+        self.block_manager.register_block(blocks.cyan_glazed_terracotta())
+        self.block_manager.register_block(blocks.purple_glazed_terracotta())
+        self.block_manager.register_block(blocks.blue_glazed_terracotta())
+        self.block_manager.register_block(blocks.brown_glazed_terracotta())
+        self.block_manager.register_block(blocks.green_glazed_terracotta())
+        self.block_manager.register_block(blocks.red_glazed_terracotta())
+        self.block_manager.register_block(blocks.black_glazed_terracotta())
 
     # [register_default_commands]
     # :return: = None
