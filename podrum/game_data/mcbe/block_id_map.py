@@ -566,5 +566,13 @@ block_id_map: dict = {
     "minecraft:stripped_warped_hyphae": 556,
     "minecraft:chiseled_nether_bricks": 557,
     "minecraft:cracked_nether_bricks": 558,
-    "minecraft:quartz_bricks": 559
+    "minecraft:quartz_bricks": 559,
+    "minecraft:deepslate": 633,
+    "minecraft:deepslate_lapis_ore": 655,
+    "minecraft:deepslate_iron_ore": 656,
+    "minecraft:deepslate_gold_ore": 657,
+    "minecraft:deepslate_redstone_ore": 658,
+    "minecraft:lit_deepslate_redstone_ore": 659,
+    "minecraft:deepslate_diamond_ore": 660,
+    "minecraft:deepslate_emerald_ore": 662
 }
