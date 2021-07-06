@@ -33,7 +33,6 @@ trap door variants
 item frame
 ladder
 leaves variant
-lit redstone lamp
 melon stem
 nether bricks variant (added nether bricks)
 nether reactor core variants
