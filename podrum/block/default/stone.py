@@ -19,7 +19,6 @@ from podrum.block.block_manager import block_manager
 
 class stone(block):
     def __init__(self) -> None:
-        self.types = {"stone": 0, "granite": 1, "polished_granite": 2, "diorite": 3, "polished_diorite": 4, "andesite": 5, "polished_andesite": 6}
         super().__init__("minecraft:stone", 0, 1.5, 6)
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
