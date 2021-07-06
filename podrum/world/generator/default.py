@@ -47,7 +47,7 @@ class default:
                 # decorate land
                 if not chunk_type == "water":
                     if random.uniform(0, 1) > 0.85:
-                        block_list = random.choices([blocks.yellow_flower().runtime_id, blocks.tallgrass().runtime_id, blocks.poppy().runtime_id, None], weights=(1, 4, 1, 4), k=10)
+                        block_list = random.choices([blocks.yellow_flower().runtime_id, blocks.tallgrass().runtime_id, blocks.fern().runtime_id, blocks.poppy().runtime_id, None], weights=(1, 3, 1, 2, 3), k=10)
                         block = max(set(block_list), key=block_list.count)
                         if block is not None:
                             result.set_block_runtime_id(x, sea_level + y + 1, z, block)
