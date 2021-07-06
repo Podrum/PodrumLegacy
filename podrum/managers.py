@@ -275,6 +275,13 @@ class managers:
         self.block_manager.register_block(blocks.deepslate_diamond_ore())
         self.block_manager.register_block(blocks.deepslate_emerald_ore())
         self.block_manager.register_block(blocks.lit_redstone_ore())
+        self.block_manager.register_block(blocks.oak_sapling())
+        self.block_manager.register_block(blocks.spruce_sapling())
+        self.block_manager.register_block(blocks.birch_sapling())
+        self.block_manager.register_block(blocks.jungle_sapling())
+        self.block_manager.register_block(blocks.acacia_sapling())
+        self.block_manager.register_block(blocks.dark_oak_sapling())
+
 
     # [register_default_commands]
     # :return: = None
