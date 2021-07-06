@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class lava(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:lava", 0, -1, 100)
+        super().__init__("minecraft:lava", 0, -1, 100, "minecraft:lava")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.creates_sources: bool = False

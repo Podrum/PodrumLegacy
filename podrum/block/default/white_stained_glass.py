@@ -20,7 +20,7 @@ from podrum.block.default.colors import colors
 
 class white_stained_glass(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:stained_glass", 0, 0.3, 0.3)
+        super().__init__("minecraft:stained_glass", 0, 0.3, 0.3, "minecraft:stained_glass")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class daylight_sensor(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:daylight_detector", 0, 0.2, 0.2)
+        super().__init__("minecraft:daylight_detector", 0, 0.2, 0.2, "minecraft:daylight_detector")
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.transparent: bool = True

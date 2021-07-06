@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class crafting_table(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:crafting_table", 0, 2.5, 2.5)
+        super().__init__("minecraft:crafting_table", 0, 2.5, 2.5, "minecraft:crafting_table")
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.catches_fire_from_lava: bool = True

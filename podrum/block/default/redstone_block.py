@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class redstone_block(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:redstone_block", 0, 5, 6)
+        super().__init__("minecraft:redstone_block", 0, 5, 6, "minecraft:redstone_block")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
         self.transparent: bool = True

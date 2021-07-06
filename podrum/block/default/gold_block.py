@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class gold_block(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:gold_block", 0, 3, 6)
+        super().__init__("minecraft:gold_block", 0, 3, 6, "minecraft:gold_block")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

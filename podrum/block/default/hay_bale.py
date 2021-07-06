@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class hay_bale(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:hay_block", 0, 0.5, 0.5)
+        super().__init__("minecraft:hay_block", 0, 0.5, 0.5, "minecraft:hay_block")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.flammable: bool = True

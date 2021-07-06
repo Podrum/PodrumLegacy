@@ -20,6 +20,6 @@ from podrum.block.default.colors import colors
 
 class gray_glazed_terracotta(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:gray_glazed_terracotta", 0, 1.4, 1.4)
+        super().__init__("minecraft:gray_glazed_terracotta", 0, 1.4, 1.4, "minecraft:gray_glazed_terracotta")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

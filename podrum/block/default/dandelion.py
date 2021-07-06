@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class dandelion(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:yellow_flower", 0, 0, 0)
+        super().__init__("minecraft:yellow_flower", 0, 0, 0, "minecraft:yellow_flower")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

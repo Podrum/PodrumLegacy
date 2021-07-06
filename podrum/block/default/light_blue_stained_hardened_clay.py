@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class light_blue_stained_hardened_clay(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:stained_hardened_clay", 3, 1.25, 4.2)
+        super().__init__("minecraft:stained_hardened_clay", 3, 1.25, 4.2, "minecraft:stained_hardened_clay")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

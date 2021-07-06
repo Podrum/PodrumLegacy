@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class cobblestone(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:cobblestone", 0, 2, 6)
+        super().__init__("minecraft:cobblestone", 0, 2, 6, "minecraft:cobblestone")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

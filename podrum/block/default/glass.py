@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class glass(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:glass", 0, 0.3, 0.3)
+        super().__init__("minecraft:glass", 0, 0.3, 0.3, "minecraft:glass")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

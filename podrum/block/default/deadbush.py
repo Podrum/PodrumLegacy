@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class deadbush(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:deadbush", 0, 0, 0)
+        super().__init__("minecraft:deadbush", 0, 0, 0, "minecraft:deadbush")
         self.stack_size: int = 64
         self.tool: int = tool.shears
         self.transparent: bool = True

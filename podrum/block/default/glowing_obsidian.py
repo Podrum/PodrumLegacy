@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class glowing_obsidian(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:glowingobsidian", 0, 50, 1200)
+        super().__init__("minecraft:glowingobsidian", 0, 50, 1200, "minecraft:glowingobsidian")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
         self.luminant: bool = True

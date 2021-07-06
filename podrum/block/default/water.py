@@ -17,6 +17,6 @@ from podrum.block.block import block
 
 class water(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:water", 0, 0, 0)
+        super().__init__("minecraft:water", 0, 0, 0, "minecraft:water")
         self.stack_size: int = 64
         self.transparent: bool = True

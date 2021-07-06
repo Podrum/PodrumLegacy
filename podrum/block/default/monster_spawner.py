@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class monster_spawner(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:mob_spawner", 0, 5, 5)
+        super().__init__("minecraft:mob_spawner", 0, 5, 5, "minecraft:mob_spawner")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
         self.luminant: bool = True

@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class wooden_planks(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:planks", 0, 2, 3)
+        super().__init__("minecraft:planks", 0, 2, 3, "minecraft:planks")
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.flammable: bool = True

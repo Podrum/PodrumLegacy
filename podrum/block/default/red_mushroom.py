@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class red_mushroom(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:red_mushroom", 0, 0, 0)
+        super().__init__("minecraft:red_mushroom", 0, 0, 0, "minecraft:red_mushroom")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

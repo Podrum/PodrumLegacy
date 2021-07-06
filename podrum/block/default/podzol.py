@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class podzol(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:podzol", 0, 0.5, 0.5)
+        super().__init__("minecraft:podzol", 0, 0.5, 0.5, "minecraft:podzol")
         self.stack_size: int = 64
         self.tool: int = tool.shovel

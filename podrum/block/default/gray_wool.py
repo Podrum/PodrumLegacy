@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class gray_wool(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:wool", 7, 0.8, 0.8)
+        super().__init__("minecraft:wool", 7, 0.8, 0.8, "minecraft:wool")
         self.stack_size: int = 64
         self.tool: int = tool.shears
         self.flammable: bool = True

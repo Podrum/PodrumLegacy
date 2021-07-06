@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class end_stone_brick(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:end_bricks", 0, 3, 9)
+        super().__init__("minecraft:end_bricks", 0, 3, 9, "minecraft:end_bricks")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

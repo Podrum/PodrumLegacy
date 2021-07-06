@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class prismarine(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:prismarine", 0, 1.5, 6)
+        super().__init__("minecraft:prismarine", 0, 1.5, 6, "minecraft:prismarine")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

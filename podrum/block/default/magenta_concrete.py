@@ -20,6 +20,6 @@ from podrum.block.default.colors import colors
 
 class magenta_concrete(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:concrete", 2, 1.8, 1.8)
+        super().__init__("minecraft:concrete", 2, 1.8, 1.8, "minecraft:concrete")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

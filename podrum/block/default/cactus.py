@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class cactus(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:cactus", 0, 0.4, 0.4)
+        super().__init__("minecraft:cactus", 0, 0.4, 0.4, "minecraft:cactus")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class quartz_block(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:quartz_block", 0, 0.8, 0.8)
+        super().__init__("minecraft:quartz_block", 0, 0.8, 0.8, "minecraft:quartz_block")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class cobweb(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:web", 0, 4, 4)
+        super().__init__("minecraft:web", 0, 4, 4, "minecraft:web")
         self.stack_size: int = 64
         self.tool: int = tool.shears
         self.transparent: bool = True

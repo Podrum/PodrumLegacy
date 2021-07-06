@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class obsidian(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:obsidian", 0, 50, 1200)
+        super().__init__("minecraft:obsidian", 0, 50, 1200, "minecraft:obsidian")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

@@ -19,6 +19,6 @@ from podrum.block.block_manager import block_manager
 
 class stone(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:stone", 0, 1.5, 6)
+        super().__init__("minecraft:stone", 0, 1.5, 6, "minecraft:stone")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

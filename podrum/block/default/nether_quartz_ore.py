@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class nether_quartz_ore(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:quartz_ore", 0, 3, 3)
+        super().__init__("minecraft:quartz_ore", 0, 3, 3, "minecraft:quartz_ore")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

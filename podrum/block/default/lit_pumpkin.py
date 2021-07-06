@@ -18,7 +18,7 @@ from podrum.block.tool import tool
 
 class lit_pumpkin(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:lit_pumpkin", 0, 1, 1)
+        super().__init__("minecraft:lit_pumpkin", 0, 1, 1, "minecraft:lit_pumpkin")
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.luminant: bool = True
