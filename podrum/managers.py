@@ -225,6 +225,22 @@ class managers:
         self.block_manager.register_block(blocks.green_stained_glass())
         self.block_manager.register_block(blocks.red_stained_glass())
         self.block_manager.register_block(blocks.black_stained_glass())
+        self.block_manager.register_block(blocks.white_stained_hardened_clay())
+        self.block_manager.register_block(blocks.magenta_stained_hardened_clay())
+        self.block_manager.register_block(blocks.light_blue_stained_hardened_clay())
+        self.block_manager.register_block(blocks.lime_stained_hardened_clay())
+        self.block_manager.register_block(blocks.pink_stained_hardened_clay())
+        self.block_manager.register_block(blocks.orange_stained_hardened_clay())
+        self.block_manager.register_block(blocks.yellow_stained_hardened_clay())
+        self.block_manager.register_block(blocks.gray_stained_hardened_clay())
+        self.block_manager.register_block(blocks.light_gray_stained_hardened_clay())
+        self.block_manager.register_block(blocks.cyan_stained_hardened_clay())
+        self.block_manager.register_block(blocks.purple_stained_hardened_clay())
+        self.block_manager.register_block(blocks.blue_stained_hardened_clay())
+        self.block_manager.register_block(blocks.brown_stained_hardened_clay())
+        self.block_manager.register_block(blocks.green_stained_hardened_clay())
+        self.block_manager.register_block(blocks.red_stained_hardened_clay())
+        self.block_manager.register_block(blocks.black_stained_hardened_clay())
 
     # [register_default_commands]
     # :return: = None
