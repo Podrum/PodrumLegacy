@@ -227,3 +227,4 @@ from podrum.block.default.brown_stained_glass_pane import brown_stained_glass_pa
 from podrum.block.default.green_stained_glass_pane import green_stained_glass_pane
 from podrum.block.default.red_stained_glass_pane import red_stained_glass_pane
 from podrum.block.default.black_stained_glass_pane import black_stained_glass_pane
+from podrum.block.default.fern import fern
