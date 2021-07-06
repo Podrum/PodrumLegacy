@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class andesite(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:stone", 5, 3, 3)
+        super().__init__("minecraft:stone", 5, 3, 3, "minecraft:stone")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
