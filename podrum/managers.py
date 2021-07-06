@@ -267,6 +267,13 @@ class managers:
         self.block_manager.register_block(blocks.spruce_leaves())
         self.block_manager.register_block(blocks.deepslate())
         self.block_manager.register_block(blocks.birch_leaves())
+        self.block_manager.register_block(blocks.deepslate_iron_ore())
+        self.block_manager.register_block(blocks.deepslate_gold_ore())
+        self.block_manager.register_block(blocks.deepslate_lapis_ore())
+        self.block_manager.register_block(blocks.deepslate_redstone_ore())
+        self.block_manager.register_block(blocks.lit_deepslate_redstone_ore())
+        self.block_manager.register_block(blocks.deepslate_diamond_ore())
+        self.block_manager.register_block(blocks.deepslate_emerald_ore())
 
     # [register_default_commands]
     # :return: = None
