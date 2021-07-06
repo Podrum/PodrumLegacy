@@ -24,7 +24,7 @@ class block:
         self.hardness: float = hardness
         self.blast_resistance: float = blast_resistance
         self.runtime_id: int = block_map.get_runtime_id(name, meta)
-        self.network_id: int = item_id_map[item_name]
+        self.network_id: int = item_id_map[item_name if item_name != "" else name.lower()]
         self.stack_size: int = 0
         self.tool: int = tool.none
         self.luminant: bool = False
