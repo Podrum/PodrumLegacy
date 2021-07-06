@@ -230,3 +230,11 @@ from podrum.block.default.black_stained_glass_pane import black_stained_glass_pa
 from podrum.block.default.fern import fern
 from podrum.block.default.wet_sponge import wet_sponge
 from podrum.block.default.lit_redstone_lamp import lit_redstone_lamp
+from podrum.block.default.oak_leaves import oak_leaves
+from podrum.block.default.spruce_leaves import spruce_leaves
+from podrum.block.default.birch_leaves import birch_leaves
+from podrum.block.default.jungle_leaves import jungle_leaves
+from podrum.block.default.acacia_leaves import acacia_leaves
+from podrum.block.default.dark_oak_leaves import dark_oak_leaves
+from podrum.block.default.deepslate import deepslate
+
