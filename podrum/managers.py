@@ -257,6 +257,7 @@ class managers:
         self.block_manager.register_block(blocks.green_stained_glass_pane())
         self.block_manager.register_block(blocks.red_stained_glass_pane())
         self.block_manager.register_block(blocks.black_stained_glass_pane())
+        self.block_manager.register_block(blocks.fern())
 
     # [register_default_commands]
     # :return: = None
