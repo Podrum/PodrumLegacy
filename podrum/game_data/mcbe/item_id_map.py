@@ -796,6 +796,7 @@ item_id_map: dict = {
     "minecraft:record_11": 510,
     "minecraft:record_wait": 511,
     "minecraft:shield": 513,
+    "minecraft:deepslate": 633,
     "minecraft:campfire": 720,
     "minecraft:suspicious_stew": 734,
     "minecraft:honeycomb": 736,
