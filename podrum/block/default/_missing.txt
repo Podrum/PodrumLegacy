@@ -12,8 +12,6 @@ chest/double chests
 cobble stairs
 cobble walls
 cocoa plant
-concrete (colors)
-concrete powder
 detector rail
 door
 double tall grass
@@ -32,7 +30,6 @@ iron trap door
 trap door variants
 item frame
 ladder
-leaves variant
 melon stem
 nether bricks variant (added nether bricks)
 nether reactor core variants
@@ -49,11 +46,9 @@ red sandstone, stairs, slabs, and block variants (added red sandstone)
 redstone torch
 red sand
 sand stone stairs, slabs, and block variants (added sandstone)
-saplings
 sign variants
 skulls
 snow layers
-wet sponge
 stained clay
 stained glass
 stain glass panes
@@ -68,5 +63,3 @@ trapped chest
 tripwire
 tripwire hooks
 vines
-lily pads
-wool colors
