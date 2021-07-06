@@ -260,6 +260,13 @@ class managers:
         self.block_manager.register_block(blocks.fern())
         self.block_manager.register_block(blocks.wet_sponge())
         self.block_manager.register_block(blocks.lit_redstone_lamp())
+        self.block_manager.register_block(blocks.oak_leaves())
+        self.block_manager.register_block(blocks.jungle_leaves())
+        self.block_manager.register_block(blocks.dark_oak_leaves())
+        self.block_manager.register_block(blocks.acacia_leaves())
+        self.block_manager.register_block(blocks.spruce_leaves())
+        self.block_manager.register_block(blocks.deepslate())
+        self.block_manager.register_block(blocks.birch_leaves())
 
     # [register_default_commands]
     # :return: = None
