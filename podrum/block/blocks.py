@@ -211,5 +211,19 @@ from podrum.block.default.brown_stained_hardened_clay import brown_stained_harde
 from podrum.block.default.green_stained_hardened_clay import green_stained_hardened_clay
 from podrum.block.default.red_stained_hardened_clay import red_stained_hardened_clay
 from podrum.block.default.black_stained_hardened_clay import black_stained_hardened_clay
-
-
+from podrum.block.default.white_stained_glass_pane import white_stained_glass_pane
+from podrum.block.default.orange_stained_glass_pane import orange_stained_glass_pane
+from podrum.block.default.magenta_stained_glass_pane import magenta_stained_glass_pane
+from podrum.block.default.yellow_stained_glass_pane import yellow_stained_glass_pane
+from podrum.block.default.light_blue_stained_glass_pane import light_blue_stained_glass_pane
+from podrum.block.default.lime_stained_glass_pane import lime_stained_glass_pane
+from podrum.block.default.pink_stained_glass_pane import pink_stained_glass_pane
+from podrum.block.default.gray_stained_glass_pane import gray_stained_glass_pane
+from podrum.block.default.light_gray_stained_glass_pane import light_gray_stained_glass_pane
+from podrum.block.default.cyan_stained_glass_pane import cyan_stained_glass_pane
+from podrum.block.default.purple_stained_glass_pane import purple_stained_glass_pane
+from podrum.block.default.blue_stained_glass_pane import blue_stained_glass_pane
+from podrum.block.default.brown_stained_glass_pane import brown_stained_glass_pane
+from podrum.block.default.green_stained_glass_pane import green_stained_glass_pane
+from podrum.block.default.red_stained_glass_pane import red_stained_glass_pane
+from podrum.block.default.black_stained_glass_pane import black_stained_glass_pane
