@@ -18,6 +18,6 @@ from podrum.block.tool import tool
 
 class cyan_concrete_powder(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:concretePowder", 9, 0.5, 0.5)
+        super().__init__("minecraft:concretePowder", 9, 0.5, 0.5, "minecraft:concrete_powder")
         self.stack_size: int = 64
         self.tool: int = tool.shovel
