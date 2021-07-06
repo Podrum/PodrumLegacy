@@ -150,7 +150,18 @@ class managers:
         self.block_manager.register_block(blocks.polished_diorite())
         self.block_manager.register_block(blocks.andesite())
         self.block_manager.register_block(blocks.polished_andesite())
-        blocks.red_flower.register(blocks.red_flower())
+        self.block_manager.register_block(blocks.poppy())
+        self.block_manager.register_block(blocks.blue_orchid())
+        self.block_manager.register_block(blocks.oxeye_daisy())
+        self.block_manager.register_block(blocks.azure_bluet())
+        self.block_manager.register_block(blocks.white_tulip())
+        self.block_manager.register_block(blocks.pink_tulip())
+        self.block_manager.register_block(blocks.red_tulip())
+        self.block_manager.register_block(blocks.orange_tulip())
+        self.block_manager.register_block(blocks.cornflower())
+        self.block_manager.register_block(blocks.lily_of_the_valley())
+        self.block_manager.register_block(blocks.allium())
+
         blocks.concrete.register(blocks.concrete())
 
     
