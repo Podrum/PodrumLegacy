@@ -105,7 +105,7 @@ from podrum.block.default.yellow_wool import yellow_wool
 from podrum.block.default.light_blue_wool import light_blue_wool
 from podrum.block.default.lime_wool import lime_wool
 from podrum.block.default.pink_wool import pink_wool
-from podrum.block.default.gay_wool import gray_wool
+from podrum.block.default.gray_wool import gray_wool
 from podrum.block.default.light_gray_wool import light_gray_wool
 from podrum.block.default.cyan_wool import cyan_wool
 from podrum.block.default.purple_wool import purple_wool
@@ -179,4 +179,20 @@ from podrum.block.default.brown_glazed_terracotta import brown_glazed_terracotta
 from podrum.block.default.green_glazed_terracotta import green_glazed_terracotta
 from podrum.block.default.red_glazed_terracotta import red_glazed_terracotta
 from podrum.block.default.black_glazed_terracotta import black_glazed_terracotta
+from podrum.block.default.white_stained_glass import white_stained_glass
+from podrum.block.default.orange_stained_glass import orange_stained_glass
+from podrum.block.default.magenta_stained_glass import magenta_stained_glass
+from podrum.block.default.yellow_stained_glass import yellow_stained_glass
+from podrum.block.default.light_blue_stained_glass import light_blue_stained_glass
+from podrum.block.default.lime_stained_glass import lime_stained_glass
+from podrum.block.default.pink_stained_glass import pink_stained_glass
+from podrum.block.default.gray_stained_glass import gray_stained_glass
+from podrum.block.default.light_gray_stained_glass import light_gray_stained_glass
+from podrum.block.default.cyan_stained_glass import cyan_stained_glass
+from podrum.block.default.purple_stained_glass import purple_stained_glass
+from podrum.block.default.blue_stained_glass import blue_stained_glass
+from podrum.block.default.brown_stained_glass import brown_stained_glass
+from podrum.block.default.green_stained_glass import green_stained_glass
+from podrum.block.default.red_stained_glass import red_stained_glass
+from podrum.block.default.black_stained_glass import black_stained_glass
 
