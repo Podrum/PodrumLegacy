@@ -21,5 +21,5 @@ class sea_lantern(block):
         super().__init__("minecraft:seaLantern", 0, 0.3, 0.3, "minecraft:sealantern")
         self.stack_size: int = 64
         self.tool: int = tool.none
-        self.luminant: bool = True
+        self.luminant: int = 15
         self.transparent: bool = True

@@ -21,5 +21,5 @@ class brewing_stand(block):
         super().__init__("minecraft:brewing_stand", 0, 0.5, 0.5, "minecraft:brewing_stand")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
-        self.luminant: bool = True
+        self.luminant: int = 1
         self.transparent: bool = True

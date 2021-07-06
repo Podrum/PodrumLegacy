@@ -16,9 +16,9 @@
 from podrum.block.block import block
 from podrum.block.tool import tool
 
-class lit_redstone_lamp(block):
+class lit_redstone_ore(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:lit_redstone_lamp", 0, 0.3, 0.3, "minecraft:lit_redstone_lamp")
+        super().__init__("minecraft:lit_redstone_ore", 0, 3, 3, "minecraft:lit_redstone_ore")
         self.stack_size: int = 64
-        self.tool: int = tool.none
-        self.luminant: int = 15
+        self.tool: int = tool.pickaxe
+        self.luminant: int = 9

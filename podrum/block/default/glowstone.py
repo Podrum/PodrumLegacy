@@ -22,4 +22,4 @@ class glowstone(block):
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True
-        self.luminant: bool = True
+        self.luminant: int = 15

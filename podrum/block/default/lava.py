@@ -24,3 +24,4 @@ class lava(block):
         self.creates_sources: bool = False
         self.flow_speed: int = 30
         self.flow_distance: int = 4
+        self.luminant: int = 15

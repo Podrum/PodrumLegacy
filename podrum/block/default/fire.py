@@ -21,5 +21,5 @@ class fire(block):
         super().__init__("minecraft:fire", 0, 0, 0, "minecraft:fire")
         self.stack_size: int = 64
         self.tool: int = tool.none
-        self.luminant: bool = True
+        self.luminant: int = 15
         self.catches_fire_from_lava: bool = True

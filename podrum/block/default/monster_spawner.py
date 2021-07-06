@@ -21,5 +21,5 @@ class monster_spawner(block):
         super().__init__("minecraft:mob_spawner", 0, 5, 5, "minecraft:mob_spawner")
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
-        self.luminant: bool = True
+        self.luminant: int = 3
         self.transparent: bool = True
