@@ -209,6 +209,22 @@ class managers:
         self.block_manager.register_block(blocks.green_glazed_terracotta())
         self.block_manager.register_block(blocks.red_glazed_terracotta())
         self.block_manager.register_block(blocks.black_glazed_terracotta())
+        self.block_manager.register_block(blocks.white_stained_glass())
+        self.block_manager.register_block(blocks.magenta_stained_glass())
+        self.block_manager.register_block(blocks.light_blue_stained_glass())
+        self.block_manager.register_block(blocks.lime_stained_glass())
+        self.block_manager.register_block(blocks.pink_stained_glass())
+        self.block_manager.register_block(blocks.orange_stained_glass())
+        self.block_manager.register_block(blocks.yellow_stained_glass())
+        self.block_manager.register_block(blocks.gray_stained_glass())
+        self.block_manager.register_block(blocks.light_gray_stained_glass())
+        self.block_manager.register_block(blocks.cyan_stained_glass())
+        self.block_manager.register_block(blocks.purple_stained_glass())
+        self.block_manager.register_block(blocks.blue_stained_glass())
+        self.block_manager.register_block(blocks.brown_stained_glass())
+        self.block_manager.register_block(blocks.green_stained_glass())
+        self.block_manager.register_block(blocks.red_stained_glass())
+        self.block_manager.register_block(blocks.black_stained_glass())
 
     # [register_default_commands]
     # :return: = None
