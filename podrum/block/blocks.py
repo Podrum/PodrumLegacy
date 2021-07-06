@@ -229,3 +229,4 @@ from podrum.block.default.red_stained_glass_pane import red_stained_glass_pane
 from podrum.block.default.black_stained_glass_pane import black_stained_glass_pane
 from podrum.block.default.fern import fern
 from podrum.block.default.wet_sponge import wet_sponge
+from podrum.block.default.lit_redstone_lamp import lit_redstone_lamp
