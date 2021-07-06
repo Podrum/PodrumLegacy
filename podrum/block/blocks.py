@@ -237,4 +237,11 @@ from podrum.block.default.jungle_leaves import jungle_leaves
 from podrum.block.default.acacia_leaves import acacia_leaves
 from podrum.block.default.dark_oak_leaves import dark_oak_leaves
 from podrum.block.default.deepslate import deepslate
+from podrum.block.default.deepslate_iron_ore import deepslate_iron_ore
+from podrum.block.default.deepslate_gold_ore import deepslate_gold_ore
+from podrum.block.default.deepslate_lapis_ore import deepslate_lapis_ore
+from podrum.block.default.deepslate_redstone_ore import deepslate_redstone_ore
+from podrum.block.default.lit_deepslate_redstone_ore import lit_deepslate_redstone_ore
+from podrum.block.default.deepslate_diamond_ore import deepslate_diamond_ore
+from podrum.block.default.deepslate_emerald_ore import deepslate_emerald_ore
 
