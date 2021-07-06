@@ -19,7 +19,7 @@ from podrum.block.block_manager import block_manager
 
 class allium(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:red_flower", 2, 0, 0)
+        super().__init__("minecraft:red_flower", 2, 0, 0, "minecraft:red_flower")
         self.stack_size: int = 6
         self.tool: int = tool.none
         self.transparent: bool = True
