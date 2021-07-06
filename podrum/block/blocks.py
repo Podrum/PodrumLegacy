@@ -163,4 +163,20 @@ from podrum.block.default.brown_concrete import brown_concrete
 from podrum.block.default.green_concrete import green_concrete
 from podrum.block.default.red_concrete import red_concrete
 from podrum.block.default.black_concrete import black_concrete
+from podrum.block.default.white_glazed_terracotta import white_glazed_terracotta
+from podrum.block.default.orange_glazed_terracotta import orange_glazed_terracotta
+from podrum.block.default.magenta_glazed_terracotta import magenta_glazed_terracotta
+from podrum.block.default.yellow_glazed_terracotta import yellow_glazed_terracotta
+from podrum.block.default.light_blue_glazed_terracotta import light_blue_glazed_terracotta
+from podrum.block.default.lime_glazed_terracotta import lime_glazed_terracotta
+from podrum.block.default.pink_glazed_terracotta import pink_glazed_terracotta
+from podrum.block.default.gray_glazed_terracotta import gray_glazed_terracotta
+from podrum.block.default.silver_glazed_terracotta import silver_glazed_terracotta
+from podrum.block.default.cyan_glazed_terracotta import cyan_glazed_terracotta
+from podrum.block.default.purple_glazed_terracotta import purple_glazed_terracotta
+from podrum.block.default.blue_glazed_terracotta import blue_glazed_terracotta
+from podrum.block.default.brown_glazed_terracotta import brown_glazed_terracotta
+from podrum.block.default.green_glazed_terracotta import green_glazed_terracotta
+from podrum.block.default.red_glazed_terracotta import red_glazed_terracotta
+from podrum.block.default.black_glazed_terracotta import black_glazed_terracotta
 
