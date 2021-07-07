@@ -251,5 +251,6 @@ from podrum.block.default.birch_sapling import birch_sapling
 from podrum.block.default.jungle_sapling import jungle_sapling
 from podrum.block.default.acacia_sapling import acacia_sapling
 from podrum.block.default.dark_oak_sapling import dark_oak_sapling
-
-
+from podrum.block.default.prismarine import prismarine
+from podrum.block.default.dark_prismarine import dark_prismarine
+from podrum.block.default.prismarine_bricks import prismarine_bricks
