@@ -26,18 +26,18 @@ Nó vẫn là một sự phát triển tích cực nhưng có những lợi th�
 
 **1.** Dễ sử dụng.
 
-**2.** Được viết bằng Pythhon có nghĩa là các plugin rất dễ viết.
+**2.** Được viết bằng Python có nghĩa là các plugin rất dễ viết.
 ## :
  - [x] World Generation 
  - [x] Networking
  - [x] Commands
  - [x] MOTD
- - [x] Betretbar/joinbar
+ - [x] Unible
  - [x] Plugin API
  - [ ] Mobs  
 
 ## Executer:
-Linux et MacOS (Systèmes Unix):
+Linux hoặc MacOS (System Unix):
 ```sh
 pip3 install -r ./requirements.txt
 python3 __main__.py
