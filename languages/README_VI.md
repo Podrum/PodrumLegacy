@@ -27,7 +27,7 @@ Nó vẫn là một sự phát triển tích cực nhưng có những lợi th�
 **1.** Dễ sử dụng.
 
 **2.** Được viết bằng Python có nghĩa là các plugin rất dễ viết.
-## :
+## Đặc trưng:
  - [x] World Generation 
  - [x] Networking
  - [x] Commands
