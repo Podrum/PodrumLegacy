@@ -12,7 +12,11 @@
 # of the source code. If not you may not use this file. #
 #                                                       #
 #########################################################
-
+try:
+    import chunk_utils
+    has_chunk_utils: bool = True
+except Exception as e:
+    has_chunk_utils: bool = False
 import math
 from podrum.block.default.air import air
 
@@ -76,24 +80,27 @@ class block_storage:
             self.palette.append(self.read_signed_var_int())
 
     def network_serialize(self, stream: object) -> None:
-        bits_per_block: int = max(math.ceil(math.log2(len(self.palette))), 1)
-        for bits in [1, 2, 3, 4, 5, 6, 8, 16]:
-            if bits >= bits_per_block:
-                bits_per_block: int = bits
-                break
-        stream.write_unsigned_byte((bits_per_block << 1) | 1)
-        blocks_per_word: int = math.floor(32 / bits_per_block)
-        words_per_chunk: int = math.ceil(4096 / blocks_per_word)
-        pos: int = 0
-        for chunk in range(0, words_per_chunk):
-            word: int = 0
-            for block in range(0, blocks_per_word):
-                if pos >= 4096:
+        if not has_chunk_utils:
+            bits_per_block: int = max(math.ceil(math.log2(len(self.palette))), 1)
+            for bits in [1, 2, 3, 4, 5, 6, 8, 16]:
+                if bits >= bits_per_block:
+                    bits_per_block: int = bits
                     break
-                state: int = self.blocks[pos]
-                word |= state << (bits_per_block * block)
-                pos += 1
-            stream.write_unsigned_int_le(word)
-        stream.write_signed_var_int(len(self.palette))
-        for runtime_id in self.palette:
-            stream.write_signed_var_int(runtime_id)
+            stream.write_unsigned_byte((bits_per_block << 1) | 1)
+            blocks_per_word: int = math.floor(32 / bits_per_block)
+            words_per_chunk: int = math.ceil(4096 / blocks_per_word)
+            pos: int = 0
+            for chunk in range(0, words_per_chunk):
+                word: int = 0
+                for block in range(0, blocks_per_word):
+                    if pos >= 4096:
+                        break
+                    state: int = self.blocks[pos]
+                    word |= state << (bits_per_block * block)
+                    pos += 1
+                stream.write_unsigned_int_le(word)
+            stream.write_signed_var_int(len(self.palette))
+            for runtime_id in self.palette:
+                stream.write_signed_var_int(runtime_id)
+        else:
+            stream.write(chunk_utils.block_storage_network_serialize(self.blocks, self.palette, len(self.palette)))
