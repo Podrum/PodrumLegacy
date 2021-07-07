@@ -103,4 +103,4 @@ class block_storage:
             for runtime_id in self.palette:
                 stream.write_signed_var_int(runtime_id)
         else:
-            stream.write(chunk_utils.block_storage_network_serialize(self.blocks, self.palette, len(self.palette)))
+            stream.write(chunk_utils.block_storage_network_serialize(self.blocks, self.palette))
