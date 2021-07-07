@@ -81,11 +81,7 @@ class start_game_packet(mcbe_packet):
         self.write_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0) # block states length
-        self.write_var_int(len(self.item_table)) # item table length
-        for string_id, numeric_id in self.item_table.items():
-            self.write_string(string_id)
-            self.write_short_le(numeric_id)
-            self.write_bool(False)
+        self.write_item_states(self.item_states)
         self.write_string(self.multiplayer_correlation_id)
         self.write_bool(self.server_authoritative_inventories)
         self.write_string(self.server_engine)
