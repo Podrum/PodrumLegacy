@@ -11,7 +11,7 @@
 
 # Podrum
 
-<p align="center">README aussi disponible en:</p>
+<p align="center">README auch verfügbar in:</p>
 <div align="center">
   <a href="../README.md">English🇺🇸</a>
   <a href="./README_FR.md">Français🇫🇷</a>
@@ -21,12 +21,12 @@
 <br>
 
 
-Podrum ist eine Minecraft Server software geschrieben in Python.
-Es ist unter aktiver Entwicklung und hat bis jetzt paar vorteile:
+Podrum ist eine Minecraft Server Software geschrieben in Python.
+Es ist unter aktiver Entwicklung und hat bis jetzt paar Vorteile:
 
 **1.** Einfach zu verwenden,
 
-**2.** Geschrieben in python, was es einfacher macht Plugins zu programmieren.
+**2.** Geschrieben in Python, was es einfacher macht Plugins zu programmieren.
 
 ## Features:
  - [x] Welten Generation
@@ -53,15 +53,15 @@ python __main__.py
 # FAQ:
  - Kann ich mit helfen?
  > Klar.
- - Welche Python version sollte ich verwenden?
- > Jede version über 3.5 funktioniert aber wir empfehlen dir die neuste.
+ - Welche Python Version sollte ich verwenden?
+ > Jede Version über 3.5 funktioniert aber wir empfehlen dir die neuste.
  - Ist es kostenlos?
  > Yep.
- - Ist sie für Minecraft java oder bedrock?
- > Es ist immoment nur für bedrock aber villeicht wird es ja ein Plugin mal für die java geben.
+ - Ist sie für Minecraft Java oder Bedrock?
+ > Es ist immoment nur für bedrock aber villeicht wird es ja ein Plugin mal für die Java geben.
  - Kann ich es jetzt schon verwenden?
- > Wir empfehlen es dir noch nicht für ernste projekte.
+ > Wir empfehlen es dir noch nicht für ernste Projekte.
  - Unterstützt es Plugins?
- > Ja tut es, du kannst sie in Python (oder mit tricks in anderen sprachen schreiben).
+ > Ja tut es, du kannst sie in Python (oder mit tricks in anderen Sprachen schreiben).
  - Ich habe eine Frage die hier nicht beantwortet wurde wo kann ich sie Fragen?
  > Auf unserem [discord](https://discord.gg/ScSsnwQ4kW).
