@@ -104,29 +104,3 @@ class region:
         file.seek(0)
         file.write(index_location_data + timestamp_data + chunks_data)
         file.close()
-        
-    def remove_chunk_data(self, x: int, z: int) -> None:
-        file: object = open(self.path, "r+b")
-        index_location: int = self.get_location(x, z)
-        index_location_data: bytes = b""
-        timestamp_data: bytes = b""
-        chunks_data: bytes = b""
-        offset: int = 2
-        for i in range(0, 1024):
-            file.seek(i << 2)
-            chunk_offset: int = binary_converter.read_unsigned_triad_be(file.read(3))
-            sector_count: int = binary_converter.read_unsigned_byte(file.read(1))
-            if chunk_offset > 0 and sector_count > 0 and i != (index_location >> 2):
-                index_location_data += binary_converter.write_unsigned_triad_be(offset)
-                index_location_data += binary_converter.write_unsigned_byte(sector_count)
-                offset += sector_count
-                file.seek((i << 2) + 4096)
-                timestamp_data += file.read(4)
-                file.seek(chunk_offset << 12)
-                chunks_data += file.read(sector_count << 12)
-            else:
-                index_location_data += b"\x00" * 4
-                timestamp_data += b"\x00" * 4
-        file.seek(0)
-        file.write(index_location_data + timestamp_data + chunks_data)
-        file.close()
