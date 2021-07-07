@@ -58,10 +58,10 @@ python __main__.py
  - Ist es kostenlos?
  > Yep.
  - Ist sie für Minecraft Java oder Bedrock?
- > Es ist immoment nur für bedrock aber villeicht wird es ja ein Plugin mal für die Java geben.
+ > Es ist immoment nur für Bedrock aber vielleicht wird es ja ein Plugin mal für die Java geben.
  - Kann ich es jetzt schon verwenden?
  > Wir empfehlen es dir noch nicht für ernste Projekte.
  - Unterstützt es Plugins?
  > Ja tut es, du kannst sie in Python (oder mit tricks in anderen Sprachen schreiben).
  - Ich habe eine Frage die hier nicht beantwortet wurde wo kann ich sie Fragen?
- > Auf unserem [discord](https://discord.gg/ScSsnwQ4kW).
+ > Auf unserem [Discord](https://discord.gg/ScSsnwQ4kW).
