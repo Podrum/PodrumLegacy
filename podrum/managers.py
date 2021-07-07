@@ -298,6 +298,7 @@ class managers:
         self.command_manager.register(commands.tell_command(self.server))
         self.command_manager.register(commands.version_command(self.server))
         self.command_manager.register(commands.kick_command(self.server))
+        self.command_manager.register(commands.list_command(self.server))
     
     # [register_default_events]
     # :return: = None
