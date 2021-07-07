@@ -99,7 +99,6 @@ class managers:
         self.block_manager.register_block(blocks.obsidian())
         self.block_manager.register_block(blocks.packed_ice())
         self.block_manager.register_block(blocks.podzol())
-        self.block_manager.register_block(blocks.prismarine())
         self.block_manager.register_block(blocks.pumpkin())
         self.block_manager.register_block(blocks.purpur())
         self.block_manager.register_block(blocks.quartz_block())
@@ -281,6 +280,9 @@ class managers:
         self.block_manager.register_block(blocks.jungle_sapling())
         self.block_manager.register_block(blocks.acacia_sapling())
         self.block_manager.register_block(blocks.dark_oak_sapling())
+        self.block_manager.register_block(blocks.prismarine())
+        self.block_manager.register_block(blocks.dark_prismarine())
+        self.block_manager.register_block(blocks.prismarine_bricks())
 
 
     # [register_default_commands]
