@@ -17,6 +17,7 @@ import binascii
 from binary_utils.binary_stream import binary_stream
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
+from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.protocol.mcbe.type.gamerule_type import gamerule_type
@@ -346,7 +347,7 @@ class mcbe_binary_stream(binary_stream):
             result["block_runtime_id"] = self.read_signed_var_int()
             result["extra"] = []
             for i in range(0, self.read_var_int()):
-                if result["network_id"] == 355:
+                if result["network_id"] == item_id_map["minecraft:shield"]:
                     result["extra"].append(self.read_item_extra_data_with_blocking_tick())
                 else:
                     result["extra"].append(self.read_item_extra_data_without_blocking_tick())
@@ -360,7 +361,7 @@ class mcbe_binary_stream(binary_stream):
             self.write_signed_var_int(value["block_runtime_id"])
             self.write_var_int(len(value["extra"]))
             for extra in value["extra"]:
-                if value["network_id"] == 355:
+                if value["network_id"] == item_id_map["minecraft:shield"]:
                     self.write_item_extra_data_with_blocking_tick(extra)
                 else:
                     self.write_item_extra_data_without_blocking_tick(extra)
@@ -378,7 +379,7 @@ class mcbe_binary_stream(binary_stream):
             result["block_runtime_id"] = self.read_signed_var_int()
             result["extra"] = []
             for i in range(0, self.read_var_int()):
-                if result["network_id"] == 355:
+                if result["network_id"] == item_id_map["minecraft:shield"]:
                     result["extra"].append(self.read_item_extra_data_with_blocking_tick())
                 else:
                     result["extra"].append(self.read_item_extra_data_without_blocking_tick())
@@ -394,7 +395,7 @@ class mcbe_binary_stream(binary_stream):
             self.write_signed_var_int(value["block_runtime_id"])
             self.write_var_int(len(value["extra"]))
             for extra in value["extra"]:
-                if value["network_id"] == 355:
+                if value["network_id"] == item_id_map["minecraft:shield"]:
                     self.write_item_extra_data_with_blocking_tick(extra)
                 else:
                     self.write_item_extra_data_without_blocking_tick(extra)
