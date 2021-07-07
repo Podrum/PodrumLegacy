@@ -16,7 +16,7 @@
 from podrum.event.event import event
 from podrum.block.block import block
 
-class player_join_event(event):
+class player_block_break_event(event):
 
     def __init__(self, player: object, position: int, block: block) -> None:
         self.player: object = player
