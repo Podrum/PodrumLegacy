@@ -23,7 +23,6 @@ ender chest
 fence variants
 fence gate variants
 glazed terracotta
-glowing redstone ore
 iron door
 door variants
 iron trap door
@@ -36,9 +35,9 @@ nether reactor core variants
 nether wart crop
 planks variants (added oak planks)
 powered rails
-prismarine variants (added prismarine)
 carved pumpkin
 pumpkin stem
+prismarine stairs, slabs, and block variants (added prismarine blocks)
 purpur stairs, slabs, and block variants (added purpur)
 quartz stairs, slabs, and block variants (added quartz block)
 red mushroom block variants
