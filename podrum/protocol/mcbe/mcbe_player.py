@@ -22,7 +22,7 @@ from podrum.event.default.player.player_sneak_event import player_sneak_event
 from podrum.event.default.player.player_sprint_event import player_sprint_event
 from podrum.event.default.player.player_jump_event import player_jump_event
 from podrum.event.default.player.player_form_response_event import player_form_response_event
-from podrum.game_data.mcbe.item_id_map import item_id_map
+from podrum.game_data.mcbe.item_states import item_states
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.protocol.mcbe import packets
@@ -137,7 +137,7 @@ class mcbe_player:
         packet.server_authoritative_block_breaking = False
         packet.current_tick = 0
         packet.enchantment_seed = 0
-        packet.item_table = item_id_map
+        packet.item_states = item_states
         packet.multiplayer_correlation_id = ""
         packet.server_authoritative_inventories = False
         packet.server_engine = "Podrum"
