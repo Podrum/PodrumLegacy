@@ -37,6 +37,7 @@ from podrum.world.chunk.sub_chunk import sub_chunk
 from podrum.world.chunk_utils import chunk_utils
 from podrum.world.provider.anvil.chunk import chunk
 from podrum.world.provider.anvil.region import region
+from podrum.config import config
 import random
 import sys
 import time
@@ -47,6 +48,7 @@ class anvil:
     
     def __init__(self, world_dir: str) -> None:
         self.world_dir: str = os.path.abspath(world_dir)
+        self.config: object = config(os.path.join(os.getcwd(), "server.json"))
         if not os.path.isdir(self.world_dir):
             os.mkdir(self.world_dir)
         if not os.path.isfile(os.path.join(self.world_dir, "level.dat")):
@@ -274,7 +276,7 @@ class anvil:
                 long_tag("RandomSeed", random.randint(0, sys.maxsize)),
                 long_tag("SizeOnDisk", 0),
                 long_tag("Time", 0),
-                string_tag("generatorName", "default"),
+                string_tag("generatorName", self.config.data["world_type"]),
                 string_tag("LevelName", "world"),
                 compound_tag("GameRules", [])
             ])
