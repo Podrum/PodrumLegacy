@@ -28,11 +28,10 @@ class default:
         spawn_position: object = world.get_spawn_position()
         # Default: 62, Reduced to 20 for faster load time
         sea_level: int = 62
-        seed: int = 421086205
         chunk_type: str = "normal"
 
         # generates perlin noise
-        perlin: object = Perlin(seed=seed)
+        perlin: object = Perlin(seed=world.server.config.data["seed"])
 
         # chunk generation
         for x in range(0, 16):
@@ -54,7 +53,7 @@ class default:
 
                 # fills in gaps underneath grass
                 for i in range(sea_level + y + 1):
-                    if (sea_level + (y - i)) == 0: 
+                    if (sea_level + (y - i)) == 0:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.bedrock().runtime_id)
                     elif (sea_level + (y - i)) <= 2:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.bedrock().runtime_id, blocks.deepslate().runtime_id]))
@@ -62,9 +61,9 @@ class default:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.deepslate().runtime_id)
                     elif (sea_level + (y - i)) <= 6:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.stone().runtime_id, blocks.deepslate().runtime_id]))
-                    elif (i <= 2): 
+                    elif (i <= 2):
                         result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, blocks.dirt().runtime_id if not chunk_type == "water" else blocks.sand().runtime_id)
-                    else: 
+                    else:
                         result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, blocks.stone().runtime_id)
 
                 # fills in water to sea level
