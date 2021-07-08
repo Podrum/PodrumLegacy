@@ -23,3 +23,5 @@ from podrum.command.default.tell_command import tell_command
 from podrum.command.default.version_command import version_command
 from podrum.command.default.kick_command import kick_command
 from podrum.command.default.list_command import list_command
+from podrum.command.default.me_command import me_command
+from podrum.command.default.seed_command import seed_command
