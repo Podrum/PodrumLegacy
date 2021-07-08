@@ -48,9 +48,6 @@ sand stone stairs, slabs, and block variants (added sandstone)
 sign variants
 skulls
 snow layers
-stained clay
-stained glass
-stain glass panes
 banners
 still lava/water
 stone brick stairs, slabs, block variants
