@@ -62,6 +62,10 @@ class server:
             self.config.data["world_provider"] = "anvil"
         if "world_name" not in self.config.data:
             self.config.data["world_name"] = "world"
+        if "world_type" not in self.config.data:
+            self.config.data["world_type"] = "default"
+        if "seed" not in self.config.data:
+            self.config.data["seed"] = 421086205
         self.config.save()      
 
     def start(self) -> None:
