@@ -287,3 +287,4 @@ from podrum.block.default.chest import chest
 from podrum.block.default.trapped_chest import trapped_chest
 from podrum.block.default.ender_chest import ender_chest
 from podrum.block.default.end_portal_frame import end_portal_frame
+from podrum.block.default.cake import cake
