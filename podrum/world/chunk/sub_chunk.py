@@ -30,6 +30,12 @@ class sub_chunk:
         
     def get_highest_block_at(self, x: int, z: int, layer: int) -> int:
         return self.get_block_storage(layer).get_highest_block_at(x, z)
+    
+    def is_empty(self) -> bool:
+        for storage in self.block_storages:
+            if not storage.is_empty():
+                return False
+        return True
 
     def network_deserialize(self, stream: object) -> None:
         version: int = stream.read_unsigned_byte()
