@@ -299,6 +299,14 @@ class managers:
         self.block_manager.register_block(blocks.stripped_dark_oak_log())
         self.block_manager.register_block(blocks.stripped_crimson_stem())
         self.block_manager.register_block(blocks.stripped_warped_stem())
+        self.block_manager.register_block(blocks.oak_wood_planks())
+        self.block_manager.register_block(blocks.spruce_wood_planks())
+        self.block_manager.register_block(blocks.birch_wood_planks())
+        self.block_manager.register_block(blocks.jungle_wood_planks())
+        self.block_manager.register_block(blocks.acacia_wood_planks())
+        self.block_manager.register_block(blocks.dark_oak_wood_planks())
+        self.block_manager.register_block(blocks.crimson_planks())
+        self.block_manager.register_block(blocks.warped_planks())
 
 
     # [register_default_commands]
