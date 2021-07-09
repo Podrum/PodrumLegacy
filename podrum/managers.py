@@ -283,6 +283,22 @@ class managers:
         self.block_manager.register_block(blocks.prismarine())
         self.block_manager.register_block(blocks.dark_prismarine())
         self.block_manager.register_block(blocks.prismarine_bricks())
+        self.block_manager.register_block(blocks.oak_log())
+        self.block_manager.register_block(blocks.spruce_log())
+        self.block_manager.register_block(blocks.birch_log())
+        self.block_manager.register_block(blocks.jungle_log())
+        self.block_manager.register_block(blocks.acacia_log())
+        self.block_manager.register_block(blocks.dark_oak_log())
+        self.block_manager.register_block(blocks.crimson_stem())
+        self.block_manager.register_block(blocks.warped_stem())
+        self.block_manager.register_block(blocks.stripped_oak_log())
+        self.block_manager.register_block(blocks.stripped_spruce_log())
+        self.block_manager.register_block(blocks.stripped_birch_log())
+        self.block_manager.register_block(blocks.stripped_jungle_log())
+        self.block_manager.register_block(blocks.stripped_acacia_log())
+        self.block_manager.register_block(blocks.stripped_dark_oak_log())
+        self.block_manager.register_block(blocks.stripped_crimson_stem())
+        self.block_manager.register_block(blocks.stripped_warped_stem())
 
 
     # [register_default_commands]
