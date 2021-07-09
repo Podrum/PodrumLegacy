@@ -310,6 +310,11 @@ class managers:
         self.block_manager.register_block(blocks.warped_planks())
         self.block_manager.register_block(blocks.warped_wart_block())
         self.block_manager.register_block(blocks.red_sand())
+        self.block_manager.register_block(blocks.stonecutter())
+        self.block_manager.register_block(blocks.chest())
+        self.block_manager.register_block(blocks.trapped_chest())
+        self.block_manager.register_block(blocks.ender_chest())
+        self.block_manager.register_block(blocks.end_portal_frame())
 
 
     # [register_default_commands]
