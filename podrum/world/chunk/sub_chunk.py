@@ -29,7 +29,7 @@ class sub_chunk:
         self.block_storages[layer].set_block_runtime_id(x, y, z, runtime_id)
         
     def get_highest_block_at(self, x: int, z: int, layer: int) -> int:
-        return self.get_block_storage(layer).get_highest_block_at(x, z)
+        return self.block_storages[layer].get_highest_block_at(x, z)
     
     def is_empty(self) -> bool:
         for storage in self.block_storages:
