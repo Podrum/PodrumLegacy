@@ -57,7 +57,8 @@ from podrum.block.default.iron_block import iron_block
 from podrum.block.default.iron_ore import iron_ore
 from podrum.block.default.lapis_block import lapis_block
 from podrum.block.default.lapis_ore import lapis_ore
-from podrum.block.default.lava import lava
+from podrum.block.default.still_lava import still_lava
+from podrum.block.default.flowing_lava import flowing_lava
 from podrum.block.default.lit_pumpkin import lit_pumpkin
 from podrum.block.default.magma_block import magma
 from podrum.block.default.monster_spawner import monster_spawner
@@ -92,7 +93,8 @@ from podrum.block.default.stone_bricks import stone_bricks
 from podrum.block.default.sugar_cane import sugar_cane
 from podrum.block.default.tnt import tnt
 from podrum.block.default.wooden_planks import wooden_planks
-from podrum.block.default.water import water
+from podrum.block.default.still_water import still_water
+from podrum.block.default.flowing_water import flowing_water
 from podrum.block.default.tallgrass import tallgrass
 from podrum.block.default.yellow_flower import yellow_flower
 from podrum.block.default.double_plant import double_plant
