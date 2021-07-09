@@ -33,13 +33,13 @@ class chunk:
             self.biomes: list = [0] * 256
     
     def get_sub_chunk_send_count(self) -> int:
-        top_empty: int = 16
-        #for i in range(0, 16 + 1):
-        #    if self.sub_chunks[i].is_empty():
-        #        top_empty: int = i
-        #    else:
-        #        break
-        return top_empty
+        top_empty: int = 0
+        for i in range(15, -1, -1):
+            if self.sub_chunks[i].is_empty():
+                top_empty += 1
+            else:
+                break
+        return 16 - top_empty
         
     def get_block_runtime_id(self, x: int, y: int, z: int, layer: int = 0) -> int:
         return self.sub_chunks[y >> 4].get_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, layer)
