@@ -16,11 +16,11 @@
 from podrum.world.chunk.block_storage import block_storage
 
 class sub_chunk:
-    def __init__(self, block_storages: dict = {}) -> None:
+    def __init__(self, block_storages: list = []) -> None:
         if len(block_storages) < 2:
-            self.block_storages: dict = {0: block_storage(), 1: block_storage()}
+            self.block_storages: list = [block_storage(), block_storage()]
         else:
-            self.block_storages: dict = block_storages
+            self.block_storages: list = block_storages
     
     def get_block_runtime_id(self, x: int, y: int, z: int, layer: int) -> int:
         return self.block_storages[layer].get_block_runtime_id(x, y, z)
