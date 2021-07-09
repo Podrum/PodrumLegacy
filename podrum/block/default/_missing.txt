@@ -8,7 +8,7 @@ button variants
 cake variants
 carpet variants
 crop variants (wheat, potato, carrot, beetroot)
-chest/double chests
+double chests
 cobble stairs
 cobble walls
 cocoa plant
@@ -50,7 +50,6 @@ banners
 stone brick stairs, slabs, block variants
 pressure plates
 buttons
-stone cutter
 torch
 trapped chest
 tripwire
