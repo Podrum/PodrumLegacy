@@ -50,5 +50,5 @@ class sub_chunk:
     def network_serialize(self, stream: object) -> None:
         stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
-        for storage in self.block_storages.values():
+        for storage in self.block_storages:
             storage.network_serialize(stream)
