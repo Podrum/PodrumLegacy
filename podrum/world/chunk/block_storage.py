@@ -88,7 +88,7 @@ class block_storage:
         if not has_chunk_utils:
             bits_per_block: int = math.ceil(math.log2(len(self.palette)))
             if bits_per_block == 0:
-                bits_per_block: int = 0
+                bits_per_block: int = 1
             elif 1 <= bits_per_block <= 6:
                 pass
             elif 7 <= bits_per_block <= 8:
