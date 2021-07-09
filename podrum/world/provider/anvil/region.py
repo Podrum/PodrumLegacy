@@ -28,11 +28,17 @@ class region:
         self.x: int = int(file_name_shards[1])
         self.z: int = int(file_name_shards[2])
         self.format: str = file_name_shards[3]
-        if not os.path.isfile(path):
-            with open(path, "wb") as file:
-                file.write(b"\x00" * 8192)
-                file.close()
-
+        if not os.path.isfile(path + ".lock"):
+            if not os.path.isfile(path):
+                open(path + ".lock", "w").close()
+                with open(path, "wb") as file:
+                    file.write(b"\x00" * 8192)
+                    file.close()
+                os.remove(path + ".lock")
+        else:
+            while not os.path.isfile(path + ".lock"):
+                pass
+        
     @staticmethod
     def get_location(x: int, z: int) -> int:
         return 4 * ((x & 31) + (z & 31) * 32)
