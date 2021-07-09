@@ -270,3 +270,11 @@ from podrum.block.default.stripped_acacia_log import stripped_acacia_log
 from podrum.block.default.stripped_dark_oak_log import stripped_dark_oak_log
 from podrum.block.default.stripped_crimson_stem import stripped_crimson_stem
 from podrum.block.default.stripped_warped_stem import stripped_warped_stem
+from podrum.block.default.oak_wood_planks import oak_wood_planks
+from podrum.block.default.spruce_wood_planks import spruce_wood_planks
+from podrum.block.default.birch_wood_planks import birch_wood_planks
+from podrum.block.default.jungle_wood_planks import jungle_wood_planks
+from podrum.block.default.acacia_wood_planks import acacia_wood_planks
+from podrum.block.default.dark_oak_wood_planks import dark_oak_wood_planks
+from podrum.block.default.crimson_planks import crimson_planks
+from podrum.block.default.warped_planks import warped_planks
