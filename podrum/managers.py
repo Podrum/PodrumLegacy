@@ -315,6 +315,7 @@ class managers:
         self.block_manager.register_block(blocks.trapped_chest())
         self.block_manager.register_block(blocks.ender_chest())
         self.block_manager.register_block(blocks.end_portal_frame())
+        self.block_manager.register_block(blocks.cake())
 
 
     # [register_default_commands]
