@@ -15,8 +15,6 @@
 
 from podrum.block.block import block
 from podrum.block.tool import tool
-from podrum.block.block_manager import block_manager
-from podrum.block.default.colors import colors
 
 class red_stained_glass(block):
     def __init__(self) -> None:

@@ -15,7 +15,6 @@
 
 from podrum.block.block import block
 from podrum.block.tool import tool
-from podrum.block.block_manager import block_manager
 
 class cornflower(block):
     def __init__(self) -> None:
