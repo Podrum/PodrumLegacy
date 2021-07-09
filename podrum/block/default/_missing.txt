@@ -33,7 +33,6 @@ melon stem
 nether bricks variant (added nether bricks)
 nether reactor core variants
 nether wart crop
-planks variants (added oak planks)
 powered rails
 carved pumpkin
 pumpkin stem
@@ -43,13 +42,11 @@ quartz stairs, slabs, and block variants (added quartz block)
 red mushroom block variants
 red sandstone, stairs, slabs, and block variants (added red sandstone)
 redstone torch
-red sand
 sand stone stairs, slabs, and block variants (added sandstone)
 sign variants
 skulls
 snow layers
 banners
-still lava/water
 stone brick stairs, slabs, block variants
 pressure plates
 buttons
