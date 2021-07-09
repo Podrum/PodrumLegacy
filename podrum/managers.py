@@ -308,6 +308,7 @@ class managers:
         self.block_manager.register_block(blocks.crimson_planks())
         self.block_manager.register_block(blocks.warped_planks())
         self.block_manager.register_block(blocks.warped_wart_block())
+        self.block_manager.register_block(blocks.red_sand())
 
 
     # [register_default_commands]
