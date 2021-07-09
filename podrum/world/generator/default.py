@@ -69,7 +69,7 @@ class default:
                 # fills in water to sea level
                 if sea_level + y <= sea_level:
                     for i in range(sea_level - (sea_level + y)):
-                        result.set_block_runtime_id(x, sea_level + y + i + 1, z, blocks.water().runtime_id)
+                        result.set_block_runtime_id(x, sea_level + y + i + 1, z, blocks.still_water().runtime_id)
 
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 256
