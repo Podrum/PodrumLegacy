@@ -36,7 +36,7 @@ class region:
                     file.close()
                 os.remove(path + ".lock")
         else:
-            while not os.path.isfile(path + ".lock"):
+            while os.path.isfile(path + ".lock"):
                 pass
         
     @staticmethod
