@@ -282,3 +282,8 @@ from podrum.block.default.crimson_planks import crimson_planks
 from podrum.block.default.warped_planks import warped_planks
 from podrum.block.default.warped_wart_block import warped_wart_block
 from podrum.block.default.red_sand import red_sand
+from podrum.block.default.stonecutter import stonecutter
+from podrum.block.default.chest import chest
+from podrum.block.default.trapped_chest import trapped_chest
+from podrum.block.default.ender_chest import ender_chest
+from podrum.block.default.end_portal_frame import end_portal_frame
