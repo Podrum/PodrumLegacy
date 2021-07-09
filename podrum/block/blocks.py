@@ -278,3 +278,5 @@ from podrum.block.default.acacia_wood_planks import acacia_wood_planks
 from podrum.block.default.dark_oak_wood_planks import dark_oak_wood_planks
 from podrum.block.default.crimson_planks import crimson_planks
 from podrum.block.default.warped_planks import warped_planks
+
+from podrum.block.default.warped_wart_block import warped_wart_block
