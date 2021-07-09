@@ -55,7 +55,7 @@ class mcbe_player:
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
         self.chunk_send_queue: object = Queue()
-        self.start_chunk_send_workers(5)
+        self.start_chunk_send_workers(1)
             
     def chunk_send_worker(self) -> None:
         while True:
@@ -64,6 +64,7 @@ class mcbe_player:
                 if item is None:
                     break
                 if not self.world.has_loaded_chunk(item[0], item[1]):
+                    self.send_network_chunk_publisher_update()
                     self.chunk_send_queue.put(item)
                 else:
                     c: object = self.world.get_chunk(item[0], item[1])
@@ -383,7 +384,6 @@ class mcbe_player:
             self.handle_interact_packet(data)
 
     def send_chunks(self) -> None:
-        self.send_network_chunk_publisher_update()
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
         chunk_x_end: int = (math.floor(self.position.x) >> 4) + self.view_distance
         chunk_z_start: int = (math.floor(self.position.z) >> 4) - self.view_distance
