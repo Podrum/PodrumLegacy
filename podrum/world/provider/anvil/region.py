@@ -63,37 +63,34 @@ class region:
         if compression_type == 3:
             return chunk_data
 
-    def put_chunk_data(self, chunks: list, compression_type: int = 2) -> None:
+    def put_chunk_data(self, x: int, z: int, chunk_data: bytes, compression_type: int = 2) -> None:
         file: object = open(self.path, "r+b")
-        chunks_dictionary: dict = {}
-        for chunk in chunks:
-            if compression_type == 1:
-                cc: bytes = gzip.compress(chunk[2])
-            elif compression_type == 2:
-                cc: bytes = zlib.compress(chunk[2])
-            elif compression_type == 3:
-                cc: bytes = chunk[2]
-            else:
-                return
-            ccc: bytes = binary_converter.write_unsigned_int_be(len(cc))
-            ccc += binary_converter.write_unsigned_byte(compression_type)
-            ccc += cc
-            size: int = math.ceil(len(ccc) / 4096)
-            remaining: int = (size << 12) - len(ccc)
-            ccc += b"\x00" * remaining
-            index_location: int = region.get_location(x, z)
-            chunks_dictionary[index_location] = (ccc, size)
+        if compression_type == 1:
+            cc: bytes = gzip.compress(chunk_data)
+        elif compression_type == 2:
+            cc: bytes = zlib.compress(chunk_data)
+        elif compression_type == 3:
+            cc: bytes = chunk_data
+        else:
+            return
+        ccc: bytes = binary_converter.write_unsigned_int_be(len(cc))
+        ccc += binary_converter.write_unsigned_byte(compression_type)
+        ccc += cc
+        size: int = math.ceil(len(ccc) / 4096)
+        remaining: int = (size << 12) - len(ccc)
+        ccc += b"\x00" * remaining
+        index_location: int = region.get_location(x, z)
         index_location_data: bytes = b""
         timestamp_data: bytes = b""
         chunks_data: bytes = b""
         offset: int = 2
         for i in range(0, 1024):
-            if i << 2 in chunks_dictionary:
-                sector_count: int = chunks_dictionary[i << 2][1]
+            if i == (index_location >> 2):
+                sector_count: int = size
                 index_location_data += binary_converter.write_unsigned_triad_be(offset)
                 index_location_data += binary_converter.write_unsigned_byte(sector_count)
                 timestamp_data += binary_converter.write_unsigned_int_be(int(time.time()))
-                chunks_data += chunks_dictionary[i << 2][0]
+                chunks_data += ccc
                 offset += sector_count
             else:
                 file.seek(i << 2)
