@@ -40,6 +40,11 @@ class block_storage:
         assert x >= 0 and x < 16, f"x ({x}) is not between 0 and 15"
         assert y >= 0 and y < 16, f"y ({y}) is not between 0 and 15"
         assert z >= 0 and z < 16, f"z ({z}) is not between 0 and 15"
+        
+    def is_empty(self) -> bool:
+        if self.blocks == [0] * 4096:
+            return True
+        return False
     
     def get_block_runtime_id(self, x, y, z) -> int:
         block_storage.check_bounds(x, y, z)
