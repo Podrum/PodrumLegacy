@@ -5,21 +5,15 @@ bed variants
 brown mushroom block variants
 furnace variants
 button variants
-cake variants
 carpet variants
 crop variants (wheat, potato, carrot, beetroot)
 double chests
-cobble stairs
-cobble walls
+cobble stairs, slabs, and variants (cobblestone registered)
 cocoa plant
 detector rail
 door
 double tall grass
-slab variants
-stair variants
-end portal frame
 end rod
-ender chest
 fence variants
 fence gate variants
 glazed terracotta
@@ -36,7 +30,7 @@ nether wart crop
 powered rails
 carved pumpkin
 pumpkin stem
-prismarine stairs, slabs, and block variants (added prismarine blocks)
+prismarine stairs, slabs (added prismarine blocks)
 purpur stairs, slabs, and block variants (added purpur)
 quartz stairs, slabs, and block variants (added quartz block)
 red mushroom block variants
@@ -51,7 +45,6 @@ stone brick stairs, slabs, block variants
 pressure plates
 buttons
 torch
-trapped chest
 tripwire
 tripwire hooks
 vines
