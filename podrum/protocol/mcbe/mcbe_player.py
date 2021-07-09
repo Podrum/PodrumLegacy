@@ -383,6 +383,7 @@ class mcbe_player:
             self.handle_interact_packet(data)
 
     def send_chunks(self) -> None:
+        self.send_network_chunk_publisher_update()
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
         chunk_x_end: int = (math.floor(self.position.x) >> 4) + self.view_distance
         chunk_z_start: int = (math.floor(self.position.z) >> 4) - self.view_distance
@@ -391,7 +392,6 @@ class mcbe_player:
             for chunk_z in range(chunk_z_start, chunk_z_end):
                 self.world.load_queue.put((chunk_x, chunk_z))
                 self.chunk_send_queue.put((chunk_x, chunk_z))
-        self.send_network_chunk_publisher_update()
         
     def send_available_commands(self) -> None:
         new_packet: object = packets.available_commands_packet()
