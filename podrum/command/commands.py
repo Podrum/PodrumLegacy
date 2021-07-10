@@ -25,3 +25,4 @@ from podrum.command.default.kick_command import kick_command
 from podrum.command.default.list_command import list_command
 from podrum.command.default.me_command import me_command
 from podrum.command.default.seed_command import seed_command
+from podrum.command.default.gamemode_command import gamemode_command
