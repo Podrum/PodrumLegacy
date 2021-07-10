@@ -21,3 +21,5 @@ from podrum.event.default.player.player_sprint_event import player_sprint_event
 from podrum.event.default.player.player_jump_event import player_jump_event
 from podrum.event.default.player.player_chat_event import player_chat_event
 from podrum.event.default.player.player_form_response_event import player_form_response_event
+from podrum.event.default.player.player_open_inventory_event import player_open_inventory_event
+from podrum.event.default.player.player_close_inventory_event import player_close_inventory_event
