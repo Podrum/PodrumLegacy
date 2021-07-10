@@ -26,6 +26,7 @@ import time
 
 class server:
     def __init__(self) -> None:
+        self.creative_items: dict = {}
         self.setup_config()
         block_map.load_map()
         self.managers: object = managers(self)
