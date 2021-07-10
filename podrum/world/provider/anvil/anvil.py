@@ -189,10 +189,10 @@ class anvil:
     def set_generator_name(self, generator_name: str) -> None:
         self.set_option("generatorName", generator_name)
         
-    def get_time(self) -> str:
+    def get_time(self) -> int:
         return self.get_option("Time")
     
-    def set_time(self, world_time: str) -> None:
+    def set_time(self, world_time: int) -> None:
         self.set_option("Time", world_time)
         
     def get_player_position(self, uuid: str) -> object:
