@@ -16,7 +16,7 @@
 class item_manager:
     def __init__(self) -> None:
         self.items: dict = {}
-        self.creative_items: list = {}
+        self.creative_items: dict = {}
 
     def register_item(self, item_obj: object) -> None:
         self.items[f"{item_obj.name} {item_obj.meta}"] = item_obj
