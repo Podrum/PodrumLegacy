@@ -18,6 +18,6 @@ from podrum.event.event import event
 class player_close_inventory_event(event):
 
     # Gets called when player closes their inventory
-    
+
     def __init__(self, player: object) -> None:
         self.player: object = player
