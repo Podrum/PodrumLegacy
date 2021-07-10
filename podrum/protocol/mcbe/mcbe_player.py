@@ -60,7 +60,6 @@ class mcbe_player:
                 if item is None:
                     break
                 if not self.world.has_loaded_chunk(item[0], item[1]):
-                    self.send_network_chunk_publisher_update()
                     self.chunk_send_queue.put(item)
                 else:
                     c: object = self.world.get_chunk(item[0], item[1])
@@ -282,16 +281,7 @@ class mcbe_player:
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
         packet.decode()
-        resend_chunks: bool = False
-        chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance + 1
-        chunk_x_end: int = (math.floor(self.position.x) >> 4) + self.view_distance - 1
-        chunk_z_start: int = (math.floor(self.position.z) >> 4) - self.view_distance + 1
-        chunk_z_end: int = (math.floor(self.position.z) >> 4) + self.view_distance - 1
-        if chunk_x_end <= packet.position.x <= chunk_x_start:
-            resend_chunks: bool = True
-        if chunk_z_end <= packet.position.z <= chunk_z_start:
-            resend_chunks: bool = True
-        if resend_chunks:
+        if math.floor(self.position.x) >> 4 != math.floor(packet.position.x) >> 4 or math.floor(self.position.z) >> 4 != math.floor(packet.position.z) >> 4:
             Thread(target = self.send_chunks).start()
         move_event: object = events.player_move_event(self, self.position)
         move_event.call()
@@ -416,6 +406,7 @@ class mcbe_player:
         self.send_packet(new_packet.data)
 
     def send_chunks(self) -> None:
+        self.send_network_chunk_publisher_update()
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
         chunk_x_end: int = (math.floor(self.position.x) >> 4) + self.view_distance
         chunk_z_start: int = (math.floor(self.position.z) >> 4) - self.view_distance
