@@ -17,6 +17,7 @@ import math
 import json
 from podrum.event import events
 from podrum.game_data.mcbe.item_states import item_states
+from podrum.geometry.geometry import geometry
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.protocol.mcbe import packets
@@ -281,17 +282,25 @@ class mcbe_player:
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
         packet.decode()
-        #if math.floor(packet.position.x / (8 * 16)) != math.floor(self.position.x / (8 * 16)) or math.floor(packet.position.z / (8 * 16)) != math.floor(self.position.z / (8 * 16)):
-            #Thread(target = self.send_chunks).start()
-        old_position: object = self.position
-        self.position: object = packet.position
-        if math.floor(old_position.x) >> 4 != math.floor(self.position.x) >> 4 or math.floor(old_position.z) >> 4 != math.floor(self.position.z) >> 4:
+        lerped_vector: object = geometry.lerp_vector_3(
+            vector_2(self.position.x, self.position.z),
+            vector_2(packet.position.x, packet.position.z),
+            0.5
+        )
+        resulted_vector: object = vector_3(lerped_vector.x, packet.position.y, lerped_vector.z)
+        resend_chunks: bool = False
+        if math.truc(self.position.x) != math.truc(resulted_vector.x):
+            resend_chunks: bool = True
+        if math.truc(self.position.z) != math.truc(resulted_vector.z):
+            resend_chunks: bool = True
+        if resend_chunks:
             Thread(target = self.send_chunks).start()
         move_event: object = events.player_move_event(self, self.position)
         move_event.call()
         if move_event.canceled:
-            self.position: object = old_position
-            # Todo
+            pass # Resend old pos
+        else:
+            self.position: object = packet.position
 
     def handle_player_action_packet(self, data: bytes): # probably not cancelable
         packet: object = packets.player_action_packet(data)
