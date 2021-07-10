@@ -347,6 +347,8 @@ class managers:
         event_manager.register_event(events.player_jump_event)
         event_manager.register_event(events.player_chat_event)
         event_manager.register_event(events.player_form_response_event)
+        event_manager.register_event(events.player_open_inventory_event)
+        event_manager.register_event(events.player_close_inventory_event)
     
     # [register_default_items]
     # :return: = None
