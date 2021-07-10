@@ -14,20 +14,20 @@
 #########################################################
 
 class item_manager:
-    def __init__(self) -> None:
+    def __init__(self, server: object) -> None:
         self.items: dict = {}
-        self.creative_items: dict = {}
+        self.server: object = server
 
     def register_item(self, item_obj: object) -> None:
         self.items[f"{item_obj.name} {item_obj.meta}"] = item_obj
         if item_obj.is_creative_item:
-            self.creative_items[f"{item_obj.name} {item_obj.meta}"] = {"entry_id": item_obj.entry_id, "item": item_obj.prepare_for_network()}
+            self.server.creative_items[f"{item_obj.name} {item_obj.meta}"] = {"entry_id": item_obj.entry_id, "item": item_obj.prepare_for_network()}
         
-    def remove_item(self, name: str, meta: int) -> None:
-        if f"{name} {meta}" in self.items:
-            del self.items[f"{name} {meta}"]
+    def remove_item(self, item_obj) -> None:
+        if f"{item_obj.name} {item_obj.meta}" in self.items:
+            del self.items[f"{item_obj.name} {item_obj.meta}"]
             if item_obj.is_creative_item:
-                del self.creative_items[f"{item_obj.name} {item_obj.meta}"]
+                del self.server.creative_items[f"{item_obj.name} {item_obj.meta}"]
 
     def get_item(self, name: str, meta: int) -> object:
         if f"{name} {meta}" in self.items:
