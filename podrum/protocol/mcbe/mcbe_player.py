@@ -56,6 +56,7 @@ class mcbe_player:
         self.message_format: str = "<%username> %message"
         self.chunk_send_queue: object = Queue()
         self.start_chunk_send_workers(1)
+        self.container = -1
             
     def chunk_send_worker(self) -> None:
         while True:
@@ -347,14 +348,23 @@ class mcbe_player:
         packet.decode()
         if packet.action_id == interact_type.open_inventory:
             new_packet: object = packets.container_open_packet()
-            new_packet.window_id = window_id_type.creative
+            self.container = window_id_type.creative
+            new_packet.window_id = self.container
             new_packet.window_type = window_type.inventory
             new_packet.coordinates = self.position
             new_packet.runtime_entity_id = self.entity_id
             new_packet.encode()
-            #self.send_packet(new_packet.data)
-            
-            
+            self.send_packet(new_packet.data)
+
+    def handle_close_container_packet(self, data: bytes) -> None:
+        new_packet: object = packets.container_close_packet()
+        new_packet.window_id = self.container
+        self.container = -1
+        new_packet.server = False
+        new_packet.encode()
+        self.send_packet(new_packet.data)
+
+
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = packets.command_request_packet(data)
         packet.decode()
@@ -382,6 +392,9 @@ class mcbe_player:
             self.handle_modal_form_response_packet(data)
         elif data[0] == mcbe_protocol_info.interact_packet:
             self.handle_interact_packet(data)
+        elif data[0] == mcbe_protocol_info.container_close_packet:
+            self.handle_close_container_packet(data)
+
 
     def send_chunks(self) -> None:
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
