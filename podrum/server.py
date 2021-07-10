@@ -138,7 +138,8 @@ class server:
         self.dispatch_command(command, self)
 
     def find_player(self, username: str):
-        usernames = [player.username for player in self.players.values()]
+        usernames = [player.username.lower() for player in self.players.values()]
         players = [player for player in self.players.values()]
-        if username in usernames:
-            return players[usernames.index(username)]
+        for name in usernames:
+            if username == name[:len(username)]:
+                return players[usernames.index(name)]
