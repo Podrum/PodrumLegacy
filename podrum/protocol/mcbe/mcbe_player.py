@@ -153,7 +153,7 @@ class mcbe_player:
         
     def send_creative_content_packet(self) -> None:
         packet: object = packets.creative_content_packet()
-        packet.entries = self.server.managers.item_manager.creative_items.values()
+        packet.entries = self.server.creative_items.values()
         packet.encode()
         self.send_packet(packet.data)
              
@@ -363,7 +363,6 @@ class mcbe_player:
         new_packet.server = False
         new_packet.encode()
         self.send_packet(new_packet.data)
-
 
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = packets.command_request_packet(data)
