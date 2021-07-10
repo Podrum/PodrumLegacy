@@ -15,13 +15,7 @@
 
 import math
 import json
-from podrum.event.default.player.player_chat_event import player_chat_event
-from podrum.event.default.player.player_join_event import player_join_event
-from podrum.event.default.player.player_move_event import player_move_event
-from podrum.event.default.player.player_sneak_event import player_sneak_event
-from podrum.event.default.player.player_sprint_event import player_sprint_event
-from podrum.event.default.player.player_jump_event import player_jump_event
-from podrum.event.default.player.player_form_response_event import player_form_response_event
+from podrum.event import events
 from podrum.game_data.mcbe.item_states import item_states
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
@@ -214,7 +208,7 @@ class mcbe_player:
         packet: object = packets.modal_form_response_packet(data)
         packet.decode()
         data = json.loads(packet.form_data)
-        form_event: object = player_form_response_event(packet.form_id, data, self)
+        form_event: object = events.player_form_response_event(packet.form_id, data, self)
         form_event.call()
 
 
@@ -280,9 +274,9 @@ class mcbe_player:
         if not self.spawned:
             self.send_play_status(login_status_type.spawn)
             self.spawned: bool = True  
-            join_event: object = player_join_event(self)
+            join_event: object = events.player_join_event(self)
             join_event.call()
-            self.server.broadcast_message(player_join_event(self).join_message)
+            self.server.broadcast_message(events.player_join_event(self).join_message)
                 
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
@@ -293,7 +287,7 @@ class mcbe_player:
         self.position: object = packet.position
         if math.floor(old_position.x) >> 4 != math.floor(self.position.x) >> 4 or math.floor(old_position.z) >> 4 != math.floor(self.position.z) >> 4:
             Thread(target = self.send_chunks).start()
-        move_event: object = player_move_event(self, self.position)
+        move_event: object = events.player_move_event(self, self.position)
         move_event.call()
         if move_event.canceled:
             self.position: object = old_position
@@ -303,16 +297,16 @@ class mcbe_player:
         packet: object = packets.player_action_packet(data)
         packet.decode()
         if packet.action in [action_type.start_sneak, action_type.stop_sneak]:
-            sneak_event: object = player_sneak_event(self, False if packet.action == action_type.stop_sneak else True)
+            sneak_event: object = events.player_sneak_event(self, False if packet.action == action_type.stop_sneak else True)
             sneak_event.call()
         elif packet.action in [action_type.start_sprint, action_type.stop_sprint]:
-            sprint_event: object = player_sprint_event(self, False if packet.action == action_type.stop_sprint else True)
+            sprint_event: object = events.player_sprint_event(self, False if packet.action == action_type.stop_sprint else True)
             sprint_event.call()
         elif packet.action == action_type.jump:
-            jump_event: object = player_jump_event(self)
+            jump_event: object = events.player_jump_event(self)
             jump_event.call()
         elif packet.action == action_type.start_sleeping:
-            start_sleeping_event: object = player_start_sleeping_event(self)
+            start_sleeping_event: object = events.player_start_sleeping_event(self)
             start_sleeping_event.call()
 
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
@@ -338,7 +332,7 @@ class mcbe_player:
         packet: object = packets.text_packet(data)
         packet.decode()
         if packet.type == text_type.chat:
-            chat_event: object = player_chat_event(self, packet.message)
+            chat_event: object = events.player_chat_event(self, packet.message)
             chat_event.call()
             if not chat_event.canceled:
                  self.send_chat_message(packet.message)
@@ -355,6 +349,8 @@ class mcbe_player:
             new_packet.runtime_entity_id = self.entity_id
             new_packet.encode()
             self.send_packet(new_packet.data)
+            open_inventory_event: object = events.player_open_inventory_event(self)
+            open_inventory_event.call()
 
     def handle_close_container_packet(self, data: bytes) -> None:
         new_packet: object = packets.container_close_packet()
@@ -363,6 +359,8 @@ class mcbe_player:
         new_packet.server = False
         new_packet.encode()
         self.send_packet(new_packet.data)
+        close_inventory_event: object = events.player_close_inventory_event(self)
+        close_inventory_event.call()
 
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = packets.command_request_packet(data)
