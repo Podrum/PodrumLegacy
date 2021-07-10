@@ -282,16 +282,14 @@ class mcbe_player:
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
         packet.decode()
-        lerped_vector: object = geometry.lerp_vector_3(
-            vector_2(self.position.x, self.position.z),
-            vector_2(packet.position.x, packet.position.z),
-            0.5
-        )
-        resulted_vector: object = vector_3(lerped_vector.x, packet.position.y, lerped_vector.z)
         resend_chunks: bool = False
-        if math.truc(self.position.x) != math.truc(resulted_vector.x):
+        chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance + 1
+        chunk_x_end: int = (math.floor(self.position.x) >> 4) + self.view_distance - 1
+        chunk_z_start: int = (math.floor(self.position.z) >> 4) - self.view_distance + 1
+        chunk_z_end: int = (math.floor(self.position.z) >> 4) + self.view_distance - 1
+        if chunk_x_end <= packet.position.x <= chunk_x_start:
             resend_chunks: bool = True
-        if math.truc(self.position.z) != math.truc(resulted_vector.z):
+        if chunk_z_end <= packet.position.z <= chunk_z_start:
             resend_chunks: bool = True
         if resend_chunks:
             Thread(target = self.send_chunks).start()
