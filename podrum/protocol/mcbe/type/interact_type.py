@@ -16,4 +16,4 @@
 class interact_type:
     leave_vehicle: int = 3
     mouse_over_entity: int = 4
-    open_inventory: int = 4
+    open_inventory: int = 6
