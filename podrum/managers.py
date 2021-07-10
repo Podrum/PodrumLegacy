@@ -33,7 +33,7 @@ class managers:
         self.server: object = server
         self.block_manager: object = block_manager()
         self.command_manager: object = command_manager()
-        self.item_manager: object = item_manager()
+        self.item_manager: object = item_manager(self.server)
         self.plugin_manager: object = plugin_manager(server)
         self.generator_manager: object = generator_manager()
         self.provider_manager: object = provider_manager()
