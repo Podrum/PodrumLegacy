@@ -18,7 +18,7 @@ from podrum.geometry.vector_3 import vector_3
 
 class geometry:
     @staticmethod
-    def lerp_vector_3(self, a: object, b: object, t: float) -> object:
+    def lerp_vector_3(a: object, b: object, t: float) -> object:
         return vector_3(
             a.x + t * (b.x - a.x),
             a.y + t * (b.y - a.y),
@@ -26,7 +26,7 @@ class geometry:
         )
       
     @staticmethod
-    def lerp_vector_2(self, a: object, b: object, t: float) -> object:
+    def lerp_vector_2(a: object, b: object, t: float) -> object:
         return vector_2(
             a.x + t * (b.x - a.x),
             a.z + t * (b.z - a.z),
