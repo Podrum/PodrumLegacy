@@ -21,6 +21,7 @@ from podrum.console.logger import logger
 from podrum.managers import managers
 from podrum.protocol.mcbe.rak_net_interface import rak_net_interface
 from podrum.task.repeating_task import repeating_task
+from podrum.world.world_manager import world_manager
 import sys
 import time
 
@@ -35,6 +36,7 @@ class server:
         self.players: dict = {}
         self.current_entity_id: int = 1
         self.is_ticking: bool = True
+        self.world_manager: object = world_manager(self)
         self.start()
 
     def get_plugin_main(self, name):
@@ -79,8 +81,8 @@ class server:
         worlds_path: str = os.path.join(os.getcwd(), "worlds")
         if not os.path.isfile(worlds_path) and not os.path.isdir(worlds_path):
             os.mkdir(worlds_path)
-        self.managers.world_manager.load_world(self.config.data["world_name"])
-        self.world: object = self.managers.world_manager.get_world_from_folder_name(self.config.data["world_name"])
+        self.world_manager.load_world(self.config.data["world_name"])
+        self.world: object = self.world_manager.get_world_from_folder_name(self.config.data["world_name"])
         self.rak_net_interface.start_interface()
         self.console_input_task: object = repeating_task(self.console_input)
         self.console_input_task.start()
@@ -90,7 +92,10 @@ class server:
         try:
             while self.is_ticking:
                 # Add some sort of ticking?
-                time.sleep(0.0001)
+                for world in self.world_manager.worlds.values():
+                    world.set_time(world.time + 1)
+
+                time.sleep(0.05)
         except KeyboardInterrupt:
             self.stop()
             

@@ -20,6 +20,7 @@ from podrum.geometry.vector_2 import vector_2
 from threading import Thread
 from time import sleep
 from queue import Queue
+from podrum.protocol.mcbe import packets
 from podrum.task.immediate_task import immediate_task
 
 class world:
@@ -33,6 +34,7 @@ class world:
         self.world_path: str = provider.world_dir
         self.load_queue: object = Queue()
         self.unload_queue: object = Queue()
+        self.time: int = 0
     
     # [load_chunk]
     # :return: = None
@@ -264,10 +266,11 @@ class world:
     # Sets the default generator name.
     def set_generator_name(self, generator_name: str) -> None:
         self.provider.set_generator_name(generator_name)
-
-    def get_time(self) -> int:
-        return self.provider.get_time()
     
-    def set_time(self, world_time: int) -> None:
-        self.provider.set_time(world_time)
-
+    def set_time(self, time: int) -> None:
+        self.time = time
+        new_packet: object = packets.set_time_packet()
+        new_packet.time = time
+        new_packet.encode()
+        for player in self.server.players.values():
+            player.send_packet(new_packet.data)

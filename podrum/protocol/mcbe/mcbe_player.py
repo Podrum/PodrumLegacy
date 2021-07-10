@@ -369,7 +369,10 @@ class mcbe_player:
             self.server.dispatch_command(packet.command[1:], self)
 
     def handle_set_player_game_type_packet(self, data: bytes) -> None:
-        print("changed")
+        print("gamemode changed")
+
+    def handle_set_time_packet(self, data: bytes) -> None:
+        print("set time)")
 
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
@@ -396,6 +399,8 @@ class mcbe_player:
             self.handle_close_container_packet(data)
         elif data[0] == mcbe_protocol_info.set_player_game_type_packet:
             self.handle_set_player_game_type_packet(data)
+        elif data[0] == mcbe_protocol_info.set_time_packet:
+            self.handle_set_time_packet(data)
 
     def set_gamemode(self, gamemode: int):
         new_packet: object = packets.set_player_game_type_packet()
