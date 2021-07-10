@@ -368,6 +368,9 @@ class mcbe_player:
         if packet.origin == command_origin_type.player:
             self.server.dispatch_command(packet.command[1:], self)
 
+    def handle_set_player_game_type_packet(self, data: bytes) -> None:
+        print("changed")
+
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
             self.handle_login_packet(data)
@@ -391,7 +394,14 @@ class mcbe_player:
             self.handle_interact_packet(data)
         elif data[0] == mcbe_protocol_info.container_close_packet:
             self.handle_close_container_packet(data)
+        elif data[0] == mcbe_protocol_info.set_player_game_type_packet:
+            self.handle_set_player_game_type_packet(data)
 
+    def set_gamemode(self, gamemode: int):
+        new_packet: object = packets.set_player_game_type_packet()
+        new_packet.gamemode = gamemode
+        new_packet.encode()
+        self.send_packet(new_packet.data)
 
     def send_chunks(self) -> None:
         chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
