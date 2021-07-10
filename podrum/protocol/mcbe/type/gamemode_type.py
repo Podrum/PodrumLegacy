@@ -18,5 +18,9 @@ class gamemode_type:
     creative: int = 1
     adventure: int = 2
     survival_spectator: int = 3
-    creative_spectator: int = 4
+    spectator: int = 4
     fallback: int = 5
+    s: int = 0
+    c: int = 1
+    a: int = 2
+    spec: int = 4
