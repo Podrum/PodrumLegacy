@@ -47,3 +47,4 @@ from podrum.protocol.mcbe.packet.start_game_packet import start_game_packet
 from podrum.protocol.mcbe.packet.text_packet import text_packet
 from podrum.protocol.mcbe.packet.transfer_packet import transfer_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
+from podrum.protocol.mcbe.packet.set_player_game_type_packet import set_player_game_type_packet
