@@ -334,6 +334,7 @@ class managers:
         self.command_manager.register(commands.list_command(self.server))
         self.command_manager.register(commands.me_command(self.server))
         self.command_manager.register(commands.seed_command(self.server))
+        self.command_manager.register(commands.gamemode_command(self.server))
     
     # [register_default_events]
     # :return: = None
