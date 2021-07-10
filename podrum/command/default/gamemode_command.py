@@ -23,8 +23,8 @@ class gamemode_command:
     def execute(self, args: list, sender: object) -> None:
         if len(args) >= 1:
             player = sender
-            if len(args) < 1:
-                player = self.server.find_player(args[0])
+            if len(args) > 1:
+                player = self.server.find_player(args[1])
                 if not player:
                     sender.send_message("This player is not online")
                     return
