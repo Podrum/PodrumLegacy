@@ -141,5 +141,5 @@ class server:
         usernames = [player.username.lower() for player in self.players.values()]
         players = [player for player in self.players.values()]
         for name in usernames:
-            if username == name[:len(username)]:
+            if username.lower() == name[:len(username)]:
                 return players[usernames.index(name)]
