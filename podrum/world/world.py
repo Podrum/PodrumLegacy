@@ -264,9 +264,10 @@ class world:
     # Sets the default generator name.
     def set_generator_name(self, generator_name: str) -> None:
         self.provider.set_generator_name(generator_name)
-        
+
     def get_time(self) -> int:
-        return self.provoder.get_time()
+        return self.provider.get_time()
     
     def set_time(self, world_time: int) -> None:
-        self.provoder.set_time(world_time)
+        self.provider.set_time(world_time)
+
