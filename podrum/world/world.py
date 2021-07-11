@@ -16,12 +16,14 @@
 from collections import deque
 import math
 from podrum.block.block_map import block_map
-from podrum.geometry.vector_2 import vector_2
+from podrum.geometry.vector_3 import vector_3
 from threading import Thread
 from time import sleep
 from queue import Queue
 from podrum.protocol.mcbe import packets
+from podrum.protocol.mcbe import types
 from podrum.task.immediate_task import immediate_task
+import random
 
 class world:
     def __init__(self, provider: object, server: object):
@@ -35,6 +37,8 @@ class world:
         self.load_queue: object = Queue()
         self.unload_queue: object = Queue()
         self.time: int = 0
+        self.raining: bool = False
+        self.thundering: bool = False
     
     # [load_chunk]
     # :return: = None
@@ -64,7 +68,7 @@ class world:
     # :return: = None
     # Saves and unloads a chunk.
     def unload_chunk(self, x: int, z: int) -> None:
-        if f"{x} {z}" not in self.unloading:
+        if f"{x} {z}" not in self.mark_as_unloading:
             self.mark_as_unloading.append(f"{x} {z}")
             if f"{x} {z}" in self.mark_as_saving:
                 self.save_chunk(x, z)
@@ -269,8 +273,25 @@ class world:
     
     def set_time(self, time: int) -> None:
         self.time = time
-        new_packet: object = packets.set_time_packet()
-        new_packet.time = time
-        new_packet.encode()
-        for player in self.server.players.values():
-            player.send_packet(new_packet.data)
+        packet: object = packets.set_time_packet()
+        packet.time = time
+        packet.encode()
+        self.server.broadcast_packet(self, packet)
+
+    def set_raining(self, raining: bool = True, dur: int = random.randint(90000, 110000)):
+        packet: object = packets.level_event_packet()
+        packet.event_id = types.level_event_type.start_rain if raining else types.level_event_type.stop_rain
+        packet.packet_data = dur
+        packet.position = vector_3(0, 0, 0)
+        packet.encode()
+        self.raining = raining
+        self.server.broadcast_packet(self, packet)
+
+    def set_thundering(self, thundering: bool = True, dur: int = random.randint(90000, 110000)):
+        packet: object = packets.level_event_packet()
+        packet.event_id = types.level_event_type.start_thunder if thundering else types.level_event_type.stop_thunder
+        packet.packet_data = dur
+        packet.position = vector_3(0, 0, 0)
+        packet.encode()
+        self.thundering = thundering
+        self.server.broadcast_packet(self, packet)

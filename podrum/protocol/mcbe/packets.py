@@ -49,3 +49,4 @@ from podrum.protocol.mcbe.packet.transfer_packet import transfer_packet
 from podrum.protocol.mcbe.packet.update_attributes_packet import update_attributes_packet
 from podrum.protocol.mcbe.packet.set_player_game_type_packet import set_player_game_type_packet
 from podrum.protocol.mcbe.packet.set_time_packet import set_time_packet
+from podrum.protocol.mcbe.packet.level_event_packet import level_event_packet

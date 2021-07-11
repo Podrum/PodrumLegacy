@@ -28,3 +28,4 @@ from podrum.command.default.seed_command import seed_command
 from podrum.command.default.gamemode_command import gamemode_command
 from podrum.command.default.tell_command import tell_command
 from podrum.command.default.time_command import time_command
+from podrum.command.default.weather_command import weather_command

@@ -24,14 +24,7 @@ from podrum.protocol.mcbe import packets
 from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.game_packet import game_packet
-from podrum.protocol.mcbe.type.action_type import action_type
-from podrum.protocol.mcbe.type.command_origin_type import command_origin_type
-from podrum.protocol.mcbe.type.interact_type import interact_type
-from podrum.protocol.mcbe.type.login_status_type import login_status_type
-from podrum.protocol.mcbe.type.resource_pack_client_response_type import resource_pack_client_response_type
-from podrum.protocol.mcbe.type.text_type import text_type
-from podrum.protocol.mcbe.type.window_id_type import window_id_type
-from podrum.protocol.mcbe.type.window_type import window_type
+from podrum.protocol.mcbe import types
 from podrum.task.immediate_task import immediate_task
 from podrum.world.chunk.chunk import chunk
 from queue import Queue
@@ -171,7 +164,7 @@ class mcbe_player:
                 self.xuid: str = chain["extraData"]["XUID"]
                 self.username: str = chain["extraData"]["displayName"]
                 self.identity: str = chain["extraData"]["identity"]
-        self.send_play_status(login_status_type.success)
+        self.send_play_status(types.login_status_type.success)
         packet: object = packets.resource_packs_info_packet()
         packet.forced_to_accept = False
         packet.scripting_enabled = False
@@ -215,7 +208,7 @@ class mcbe_player:
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
         packet: object = packets.resource_pack_client_response_packet(data)
         packet.decode()
-        if packet.status == resource_pack_client_response_type.none:
+        if packet.status == types.resource_pack_client_response_type.none:
             packet: object = packets.resource_pack_stack_packet()
             packet.forced_to_accept = False
             packet.behavior_pack_id_versions = []
@@ -225,7 +218,7 @@ class mcbe_player:
             packet.experimental = False
             packet.encode()
             self.send_packet(packet.data)
-        elif packet.status == resource_pack_client_response_type.has_all_packs:
+        elif packet.status == types.resource_pack_client_response_type.has_all_packs:
             packet: object = packets.resource_pack_stack_packet()
             packet.forced_to_accept = False
             packet.behavior_pack_id_versions = []
@@ -235,7 +228,7 @@ class mcbe_player:
             packet.experimental = False
             packet.encode()
             self.send_packet(packet.data)
-        elif packet.status == resource_pack_client_response_type.completed:
+        elif packet.status == types.resource_pack_client_response_type.completed:
             self.server.logger.success(f"{self.username} has all packs.")
             self.send_start_game()
             self.send_creative_content_packet()
@@ -272,7 +265,7 @@ class mcbe_player:
         self.send_packet(new_packet.data)
         Thread(target = self.send_chunks).start()
         if not self.spawned:
-            self.send_play_status(login_status_type.spawn)
+            self.send_play_status(types.login_status_type.spawn)
             self.spawned: bool = True  
             join_event: object = events.player_join_event(self)
             join_event.call()
@@ -293,22 +286,22 @@ class mcbe_player:
     def handle_player_action_packet(self, data: bytes): # probably not cancelable
         packet: object = packets.player_action_packet(data)
         packet.decode()
-        if packet.action in [action_type.start_sneak, action_type.stop_sneak]:
-            sneak_event: object = events.player_sneak_event(self, False if packet.action == action_type.stop_sneak else True)
+        if packet.action in [types.action_type.start_sneak, types.action_type.stop_sneak]:
+            sneak_event: object = events.player_sneak_event(self, False if packet.action == types.action_type.stop_sneak else True)
             sneak_event.call()
-        elif packet.action in [action_type.start_sprint, action_type.stop_sprint]:
-            sprint_event: object = events.player_sprint_event(self, False if packet.action == action_type.stop_sprint else True)
+        elif packet.action in [types.action_type.start_sprint, types.action_type.stop_sprint]:
+            sprint_event: object = events.player_sprint_event(self, False if packet.action == types.action_type.stop_sprint else True)
             sprint_event.call()
-        elif packet.action == action_type.jump:
+        elif packet.action == types.action_type.jump:
             jump_event: object = events.player_jump_event(self)
             jump_event.call()
-        elif packet.action == action_type.start_sleeping:
+        elif packet.action == types.action_type.start_sleeping:
             start_sleeping_event: object = events.player_start_sleeping_event(self)
             start_sleeping_event.call()
 
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = packets.text_packet()
-        new_packet.type = text_type.raw
+        new_packet.type = types.text_type.raw
         new_packet.needs_translation = needs_translation
         new_packet.message = message
         new_packet.xuid = xuid
@@ -328,7 +321,7 @@ class mcbe_player:
     def handle_text_packet(self, data: bytes) -> None:
         packet: object = packets.text_packet(data)
         packet.decode()
-        if packet.type == text_type.chat:
+        if packet.type == types.text_type.chat:
             chat_event: object = events.player_chat_event(self, packet.message)
             chat_event.call()
             if not chat_event.canceled:
@@ -337,11 +330,11 @@ class mcbe_player:
     def handle_interact_packet(self, data: bytes) -> None:
         packet: object = packets.interact_packet(data)
         packet.decode()
-        if packet.action_id == interact_type.open_inventory:
+        if packet.action_id == types.interact_type.open_inventory:
             new_packet: object = packets.container_open_packet()
-            self.container = window_id_type.creative
+            self.container = types.window_id_type.creative
             new_packet.window_id = self.container
-            new_packet.window_type = window_type.inventory
+            new_packet.window_type = types.window_type.inventory
             new_packet.coordinates = self.position
             new_packet.runtime_entity_id = self.entity_id
             new_packet.encode()
@@ -362,14 +355,19 @@ class mcbe_player:
     def handle_command_request_packet(self, data: bytes) -> None:
         packet: object = packets.command_request_packet(data)
         packet.decode()
-        if packet.origin == command_origin_type.player:
+        if packet.origin == types.command_origin_type.player:
             self.server.dispatch_command(packet.command[1:], self)
 
     def handle_set_player_game_type_packet(self, data: bytes) -> None:
-        print("gamemode changed")
+        pass
+        # gamemode change event
 
-    def handle_set_time_packet(self, data: bytes) -> None:
-        print("set time)")
+    def handle_level_event_packet(self, data: bytes) -> None:
+        packet: object = packets.level_event_packet(data)
+        packet.decode()
+        if packet.event_id in [types.level_event_type.stop_thunder, types.level_event_type.start_thunder, types.level_event_type.start_rain, types.level_event_type.stop_rain]:
+            pass
+            # weather change event
 
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
@@ -396,8 +394,8 @@ class mcbe_player:
             self.handle_close_container_packet(data)
         elif data[0] == mcbe_protocol_info.set_player_game_type_packet:
             self.handle_set_player_game_type_packet(data)
-        elif data[0] == mcbe_protocol_info.set_time_packet:
-            self.handle_set_time_packet(data)
+        elif data[0] == mcbe_protocol_info.level_event_packet:
+            print("A")
 
     def set_gamemode(self, gamemode: int):
         new_packet: object = packets.set_player_game_type_packet()
