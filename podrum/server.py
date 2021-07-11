@@ -93,8 +93,7 @@ class server:
             while self.is_ticking:
                 # Add some sort of ticking?
                 for world in self.world_manager.worlds.values():
-                    world.set_time(world.time + 1)
-
+                    world.set_time(world.time + 1 if world.time + 1 <= 24000 else 0)
                 time.sleep(0.05)
         except KeyboardInterrupt:
             self.stop()
@@ -148,3 +147,8 @@ class server:
         for name in usernames:
             if username.lower() == name[:len(username)]:
                 return players[usernames.index(name)]
+
+    def broadcast_packet(self, world, packet) -> None:
+        for player in self.players.values():
+            if player.world == world:
+                player.send_packet(packet.data)
