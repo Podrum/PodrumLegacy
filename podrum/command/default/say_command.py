@@ -21,6 +21,9 @@ class say_command:
     
     def execute(self, args: list, sender: object) -> None:
         if len(args) > 0:
-            sender.send_chat_message(" ".join(args))
+            if not hasattr(sender, "username"):
+                sender.send_chat_message(' '.join(args))
+            else:
+                sender.server.broadcast_message(f"[{sender.username}] {' '.join(args)}")
         else:
             sender.send_message("/say <message: message>")
