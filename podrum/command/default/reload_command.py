@@ -17,7 +17,7 @@ class reload_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "reload"
-        self.description: str = "reload command"
+        self.description: str = "Reloads all plugin."
     
     def execute(self, args: list, sender: object) -> None:
         sender.send_message("Reloading...")

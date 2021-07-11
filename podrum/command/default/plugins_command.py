@@ -17,8 +17,8 @@ class plugins_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "plugins"
-        self.description: str = "plugins command"
+        self.description: str = "Shows all server plugins."
         self.aliases: list = ["pl"]
     
     def execute(self, args: list, sender: object) -> None:
-        sender.send_message(f"Plugins({len(self.server.managers.plugin_manager.plugins)}): {', '.join(self.server.managers.plugin_manager.plugins)}")
+        sender.send_message(f"Plugins ({len(self.server.managers.plugin_manager.plugins)}): {', '.join(self.server.managers.plugin_manager.plugins)}")

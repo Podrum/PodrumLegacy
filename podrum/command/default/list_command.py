@@ -17,7 +17,7 @@ class list_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "list"
-        self.description: str = "list players command"
+        self.description: str = "Lists players on the server."
     
     def execute(self, args: list, sender: object) -> None:
-        sender.send_message(f"Players ({len(self.server.players.values())}): {', '.join(player.username for player in self.server.players.values())}")
+        sender.send_message(f"There are {len(self.server.players.values())}/{self.server.config.data['max_players']} players online: \n{', '.join(player.username for player in self.server.players.values())}")

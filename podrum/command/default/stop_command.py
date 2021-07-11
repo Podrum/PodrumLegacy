@@ -19,7 +19,7 @@ class stop_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "stop"
-        self.description: str = "stop command"
+        self.description: str = "Stops a server."
     
     def execute(self, args: list, sender: object) -> None:
         sender.send_message("Stopping server...")

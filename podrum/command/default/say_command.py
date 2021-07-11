@@ -17,10 +17,10 @@ class say_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "say"
-        self.description: str = "say command"
+        self.description: str = "Sends a message in the chat."
     
     def execute(self, args: list, sender: object) -> None:
         if len(args) > 0:
             sender.send_chat_message(" ".join(args))
         else:
-            sender.send_message("say <message>")
+            sender.send_message("/say <message: message>")

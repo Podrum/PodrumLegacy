@@ -19,7 +19,7 @@ class version_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "version"
-        self.description: str = "version command"
+        self.description: str = "Shows server version and software."
         self.aliases: list = ["ver", "about"]
     
     def execute(self, args: list, sender: object) -> None:

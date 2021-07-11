@@ -17,7 +17,7 @@ class help_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "help"
-        self.description: str = "help command"
+        self.description: str = "Provides help/lists of commands."
         self.aliases: list = ["?"]
     
     def execute(self, args: list, sender: object) -> None:

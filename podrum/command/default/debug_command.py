@@ -20,7 +20,7 @@ class debug_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "debug"
-        self.description: str = "debug command"
+        self.description: str = "Debug command."
     
     def execute(self, args: list, sender: object) -> None:
         thread_count: int = threading.active_count()

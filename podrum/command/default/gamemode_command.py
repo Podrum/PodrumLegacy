@@ -44,4 +44,4 @@ class gamemode_command:
             player.send_message(f"Your game mode has been updated to {gamemode_name}")
             sender.send_message(f"Set {player.username if player != sender else 'own'} game mode to {gamemode_name}")
         else:
-            sender.send_message("gamemode <gamemode>")
+            sender.send_message("/gamemode <gameMode: int> [player: target]")

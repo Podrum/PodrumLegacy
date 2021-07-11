@@ -26,4 +26,4 @@ class me_command:
                 return
             self.server.broadcast_message(f"* {sender.username} {' '.join(args)}")
         else:
-            sender.send_message("me <message>")
+            sender.send_message("/me <message: message>")

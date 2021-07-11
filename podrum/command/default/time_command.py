@@ -41,6 +41,6 @@ class time_command:
             elif args[0].lower() == "query":
                 sender.send_message(f"Time is {sender.world.time}")
                 return
-            sender.send_message("/time <add | query | set> <amount: int>")
+            sender.send_message("/time <add|query|set> <amount: int>")
         else:
-            sender.send_message("/time <add | query | set> <amount: int>")
+            sender.send_message("/time <add|query|set> <amount: int>")

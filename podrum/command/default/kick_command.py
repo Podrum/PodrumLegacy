@@ -17,7 +17,7 @@ class kick_command:
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "kick"
-        self.description: str = "kick command"
+        self.description: str = "Kicks a player off the server."
     
     def execute(self, args: list, sender: object) -> None:
         if len(args) >= 1:
@@ -33,4 +33,4 @@ class kick_command:
                 player.disconnect(f"Kicked by Console{': ' if args else ''}{' '.join(args)}")
                 sender.send_message(f"Kicked {player.username}.")
         else:
-            sender.send_message("kick <player> [reason]")
+            sender.send_message("/kick <name: target> [reason: message]")
