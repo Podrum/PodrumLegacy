@@ -39,6 +39,7 @@ class world:
         self.time: int = 0
         self.raining: bool = False
         self.thundering: bool = False
+        self.difficulty: int = server.config.data["difficulty"]
     
     # [load_chunk]
     # :return: = None
@@ -278,7 +279,7 @@ class world:
         packet.encode()
         self.server.broadcast_packet(self, packet)
 
-    def set_raining(self, raining: bool = True, dur: int = random.randint(90000, 110000)):
+    def set_raining(self, raining: bool = True, dur: int = random.randint(90000, 110000)) -> None:
         packet: object = packets.level_event_packet()
         packet.event_id = types.level_event_type.start_rain if raining else types.level_event_type.stop_rain
         packet.packet_data = dur
@@ -287,11 +288,18 @@ class world:
         self.raining = raining
         self.server.broadcast_packet(self, packet)
 
-    def set_thundering(self, thundering: bool = True, dur: int = random.randint(90000, 110000)):
+    def set_thundering(self, thundering: bool = True, dur: int = random.randint(90000, 110000)) -> None:
         packet: object = packets.level_event_packet()
         packet.event_id = types.level_event_type.start_thunder if thundering else types.level_event_type.stop_thunder
         packet.packet_data = dur
         packet.position = vector_3(0, 0, 0)
         packet.encode()
         self.thundering = thundering
+        self.server.broadcast_packet(self, packet)
+
+    def set_difficulty(self, difficulty: int) -> None:
+        packet: object = packets.set_difficulty_packet()
+        packet.difficulty = difficulty
+        packet.encode()
+        self.difficulty = difficulty
         self.server.broadcast_packet(self, packet)

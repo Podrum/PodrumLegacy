@@ -32,4 +32,5 @@ from podrum.protocol.mcbe.type.transaction_type import transaction_type
 from podrum.protocol.mcbe.type.transaction_actions_type import transaction_actions_type
 from podrum.protocol.mcbe.type.window_id_type import window_id_type
 from podrum.protocol.mcbe.type.window_type import window_type
+from podrum.protocol.mcbe.type.difficulty_type import difficulty_type
 
