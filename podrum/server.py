@@ -69,6 +69,8 @@ class server:
             self.config.data["world_type"] = "default"
         if "seed" not in self.config.data:
             self.config.data["seed"] = 421086205
+        if "difficulty" not in self.config.data:
+            self.config.data["difficulty"] = 0
         self.config.save()      
 
     def start(self) -> None:

@@ -82,7 +82,7 @@ class mcbe_player:
         packet.dimension = 0
         packet.generator = 2
         packet.world_gamemode = self.world.get_world_gamemode()
-        packet.difficulty = 0
+        packet.difficulty = self.server.config.data["difficulty"]
         packet.world_spawn = vector_3(0, 4.0, 0)
         packet.disable_achivements = False
         packet.time = 0
