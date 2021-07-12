@@ -44,7 +44,6 @@ class mcbe_player:
         self.message_format: str = "<%username> %message"
         self.chunk_send_queue: object = Queue()
         self.start_chunk_send_workers(1)
-        self.container = -1
             
     def chunk_send_worker(self) -> None:
         while True:
@@ -332,8 +331,7 @@ class mcbe_player:
         packet.decode()
         if packet.action_id == types.interact_type.open_inventory:
             new_packet: object = packets.container_open_packet()
-            self.container = types.window_id_type.creative
-            new_packet.window_id = self.container
+            new_packet.window_id = types.window_id_type.creative
             new_packet.window_type = types.window_type.inventory
             new_packet.coordinates = self.position
             new_packet.runtime_entity_id = self.entity_id
