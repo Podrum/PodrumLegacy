@@ -69,6 +69,7 @@ class mcbe_player:
             self.world.create_player(self.identity)
         self.position: object = self.world.get_player_position(self.identity)
         self.position.y += 1
+        self.gamemode: int = 1
         packet: object = packets.start_game_packet()
         packet.entity_id = self.entity_id
         packet.entity_runtime_id = self.entity_id
@@ -331,7 +332,20 @@ class mcbe_player:
         packet.decode()
         if packet.action_id == types.interact_type.open_inventory:
             new_packet: object = packets.container_open_packet()
-            new_packet.window_id = types.window_id_type.creative
+            if self.gamemode == types.gamemode_type.survival:
+                new_packet.window_id = types.window_id_type.inventory
+            elif self.gamemode == types.gamemode_type.creative:
+                new_packet.window_id = types.window_id_type.creative
+            elif self.gamemode == types.gamemode_type.adventure:
+                new_packet.window_id = types.window_id_type.inventory
+            elif self.gamemode == types.gamemode_type.survival_spectator:
+                new_packet.window_id = types.window_id_type.inventory
+            elif self.gamemode == types.gamemode_type.spectator:
+                new_packet.window_id = types.window_id_type.creative
+            elif self.gamemode == types.gamemode_type.fallback:
+                new_packet.window_id = types.window_id_type.inventory
+            else:
+                new_packet.window_id = types.window_id_type.inventory
             new_packet.window_type = types.window_type.inventory
             new_packet.coordinates = self.position
             new_packet.runtime_entity_id = self.entity_id
@@ -396,6 +410,7 @@ class mcbe_player:
             print("A")
 
     def set_gamemode(self, gamemode: int):
+        self.gamemode: int = gamemode
         new_packet: object = packets.set_player_game_type_packet()
         new_packet.gamemode = gamemode
         new_packet.encode()
