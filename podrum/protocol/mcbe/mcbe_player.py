@@ -204,7 +204,6 @@ class mcbe_player:
         form_event: object = events.player_form_response_event(packet.form_id, data, self)
         form_event.call()
 
-
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
         packet: object = packets.resource_pack_client_response_packet(data)
         packet.decode()
@@ -356,8 +355,20 @@ class mcbe_player:
 
     def handle_close_container_packet(self, data: bytes) -> None:
         new_packet: object = packets.container_close_packet()
-        new_packet.window_id = self.container
-        self.container = -1
+        if self.gamemode == types.gamemode_type.survival:
+            new_packet.window_id = types.window_id_type.inventory
+        elif self.gamemode == types.gamemode_type.creative:
+            new_packet.window_id = types.window_id_type.creative
+        elif self.gamemode == types.gamemode_type.adventure:
+            new_packet.window_id = types.window_id_type.inventory
+        elif self.gamemode == types.gamemode_type.survival_spectator:
+            new_packet.window_id = types.window_id_type.inventory
+        elif self.gamemode == types.gamemode_type.spectator:
+            new_packet.window_id = types.window_id_type.creative
+        elif self.gamemode == types.gamemode_type.fallback:
+            new_packet.window_id = types.window_id_type.inventory
+        else:
+            new_packet.window_id = types.window_id_type.inventory
         new_packet.server = False
         new_packet.encode()
         self.send_packet(new_packet.data)
