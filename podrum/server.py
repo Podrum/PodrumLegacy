@@ -18,6 +18,7 @@ import platform
 from podrum.block.block_map import block_map
 from podrum.config import config
 from podrum.console.logger import logger
+from podrum.item.item_map import item_map
 from podrum.managers import managers
 from podrum.protocol.mcbe.rak_net_interface import rak_net_interface
 from podrum.task.repeating_task import repeating_task
@@ -28,6 +29,7 @@ import time
 class server:
     def __init__(self) -> None:
         self.setup_config()
+        item_map.load_map()
         block_map.load_map()
         self.managers: object = managers(self)
         self.rak_net_interface: object = rak_net_interface(self)
