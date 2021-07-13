@@ -142,8 +142,7 @@ class mcbe_player:
         
     def send_creative_content_packet(self) -> None:
         packet: object = packets.creative_content_packet()
-        packet.window_id = types.window_id_type.creative
-        packet.input = []
+        packet.entries = []
         packet.encode()
         self.send_packet(packet.data)
              
@@ -154,7 +153,11 @@ class mcbe_player:
         
     def send_creative_inventory(self) -> None:
         packet: object = packets.inventory_content_packet()
-        packet.entries = []
+        packet.window_id = types.window_id_type.creative
+        packet.input = []
+        for creative_item in creative_items:
+            item_obj: object = item("none", creative_item["id"], 0 if "damage" not in creative_item else creative_item["damage"])
+            packet.input.append(item_obj.prepare_for_network())
         packet.encode()
         self.send_packet(packet.data)
         
