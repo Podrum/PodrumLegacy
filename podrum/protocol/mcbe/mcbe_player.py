@@ -151,16 +151,6 @@ class mcbe_player:
         packet.encode()
         self.send_packet(packet.data)
         
-    def send_creative_inventory(self) -> None:
-        packet: object = packets.inventory_content_packet()
-        packet.window_id = types.window_id_type.creative
-        packet.input = []
-        #for creative_item in creative_items:
-        item_obj: object = item("minecraft:planks", 3, 0)
-        packet.input.append(item_obj.prepare_for_network())
-        packet.encode()
-        self.send_packet(packet.data)
-        
     def send_available_entity_identifiers_packet(self) -> None:
         packet: object = packets.available_entity_identifiers_packet()
         packet.encode()
@@ -249,7 +239,6 @@ class mcbe_player:
             self.send_available_commands()
             self.send_item_component_packet()
             self.send_available_entity_identifiers_packet()
-            self.send_creative_inventory()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packets.packet_violation_warning_packet(data)
