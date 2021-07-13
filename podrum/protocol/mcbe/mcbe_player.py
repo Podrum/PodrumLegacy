@@ -419,10 +419,10 @@ class mcbe_player:
                 if self.world.has_loaded_chunk(item[0], item[1]):
                     break
         # Finally send the chunks
-        self.send_network_chunk_publisher_update()
         for item in chunk_send_queue:
             c: object = self.world.get_chunk(item[0], item[1])
             self.send_chunk(c)
+        self.send_network_chunk_publisher_update()
                     
         
     def send_available_commands(self) -> None:
