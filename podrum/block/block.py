@@ -16,6 +16,7 @@
 from podrum.block.block_map import block_map
 from podrum.block.tool import tool
 from podrum.game_data.mcbe.item_states import item_states
+from podrum.item.item_map import item_map
 
 class block:
     def __init__(self, name: str, meta: int, hardness: float, blast_resistance: float, item_name: str = "") -> None:
@@ -24,7 +25,7 @@ class block:
         self.hardness: float = hardness
         self.blast_resistance: float = blast_resistance
         self.runtime_id: int = block_map.get_runtime_id(name, meta)
-        self.network_id: int = item_states[item_name]["runtime_id"]
+        self.network_id: int = item_map.name_to_runtime_id(item_name)
         self.stack_size: int = 0
         self.tool: int = tool.none
         self.luminant: bool = False
