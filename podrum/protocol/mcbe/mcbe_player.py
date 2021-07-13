@@ -251,7 +251,8 @@ class mcbe_player:
         new_packet.chunk_radius = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
-        Thread(target = self.send_chunks, args = [True]).start()
+        if self.spawned == False:
+            Thread(target = self.send_chunks, args = [True]).start()
                 
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
