@@ -396,7 +396,7 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
 
-    def send_chunks(self, spawn: bool) -> None:
+    def send_chunks(self, spawn: bool = False) -> None:
         chunk_send_queue: list = []
         current_x: int = math.floor(self.position.x) >> 4
         current_z: int = math.floor(self.position.z) >> 4
