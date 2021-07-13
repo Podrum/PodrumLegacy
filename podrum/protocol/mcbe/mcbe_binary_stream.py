@@ -371,7 +371,7 @@ class mcbe_binary_stream(binary_stream):
             "network_id": self.read_signed_var_int()
         }
         if result["network_id"] > 0:
-            result["count"] = self.read_long_le()
+            result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["has_stack_id"] = self.read_bool()
             if result["has_stack_id"]:
@@ -388,7 +388,7 @@ class mcbe_binary_stream(binary_stream):
     def write_item(self, value: dict) -> None:
         self.write_signed_var_int(value["network_id"])
         if value["network_id"] > 0:
-            self.write_long_le(value["count"])
+            self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
             if value["has_stack_id"]:
                 self.write_signed_var_int(value["stack_id"])
