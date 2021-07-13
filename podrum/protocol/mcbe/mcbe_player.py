@@ -408,7 +408,7 @@ class mcbe_player:
         for send_chunk_x in range(-self.view_distance, self.view_distance + 1):
             for send_chunk_z in range(-self.view_distance, self.view_distance + 1):
                 chunk_distance: int = round(math.sqrt(send_chunk_z * send_chunk_z + send_chunk_x * send_chunk_x))
-                if chunkDistance <= viewDistance:
+                if chunk_distance <= self.view_distance:
                     self.world.load_queue.put((current_x + chunk_x, current_z + chunk_z))
                     chunk_send_queue.append((current_x + chunk_x, current_z + chunk_z))
         # Sort the chunk order to send the closest chunks first.
