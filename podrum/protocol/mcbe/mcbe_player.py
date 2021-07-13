@@ -22,6 +22,7 @@ from podrum.geometry.geometry import geometry
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.item.item import item
+from podrum.item.item_map import item_map
 from podrum.protocol.mcbe import packets
 from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
@@ -143,6 +144,11 @@ class mcbe_player:
     def send_creative_content_packet(self) -> None:
         packet: object = packets.creative_content_packet()
         packet.entries = []
+        entry_id: int = 1
+        for creative_item in creative_items:
+            item_obj: object = item(item_map.runtime_id_to_name(creative_item["id"]), creative_item["id"], 0 if "damage" not in creative_item else creative_item["damage"])
+            packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
+            entry_id += 1
         packet.encode()
         self.send_packet(packet.data)
              
