@@ -36,7 +36,6 @@ class region:
             with open(path, "wb") as file:
                 file.write(b"\x00" * 8192)
                 file.close()
-            while True:
             try:
                 os.remove(path + ".lock")
             except PermissionError as e:
