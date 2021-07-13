@@ -358,7 +358,7 @@ class mcbe_binary_stream(binary_stream):
             self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
             self.write_signed_var_int(value["block_runtime_id"])
-            stream: object = mcbe_binary_stream(self.read_byte_array())
+            stream: object = mcbe_binary_stream()
             if value["network_id"] == item_id_map["minecraft:shield"]:
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
             else:
@@ -391,7 +391,7 @@ class mcbe_binary_stream(binary_stream):
             if value["has_stack_id"]:
                 self.write_signed_var_int(value["stack_id"])
             self.write_signed_var_int(value["block_runtime_id"])
-            stream: object = mcbe_binary_stream(self.read_byte_array())
+            stream: object = mcbe_binary_stream()
             if value["network_id"] == item_id_map["minecraft:shield"]:
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
             else:
