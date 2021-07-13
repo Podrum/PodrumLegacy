@@ -13,6 +13,7 @@
 #                                                       #
 #########################################################
 
+from functools import cmp_to_key
 import math
 import json
 from podrum.event import events
@@ -45,27 +46,6 @@ class mcbe_player:
         self.metadata_storage: object = metadata_storage()
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
-        self.chunk_send_queue: object = Queue()
-        self.start_chunk_send_workers(1)
-            
-    def chunk_send_worker(self) -> None:
-        while True:
-            if not self.chunk_send_queue.empty():
-                item: tuple = self.chunk_send_queue.get()
-                if item is None:
-                    break
-                if not self.world.has_loaded_chunk(item[0], item[1]):
-                    self.chunk_send_queue.put(item)
-                else:
-                    c: object = self.world.get_chunk(item[0], item[1])
-                    self.send_chunk(c)
-            else:
-                sleep(0.05)
-                    
-    def start_chunk_send_workers(self, count: int) -> None:
-        self.chunk_send_worker_count: int = count
-        for i in range(0, count):
-            Thread(target = self.chunk_send_worker).start()
         
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
@@ -422,15 +402,28 @@ class mcbe_player:
         self.send_packet(new_packet.data)
 
     def send_chunks(self) -> None:
+        chunk_send_queue: list = []
+        current_x: int = self.position.x >> 4
+        current_z: int = self.position.z >> 4
+        for send_chunk_x in range(-self.view_distance, self.view_distance + 1):
+            for send_chunk_z in range(-self.view_distance, self.view_distance + 1):
+                chunk_distance: int = round(math.sqrt(send_chunk_z * send_chunk_z + send_chunk_x * send_chunk_x))
+                if chunkDistance <= viewDistance:
+                    self.world.load_queue.put((chunk_x, chunk_z))
+                    chunk_send_queue.append((chunk_x, chunk_z))
+        # Sort the chunk order to send the closest chunks first.
+        chunk_send_queue.sort(key = lambda x: (abs(current_x - x[0]), abs(current_z - x[1])))
+        # Wait for all chunks to load.
+        for item in chunk_send_queue:
+            while True:
+                if self.world.has_loaded_chunk(item[0], item[1]):
+                    break
+        # Finally send the chunks
         self.send_network_chunk_publisher_update()
-        chunk_x_start: int = (math.floor(self.position.x) >> 4) - self.view_distance
-        chunk_x_end: int = (math.floor(self.position.x) >> 4) + self.view_distance
-        chunk_z_start: int = (math.floor(self.position.z) >> 4) - self.view_distance
-        chunk_z_end: int = (math.floor(self.position.z) >> 4) + self.view_distance
-        for chunk_x in range(chunk_x_start, chunk_x_end):
-            for chunk_z in range(chunk_z_start, chunk_z_end):
-                self.world.load_queue.put((chunk_x, chunk_z))
-                self.chunk_send_queue.put((chunk_x, chunk_z))
+        for item in chunk_send_queue:
+            c: object = self.world.get_chunk(item[0], item[1])
+            self.send_chunk(c)
+                    
         
     def send_available_commands(self) -> None:
         new_packet: object = packets.available_commands_packet()
