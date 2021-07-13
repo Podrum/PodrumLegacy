@@ -142,12 +142,19 @@ class mcbe_player:
         
     def send_creative_content_packet(self) -> None:
         packet: object = packets.creative_content_packet()
-        packet.entries = []
+        packet.window_id = types.window_id_type.creative
+        packet.input = []
         packet.encode()
         self.send_packet(packet.data)
              
     def send_biome_definition_list_packet(self) -> None:
         packet: object = packets.biome_definition_list_packet()
+        packet.encode()
+        self.send_packet(packet.data)
+        
+    def send_creative_inventory(self) -> None:
+        packet: object = packets.inventory_content_packet()
+        packet.entries = []
         packet.encode()
         self.send_packet(packet.data)
         
@@ -239,6 +246,7 @@ class mcbe_player:
             self.send_available_commands()
             self.send_item_component_packet()
             self.send_available_entity_identifiers_packet()
+            self.send_creative_inventory()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
         packet: object = packets.packet_violation_warning_packet(data)
