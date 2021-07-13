@@ -155,9 +155,9 @@ class mcbe_player:
         packet: object = packets.inventory_content_packet()
         packet.window_id = types.window_id_type.creative
         packet.input = []
-        for creative_item in creative_items:
-            item_obj: object = item("none", creative_item["id"], 0 if "damage" not in creative_item else creative_item["damage"])
-            packet.input.append(item_obj.prepare_for_network())
+        #for creative_item in creative_items:
+        item_obj: object = item("minecraft:planks", 3, 0)
+        packet.input.append(item_obj.prepare_for_network())
         packet.encode()
         self.send_packet(packet.data)
         
