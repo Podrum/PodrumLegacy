@@ -128,7 +128,7 @@ class mcbe_player:
         packet.enchantment_seed = 0
         packet.item_states = item_states
         packet.multiplayer_correlation_id = ""
-        packet.server_authoritative_inventories = False
+        packet.server_authoritative_inventories = True
         packet.server_engine = "Podrum"
         packet.encode()
         self.send_packet(packet.data)
