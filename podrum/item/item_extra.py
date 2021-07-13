@@ -24,7 +24,7 @@ class item_extra:
           
     def prepare_for_network(self) -> dict:
         result: dict = {}
-        if self.nbt.name != "" and len(self.nbt.value) > 0:
+        if self.nbt.name != "" and len(self.nbt.value) == 0:
             result["has_nbt"] = True
             result["version"] = 1
             result["nbt"] = self.nbt
