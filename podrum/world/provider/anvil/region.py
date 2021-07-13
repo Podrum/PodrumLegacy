@@ -40,7 +40,7 @@ class region:
             try:
                 os.remove(path + ".lock")
             except PermissionError as e:
-                return       
+                return  
         
     @staticmethod
     def get_location(x: int, z: int) -> int:
