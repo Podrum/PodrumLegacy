@@ -403,8 +403,8 @@ class mcbe_player:
 
     def send_chunks(self) -> None:
         chunk_send_queue: list = []
-        current_x: int = self.position.x >> 4
-        current_z: int = self.position.z >> 4
+        current_x: int = math.floor(self.position.x) >> 4
+        current_z: int = math.floor(self.position.z) >> 4
         for send_chunk_x in range(-self.view_distance, self.view_distance + 1):
             for send_chunk_z in range(-self.view_distance, self.view_distance + 1):
                 chunk_distance: int = round(math.sqrt(send_chunk_z * send_chunk_z + send_chunk_x * send_chunk_x))
