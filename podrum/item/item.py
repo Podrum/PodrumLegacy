@@ -29,6 +29,7 @@ class item:
             "network_id": self.network_id,
             "count": self.count,
             "metadata": self.meta,
+            "has_stack_id": False,
             "block_runtime_id": self.block_runtime_id,
             "extra": self.extra.prepare_for_network()
         }
