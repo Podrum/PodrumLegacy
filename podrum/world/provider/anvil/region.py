@@ -28,14 +28,19 @@ class region:
         self.x: int = int(file_name_shards[1])
         self.z: int = int(file_name_shards[2])
         self.format: str = file_name_shards[3]
-        while os.path.isfile(path + ".lock"):
-            pass
+        while True:
+            if not os.path.isfile(path + ".lock"):
+                break
         if not os.path.isfile(path):
             open(path + ".lock", "w").close()
             with open(path, "wb") as file:
                 file.write(b"\x00" * 8192)
                 file.close()
-            os.remove(path + ".lock")
+            while True:
+            try:
+                os.remove(path + ".lock")
+            except PermissionError as e:
+                return
             
         
     @staticmethod
