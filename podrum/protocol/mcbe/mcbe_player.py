@@ -144,10 +144,10 @@ class mcbe_player:
         packet: object = packets.creative_content_packet()
         packet.entries = []
         entry_id: int = 1
-        for creative_item in creative_items:
-            item_obj: object = item("none", creative_item["id"], 0 if "damage" not in creative_item else creative_item["damage"])
-            packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
-            entry_id += 1
+        #for creative_item in creative_items:
+        item_obj: object = item("minecraft:planks", 3, 0)
+        packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
+        #entry_id += 1
         packet.encode()
         self.send_packet(packet.data)
              
@@ -388,17 +388,6 @@ class mcbe_player:
         if packet.origin == types.command_origin_type.player:
             self.server.dispatch_command(packet.command[1:], self)
 
-    def handle_set_player_game_type_packet(self, data: bytes) -> None:
-        pass
-        # gamemode change event
-
-    def handle_level_event_packet(self, data: bytes) -> None:
-        packet: object = packets.level_event_packet(data)
-        packet.decode()
-        if packet.event_id in [types.level_event_type.stop_thunder, types.level_event_type.start_thunder, types.level_event_type.start_rain, types.level_event_type.stop_rain]:
-            pass
-            # weather change event
-
     def handle_packet(self, data: bytes) -> None:
         if data[0] == mcbe_protocol_info.login_packet:
             self.handle_login_packet(data)
@@ -422,10 +411,6 @@ class mcbe_player:
             self.handle_interact_packet(data)
         elif data[0] == mcbe_protocol_info.container_close_packet:
             self.handle_close_container_packet(data)
-        elif data[0] == mcbe_protocol_info.set_player_game_type_packet:
-            self.handle_set_player_game_type_packet(data)
-        elif data[0] == mcbe_protocol_info.level_event_packet:
-            print("A")
 
     def set_gamemode(self, gamemode: int):
         self.gamemode: int = gamemode
