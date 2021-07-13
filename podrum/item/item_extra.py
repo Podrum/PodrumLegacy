@@ -16,7 +16,7 @@
 from nbt_utils.tag.compound_tag import compound_tag
 
 class item_extra:
-    def __init__(self, nbt: object = compound_tag(), can_place_on: list = [], can_destroy: list = [], blocking_tick: int = None) -> None:
+    def __init__(self, nbt: object = compound_tag(), can_place_on: list = [], can_destroy: list = [], blocking_tick: int = 0) -> None:
         self.nbt: object = nbt
         self.can_place_on: list = can_place_on
         self.can_destroy: list = can_destroy
@@ -32,6 +32,5 @@ class item_extra:
             result["has_nbt"] = False
         result["can_place_on"] = self.can_place_on
         result["can_destroy"] = self.can_destroy
-        if self.blocking_tick is not None:
-            result["blocking_tick"] = self.blocking_tick
+        result["blocking_tick"] = self.blocking_tick
         return result
