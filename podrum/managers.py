@@ -19,7 +19,6 @@ from podrum.command.command_manager import command_manager
 from podrum.command import commands
 from podrum.event.event_manager import event_manager
 from podrum.event import events
-from podrum.item.default.stone import stone as stone_item
 from podrum.item.item_manager import item_manager
 from podrum.plugin_manager import plugin_manager
 from podrum.world.generator_manager import generator_manager
@@ -317,7 +316,6 @@ class managers:
         self.block_manager.register_block(blocks.end_portal_frame())
         self.block_manager.register_block(blocks.cake())
 
-
     # [register_default_commands]
     # :return: = None
     # Registers the default commands.
@@ -358,7 +356,7 @@ class managers:
     # :return: = None
     # Registers the default items.
     def register_default_items(self) -> None:
-        self.item_manager.register_item(stone_item())
+        pass
     
     # [register_default_generators]
     # :return: = None
