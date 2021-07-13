@@ -20,6 +20,7 @@ from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
 from podrum.game_data.mcbe.item_id_map import item_id_map
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
+from podrum.item.item_map import item_map
 from podrum.protocol.mcbe.type.gamerule_type import gamerule_type
 from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 from podrum.protocol.mcbe.type.recipes_type import recipes_type
@@ -346,7 +347,7 @@ class mcbe_binary_stream(binary_stream):
             result["metadata"] = self.read_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
             stream: object = mcbe_binary_stream(self.read_byte_array())
-            if result["network_id"] == item_id_map["minecraft:shield"]:
+            if item_map.runtime_id_to_name(result["network_id"]) == "minecraft:shield":
                 result["extra"] = stream.read_item_extra_data_with_blocking_tick()
             else:
                 result["extra"] = stream.read_item_extra_data_without_blocking_tick()
@@ -359,7 +360,7 @@ class mcbe_binary_stream(binary_stream):
             self.write_var_int(value["metadata"])
             self.write_signed_var_int(value["block_runtime_id"])
             stream: object = mcbe_binary_stream()
-            if value["network_id"] == item_id_map["minecraft:shield"]:
+            if item_map.runtime_id_to_name(value["network_id"]) == "minecraft:shield":
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
             else:
                 stream.write_item_extra_data_without_blocking_tick(value["extra"])
@@ -377,7 +378,7 @@ class mcbe_binary_stream(binary_stream):
                 result["stack_id"] = self.read_signed_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
             stream: object = mcbe_binary_stream(self.read_byte_array())
-            if result["network_id"] == item_id_map["minecraft:shield"]:
+            if item_map.runtime_id_to_name(result["network_id"]) == "minecraft:shield":
                 result["extra"] = stream.read_item_extra_data_with_blocking_tick()
             else:
                 result["extra"] = stream.read_item_extra_data_without_blocking_tick()
@@ -392,7 +393,7 @@ class mcbe_binary_stream(binary_stream):
                 self.write_signed_var_int(value["stack_id"])
             self.write_signed_var_int(value["block_runtime_id"])
             stream: object = mcbe_binary_stream()
-            if value["network_id"] == item_id_map["minecraft:shield"]:
+            if item_map.runtime_id_to_name(value["network_id"]) == "minecraft:shield":
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
             else:
                 stream.write_item_extra_data_without_blocking_tick(value["extra"])
