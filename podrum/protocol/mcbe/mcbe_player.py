@@ -144,11 +144,12 @@ class mcbe_player:
     def send_creative_content_packet(self) -> None:
         packet: object = packets.creative_content_packet()
         packet.entries = []
-        entry_id: int = 1
-        for creative_item in creative_items:
-            item_obj: object = item(item_map.runtime_id_to_name(creative_item["id"]), creative_item["id"], 0 if "damage" not in creative_item else creative_item["damage"])
-            packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
-            entry_id += 1
+        # Not working?
+        # entry_id: int = 1
+        # for creative_item in creative_items:
+        #     item_obj: object = item(item_map.runtime_id_to_name(creative_item["id"]), creative_item["id"], 0 if "damage" not in creative_item else creative_item["damage"])
+        #     packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
+        #     entry_id += 1
         packet.encode()
         self.send_packet(packet.data)
              
