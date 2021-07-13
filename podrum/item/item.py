@@ -13,6 +13,8 @@
 #                                                       #
 #########################################################
 
+from podrum.item.item_extra import item_extra
+
 class item:
     def __init__(self, name: str, network_id: int, meta: int) -> None:
         self.name: str = name
@@ -20,16 +22,13 @@ class item:
         self.meta: int = meta
         self.block_runtime_id: int = 0
         self.count: int = 1
-        self.extra: list = []
+        self.extra: list = item_extra()
           
     def prepare_for_network(self) -> dict:
-        result: dict = {
+        return {
             "network_id": self.network_id,
             "count": self.count,
             "metadata": self.meta,
             "block_runtime_id": self.block_runtime_id,
-            "extra": []
+            "extra": self.extra.prepare_for_network()
         }
-        for extra in self.extra:
-            result["extra"].append(extra.prepare_for_network())
-        return result
