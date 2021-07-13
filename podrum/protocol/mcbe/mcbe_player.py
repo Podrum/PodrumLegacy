@@ -251,13 +251,7 @@ class mcbe_player:
         new_packet.chunk_radius = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
-        Thread(target = self.send_chunks).start()
-        if not self.spawned:
-            self.send_play_status(types.login_status_type.spawn)
-            self.spawned: bool = True  
-            join_event: object = events.player_join_event(self)
-            join_event.call()
-            self.server.broadcast_message(events.player_join_event(self).join_message)
+        Thread(target = self.send_chunks, args = [True]).start()
                 
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
@@ -401,7 +395,7 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
 
-    def send_chunks(self) -> None:
+    def send_chunks(self, spawn: bool) -> None:
         chunk_send_queue: list = []
         current_x: int = math.floor(self.position.x) >> 4
         current_z: int = math.floor(self.position.z) >> 4
@@ -423,7 +417,12 @@ class mcbe_player:
             c: object = self.world.get_chunk(item[0], item[1])
             self.send_chunk(c)
         self.send_network_chunk_publisher_update()
-                    
+        if spawn:
+            self.send_play_status(types.login_status_type.spawn)
+            self.spawned: bool = True  
+            join_event: object = events.player_join_event(self)
+            join_event.call()
+            self.server.broadcast_message(events.player_join_event(self).join_message)        
         
     def send_available_commands(self) -> None:
         new_packet: object = packets.available_commands_packet()
