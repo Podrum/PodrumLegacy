@@ -494,4 +494,4 @@ class mcbe_player:
         send_packet: object = frame()
         send_packet.reliability = 0
         send_packet.body = new_packet.data
-        self.connection.add_to_queue(send_packet, False)
+        self.connection.add_to_queue(send_packet)
