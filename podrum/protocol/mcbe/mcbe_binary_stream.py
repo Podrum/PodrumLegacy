@@ -345,12 +345,10 @@ class mcbe_binary_stream(binary_stream):
             result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
-            result["extra"] = []
-            for i in range(0, self.read_var_int()):
-                if result["network_id"] == item_id_map["minecraft:shield"]:
-                    result["extra"].append(self.read_item_extra_data_with_blocking_tick())
-                else:
-                    result["extra"].append(self.read_item_extra_data_without_blocking_tick())
+            if result["network_id"] == item_id_map["minecraft:shield"]:
+                result["extra"] = self.read_item_extra_data_with_blocking_tick()
+            else:
+                result["extra"] = self.read_item_extra_data_without_blocking_tick()
         return result
                     
     def write_item_legacy(self, value: dict) -> None:
@@ -359,12 +357,10 @@ class mcbe_binary_stream(binary_stream):
             self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
             self.write_signed_var_int(value["block_runtime_id"])
-            self.write_var_int(len(value["extra"]))
-            for extra in value["extra"]:
-                if value["network_id"] == item_id_map["minecraft:shield"]:
-                    self.write_item_extra_data_with_blocking_tick(extra)
-                else:
-                    self.write_item_extra_data_without_blocking_tick(extra)
+            if value["network_id"] == item_id_map["minecraft:shield"]:
+                self.write_item_extra_data_with_blocking_tick(value["extra"])
+            else:
+                self.write_item_extra_data_without_blocking_tick(value["extra"])
                     
     def read_item(self) -> dict:
         result: dict = {
@@ -377,12 +373,10 @@ class mcbe_binary_stream(binary_stream):
             if result["has_stack_id"]:
                 result["stack_id"] = self.read_signed_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
-            result["extra"] = []
-            for i in range(0, self.read_var_int()):
-                if result["network_id"] == item_id_map["minecraft:shield"]:
-                    result["extra"].append(self.read_item_extra_data_with_blocking_tick())
-                else:
-                    result["extra"].append(self.read_item_extra_data_without_blocking_tick())
+            if result["network_id"] == item_id_map["minecraft:shield"]:
+                result["extra"] = self.read_item_extra_data_with_blocking_tick()
+            else:
+                result["extra"] = self.read_item_extra_data_without_blocking_tick()
         return result
                     
     def write_item(self, value: dict) -> None:
@@ -393,12 +387,10 @@ class mcbe_binary_stream(binary_stream):
             if value["has_stack_id"]:
                 self.write_signed_var_int(value["stack_id"])
             self.write_signed_var_int(value["block_runtime_id"])
-            self.write_var_int(len(value["extra"]))
-            for extra in value["extra"]:
-                if value["network_id"] == item_id_map["minecraft:shield"]:
-                    self.write_item_extra_data_with_blocking_tick(extra)
-                else:
-                    self.write_item_extra_data_without_blocking_tick(extra)
+            if value["network_id"] == item_id_map["minecraft:shield"]:
+                self.write_item_extra_data_with_blocking_tick(value["extra"])
+            else:
+                self.write_item_extra_data_without_blocking_tick(value["extra"])
                     
     def read_vector_3_int(self) -> object:
         return vector_3(
