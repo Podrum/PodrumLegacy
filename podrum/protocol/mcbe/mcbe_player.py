@@ -281,6 +281,21 @@ class mcbe_player:
         elif packet.action == types.action_type.start_sleeping:
             start_sleeping_event: object = events.player_start_sleeping_event(self)
             start_sleeping_event.call()
+        elif packet.action == types.action_type.start_break:
+            break_time = math.ceil(self.world.get_block(packet.position.x, packet.position.y, packet.position.z).hardness * 1.5 * 20)
+            new_packet: object = packets.level_event_packet()
+            new_packet.event_id = types.level_event_type.block_start_break
+            new_packet.position = packet.position
+            new_packet.packet_data = int(65535/break_time)
+            new_packet.encode()
+            self.server.broadcast_packet(self.world, new_packet)
+        elif packet.action == types.action_type.abort_break:
+            new_packet: object = packets.level_event_packet()
+            new_packet.event_id = types.level_event_type.block_stop_break
+            new_packet.position = packet.position
+            new_packet.packet_data = 0
+            new_packet.encode()
+            self.server.broadcast_packet(self.world, new_packet)
 
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = packets.text_packet()
@@ -296,7 +311,6 @@ class mcbe_player:
         self.server.send_message(message)
         for p in self.server.players.values():
             p.send_message(message, xuid, needs_translation)
-
 
     def send_chat_message(self, message: str) -> None:
         self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", message), self.xuid)

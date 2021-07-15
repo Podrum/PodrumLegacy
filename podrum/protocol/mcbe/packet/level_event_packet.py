@@ -24,7 +24,7 @@ class level_event_packet(mcbe_packet):
         
     def decode_payload(self) -> None:
         self.event_id: int = self.read_signed_var_int()
-        self.position: float = self.read_vector_3_float()
+        self.position: object = self.read_vector_3_float()
         self.packet_data: int = self.read_signed_var_int()
         
     def encode_payload(self) -> None:

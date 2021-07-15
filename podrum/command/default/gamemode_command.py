@@ -31,7 +31,7 @@ class gamemode_command:
             try:
                 gamemode = int(args[0]) if int(args[0]) <= 2 else 4
             except ValueError:
-                if hasattr(gamemode_type, args[0].loweR()):
+                if hasattr(gamemode_type, args[0].lower()):
                     gamemode = int(getattr(gamemode_type, args[0].lower()))
                 else:
                     sender.send_message(f"'{args[0]}' is an invalid gamemode.")
