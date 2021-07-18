@@ -47,7 +47,7 @@ class available_commands_packet(mcbe_packet):
             command: dict = {}
             command["name"] = self.read_string()
             command["description"] = self.read_string()
-            command["flags"] = self.read_unsigned_short()
+            command["flags"] = self.read_unsigned_short_le()
             command["permission_level"] = self.read_unsigned_byte()
             command["alias"] = self.read_int_le()
             command["overloads"] = []
@@ -103,7 +103,7 @@ class available_commands_packet(mcbe_packet):
         for command in self.command_data:
             self.write_string(command["name"])
             self.write_string(command["description"])
-            self.write_unsigned_short(command["flags"])
+            self.write_unsigned_short_le(command["flags"])
             self.write_unsigned_byte(command["permission_level"])
             self.write_int_le(command["alias"])
             self.write_var_int(len(command["overloads"]))
