@@ -159,6 +159,7 @@ class mcbe_player:
         packet.scripting_enabled = False
         packet.behavior_pack_infos = []
         packet.texture_pack_infos = []
+        packet.force_server_resource_packs = False
         packet.encode()
         self.send_packet(packet.data)
         self.spawned: bool = False
