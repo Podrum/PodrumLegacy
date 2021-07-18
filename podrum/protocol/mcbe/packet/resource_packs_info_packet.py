@@ -26,9 +26,11 @@ class resource_packs_info_packet(mcbe_packet):
         self.scripting_enabled: bool = self.read_bool()
         self.behavior_pack_infos: list = self.read_behavior_pack_infos()
         self.texture_pack_infos: list = self.read_texture_pack_infos()
+        self.force_server_resource_packs: bool = self.read_bool()
           
     def encode_payload(self):
         self.write_bool(self.forced_to_accept)
         self.write_bool(self.scripting_enabled)
         self.write_behavior_pack_infos(self.behavior_pack_infos)
         self.write_texture_pack_infos(self.texture_pack_infos)
+        self.write_bool(self.force_server_resource_packs)
