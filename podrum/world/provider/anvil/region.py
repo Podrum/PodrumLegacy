@@ -38,7 +38,7 @@ class region:
                 file.close()
             try:
                 os.remove(path + ".lock")
-            except PermissionError as e:
+            except PermissionError or FileExistsError as e:
                 return  
         
     @staticmethod
