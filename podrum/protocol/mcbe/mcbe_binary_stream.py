@@ -45,11 +45,12 @@ class mcbe_binary_stream(binary_stream):
             self.write_int_le(stream.read_int_be())
     
     def read_string(self) -> str:
-        return self.read(self.read_var_int()).decode(encoding = "UTF-8", errors = "strict")
+        return self.read(self.read_var_int()).decode()
     
     def write_string(self, value: str) -> None:
-        self.write_var_int(len(value))
-        self.write(value.encode(encoding = "UTF-8", errors = "strict"))
+        encoded_string: str = value.encode()
+        self.write_var_int(len(encoded_string))
+        self.write(encoded_string)
         
     def read_little_string(self) -> str:
         return self.read(self.read_int_le()).decode()
