@@ -25,6 +25,15 @@ class plugin_manager:
         self.server: object = server
         self.plugins: dict = {}
         
+    def check_for_required_plugins(self) -> None:
+        for name in dict(self.plugins):
+            if hasattr(self.plugins[name], "required_plugins"):
+                for plugin_name in self.plugins[name].required_plugins:
+                    if not plugin_name in self.plugins:
+                        self.server.logger.alert(f"A required plugin {plugin_name} is not loaded.")
+                        self.server.logger.alert(f"Plugin {name} will be unloaded.")
+                        self.unload(name)
+
     def load(self, path: str) -> None:
         plugin_file = ZipFile(path, "r")
         plugin_info: dict = json.loads(plugin_file.read("info.json"))
@@ -45,6 +54,7 @@ class plugin_manager:
         self.plugins[plugin_info["name"]].version = plugin_info["version"] if "version" in plugin_info else ""
         self.plugins[plugin_info["name"]].description = plugin_info["description"] if "description" in plugin_info else ""
         self.plugins[plugin_info["name"]].author = plugin_info["author"] if "author" in plugin_info else ""
+        self.plugins[plugin_info["name"]].required_plugins = plugin_info["required_plugins"] if "required_plugins" in plugin_info else []
         if hasattr(main_class, "on_load"):
             self.plugins[plugin_info["name"]].on_load()
         self.server.logger.success(f"Successfully loaded {plugin_info['name']}.")
@@ -55,6 +65,7 @@ class plugin_manager:
                 full_path: str = os.path.abspath(os.path.join(top, file_name))
                 if full_path.endswith(".pyz") or full_path.endswith(".zip"):
                     self.load(full_path)
+        self.check_for_required_plugins()
         
     def unload(self, name: str) -> None:
         if name in self.plugins:
