@@ -33,6 +33,9 @@ class plugin_manager:
                         self.server.logger.alert(f"A required plugin {plugin_name} is not loaded.")
                         self.server.logger.alert(f"Plugin {name} will be unloaded.")
                         self.unload(name)
+                        continue
+                    
+                    setattr(self.plugins[name], plugin_name, self.plugins[plugin_name])
 
     def load(self, path: str) -> None:
         plugin_file = ZipFile(path, "r")
