@@ -24,6 +24,7 @@ class block:
         self.meta: int = meta
         self.hardness: float = hardness
         self.blast_resistance: float = blast_resistance
+        self.item_name: str = item_name
         self.runtime_id: int = block_map.get_runtime_id(name, meta)
         self.network_id: int = item_map.name_to_runtime_id(item_name)
         self.stack_size: int = 0
