@@ -127,7 +127,7 @@ class mcbe_player:
         entry_id: int = 1
         for creative_item in creative_items:
             if creative_item['id'] < 0: # Disabled items with negative id
-                break
+                continue
             damage: int = 0 if "damage" not in creative_item else creative_item["damage"]
             name: str = item_map.runtime_id_to_name(creative_item['id'])
             if f"{name} {damage}" in self.server.managers.item_manager.items:
