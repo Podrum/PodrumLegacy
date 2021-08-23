@@ -126,13 +126,14 @@ class mcbe_player:
         packet.entries = []
         entry_id: int = 1
         for creative_item in creative_items:
-            if entry_id == 7: # Temp disable the rest items
+            if creative_item['id'] < 0: # Disabled items with negative id
                 break
             damage: int = 0 if "damage" not in creative_item else creative_item["damage"]
             name: str = item_map.runtime_id_to_name(creative_item['id'])
             if f"{name} {damage}" in self.server.managers.item_manager.items:
                 item_obj: object = self.server.managers.item_manager.items[f"{name} {damage}"]
             else:
+                continue # Disabled non registered items
                 item_obj: object = item(name, creative_item["id"], damage)   
             packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
             entry_id += 1
