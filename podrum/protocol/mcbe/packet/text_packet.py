@@ -16,6 +16,7 @@ from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.mcbe_packet import mcbe_packet
 from podrum.protocol.mcbe.type.text_type import text_type
 
+
 class text_packet(mcbe_packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
@@ -78,5 +79,6 @@ class text_packet(mcbe_packet):
             self.write_var_int(len(self.parameters))
             for parameter in self.parameters:
                 self.write_string(parameter)
+
         self.write_string(self.xuid)
         self.write_string(self.platform_chat_id)

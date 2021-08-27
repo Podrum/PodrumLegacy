@@ -14,6 +14,7 @@ r"""
 
 from podrum.item.item import item
 
+
 class block_manager:
 
     def __init__(self, managers) -> None:
@@ -22,7 +23,11 @@ class block_manager:
 
     def register_block(self, block_obj: object) -> None:
         self.blocks[f"{block_obj.name} {block_obj.meta}"] = block_obj
-        item_obj: object = item(block_obj.item_name, block_obj.network_id, block_obj.meta)
+
+        item_obj: object = item(
+            block_obj.item_name, block_obj.network_id, block_obj.meta
+        )
+
         item_obj.block_runtime_id = block_obj.runtime_id
         self.managers.item_manager.register_item(item_obj)
         

@@ -15,8 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class stripped_warped_stem(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:stripped_warped_stem", 0, 2, 2, "minecraft:stripped_warped_stem")
+        super().__init__(
+            "minecraft:stripped_warped_stem",
+            0, 2, 2,
+            "minecraft:stripped_warped_stem"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe

@@ -15,6 +15,7 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class black_concrete(block):
     def __init__(self) -> None:
         super().__init__("minecraft:concrete", 15, 1.8, 1.8, "minecraft:concrete")

@@ -15,8 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class cyan_glazed_terracotta(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:cyan_glazed_terracotta", 0, 1.4, 1.4, "minecraft:cyan_glazed_terracotta")
+        super().__init__(
+            "minecraft:cyan_glazed_terracotta",
+            0, 1.4, 1.4,
+            "minecraft:cyan_glazed_terracotta"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

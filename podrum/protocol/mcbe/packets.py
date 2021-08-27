@@ -11,7 +11,6 @@ r"""
  The license file is located in the root directory
  of the source code. If not you may not use this file.
 """
-from typing import Tuple
 
 from podrum.protocol.mcbe.packet.add_player_packet import add_player_packet
 from podrum.protocol.mcbe.packet.available_commands_packet import available_commands_packet

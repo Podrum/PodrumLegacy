@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class stone_bricks(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:stonebrick", 0, 1.5, 6, "minecraft:stonebrick")
         self.stack_size: int = 64

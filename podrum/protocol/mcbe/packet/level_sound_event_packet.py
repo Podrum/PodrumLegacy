@@ -14,9 +14,10 @@ r"""
 
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.mcbe_packet import mcbe_packet
-from podrum.protocol.mcbe.type.interact_type import interact_type
+
 
 class level_sound_event_packet(mcbe_packet):
+
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = mcbe_protocol_info.level_sound_event_packet

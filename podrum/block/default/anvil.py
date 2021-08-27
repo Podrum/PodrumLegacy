@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class anvil(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:anvil", 0, 5, 1200, "minecraft:anvil")
         self.stack_size: int = 64

@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class mycelium(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:mycelium", 0, 0.6, 0.5, "minecraft:mycelium")
+        super().__init__(
+            "minecraft:mycelium", 0, 0.6, 0.5, "minecraft:mycelium"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.shovel

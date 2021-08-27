@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class redstone_ore(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:redstone_ore", 0, 3, 3, "minecraft:redstone_ore")
+        super().__init__(
+            "minecraft:redstone_ore", 0, 3, 3, "minecraft:redstone_ore"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

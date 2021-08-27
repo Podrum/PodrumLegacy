@@ -13,9 +13,11 @@ r"""
 """
 
 import binascii
+
 from binary_utils.binary_stream import binary_stream
 from nbt_utils.utils.nbt_le_binary_stream import nbt_le_binary_stream
 from nbt_utils.utils.nbt_net_le_binary_stream import nbt_net_le_binary_stream
+
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
 from podrum.item.item_map import item_map
@@ -25,10 +27,11 @@ from podrum.protocol.mcbe.type.recipes_type import recipes_type
 from podrum.protocol.mcbe.type.transaction_actions_type import transaction_actions_type
 from podrum.protocol.mcbe.type.transaction_type import transaction_type
 
+
 class mcbe_binary_stream(binary_stream):
     def read_uuid(self) -> str:
         stream: object = binary_stream()
-        for i in range(0, 4):
+        for _ in range(4):
             stream.write_int_be(self.read_int_le())
         return b"-".join([
             binascii.hexlify(stream.read(4)),
@@ -40,7 +43,7 @@ class mcbe_binary_stream(binary_stream):
     
     def write_uuid(self, uuid: str) -> None:
         stream: object = binary_stream(binascii.unhexlify(uuid.replace("-", "")))
-        for i in range(0, 4):
+        for _ in range(4):
             self.write_int_le(stream.read_int_be())
     
     def read_string(self) -> str:
@@ -281,17 +284,20 @@ class mcbe_binary_stream(binary_stream):
             self.write_net_le_tag(block_property["nbt"])
             
     def read_item_extra_data_with_blocking_tick(self) -> dict:
-        result: dict = {}
-        result["has_nbt"] = self.read_unsigned_short_le() > 0
+        result: dict = {"has_nbt": self.read_unsigned_short_le() > 0}
+
         if result["has_nbt"]:
             result["version"] = self.read_unsigned_byte()
             result["nbt"] = self.read_le_tag()
+
         result["can_place_on"] = []
         for _ in range(self.read_int_le()):
             result["can_place_on"].append(self.read_short_array())
+
         result["can_destroy"] = []
         for _ in range(self.read_int_le()):
             result["can_destroy"].append(self.read_short_array())
+
         result["blocking_tick"] = self.read_long_le()
         return result
     
@@ -302,26 +308,32 @@ class mcbe_binary_stream(binary_stream):
             self.write_le_tag(value["nbt"])
         else:
             self.write_unsigned_short_le(0)
+
         self.write_int_le(len(value["can_place_on"]))
         for item in value["can_place_on"]:
             self.write_short_array(item)
+
         self.write_int_le(len(value["can_destroy"]))
         for item in value["can_destroy"]:
             self.write_short_array(item)
+
         self.write_long_le(value["blocking_tick"])
         
     def read_item_extra_data_without_blocking_tick(self) -> dict:
-        result: dict = {}
-        result["has_nbt"] = self.read_unsigned_short_le() > 0
+        result: dict = {"has_nbt": self.read_unsigned_short_le() > 0}
+
         if result["has_nbt"]:
             result["version"] = self.read_unsigned_byte()
             result["nbt"] = self.read_le_tag()
+
         result["can_place_on"] = []
         for _ in range(self.read_int_le()):
             result["can_place_on"].append(self.read_short_array())
+
         result["can_destroy"] = []
         for _ in range(self.read_int_le()):
             result["can_destroy"].append(self.read_short_array())
+
         return result
     
     def write_item_extra_data_without_blocking_tick(self, value: dict) -> None:
@@ -331,9 +343,11 @@ class mcbe_binary_stream(binary_stream):
             self.write_le_tag(value["nbt"])
         else:
             self.write_unsigned_short_le(0)
+
         self.write_int_le(len(value["can_place_on"]))
         for item in value["can_place_on"]:
             self.write_short_array(item)
+
         self.write_int_le(len(value["can_destroy"]))
         for item in value["can_destroy"]:
             self.write_short_array(item)
@@ -342,15 +356,18 @@ class mcbe_binary_stream(binary_stream):
         result: dict = {
             "network_id": self.read_signed_var_int()
         }
+
         if result["network_id"] > 0:
             result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
             stream: object = mcbe_binary_stream(self.read_byte_array())
+
             if item_map.runtime_id_to_name(result["network_id"]) == "minecraft:shield":
                 result["extra"] = stream.read_item_extra_data_with_blocking_tick()
             else:
                 result["extra"] = stream.read_item_extra_data_without_blocking_tick()
+
         return result
                     
     def write_item_legacy(self, value: dict) -> None:
@@ -360,10 +377,12 @@ class mcbe_binary_stream(binary_stream):
             self.write_var_int(value["metadata"])
             self.write_signed_var_int(value["block_runtime_id"])
             stream: object = mcbe_binary_stream()
+
             if item_map.runtime_id_to_name(value["network_id"]) == "minecraft:shield":
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
             else:
                 stream.write_item_extra_data_without_blocking_tick(value["extra"])
+
             self.write_byte_array(stream.data)
                     
     def read_item(self) -> dict:
@@ -374,10 +393,13 @@ class mcbe_binary_stream(binary_stream):
             result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["has_stack_id"] = self.read_bool()
+
             if result["has_stack_id"]:
                 result["stack_id"] = self.read_signed_var_int()
+
             result["block_runtime_id"] = self.read_signed_var_int()
             stream: object = mcbe_binary_stream(self.read_byte_array())
+
             if item_map.runtime_id_to_name(result["network_id"]) == "minecraft:shield":
                 result["extra"] = stream.read_item_extra_data_with_blocking_tick()
             else:
@@ -389,14 +411,18 @@ class mcbe_binary_stream(binary_stream):
         if value["network_id"] > 0:
             self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
+
             if value["has_stack_id"]:
                 self.write_signed_var_int(value["stack_id"])
+
             self.write_signed_var_int(value["block_runtime_id"])
             stream: object = mcbe_binary_stream()
+
             if item_map.runtime_id_to_name(value["network_id"]) == "minecraft:shield":
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
             else:
                 stream.write_item_extra_data_without_blocking_tick(value["extra"])
+
             self.write_byte_array(stream.data)
                     
     def read_vector_3_int(self) -> object:
@@ -470,6 +496,7 @@ class mcbe_binary_stream(binary_stream):
                 metadata_value: int = self.read_vector_3_float()
             else:
                 raise Exception("Invalid metadata type")
+
             metadata_dictionary[metadata_key] = {"type": metadata_type, "value": metadata_value}
         return metadata_dictionary
     
@@ -782,8 +809,8 @@ class mcbe_binary_stream(binary_stream):
     def read_recipes(self) -> list:
         recipes: list = []
         for _ in range(self.read_var_int()):
-            recipe: dict = {}
-            recipe["type"] = self.read_signed_var_int()
+            recipe: dict = {"type": self.read_signed_var_int()}
+
             if recipe["type"] in [
                 recipes_type.type_shapeless,
                 recipes_type.type_shulker_box,

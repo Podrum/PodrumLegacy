@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class time_type:
     morning: int = 0
     day: int = 1000

@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class text_type:
     raw: int = 0
     chat: int = 1

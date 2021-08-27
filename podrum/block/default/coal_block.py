@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class coal_block(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:coal_block", 0, 5, 6, "minecraft:coal_block")
+        super().__init__(
+            "minecraft:coal_block", 0, 5, 6, "minecraft:coal_block"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
         self.flammable: bool = True

@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class warped_planks(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:warped_planks", 0, 3, 2, "minecraft:warped_planks")
+        super().__init__(
+            "minecraft:warped_planks", 0, 3, 2, "minecraft:warped_planks"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe

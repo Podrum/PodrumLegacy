@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class dirt(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:dirt", 0, 0.5, 0.5, "minecraft:dirt")
         self.stack_size: int = 64

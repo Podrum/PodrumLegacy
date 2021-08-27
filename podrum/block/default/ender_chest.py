@@ -15,9 +15,16 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class ender_chest(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:ender_chest", 0, 22.5, 600, "minecraft:ender_chest")
+        super().__init__(
+            "minecraft:ender_chest",
+            0, 22.5, 600,
+            "minecraft:ender_chest"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
         self.luminant: int = 7

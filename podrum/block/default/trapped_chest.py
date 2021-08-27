@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class trapped_chest(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:trapped_chest", 0, 2.5, 2.5, "minecraft:trapped_chest")
+        super().__init__(
+            "minecraft:trapped_chest", 0, 2.5, 2.5, "minecraft:trapped_chest"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.transparent: bool = True

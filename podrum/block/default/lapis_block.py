@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class lapis_block(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:lapis_block", 0, 3, 3, "minecraft:lapis_block")
+        super().__init__(
+            "minecraft:lapis_block", 0, 3, 3, "minecraft:lapis_block"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

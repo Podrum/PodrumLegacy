@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class chest(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:chest", 0, 2.5, 2.5, "minecraft:chest")
         self.stack_size: int = 64

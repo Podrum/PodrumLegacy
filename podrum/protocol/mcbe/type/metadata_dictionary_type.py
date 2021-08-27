@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class metadata_dictionary_type:
     key_flags: int = 0
     key_health: int = 1

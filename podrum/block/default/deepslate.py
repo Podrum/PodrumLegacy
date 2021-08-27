@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class deepslate(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:deepslate", 0, 3, 6, "minecraft:deepslate")
+        super().__init__(
+            "minecraft:deepslate", 0, 3, 6, "minecraft:deepslate"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

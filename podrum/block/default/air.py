@@ -14,6 +14,8 @@ r"""
 
 from podrum.block.block import block
 
+
 class air(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:air", 0, 0, 0, "minecraft:air")

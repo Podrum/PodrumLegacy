@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class glowstone(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:glowstone", 0, 0.3, 0.3, "minecraft:glowstone")
+        super().__init__(
+            "minecraft:glowstone", 0, 0.3, 0.3, "minecraft:glowstone"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

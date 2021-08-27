@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class jungle_leaves(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:leaves", 3, 0.2, 0.2, "minecraft:leaves")
         self.stack_size: int = 64

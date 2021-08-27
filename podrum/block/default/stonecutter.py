@@ -15,8 +15,15 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class stonecutter(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:stonecutter", 0, 3.5, 3.5, "minecraft:stonecutter_block")
+        super().__init__(
+            "minecraft:stonecutter",
+            0, 3.5, 3.5,
+            "minecraft:stonecutter_block"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

@@ -12,32 +12,30 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from functools import cmp_to_key
-import math
 import json
+import math
+from threading import Thread
+
+from rak_net.protocol.frame import frame
+
 from podrum.event import events
-from podrum.game_data.mcbe.item_states import item_states
 from podrum.game_data.mcbe.creative_items import creative_items
-from podrum.geometry.geometry import geometry
+from podrum.game_data.mcbe.item_states import item_states
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
-from podrum.item.item import item
 from podrum.item.item_map import item_map
 from podrum.protocol.mcbe import packets
+from podrum.protocol.mcbe import types
 from podrum.protocol.mcbe.entity.metadata_storage import metadata_storage
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.game_packet import game_packet
-from podrum.protocol.mcbe import types
-from podrum.task.immediate_task import immediate_task
-from podrum.world.chunk.chunk import chunk
-from queue import Queue
-from rak_net.protocol.frame import frame
-from threading import Thread
-from time import sleep
-import zlib
+
 
 class mcbe_player:
-    def __init__(self, connection: object, server: object, entity_id: int) -> None:
+
+    def __init__(
+            self, connection: object, server: object, entity_id: int
+    ) -> None:
         self.connection: object = connection
         self.server: object = server
         self.entity_id: int = entity_id
@@ -49,6 +47,7 @@ class mcbe_player:
     def send_start_game(self) -> None:
         if not self.world.has_player(self.identity):
             self.world.create_player(self.identity)
+
         self.position: object = self.world.get_player_position(self.identity)
         self.position.y += 1
         self.gamemode: int = 1
@@ -129,11 +128,13 @@ class mcbe_player:
                 item_obj: object = self.server.managers.item_manager.items[f"minecraft:stone 0"]
             damage: int = 0 if "damage" not in creative_item else creative_item["damage"]
             name: str = item_map.runtime_id_to_name(creative_item['id'])
+
             if f"{name} {damage}" in self.server.managers.item_manager.items:
                 item_obj: object = self.server.managers.item_manager.items[f"{name} {damage}"]
             else:
                 item_obj: object = self.server.managers.item_manager.items[f"minecraft:stone 0"]
                 #item_obj: object = item(name, creative_item["id"], damage)
+
             packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
             entry_id += 1
         packet.encode()
@@ -152,6 +153,7 @@ class mcbe_player:
     def handle_login_packet(self, data: bytes) -> None:
         packet: object = packets.login_packet(data)
         packet.decode()
+
         for chain in packet.chain_data:
             if "identityPublicKey" in chain:
                 self.identity_public_key: str = chain["identityPublicKey"]
@@ -159,6 +161,7 @@ class mcbe_player:
                 self.xuid: str = chain["extraData"]["XUID"]
                 self.username: str = chain["extraData"]["displayName"]
                 self.identity: str = chain["extraData"]["identity"]
+
         self.send_play_status(types.login_status_type.success)
         packet: object = packets.resource_packs_info_packet()
         packet.forced_to_accept = False
@@ -171,7 +174,12 @@ class mcbe_player:
         self.spawned: bool = False
         self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
 
-    def disconnect(self, message: str = "Disconnected from server.", *, hide_disconnect_screen: bool = False) -> None:
+    def disconnect(
+            self,
+            message: str = "Disconnected from server.",
+            *,
+            hide_disconnect_screen: bool = False
+    ) -> None:
         packet: object = packets.disconnect_packet()
         packet.message = message
         packet.hide_disconnect_screen = hide_disconnect_screen
@@ -240,12 +248,14 @@ class mcbe_player:
         if packet.type == 0:
             error_message: str = ""
             temp: str = f", due to malformed packet ({hex(packet.violated_packet_id)})"
+
             if packet.severity == 0:
                 error_message += f"Warning{temp}"
             elif packet.severity == 1:
                 error_message += f"Final Warning{temp}"
             elif packet.severity == 2:
                 error_message += f"Terminating connectinon{temp}"
+
             self.server.logger.error(error_message)
             if len(packet.message) > 0:
                 self.server.logger.error(packet.message)
@@ -253,21 +263,26 @@ class mcbe_player:
     def handle_request_chunk_radius_packet(self, data: bytes) -> None:
         packet: object = packets.request_chunk_radius_packet(data)
         packet.decode()
+
         self.view_distance: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
         new_packet: object = packets.chunk_radius_updated_packet()
         new_packet.chunk_radius = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
-        if self.spawned == False:
-            Thread(target = self.send_chunks, args = [True]).start()
+
+        if not self.spawned:
+            Thread(target=self.send_chunks, args=[True]).start()
                 
     def handle_move_player_packet(self, data: bytes):
         packet: object = packets.move_player_packet(data)
         packet.decode()
+
         if math.floor(self.position.x) >> 4 != math.floor(packet.position.x) >> 4 or math.floor(self.position.z) >> 4 != math.floor(packet.position.z) >> 4:
-            Thread(target = self.send_chunks).start()
+            Thread(target=self.send_chunks).start()
+
         move_event: object = events.player_move_event(self, self.position)
         move_event.call()
+
         if not move_event.canceled:
             self.position: object = packet.position
 
@@ -366,6 +381,7 @@ class mcbe_player:
                 new_packet.window_id = types.window_id_type.inventory
             else:
                 new_packet.window_id = types.window_id_type.inventory
+
             new_packet.window_type = types.window_type.inventory
             new_packet.coordinates = self.position
             new_packet.runtime_entity_id = self.entity_id
@@ -443,18 +459,21 @@ class mcbe_player:
                 if chunk_distance <= self.view_distance:
                     self.world.load_queue.put((current_x + send_chunk_x, current_z + send_chunk_z))
                     chunk_send_queue.append((current_x + send_chunk_x, current_z + send_chunk_z))
+
         # Sort the chunk order to send the closest chunks first.
-        chunk_send_queue.sort(key = lambda x: (abs(current_x - x[0]), abs(current_z - x[1])))
+        chunk_send_queue.sort(key=lambda x: (abs(current_x - x[0]), abs(current_z - x[1])))
         # Wait for all chunks to load.
         for item in chunk_send_queue:
             while True:
                 if self.world.has_loaded_chunk(item[0], item[1]):
                     break
+
         # Finally send the chunks
         for item in chunk_send_queue:
             c: object = self.world.get_chunk(item[0], item[1])
             self.send_chunk(c)
         self.send_network_chunk_publisher_update()
+
         if spawn:
             self.send_play_status(types.login_status_type.spawn)
             self.spawned: bool = True  
@@ -469,6 +488,7 @@ class mcbe_player:
         new_packet.suffixes = []
         new_packet.enums = []
         new_packet.command_data = []
+
         for command in self.server.managers.command_manager.commands:
             new_packet.command_data.append({
                 "name": command.name,
@@ -478,6 +498,7 @@ class mcbe_player:
                 "alias": 0,
                 "overloads": []
             })
+
         new_packet.dynamic_enums = []
         new_packet.enum_constraints = []
         new_packet.encode()

@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class sandstone(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:sandstone", 0, 0.8, 0.8, "minecraft:sandstone")
+        super().__init__(
+            "minecraft:sandstone", 0, 0.8, 0.8, "minecraft:sandstone"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class gamemode_type:
     survival: int = 0
     creative: int = 1

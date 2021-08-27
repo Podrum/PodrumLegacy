@@ -15,9 +15,16 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class enchanting_table(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:enchanting_table", 0, 5, 1200, "minecraft:enchanting_table")
+        super().__init__(
+            "minecraft:enchanting_table",
+            0, 5, 1200,
+            "minecraft:enchanting_table"
+        )
+
         self.stack_size: int = 64
         self.luminant: int = 12
         self.transparent: bool = True

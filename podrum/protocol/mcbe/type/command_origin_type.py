@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class command_origin_type:
     player: int = 0
     block: int = 1

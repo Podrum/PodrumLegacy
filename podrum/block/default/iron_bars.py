@@ -15,6 +15,7 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class iron_bars(block):
     def __init__(self) -> None:
         super().__init__("minecraft:iron_bars", 0, 5, 6, "minecraft:iron_bars")

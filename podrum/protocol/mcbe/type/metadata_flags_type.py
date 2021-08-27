@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class metadata_flags_type:
     flag_onfire: int = 0
     flag_sneaking: int = 1

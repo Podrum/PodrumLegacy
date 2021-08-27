@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class recipes_type:
     type_shapeless: int = 0
     type_shaped: int = 1

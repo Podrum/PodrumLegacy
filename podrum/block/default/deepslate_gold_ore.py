@@ -15,8 +15,15 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class deepslate_gold_ore(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:deepslate_gold_ore", 0, 4.5, 3, "minecraft:deepslate_gold_ore")
+        super().__init__(
+            "minecraft:deepslate_gold_ore",
+            0, 4.5, 3,
+            "minecraft:deepslate_gold_ore"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

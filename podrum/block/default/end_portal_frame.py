@@ -15,9 +15,16 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class end_portal_frame(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:end_portal_frame", 0, -1, 36000000, "minecraft:end_portal_frame")
+        super().__init__(
+            "minecraft:end_portal_frame",
+            0, -1, 36000000,
+            "minecraft:end_portal_frame"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

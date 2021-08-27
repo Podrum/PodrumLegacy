@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class resource_pack_client_response_type:
     none: int = 0
     refused: int = 1

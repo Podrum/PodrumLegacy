@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class bookshelf(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:bookshelf", 0, 1.5, 1.5, "minecraft:bookshelf")
+        super().__init__(
+            "minecraft:bookshelf", 0, 1.5, 1.5, "minecraft:bookshelf"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.flammable: bool = True

@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class soul_sand(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:soul_sand", 0, 0.5, 0.5, "minecraft:soul_sand")
+        super().__init__(
+            "minecraft:soul_sand", 0, 0.5, 0.5, "minecraft:soul_sand"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.shovel
         self.transparent: bool = True

@@ -16,6 +16,7 @@ from binary_utils.binary_stream import binary_stream
 from rak_net.protocol.packet import packet
 import zlib
 
+
 class game_packet(packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)

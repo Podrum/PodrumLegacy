@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class action_type:
     start_break: int = 0
     abort_break: int = 1
