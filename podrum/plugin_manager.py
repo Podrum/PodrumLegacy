@@ -16,36 +16,53 @@ r"""
 import importlib
 import json
 import os
-from podrum.version import version
 import sys
 from zipfile import ZipFile
 
+from podrum.version import version
+
+
 class plugin_manager:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+    def __init__(self, server) -> None:
+        self.server = server
         self.plugins: dict = {}
         
     def check_for_required_plugins(self) -> None:
         for name in dict(self.plugins):
-            if hasattr(self.plugins[name], "required_plugins"):
-                for plugin_name in self.plugins[name].required_plugins:
-                    if not plugin_name in self.plugins:
-                        self.server.logger.alert(f"A required plugin {plugin_name} is not loaded.")
-                        self.server.logger.alert(f"Plugin {name} will be unloaded.")
-                        self.unload(name)
-                        continue
-                    
-                    setattr(self.plugins[name], plugin_name, self.plugins[plugin_name])
+            if not hasattr(self.plugins[name], "required_plugins"):
+                continue
+
+            for plugin_name in self.plugins[name].required_plugins:
+                if plugin_name in self.plugins:
+                    self.server.logger.alert(
+                        f"A required plugin {plugin_name} is not loaded."
+                    )
+
+                    self.server.logger.alert(
+                        f"Plugin {name} will be unloaded."
+                    )
+
+                    self.unload(name)
+                    continue
+
+                setattr(
+                    self.plugins[name],
+                    plugin_name,
+                    self.plugins[plugin_name]
+                )
 
     def load(self, path: str) -> None:
         plugin_file = ZipFile(path, "r")
         plugin_info: dict = json.loads(plugin_file.read("info.json"))
+
         if plugin_info["name"] in self.plugins:
             self.server.logger.alert(f"A plugin with the name {plugin_info['name']} already exists.")
             return
+
         if plugin_info["api_version"] != version.podrum_api_version:
             self.server.logger.alert(f"A plugin with the name {plugin_info['name']} could not be loaded due to incompatible api version ({plugin_info['api_version']}). Neweset Podrum API version is {version.podrum_api_version}")
             return
+
         self.server.logger.info(f"Loading {plugin_info['name']}...")
         sys.path.append(path)
         main: str = plugin_info["main"].rsplit(".", 1)

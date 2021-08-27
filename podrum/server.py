@@ -177,6 +177,6 @@ class server:
                 return players[usernames.index(name)]
 
     def broadcast_packet(self, world, packet) -> None:
-        for player in self.players.values():
+        for player in list(self.players.values()):
             if player.world == world:
                 player.send_packet(packet.data)

@@ -19,11 +19,11 @@ from podrum.command.command_abc import Command
 
 class debug_command(Command):
 
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+    def __init__(self, server) -> None:
+        self.server = server
         self.name: str = "debug"
         self.description: str = "Debug command."
     
-    def execute(self, args: list, sender: object) -> None:
+    def execute(self, args: list, sender) -> None:
         thread_count: int = threading.active_count()
         sender.send_message(f"There are {thread_count} active threads.")

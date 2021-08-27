@@ -17,7 +17,7 @@ from podrum.command.command_abc import Command
 class say_command(Command):
 
     def __init__(self, server) -> None:
-        self.server: object = server
+        self.server = server
         self.name: str = "say"
         self.description: str = "Sends a message in the chat."
 
