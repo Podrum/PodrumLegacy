@@ -29,3 +29,11 @@ from podrum.command.default.tell_command import tell_command
 from podrum.command.default.time_command import time_command
 from podrum.command.default.weather_command import weather_command
 from podrum.command.default.difficulty_command import difficulty_command
+
+__all__ = (
+    "debug_command", "help_command", "plugins_command", "reload_command",
+    "say_command", "stop_command", "tell_command", "version_command",
+    "kick_command", "list_command", "me_command", "seed_command",
+    "gamemode_command", "tell_command", "time_command", "weather_command",
+    "difficulty_command"
+)
