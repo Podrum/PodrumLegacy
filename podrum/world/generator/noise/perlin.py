@@ -29,7 +29,7 @@ class Perlin:
         freq: float = 1
         height: float = 0
 
-        for i in range(0, octaves):
+        for i in range(octaves):
             sample_x: float = x / scale * freq * (i+1)
             sample_z: float = z / scale * freq * (i+1)
 
@@ -52,7 +52,7 @@ class Perlin:
     def grad(_hash, x, y, z) -> float:
         h = _hash & 15
         u = y if h & 8 else x
-        v = (x if h == 12 or h == 14 else z) if h & 12 else y
+        v = (x if h in [12, 14] else z) if h & 12 else y
         return (u if h & 1 else -u) + (v if h & 2 else -v)
 
     def noise(self, x, y, z=0) -> float:

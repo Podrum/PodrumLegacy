@@ -269,19 +269,29 @@ class mcbe_player:
             Thread(target = self.send_chunks).start()
         move_event: object = events.player_move_event(self, self.position)
         move_event.call()
-        if move_event.canceled:
-            pass # Resend old pos
-        else:
+        if not move_event.canceled:
             self.position: object = packet.position
 
     def handle_player_action_packet(self, data: bytes): # probably not cancelable
         packet: object = packets.player_action_packet(data)
         packet.decode()
-        if packet.action in [types.action_type.start_sneak, types.action_type.stop_sneak]:
-            sneak_event: object = events.player_sneak_event(self, False if packet.action == types.action_type.stop_sneak else True)
+        if packet.action == types.action_type.start_sneak:
+            sneak_event: object = events.player_sneak_event(
+                self, packet.action != types.action_type.stop_sneak
+            )
+
+            sneak_event.call()
+        elif packet.action == types.action_type.stop_sneak:
+            sneak_event: object = events.player_sneak_event(
+                self, packet.action != types.action_type.stop_sneak
+            )
+
             sneak_event.call()
         elif packet.action in [types.action_type.start_sprint, types.action_type.stop_sprint]:
-            sprint_event: object = events.player_sprint_event(self, False if packet.action == types.action_type.stop_sprint else True)
+            sprint_event: object = events.player_sprint_event(
+                self, packet.action != types.action_type.stop_sprint
+            )
+
             sprint_event.call()
         elif packet.action == types.action_type.jump:
             jump_event: object = events.player_jump_event(self)
@@ -290,20 +300,26 @@ class mcbe_player:
             start_sleeping_event: object = events.player_start_sleeping_event(self)
             start_sleeping_event.call()
         elif packet.action == types.action_type.start_break:
-            break_time = math.ceil(self.world.get_block(packet.position.x, packet.position.y, packet.position.z).hardness * 1.5 * 20)
-            new_packet: object = packets.level_event_packet()
-            new_packet.event_id = types.level_event_type.block_start_break
-            new_packet.position = packet.position
-            new_packet.packet_data = int(65535/break_time)
-            new_packet.encode()
-            self.server.broadcast_packet(self.world, new_packet)
+            self._extracted_from_handle_player_action_packet_17(packet)
         elif packet.action == types.action_type.abort_break:
-            new_packet: object = packets.level_event_packet()
-            new_packet.event_id = types.level_event_type.block_stop_break
-            new_packet.position = packet.position
-            new_packet.packet_data = 0
-            new_packet.encode()
-            self.server.broadcast_packet(self.world, new_packet)
+            self._extracted_from_handle_player_action_packet_25(packet)
+
+    def _extracted_from_handle_player_action_packet_25(self, packet):
+        new_packet: object = packets.level_event_packet()
+        new_packet.event_id = types.level_event_type.block_stop_break
+        new_packet.position = packet.position
+        new_packet.packet_data = 0
+        new_packet.encode()
+        self.server.broadcast_packet(self.world, new_packet)
+
+    def _extracted_from_handle_player_action_packet_17(self, packet):
+        break_time = math.ceil(self.world.get_block(packet.position.x, packet.position.y, packet.position.z).hardness * 1.5 * 20)
+        new_packet: object = packets.level_event_packet()
+        new_packet.event_id = types.level_event_type.block_start_break
+        new_packet.position = packet.position
+        new_packet.packet_data = int(65535/break_time)
+        new_packet.encode()
+        self.server.broadcast_packet(self.world, new_packet)
 
     def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
         new_packet: object = packets.text_packet()

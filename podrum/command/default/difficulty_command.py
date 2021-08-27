@@ -21,7 +21,7 @@ class difficulty_command:
         self.description: str = "Sets the difficulty level (peaceful, easy, etc.)."
     
     def execute(self, args: list, sender: object) -> None:
-        if len(args) >= 1:
+        if args:
             try:
                 difficulty = int(args[0]) if int(args[0]) <= 2 else 4
             except ValueError:

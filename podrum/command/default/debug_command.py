@@ -24,7 +24,4 @@ class debug_command:
     
     def execute(self, args: list, sender: object) -> None:
         thread_count: int = threading.active_count()
-        if thread_count > 1:
-            sender.send_message(f"There are {thread_count} active threads.")
-        else:
-            sender.send_message(f"There are {thread_count} active threads.")
+        sender.send_message(f"There are {thread_count} active threads.")

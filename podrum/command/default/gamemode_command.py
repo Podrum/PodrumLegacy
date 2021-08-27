@@ -21,7 +21,7 @@ class gamemode_command:
         self.description: str = "Sets a player's game mode."
     
     def execute(self, args: list, sender: object) -> None:
-        if len(args) >= 1:
+        if args:
             player = sender
             if len(args) > 1:
                 player = self.server.find_player(args[1])

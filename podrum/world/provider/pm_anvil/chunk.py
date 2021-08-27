@@ -32,15 +32,12 @@ class chunk:
         self.x: int = x
         self.z: int = z
         self.sections: dict = {}
-        for i in range(0, 16):
-            if i in sections:
-                self.sections[i] = sections[i]
-            else:
-                self.sections[i] = section()
+        for i in range(16):
+            self.sections[i] = sections.get(i, section())
         if len(height_map) == 256:
             self.height_map: list = height_map
         else:
-            self.height_map: list = [0] * 256      
+            self.height_map: list = [0] * 256
         if len(biomes) == 256:
             self.biomes: list = biomes
         else:
@@ -90,7 +87,7 @@ class chunk:
     
     def recalculate_height_map(self) -> None:
         for x in range(0, 16):
-            for z in range(0, 16):
+            for z in range(16):
                 y: int = self.get_highest_block_at(x, z) + 1
                 self.height_map[(x << 4) + z] = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
                     

@@ -32,4 +32,4 @@ class text_input(input_field):
         
     @classmethod
     def from_dict(cls, obj: dict) -> object:
-        return cls(obj['text'], obj['placeholder'], obj.get('default', None))
+        return cls(obj['text'], obj['placeholder'], obj.get('default'))

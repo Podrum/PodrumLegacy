@@ -19,7 +19,7 @@ from podrum.forms.inputs.input_field import input_field
 class step_slider(input_field):
     def __init__(self, text: str, options: list, default: int = None):
         super().__init__(text, 'step_slider')
-        self.options: List[str] = options
+        self.options = options
         self.default_index: int = default
         
     @property
@@ -33,12 +33,10 @@ class step_slider(input_field):
             
     @default.setter
     def default(self, default: str) -> None:
-        index = 0
-        for option in self.options:
+        for index, option in enumerate(self.options):
             if option == default:
                 self.default_index = index
                 return
-            index += 1
         self.default_index = None
             
     def to_dict(self) -> dict:

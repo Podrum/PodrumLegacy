@@ -90,7 +90,7 @@ class chunk:
     
     def recalculate_height_map(self) -> None:
         for x in range(0, 16):
-            for z in range(0, 16):
+            for z in range(16):
                 y: int = self.get_highest_block_at(x, z) + 1
                 self.height_map[(x << 4) + z] = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
                     
