@@ -14,8 +14,16 @@ r"""
 
 from podrum.world.chunk_utils import chunk_utils
 
+
 class section:
-    def __init__(self, block_ids: list = [], data_entries: list = [], block_light_entries: list = [], sky_light_entries: list = []) -> None:
+
+    def __init__(
+        self,
+        block_ids: list = [],
+        data_entries: list = [],
+        block_light_entries: list = [],
+        sky_light_entries: list = []
+    ) -> None:
         if len(block_ids) == 4096:
             self.block_ids: list = block_ids
         else:
@@ -39,9 +47,9 @@ class section:
       
     @staticmethod
     def check_bounds(x: int, y: int, z: int) -> None:
-        assert x >= 0 and x < 16, f"x ({x}) is not between 0 and 15"
-        assert y >= 0 and y < 16, f"y ({y}) is not between 0 and 15"
-        assert z >= 0 and z < 16, f"z ({z}) is not between 0 and 15"
+        assert 0 <= x < 16, f"x ({x}) is not between 0 and 15"
+        assert 0 <= y < 16, f"y ({y}) is not between 0 and 15"
+        assert 0 <= z < 16, f"z ({z}) is not between 0 and 15"
               
     def get_block_id(self, x: int, y: int, z: int) -> int:
         return self.block_ids[section.get_index(x, y, z)]

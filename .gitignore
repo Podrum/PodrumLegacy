@@ -3,13 +3,9 @@
 /.vscode
 
 # Python
-*.pyc
-*.pyd
-*.pyz
-*.pyw
-/venv
-/__pycache__
-src/pyraklib/server/__pycache__
+*.py[*]
+venv
+__pycache__
 
 # Server/Podrum files
 /src/test

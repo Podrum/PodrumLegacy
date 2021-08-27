@@ -14,8 +14,10 @@ r"""
 
 from podrum.event.event_manager import event_manager
 
+
 class event:
-    canceled = False
+
+    canceled: bool = False
     
     # [call]
     # :return: = None

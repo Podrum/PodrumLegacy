@@ -15,17 +15,19 @@ r"""
 from binary_utils.binary_stream import binary_stream
 from podrum.world.chunk.sub_chunk import sub_chunk
 
+
 class chunk:
+
     def __init__(self, x: int, z: int, sub_chunks: dict = {}, biomes: list = []) -> None:
         self.x: int = x
         self.z: int = z
         self.has_changed: bool = False
         self.sub_chunks: dict = {}
-        for y in range(0, 16):
-            if y in self.sub_chunks:
-                self.sub_chunks[y] = sub_chunks[y]
-            else:
-                self.sub_chunks[y] = sub_chunk()
+        for y in range(16):
+            self.sub_chunks[y] = (
+                sub_chunks[y] if y in self.sub_chunks else sub_chunk()
+            )
+
         if len(biomes) == 256:
             self.biomes: list = biomes
         else:
@@ -56,20 +58,26 @@ class chunk:
     
     def network_deserialize(self, data: bytes, sub_chunk_count: int = 16) -> None:
         stream: object = binary_stream(data)
+
         for y in range(sub_chunk_count):
             sc: object = sub_chunk()
             sc.network_deserialize(stream)
             self.sub_chunks[y] = sc
+
         self.biomes: list = []
+
         for _ in range(stream.read_var_int()):
             self.biomes.append(stream.read_unsigned_byte())
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
+
         for y in range(self.get_sub_chunk_send_count()):
             self.sub_chunks[y].network_serialize(stream)
         stream.write_var_int(len(self.biomes))
+
         for biome in self.biomes:
             stream.write_unsigned_byte(biome)
+
         stream.write_unsigned_byte(0)
         return stream.data

@@ -39,14 +39,14 @@ It's still under active development, yet it has a few advantages:
 ## Running:
 Linux and MacOS (Unix systems):
 ```sh
-pip3 install -r ./requirements.txt
-python3 __main__.py
+pip3 install -r requirements.txt
+python3 run.py
 ```
 
 Windows:
 ```batch
-pip install -r ./requirements.txt
-python __main__.py
+pip install -r requirements.txt
+python run.py
 ```
 
 # FAQ:

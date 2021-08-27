@@ -14,9 +14,10 @@ r"""
 
 from podrum.event.event import event
 
+
 class player_jump_event(event):
     
     # Gets called when a player jumps.
 
-    def __init__(self, player: object) -> None:
-        self.player: object = player
+    def __init__(self, player) -> None:
+        self.player = player

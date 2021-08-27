@@ -12,22 +12,31 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from binary_utils.binary_stream import binary_stream
-from nbt_utils.tag_ids import tag_ids
-from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
+from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.compound_tag import compound_tag
-from nbt_utils.tag.int_tag import int_tag
 from nbt_utils.tag.int_array_tag import int_array_tag
+from nbt_utils.tag.int_tag import int_tag
 from nbt_utils.tag.list_tag import list_tag
 from nbt_utils.tag.long_tag import long_tag
-from nbt_utils.tag.string_tag import string_tag
+from nbt_utils.tag_ids import tag_ids
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
-from podrum.world.chunk_utils import chunk_utils
+
 from podrum.world.provider.pm_anvil.section import section
 
+
 class chunk:
-    def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: list = [], tile_entities: list = []) -> None:
+
+    def __init__(
+        self,
+        x: int,
+        z: int,
+        sections: dict = {},
+        height_map: list = [],
+        biomes: list = [],
+        entities: list = [],
+        tile_entities: list = []
+    ) -> None:
         self.x: int = x
         self.z: int = z
         self.sections: dict = {}

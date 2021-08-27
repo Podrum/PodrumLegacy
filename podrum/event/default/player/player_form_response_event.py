@@ -14,20 +14,24 @@ r"""
 
 from podrum.event.event import event
 
+
 class player_form_response_event(event):
     
     # Gets called when a player submits a form.
 
-    def __init__(self, form_id: int, data: object, player: object) -> None:
+    def __init__(self, form_id: int, data, player) -> None:
         self.form_id = form_id
         self.player = player
         self.cancelled = data is None
         self.form_type = None
         self.response = data
+
         if isinstance(data, list):
             self.form_type = 'custom'
             self.response = data
+
         elif isinstance(data, bool):
             self.form_type = 'modal'
+
         elif isinstance(data, int):
             self.form_type = 'normal'

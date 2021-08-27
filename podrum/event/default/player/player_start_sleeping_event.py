@@ -14,6 +14,8 @@ r"""
 
 from podrum.event.event import event
 
+
 class player_start_sleeping_event(event):
-    def __init__(self, player: object) -> None:
+
+    def __init__(self, player) -> None:
         self.player = player

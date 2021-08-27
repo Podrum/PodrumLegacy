@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class provider_manager:
     def __init__(self):
         self.providers: dict = {}

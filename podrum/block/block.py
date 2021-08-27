@@ -18,7 +18,15 @@ from podrum.game_data.mcbe.item_states import item_states
 from podrum.item.item_map import item_map
 
 class block:
-    def __init__(self, name: str, meta: int, hardness: float, blast_resistance: float, item_name: str = "") -> None:
+
+    def __init__(
+            self,
+            name: str,
+            meta: int,
+            hardness: float,
+            blast_resistance: float,
+            item_name: str = ""
+    ) -> None:
         self.name: str = name
         self.meta: int = meta
         self.hardness: float = hardness

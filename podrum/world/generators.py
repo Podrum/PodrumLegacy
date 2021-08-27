@@ -15,3 +15,5 @@ r"""
 from podrum.world.generator.flat import flat
 from podrum.world.generator.default import default
 from podrum.world.generator.void import void
+
+__all__ = ("flat", "default", "void")

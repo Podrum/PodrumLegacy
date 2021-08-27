@@ -14,10 +14,11 @@ r"""
 
 from podrum.event.event import event
 
+
 class player_join_event(event):
 
     # Gets called when a player joins the server.
 
-    def __init__(self, player: object) -> None:
-        self.player: object = player
+    def __init__(self, player) -> None:
+        self.player = player
         self.join_message: str = f"{player.username} joined the server"

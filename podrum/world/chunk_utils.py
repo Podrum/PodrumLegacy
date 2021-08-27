@@ -12,7 +12,9 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class chunk_utils:
+
     @staticmethod
     def get_nibble_4(items: list, index: int) -> int:
         if index % 2 == 0:

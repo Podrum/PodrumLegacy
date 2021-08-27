@@ -17,10 +17,13 @@ try:
     has_chunk_utils: bool = True
 except Exception as e:
     has_chunk_utils: bool = False
+
 import math
 from podrum.block.default.air import air
 
+
 class block_storage:
+
     def __init__(self, blocks: list = [], palette: list = []) -> None:
         if palette:
             self.palette: list = palette
@@ -37,9 +40,9 @@ class block_storage:
     
     @staticmethod
     def check_bounds(x: int, y: int, z: int) -> None:
-        assert x >= 0 and x < 16, f"x ({x}) is not between 0 and 15"
-        assert y >= 0 and y < 16, f"y ({y}) is not between 0 and 15"
-        assert z >= 0 and z < 16, f"z ({z}) is not between 0 and 15"
+        assert 0 <= x < 16, f"x ({x}) is not between 0 and 15"
+        assert 0 <= y < 16, f"y ({y}) is not between 0 and 15"
+        assert 0 <= z < 16, f"z ({z}) is not between 0 and 15"
         
     def is_empty(self) -> bool:
         return self.blocks == [0] * 4096
@@ -53,6 +56,7 @@ class block_storage:
         block_storage.check_bounds(x, y, z)
         if runtime_id not in self.palette:
             self.palette.append(runtime_id)
+
         self.blocks[block_storage.get_index(x, y, z)] = self.palette.index(runtime_id)
             
     def get_highest_block_at(self, x: int, z: int) -> int:
@@ -61,8 +65,10 @@ class block_storage:
             index: int = block_storage.get_index(x, y, z)
             palette_index: int = self.blocks[index]
             runtime_id: int = self.palette[palette_index]
+
             if runtime_id != air().runtime_id:
                 return y
+
         return -1
     
     def network_deserialize(self, stream: object) -> None:
@@ -70,14 +76,17 @@ class block_storage:
         blocks_per_word: int = math.floor(32 / bits_per_block)
         words_per_chunk: int = math.ceil(4096 / blocks_per_word)
         pos: int = 0
+
         for _ in range(words_per_chunk):
             word: int = self.read_unsigned_int_le()
             for block in range(blocks_per_word):
                 if pos >= 4096:
                     break
+
                 state: int = (word >> (bits_per_block * block)) & ((1 << bits_per_block) - 1)
                 self.blocks[pos] = state
                 pos += 1
+
         self.palette: list = []
         for _ in range(self.read_signed_var_int()):
             self.palette.append(self.read_signed_var_int())
@@ -85,6 +94,7 @@ class block_storage:
     def network_serialize(self, stream: object) -> None:
         if not has_chunk_utils:
             bits_per_block: int = math.ceil(math.log2(len(self.palette)))
+
             if bits_per_block == 0:
                 bits_per_block: int = 1
             elif 1 <= bits_per_block <= 6:
@@ -93,10 +103,12 @@ class block_storage:
                 bits_per_block: int = 8
             elif bits_per_block > 8:
                 bits_per_block: int = 16
+
             stream.write_unsigned_byte((bits_per_block << 1) | 1)
             blocks_per_word: int = math.floor(32 / bits_per_block)
             words_per_chunk: int = math.ceil(4096 / blocks_per_word)
             pos: int = 0
+
             for _ in range(words_per_chunk):
                 word: int = 0
                 for block in range(blocks_per_word):
@@ -106,8 +118,11 @@ class block_storage:
                     word |= state << (bits_per_block * block)
                     pos += 1
                 stream.write_unsigned_int_le(word)
+
             stream.write_signed_var_int(len(self.palette))
+
             for runtime_id in self.palette:
                 stream.write_signed_var_int(runtime_id)
+
         else:
             stream.write(chunk_utils.block_storage_network_serialize(self.blocks, self.palette))

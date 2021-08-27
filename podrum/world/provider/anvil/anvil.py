@@ -13,35 +13,34 @@ r"""
 """
 
 import gzip
-from nbt_utils.tag_ids import tag_ids
-from nbt_utils.tag.byte_tag import byte_tag
-from nbt_utils.tag.byte_array_tag import byte_array_tag
-from nbt_utils.tag.compound_tag import compound_tag
-from nbt_utils.tag.float_tag import float_tag
-from nbt_utils.tag.double_tag import double_tag
-from nbt_utils.tag.int_tag import int_tag
-from nbt_utils.tag.int_array_tag import int_array_tag
-from nbt_utils.tag.list_tag import list_tag
-from nbt_utils.tag.long_tag import long_tag
-from nbt_utils.tag.short_tag import short_tag
-from nbt_utils.tag.string_tag import string_tag
-from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
 import os
-from podrum.block.block_map import block_map
-from podrum.game_data.mcbe.block_id_map import block_id_map
-from podrum.geometry.vector_3 import vector_3
-from podrum.world.chunk.block_storage import block_storage
-from podrum.world.chunk.chunk import chunk as server_chunk
-from podrum.world.chunk.sub_chunk import sub_chunk
-from podrum.world.chunk_utils import chunk_utils
-from podrum.world.provider.anvil.chunk import chunk
-from podrum.world.provider.anvil.region import region
-from podrum.config import config
 import random
 import sys
 import time
 
+from nbt_utils.tag.byte_tag import byte_tag
+from nbt_utils.tag.compound_tag import compound_tag
+from nbt_utils.tag.double_tag import double_tag
+from nbt_utils.tag.float_tag import float_tag
+from nbt_utils.tag.int_tag import int_tag
+from nbt_utils.tag.list_tag import list_tag
+from nbt_utils.tag.long_tag import long_tag
+from nbt_utils.tag.short_tag import short_tag
+from nbt_utils.tag.string_tag import string_tag
+from nbt_utils.tag_ids import tag_ids
+from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
+
+from podrum.block.block_map import block_map
+from podrum.config import config
+from podrum.game_data.mcbe.block_id_map import block_id_map
+from podrum.geometry.vector_3 import vector_3
+from podrum.world.chunk.chunk import chunk as server_chunk
+from podrum.world.provider.anvil.chunk import chunk
+from podrum.world.provider.anvil.region import region
+
+
 class anvil:
+
     provider_name: str = "anvil"
     region_file_extension: str = "mca"
     
@@ -70,25 +69,27 @@ class anvil:
     @staticmethod
     def to_server_chunk(chunk_in: object) -> object:
         cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
-        for x in range(0, 16):
-            for z in range(0, 16):
-                for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
+        for x in range(16):
+            for z in range(16):
+                for y in range(chunk_in.get_highest_block_at(x, z) + 1):
                     block_id: int = chunk_in.get_block_id(x, y, z) & 0xff
                     meta: int = chunk_in.get_data(x, y, z) & 0xff
                     block_name: str = list(block_id_map.keys())[list(block_id_map.values()).index(block_id)]
+
                     try:
                         runtime_id: int = block_map.get_runtime_id(block_name, meta)
                     except KeyError:
                         runtime_id: int = block_map.get_runtime_id(block_name, 0)
+
                     cnv_chunk.set_block_runtime_id(x, y, z, runtime_id)
         return cnv_chunk
     
     @staticmethod
     def to_anvil_chunk(chunk_in: object) -> object:
         cnv_chunk: object = chunk(chunk_in.x, chunk_in.z)
-        for x in range(0, 16):
-            for z in range(0, 16):
-                for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
+        for x in range(16):
+            for z in range(16):
+                for y in range(chunk_in.get_highest_block_at(x, z) + 1):
                     legacy_id: tuple = block_map.get_name_and_meta(chunk_in.get_block_runtime_id(x, y, z))
                     block: int = (((block_id_map[legacy_id[0]] >> 7) * 128) ^ block_id_map[legacy_id[0]]) - ((block_id_map[legacy_id[0]] >> 7) * 128)
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)
@@ -102,6 +103,7 @@ class anvil:
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
         reg: object = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
+
         if len(chunk_data) > 0:
             result: object = chunk(x, z)
             result.nbt_deserialize(chunk_data)
@@ -127,6 +129,7 @@ class anvil:
             file.close()
             tag: object = stream.read_root_tag()
             data_tag: bytes = tag.get_tag("Data")
+
             if data_tag.has_tag(name):
                 option_tag: object = data_tag.get_tag(name)
                 option_tag.value = value
@@ -135,6 +138,7 @@ class anvil:
                 stream.buffer = b""
                 stream.pos = 0
                 stream.write_root_tag(tag)
+
                 with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))
                     file.close()
@@ -144,6 +148,7 @@ class anvil:
             stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
             file.close()
             tag: object = stream.read_root_tag()
+
             return tag.get_tag(name).value
     
     def set_player_option(self, uuid: str, name: str, value: object) -> None:
@@ -151,6 +156,7 @@ class anvil:
             stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
             file.close()
             tag: object = stream.read_root_tag()
+
             if tag.has_tag(name):
                 option_tag: object = tag.get_tag(name)
                 option_tag.value = value
@@ -158,12 +164,17 @@ class anvil:
                 stream.buffer = b""
                 stream.pos = 0
                 stream.write_root_tag(tag)
+
                 with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "wb") as file:
                     file.write(gzip.compress(stream.data))
                     file.close()
             
     def get_spawn_position(self) -> object:
-        return vector_3(self.get_option("SpawnX"), self.get_option("SpawnY"), self.get_option("SpawnZ"))
+        return vector_3(
+            self.get_option("SpawnX"),
+            self.get_option("SpawnY"),
+            self.get_option("SpawnZ")
+        )
     
     def set_spawn_position(self, position: object) -> None:
         self.set_option("SpawnX", position.x)
@@ -286,6 +297,7 @@ class anvil:
                 compound_tag("GameRules", [])
             ])
         ])
+
         stream.write_root_tag(tag)
         with open(os.path.join(self.world_dir, "level.dat"), "wb") as file:
             file.write(gzip.compress(stream.data))

@@ -39,14 +39,14 @@ Nó vẫn là một sự phát triển tích cực nhưng có những lợi th�
 ## Executer:
 Linux hoặc MacOS (System Unix):
 ```sh
-pip3 install -r ./requirements.txt
-python3 __main__.py
+pip3 install -r requirements.txt
+python3 run.py
 ```
 
 Windows:
 ```batch
-pip install -r ./requirements.txt
-python __main__.py
+pip install -r requirements.txt
+python run.py
 ```
 
 # FAQ:

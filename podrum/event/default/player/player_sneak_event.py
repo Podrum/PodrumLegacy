@@ -14,10 +14,11 @@ r"""
 
 from podrum.event.event import event
 
+
 class player_sneak_event(event):
 
     # Gets called when a player sneak.
 
-    def __init__(self, player: object, sneaking: bool) -> None:
-        self.player: object = player
+    def __init__(self, player, sneaking: bool) -> None:
+        self.player = player
         self.sneaking: bool = sneaking
