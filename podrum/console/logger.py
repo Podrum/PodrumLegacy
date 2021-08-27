@@ -12,65 +12,60 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from datetime import datetime
-import inspect
-from podrum.console.text_format import text_format
 import sys
+from datetime import datetime
+from typing import Callable, Dict
+
+from podrum.console.text_format import text_format
+
+LogMethod = Callable[[str], None]
+
 
 class logger:
-    def __init__(self):
-        if sys.platform == "win32" or sys.platform == "win64":
+
+    __log_types: Dict[str, str] = {
+        "info": text_format.blue,
+        "warn": text_format.yellow,
+        "error": text_format.red,
+        "success": text_format.green,
+        "emergency": text_format.gold,
+        "notice": text_format.aqua,
+        "critical": text_format.dark_red,
+        "debug": text_format.gray
+    }
+
+    info: LogMethod
+    warn: LogMethod
+    error: LogMethod
+    success: LogMethod
+    emergency: LogMethod
+    notice: LogMethod
+    critical: LogMethod
+    debug: LogMethod
+
+    def __init__(self) -> None:
+        if sys.platform in ["win32", "win64"]:
             from ctypes import windll
-            kernel: object = windll.kernel32
+
+            kernel = windll.kernel32
             kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)
-        
-    def log(self, log_type: str, content: str) -> None:
-        date_time: object = datetime.now()
-        if log_type.lower() == "info":
-            color: str = text_format.blue
-        elif log_type.lower() == "warn":
-            color: str = text_format.yellow
-        elif log_type.lower() == "error":
-            color: str = text_format.red
-        elif log_type.lower() == "success":
-            color: str = text_format.green
-        elif log_type.lower() == "emergency":
-            color: str = text_format.gold
-        elif log_type.lower() == "alert":
-            color: str = text_format.light_purple
-        elif log_type.lower() == "notice":
-            color: str = text_format.aqua
-        elif log_type.lower() == "critical":
-            color: str = text_format.darkRed
-        elif log_type.lower() == "debug":
-            color: str = text_format.gray
-        else:
-            return
-        print(text_format.minecraft_to_console_colors(f"{color}[{log_type.upper()}: {date_time.strftime('%H:%M')}]{text_format.white} {content}{text_format.reset}"))
 
-    def info(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
+    def __getattr__(self, item: str) -> LogMethod:
+        log_type = self.__log_types.get(item.lower())
 
-    def warn(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
+        if not log_type:
+            raise AttributeError
 
-    def error(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
+        return lambda content: self.__log(item, content)
 
-    def success(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
+    def __log(self, log_type: str, content: str) -> None:
+        date_time: datetime = datetime.now()
+        color: str = self.__log_types[log_type]
 
-    def emergency(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
-
-    def alert(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
-
-    def notice(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
-              
-    def critical(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
-
-    def debug(self, content: str) -> None:
-        self.log(inspect.stack()[0][3], content)
+        print(
+            text_format.minecraft_to_console_colors(
+                f"{color}[{log_type.upper()}: "
+                f"{date_time:%H:%M}]{text_format.white}"
+                f" {content}{text_format.reset}"
+            )
+        )
