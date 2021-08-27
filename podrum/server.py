@@ -146,7 +146,7 @@ class server:
 
     def find_player(self, username: str):
         usernames = [player.username.lower() for player in self.players.values()]
-        players = [player for player in self.players.values()]
+        players = [player for player in dict(self.players).values()]
         for name in usernames:
             if username.lower() == name[:len(username)]:
                 return players[usernames.index(name)]
