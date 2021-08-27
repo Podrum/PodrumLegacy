@@ -46,8 +46,8 @@ python3 run.py
 
 Windows:
 ```batch
-pip install -r ./requirements.txt
-python __main__.py
+pip install -r requirements.txt
+python run.py
 ```
 
 # FAQ:
