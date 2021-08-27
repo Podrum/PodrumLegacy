@@ -22,7 +22,7 @@ from podrum.block.default.air import air
 
 class block_storage:
     def __init__(self, blocks: list = [], palette: list = []) -> None:
-        if palette:
+        if len(palette) > 0:
             self.palette: list = palette
         else:
             self.palette: list = [air().runtime_id]
@@ -42,7 +42,9 @@ class block_storage:
         assert z >= 0 and z < 16, f"z ({z}) is not between 0 and 15"
         
     def is_empty(self) -> bool:
-        return self.blocks == [0] * 4096
+        if self.blocks == [0] * 4096:
+            return True
+        return False
     
     def get_block_runtime_id(self, x, y, z) -> int:
         block_storage.check_bounds(x, y, z)
@@ -70,16 +72,16 @@ class block_storage:
         blocks_per_word: int = math.floor(32 / bits_per_block)
         words_per_chunk: int = math.ceil(4096 / blocks_per_word)
         pos: int = 0
-        for _ in range(words_per_chunk):
+        for chunk in range(0, words_per_chunk):
             word: int = self.read_unsigned_int_le()
-            for block in range(blocks_per_word):
+            for block in range(0, blocks_per_word):
                 if pos >= 4096:
                     break
                 state: int = (word >> (bits_per_block * block)) & ((1 << bits_per_block) - 1)
                 self.blocks[pos] = state
                 pos += 1
         self.palette: list = []
-        for _ in range(self.read_signed_var_int()):
+        for i in range(0, self.read_signed_var_int()):
             self.palette.append(self.read_signed_var_int())
 
     def network_serialize(self, stream: object) -> None:
@@ -97,9 +99,9 @@ class block_storage:
             blocks_per_word: int = math.floor(32 / bits_per_block)
             words_per_chunk: int = math.ceil(4096 / blocks_per_word)
             pos: int = 0
-            for _ in range(words_per_chunk):
+            for chunk in range(0, words_per_chunk):
                 word: int = 0
-                for block in range(blocks_per_word):
+                for block in range(0, blocks_per_word):
                     if pos >= 4096:
                         break
                     state: int = self.blocks[pos]

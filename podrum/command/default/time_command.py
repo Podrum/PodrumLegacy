@@ -21,12 +21,15 @@ class time_command:
         self.description: str = "Changes or queries the world's game time."
     
     def execute(self, args: list, sender: object) -> None:
-        if args:
+        if len(args) >= 1:
             if len(args) > 1:
                 try:
                     time = int(args[1])
                 except ValueError:
-                    time = int(getattr(time_type, args[1])) if hasattr(time_type, args[1]) else 0
+                    if hasattr(time_type, args[1]):
+                        time = int(getattr(time_type, args[1]))
+                    else:
+                        time = 0
                 if args[0].lower() == "set":
                     sender.world.set_time(time)
                     sender.send_message(f"Set the time to {time}")
@@ -38,4 +41,6 @@ class time_command:
             elif args[0].lower() == "query":
                 sender.send_message(f"Time is {sender.world.time}")
                 return
-        sender.send_message("/time <add|query|set> <amount: int>")
+            sender.send_message("/time <add|query|set> <amount: int>")
+        else:
+            sender.send_message("/time <add|query|set> <amount: int>")

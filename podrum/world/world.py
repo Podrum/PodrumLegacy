@@ -45,26 +45,25 @@ class world:
     # :return: = None
     # Loads a chunk.
     def load_chunk(self, x: int, z: int) -> None:
-        if (
-            not self.has_loaded_chunk(x, z)
-            and f"{x} {z}" not in self.mark_as_loading
-        ):
-            self.mark_as_loading.append(f"{x} {z}")
-            chunk: object = self.provider.get_chunk(x, z)
-            if chunk is None:
-                generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-                chunk: object = generator.generate(x, z, self)
-            self.chunks[f"{x} {z}"] = chunk
-            self.mark_as_loading.remove(f"{x} {z}")
+        if not self.has_loaded_chunk(x, z):
+            if f"{x} {z}" not in self.mark_as_loading:
+                self.mark_as_loading.append(f"{x} {z}")
+                chunk: object = self.provider.get_chunk(x, z)
+                if chunk is None:
+                    generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
+                    chunk: object = generator.generate(x, z, self)
+                self.chunks[f"{x} {z}"] = chunk
+                self.mark_as_loading.remove(f"{x} {z}")
                 
     # [save_chunk]
     # :return: = None
     # Saves a chunk to its file.
     def save_chunk(self, x: int, z: int) -> None:
-        if self.has_loaded_chunk(x, z) and f"{x} {z}" not in self.mark_as_saving:
-            self.mark_as_saving.append(f"{x} {z}")
-            self.provider.set_chunk(self.get_chunk(x, z))
-            self.mark_as_saving.remove(f"{x} {z}")
+        if self.has_loaded_chunk(x, z):
+            if f"{x} {z}" not in self.mark_as_saving:
+                self.mark_as_saving.append(f"{x} {z}")
+                self.provider.set_chunk(self.get_chunk(x, z))
+                self.mark_as_saving.remove(f"{x} {z}")
          
     # [unload_chunk]
     # :return: = None
@@ -98,7 +97,7 @@ class world:
     def start_load_workers(self, count: int) -> list:
         workers: list = []
         self.load_worker_count: int = count
-        for _ in range(count):
+        for i in range(0, count):
             worker: object = Thread(target = self.load_worker)
             worker.start()
             workers.append(worker)
@@ -108,7 +107,7 @@ class world:
     # :return: = None
     # Stops the load workers
     def stop_load_workers(self) -> None:
-        for _ in range(self.load_worker_count):
+        for i in range(0, self.load_worker_count):
             self.load_queue.put(None)
        
     # [unload_worker]
@@ -130,7 +129,7 @@ class world:
     def start_unload_workers(self, count: int) -> list:
         workers: list = []
         self.unload_worker_count: int = count
-        for _ in range(count):
+        for i in range(0, count):
             worker: object = Thread(target = self.unload_worker)
             worker.start()
             workers.append(worker)
@@ -140,14 +139,16 @@ class world:
     # :return: = None
     # Stops the load workers
     def stop_unload_workers(self) -> None:
-        for _ in range(self.unload_worker_count):
+        for i in range(0, self.unload_worker_count):
             self.unload_queue.put(None)
 
     # [has_loaded_chunk]
     # :return: = bool
     # Checks if a chunk is loaded.
     def has_loaded_chunk(self, x: int, z: int) -> bool:
-        return f"{x} {z}" in self.chunks
+        if f"{x} {z}" in self.chunks:
+            return True
+        return False
     
     # [get_chunk]
     # :return: = object

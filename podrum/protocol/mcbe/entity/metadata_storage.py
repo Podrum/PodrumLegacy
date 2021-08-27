@@ -91,22 +91,18 @@ class metadata_storage:
         
     def get_long(self, key: int) -> int:
         entry: dict = self.get_entry(key)
-        if (
-            entry is not None
-            and entry["type"] == metadata_dictionary_type.type_long
-        ):
-            return entry["value"]
+        if entry is not None:
+            if entry["type"] == metadata_dictionary_type.type_long:
+                return entry["value"]
              
     def set_long(self, key: int, value: int) -> None:
         self.set_entry(key, value, metadata_dictionary_type.type_long)
         
     def get_vector_3_float(self, key: int) -> object:
         entry: dict = self.get_entry(key)
-        if (
-            entry is not None
-            and entry["type"] == metadata_dictionary_type.type_vector_3_float
-        ):
-            return entry["value"]
+        if entry is not None:
+            if entry["type"] == metadata_dictionary_type.type_vector_3_float:
+                return entry["value"]
              
     def set_vector_3_float(self, key: int, value: object) -> None:
         self.set_entry(key, value, metadata_dictionary_type.type_vector_3_float)
@@ -124,10 +120,11 @@ class metadata_storage:
         if current_value is None or current_value != value:
             if current_value is None:
                 flags: int = 0
-            elif not extended:
-                flags: int = self.get_long(metadata_dictionary_type.key_flags)
             else:
-                flags: int = self.get_long(metadata_dictionary_type.key_flags_extended)
+                if not extended:
+                    flags: int = self.get_long(metadata_dictionary_type.key_flags)
+                else:
+                    flags: int = self.get_long(metadata_dictionary_type.key_flags_extended)
             if not extended:
                 self.set_long(metadata_dictionary_type.key_flags, flags ^ (1 << flag))
             else:

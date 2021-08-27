@@ -20,7 +20,7 @@ class me_command:
         self.description: str = "Displays a message about yourself."
     
     def execute(self, args: list, sender: object) -> None:
-        if args:
+        if len(args) > 0:
             if getattr(sender, 'username', None) is None:
                 sender.send_message("Cannot use this command as CONSOLE")
                 return

@@ -34,9 +34,5 @@ class modal_form(form):
         
     @classmethod
     def from_dict(cls, obj: dict) -> object:
-        return cls(
-            obj['title'],
-            obj['content'] or None,
-            inputs.button.from_dict(obj['button1']),
-            inputs.button.from_dict(obj['button2']) if 'button2' in obj else None,
-        )
+        form = cls(obj['title'], obj['content'] or None, inputs.button.from_dict(obj['button1']), inputs.button.from_dict(obj['button2']) if 'button2' in obj else None)
+        return form

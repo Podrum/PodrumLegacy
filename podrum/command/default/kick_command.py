@@ -20,7 +20,7 @@ class kick_command:
         self.description: str = "Kicks a player off the server."
     
     def execute(self, args: list, sender: object) -> None:
-        if args:
+        if len(args) >= 1:
             player = self.server.find_player(args[0])
             if not self.server.find_player(args[0]):
                 sender.send_message("This player is not online")
@@ -28,8 +28,9 @@ class kick_command:
             args.remove(args[0])
             if sender in self.server.players.values():
                 player.disconnect(f"Kicked by {sender.username}{': ' if args else ''}{' '.join(args)}")
+                sender.send_message(f"Kicked {player.username}.")
             else:
                 player.disconnect(f"Kicked by Console{': ' if args else ''}{' '.join(args)}")
-            sender.send_message(f"Kicked {player.username}.")
+                sender.send_message(f"Kicked {player.username}.")
         else:
             sender.send_message("/kick <name: target> [reason: message]")

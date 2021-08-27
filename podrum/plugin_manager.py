@@ -29,12 +29,12 @@ class plugin_manager:
         for name in dict(self.plugins):
             if hasattr(self.plugins[name], "required_plugins"):
                 for plugin_name in self.plugins[name].required_plugins:
-                    if plugin_name not in self.plugins:
+                    if not plugin_name in self.plugins:
                         self.server.logger.alert(f"A required plugin {plugin_name} is not loaded.")
                         self.server.logger.alert(f"Plugin {name} will be unloaded.")
                         self.unload(name)
                         continue
-
+                    
                     setattr(self.plugins[name], plugin_name, self.plugins[plugin_name])
 
     def load(self, path: str) -> None:

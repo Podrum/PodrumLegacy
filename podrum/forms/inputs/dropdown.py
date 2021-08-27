@@ -33,10 +33,12 @@ class dropdown(input_field):
             
     @default.setter
     def default(self, default: str) -> None:
-        for index, option in enumerate(self.options):
+        index = 0
+        for option in self.options:
             if option == default:
                 self.default_index = index
                 return
+            index += 1
         self.default_index = None
             
     def to_dict(self) -> dict:
