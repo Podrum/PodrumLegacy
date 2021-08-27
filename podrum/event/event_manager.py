@@ -12,28 +12,29 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-
 from typing import Callable
 
+
 class event_manager:
+
     events: dict = {}
-  
+
     @staticmethod
-    def register_listener(event: object, listener: Callable) -> None:
+    def register_listener(event, listener: Callable) -> None:
         event_manager.events[event.__name__].append(listener)
-        
+
     @staticmethod
-    def remove_listener(event: object, listener: Callable) -> None:
+    def remove_listener(event, listener: Callable) -> None:
         event_manager.events[event.__name__].remove(listener)
-        
+
     @staticmethod
-    def get_listeners(event: object) -> list:
+    def get_listeners(event) -> list:
         return event_manager.events[event.__name__]
-    
+
     @staticmethod
-    def register_event(event: object) -> None:
+    def register_event(event) -> None:
         event_manager.events[event.__name__] = []
-        
+
     @staticmethod
-    def remove_event(event: object) -> None:
+    def remove_event(event) -> None:
         del event_manager.events[event.__name__]

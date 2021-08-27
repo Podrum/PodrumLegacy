@@ -14,9 +14,10 @@ r"""
 
 from podrum.event.event import event
 
+
 class player_open_inventory_event(event):
 
     # Gets called when player opens their inventory
 
-    def __init__(self, player: object) -> None:
+    def __init__(self, player) -> None:
         self.player: object = player

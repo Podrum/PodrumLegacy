@@ -15,8 +15,9 @@ r"""
 from podrum.item.item import item
 
 class block_manager:
-    def __init__(self, managers: object) -> None:
-        self.managers: object = managers
+
+    def __init__(self, managers) -> None:
+        self.managers = managers
         self.blocks: dict = {}
 
     def register_block(self, block_obj: object) -> None:

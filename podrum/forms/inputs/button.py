@@ -15,6 +15,7 @@ r"""
 
 from podrum.forms.inputs.input_field import input_field
 
+
 class button(input_field):
     def __init__(self, text: str, icon: object = None):
         super().__init__(text, 'button')
