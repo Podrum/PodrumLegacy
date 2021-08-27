@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class interact_type:
     leave_vehicle: int = 3
     mouse_over_entity: int = 4

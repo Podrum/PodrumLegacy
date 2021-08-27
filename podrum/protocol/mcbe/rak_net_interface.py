@@ -20,6 +20,7 @@ from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictiona
 from rak_net.server import server as rak_net_server
 from threading import Thread
 
+
 class rak_net_interface(Thread):
     def __init__(self, server: object) -> None:
         super().__init__()

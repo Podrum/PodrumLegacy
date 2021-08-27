@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class difficulty_type:
     peaceful: int = 0
     easy: int = 1

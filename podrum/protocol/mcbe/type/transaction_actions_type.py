@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class transaction_actions_type:
     type_container: int = 0
     type_global: int = 1

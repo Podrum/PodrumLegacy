@@ -14,6 +14,7 @@ r"""
 
 from podrum.protocol.mcbe.type.metadata_dictionary_type import metadata_dictionary_type
 
+
 class metadata_storage:
     def __init__(self) -> None:
         self.metadata: dict = {}

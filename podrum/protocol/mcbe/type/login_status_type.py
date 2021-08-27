@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class login_status_type:
     success: int = 0
     failed_client: int = 1

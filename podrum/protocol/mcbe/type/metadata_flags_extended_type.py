@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class metadata_flags_extended_type:
     flag_sneezing: int = 0
     flag_trusting: int = 1

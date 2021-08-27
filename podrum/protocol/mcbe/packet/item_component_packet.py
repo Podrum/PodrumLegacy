@@ -15,7 +15,9 @@ r"""
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
 from podrum.protocol.mcbe.packet.mcbe_packet import mcbe_packet
 
+
 class item_component_packet(mcbe_packet):
+
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
         self.packet_id: int = mcbe_protocol_info.item_component_packet

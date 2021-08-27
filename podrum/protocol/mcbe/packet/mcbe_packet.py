@@ -14,6 +14,7 @@ r"""
 
 from podrum.protocol.mcbe.mcbe_binary_stream import mcbe_binary_stream
 
+
 class mcbe_packet(mcbe_binary_stream):
     def decode_header(self) -> None:
         self.read_var_int()

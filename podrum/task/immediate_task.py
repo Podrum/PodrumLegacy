@@ -15,11 +15,19 @@ r"""
 from threading import Thread
 from time import sleep
 
+
 class immediate_task(Thread):
-    def __init__(self, task_object: object, args: list = [], interval: int = 0, interval_before: bool = False) -> None:
+
+    def __init__(
+            self,
+            task_object,
+            args: list = [],
+            interval: int = 0,
+            interval_before: bool = False
+    ) -> None:
         super().__init__()
         self.setDaemon(True)
-        self.task_object: object = task_object
+        self.task_object = task_object
         self.args: list = args
         self.interval: int = interval
         self.interval_before: bool = interval_before
@@ -30,6 +38,7 @@ class immediate_task(Thread):
     def run(self) -> None:
         if self.interval_before:
             sleep(self.interval)
+
         self.task_object(*self.args)
         if not self.interval_before:
             sleep(self.interval)

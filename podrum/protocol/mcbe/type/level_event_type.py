@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class level_event_type:
     sound_click: int = 1000
     sound_click_fail: int = 1001

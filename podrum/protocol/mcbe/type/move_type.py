@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class move_type:
     normal: int = 0
     reset: int = 0

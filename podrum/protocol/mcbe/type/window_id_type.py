@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class window_id_type:
     drop_contents: int = -100
     beacon: int = -24

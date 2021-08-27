@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class gamerule_type:
     type_bool: int = 1
     type_int: int = 2

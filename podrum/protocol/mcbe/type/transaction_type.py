@@ -12,6 +12,7 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+
 class transaction_type:
     type_normal: int = 0
     type_inventory_mismatch: int = 1
