@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 
 from podrum.forms.inputs.input_field import input_field
@@ -33,12 +32,10 @@ class dropdown(input_field):
             
     @default.setter
     def default(self, default: str) -> None:
-        index = 0
-        for option in self.options:
+        for index, option in enumerate(self.options):
             if option == default:
                 self.default_index = index
                 return
-            index += 1
         self.default_index = None
             
     def to_dict(self) -> dict:

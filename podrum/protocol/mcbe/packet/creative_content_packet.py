@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 import binascii
 from podrum.protocol.mcbe.mcbe_protocol_info import mcbe_protocol_info
@@ -24,7 +23,7 @@ class creative_content_packet(mcbe_packet):
         
     def decode_payload(self) -> None:
         self.entries: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             self.entries.append({
                 "entry_id": self.read_var_int(),
                 "item": self.read_item_legacy()

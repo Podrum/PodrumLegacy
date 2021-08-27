@@ -1,17 +1,17 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
+
 
 import os
 import platform
@@ -96,26 +96,26 @@ class server:
             while self.is_ticking:
                 # Add some sort of ticking?
                 for world in self.world_manager.worlds.values():
-                    world.set_time(world.time + 1 if world.time + 1 <= 24000 else 0)
+                    world.set_time(world.time + 1 if world.time <= 23999 else 0)
                 time.sleep(0.05)
         except KeyboardInterrupt:
             self.stop()
             
     def dispatch_command(self, user_input: str, sender: object) -> None:
-        if len(user_input) > 0:
-            split_input: list = user_input.split()
-            try:
-                command_name: str = split_input[0]
-                command_args: list = split_input[1:]
-            except Exception as e:
-                return
-            if self.managers.command_manager.has_command(command_name):
-                self.managers.command_manager.execute(command_name, command_args, sender)
-            else:
-                if sender == self:
-                    self.logger.error("Invalid command!")
-                else:
-                    sender.send_message("Invalid command!")
+        if len(user_input) <= 0:
+            return
+        split_input: list = user_input.split()
+        try:
+            command_name: str = split_input[0]
+            command_args: list = split_input[1:]
+        except Exception as e:
+            return
+        if self.managers.command_manager.has_command(command_name):
+            self.managers.command_manager.execute(command_name, command_args, sender)
+        elif sender == self:
+            self.logger.error("Invalid command!")
+        else:
+            sender.send_message("Invalid command!")
 
     def stop(self) -> None:
         self.console_input_task.stop()

@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 from podrum.world.chunk.block_storage import block_storage
 
@@ -32,17 +31,14 @@ class sub_chunk:
         return self.block_storages[layer].get_highest_block_at(x, z)
     
     def is_empty(self) -> bool:
-        for storage in self.block_storages:
-            if not storage.is_empty():
-                return False
-        return True
+        return all(storage.is_empty() for storage in self.block_storages)
 
     def network_deserialize(self, stream: object) -> None:
         version: int = stream.read_unsigned_byte()
         if version != 8:
             raise Exception("Unsupported SubChunk version.")
         self.block_storages: dict = {}
-        for i in range(0, stream.read_unsigned_byte()):
+        for i in range(stream.read_unsigned_byte()):
             storage: object = block_storage()
             storage.network_deserialize(stream)
             self.block_storages[i] = storage

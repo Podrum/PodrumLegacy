@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 import gzip
 import os
@@ -32,9 +31,9 @@ class pm_anvil(anvil):
     @staticmethod
     def to_server_chunk(chunk_in: object) -> object:
         cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
-        for x in range(0, 16):
-            for z in range(0, 16):
-                for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
+        for x in range(16):
+            for z in range(16):
+                for y in range(chunk_in.get_highest_block_at(x, z) + 1):
                     block_id: int = chunk_in.get_block_id(x, y, z) & 0xff
                     meta: int = chunk_in.get_data(x, y, z) & 0xff
                     block_name: str = list(block_id_map.keys())[list(block_id_map.values()).index(block_id)]
@@ -48,9 +47,9 @@ class pm_anvil(anvil):
     @staticmethod
     def to_anvil_chunk(chunk_in: object) -> object:
         cnv_chunk: object = chunk(chunk_in.x, chunk_in.z)
-        for x in range(0, 16):
-            for z in range(0, 16):
-                for y in range(0, chunk_in.get_highest_block_at(x, z) + 1):
+        for x in range(16):
+            for z in range(16):
+                for y in range(chunk_in.get_highest_block_at(x, z) + 1):
                     legacy_id: tuple = block_map.get_name_and_meta(chunk_in.get_block_runtime_id(x, y, z))
                     block: int = (((block_id_map[legacy_id[0]] >> 7) * 128) ^ block_id_map[legacy_id[0]]) - ((block_id_map[legacy_id[0]] >> 7) * 128)
                     meta: int = (((legacy_id[1] >> 7) * 128) ^ legacy_id[1]) - ((legacy_id[1] >> 7) * 128)

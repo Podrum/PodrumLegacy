@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 import binascii
 from binary_utils.binary_stream import binary_stream
@@ -83,7 +82,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_behavior_pack_infos(self) -> list:
         behavior_pack_infos: list = []
-        for i in range(0, self.read_short_le()):
+        for _ in range(self.read_short_le()):
             behavior_pack_infos.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
@@ -108,7 +107,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_texture_pack_infos(self) -> list:
         texture_pack_infos: list = []
-        for i in range(0, self.read_short_le()):
+        for _ in range(self.read_short_le()):
             texture_pack_infos.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
@@ -135,7 +134,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_resource_pack_id_versions(self) -> list:
         resource_pack_id_versions: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             resource_pack_id_versions.append({
                 "uuid": self.read_string(),
                 "version": self.read_string(),
@@ -152,7 +151,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_resource_pack_ids(self) -> list:
         resource_pack_ids: list = []
-        for i in range(0, self.read_short_le()):
+        for _ in range(self.read_short_le()):
             resource_pack_ids.append(self.read_string())
         return resource_pack_ids
         
@@ -173,7 +172,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_experiments(self) -> list:
         experiments: list = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             experiments.append(self.read_experiment())
         return experiments
         
@@ -209,7 +208,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_game_rules(self) -> list:
         game_rules: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             game_rules.append(self.read_game_rule())
         return game_rules
         
@@ -230,7 +229,7 @@ class mcbe_binary_stream(binary_stream):
 
     def read_item_states(self) -> list:
         item_states: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             item_states.append({
                 "name": self.read_string(),
                 "runtime_id": self.read_short_le(),
@@ -269,7 +268,7 @@ class mcbe_binary_stream(binary_stream):
 
     def read_block_properties(self) -> list:
         block_properties: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             block_properties.append({
                 "name": self.read_string(),
                 "nbt": self.read_net_le_tag()
@@ -288,10 +287,10 @@ class mcbe_binary_stream(binary_stream):
             result["version"] = self.read_unsigned_byte()
             result["nbt"] = self.read_le_tag()
         result["can_place_on"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             result["can_place_on"].append(self.read_short_array())
         result["can_destroy"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             result["can_destroy"].append(self.read_short_array())
         result["blocking_tick"] = self.read_long_le()
         return result
@@ -318,10 +317,10 @@ class mcbe_binary_stream(binary_stream):
             result["version"] = self.read_unsigned_byte()
             result["nbt"] = self.read_le_tag()
         result["can_place_on"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             result["can_place_on"].append(self.read_short_array())
         result["can_destroy"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             result["can_destroy"].append(self.read_short_array())
         return result
     
@@ -448,7 +447,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_metadata_dictionary(self) -> dict:
         metadata_dictionary: dict = {}
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             metadata_key: int = self.read_var_int()
             metadata_type: int = self.read_var_int()
             if metadata_type == metadata_dictionary_type.type_byte:
@@ -518,7 +517,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_links(self) -> list:
         links: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             links.append(self.read_link())
         return links
         
@@ -529,7 +528,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_entity_attributes(self) -> list:
         entity_attributes: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             entity_attributes.append({
                 "name": self.read_string(),
                 "min": self.read_float_le(),
@@ -572,7 +571,7 @@ class mcbe_binary_stream(binary_stream):
         
     def read_player_attributes(self) -> list:
         player_attributes: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             player_attributes.append({
                 "min": self.read_float_le(),
                 "max": self.read_float_le(),
@@ -615,14 +614,20 @@ class mcbe_binary_stream(binary_stream):
         
     def read_transaction_actions(self) -> list:
         transaction_actions: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             transaction_action: dict = {}
             transaction_action["source_type"] = self.read_var_int()
-            if transaction_action["source_type"] == transaction_actions_type.type_container or transaction_action["source_type"] == transaction_actions_type.type_craft:
+            if transaction_action["source_type"] in [
+                transaction_actions_type.type_container,
+                transaction_actions_type.type_craft,
+            ]:
                 transaction_action["inventory_id"] = self.read_var_int()
             if transaction_action["source_type"] == transaction_actions_type.type_world_interaction:
                 transaction_action["flags"] = self.read_var_int()
-            if transaction_action["source_type"] == transaction_actions_type.type_craft_slot or transaction_action["source_type"] == transaction_actions_type.type_craft:
+            if transaction_action["source_type"] in [
+                transaction_actions_type.type_craft_slot,
+                transaction_actions_type.type_craft,
+            ]:
                 transaction_action["action"] = self.read_var_int()
             transaction_action["old_item"] = self.read_item()
             transaction_action["new_item"] = self.read_item()
@@ -633,11 +638,17 @@ class mcbe_binary_stream(binary_stream):
         self.write_var_int(len(transaction_actions))
         for transaction_action in transaction_actions:
             self.write_var_int(transaction_action["source_type"])
-            if transaction_action["source_type"] == transaction_actions_type.type_container or transaction_action["source_type"] == transaction_actions_type.type_craft:
+            if transaction_action["source_type"] in [
+                transaction_actions_type.type_container,
+                transaction_actions_type.type_craft,
+            ]:
                 self.write_var_int(transaction_action["inventory_id"])
             if transaction_action["source_type"] == transaction_actions_type.type_world_interaction:
                 self.write_var_int(transaction_action["flags"])
-            if transaction_action["source_type"] == transaction_actions_type.type_craft_slot or transaction_action["source_type"] == transaction_actions_type.type_craft:
+            if transaction_action["source_type"] in [
+                transaction_actions_type.type_craft_slot,
+                transaction_actions_type.type_craft,
+            ]:
                 self.write_var_int(transaction_action["action"])
             self.write_item(transaction_action["old_item"])
             self.write_item(transaction_action["new_item"])
@@ -647,11 +658,11 @@ class mcbe_binary_stream(binary_stream):
         transaction_legacy["legacy_request_id"] = self.read_signed_var_int()
         if transaction_legacy["legacy_request_id"] > 0:
             legacy_transactions: list = []
-            for i in range(0, self.read_var_int()):
+            for _ in range(self.read_var_int()):
                 legacy_transaction: dict = {}
                 legacy_transaction["container_id"] = self.read_unsigned_byte()
                 legacy_transaction["changed_slots"] = []
-                for i in range(0, self.read_var_int()):
+                for _ in range(self.read_var_int()):
                     legacy_transaction["changed_slots"].append(self.read_unsigned_byte())
                 legacy_transactions.append(legacy_transaction)
             transaction_legacy["legacy_transactions"] = legacy_transactions
@@ -705,7 +716,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_item_stacks(self) -> list:
         item_stacks: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             item_stacks.append(self.read_item())
         return item_stacks
         
@@ -730,7 +741,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_potion_type_recipes(self) -> list:
         potion_type_recipes: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             potion_type_recipes.append({
                 "input_item_id": self.read_signed_var_int(),
                 "input_item_meta": self.read_signed_var_int(),
@@ -753,7 +764,7 @@ class mcbe_binary_stream(binary_stream):
             
     def read_potion_container_change_recipes(self) -> list:
         potion_container_change_recipes: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             potion_container_change_recipes.append({
                 "input_item_id": self.read_signed_var_int(),
                 "ingredient_id": self.read_signed_var_int(),
@@ -770,55 +781,67 @@ class mcbe_binary_stream(binary_stream):
 
     def read_recipes(self) -> list:
         recipes: list = []
-        for i in range(0, self.read_var_int()):
+        for _ in range(self.read_var_int()):
             recipe: dict = {}
             recipe["type"] = self.read_signed_var_int()
-            if recipe["type"] == recipes_type.type_shapeless or recipe["type"] == recipes_type.type_shulker_box or recipe["type"] == recipes_type.type_shapeless_chemistry:
+            if recipe["type"] in [
+                recipes_type.type_shapeless,
+                recipes_type.type_shulker_box,
+                recipes_type.type_shapeless_chemistry,
+            ]:
                 recipe["recipe_id"] = self.read_string()
                 recipe["input"] = []
-                for i in range(0, self.read_var_int()):
+                for _ in range(self.read_var_int()):
                     recipe["input"].append(self.read_recipe_ingredient())
                 recipe["output"] = []
-                for i in range(0, self.read_var_int()):
+                for _ in range(self.read_var_int()):
                     recipe["output"].append(self.read_item_legacy())
                 recipe["uuid"] = self.read_uuid()
                 recipe["block"] = self.read_string()
                 recipe["priority"] = self.read_signed_var_int()
                 recipe["network_id"] = self.read_var_int()
-            if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
+            if recipe["type"] in [
+                recipes_type.type_shaped,
+                recipes_type.type_shaped_chemistry,
+            ]:
                 recipe["recipe_id"] = self.read_string()
                 recipe["width"] = self.read_signed_var_int()
                 recipe["height"] = self.read_signed_var_int()
                 recipe["input"] = [[0 for i in range(recipe["height"])] for j in range(recipe["width"])]
-                for z in range(0, recipe["width"]):
-                    for x in range(0, recipe["height"]):
+                for z in range(recipe["width"]):
+                    for x in range(recipe["height"]):
                         recipe["input"][z][x] = self.read_recipe_ingredient()
                 recipe["output"] = []
-                for i in range(0, self.read_var_int()):
+                for _ in range(self.read_var_int()):
                     recipe["output"].append(self.read_item_legacy())
                 recipe["uuid"] = self.read_uuid()
                 recipe["block"] = self.read_string()
                 recipe["priority"] = self.read_signed_var_int()
                 recipe["network_id"] = self.read_var_int()
             if recipe["type"] == recipes_type.type_furnace:
-                recipe["input_id"] = self.read_signed_var_int()
-                recipe["output"] = self.read_item_legacy()
-                recipe["block"] = self.read_string()
+                self._extracted_from_read_recipes_34(recipe, "input_id")
             if recipe["type"] == recipes_type.type_furnace_with_metadata:
                 recipe["input_id"] = self.read_signed_var_int()
-                recipe["input_meta"] = self.read_signed_var_int()
-                recipe["output"] = self.read_item_legacy()
-                recipe["block"] = self.read_string()
+                self._extracted_from_read_recipes_34(recipe, "input_meta")
             if recipe["type"] == recipes_type.type_multi:
                 recipe["uuid"] = self.read_uuid()
                 recipe["network_id"] = self.read_var_int()
         return recipes
+
+    def _extracted_from_read_recipes_34(self, recipe, arg1):
+        recipe[arg1] = self.read_signed_var_int()
+        recipe["output"] = self.read_item_legacy()
+        recipe["block"] = self.read_string()
     
     def write_recipes(self, recipes: list) -> None:
         self.write_var_int(len(recipes))
         for recipe in recipes:
             self.write_signed_var_int(recipe["type"])
-            if recipe["type"] == recipes_type.type_shapeless or recipe["type"] == recipes_type.type_shulker_box or recipe["type"] == recipes_type.type_shapeless_chemistry:
+            if recipe["type"] in [
+                recipes_type.type_shapeless,
+                recipes_type.type_shulker_box,
+                recipes_type.type_shapeless_chemistry,
+            ]:
                 self.write_string(recipe["recipe_id"])
                 self.write_var_int(len(recipe["input"]))
                 for recipe_input in recipe["input"]:
@@ -830,12 +853,15 @@ class mcbe_binary_stream(binary_stream):
                 self.write_string(recipe["block"])
                 self.write_signed_var_int(recipe["priority"])
                 self.write_var_int(recipe["network_id"])
-            if recipe["type"] == recipes_type.type_shaped or recipe["type"] == recipes_type.type_shaped_chemistry:
+            if recipe["type"] in [
+                recipes_type.type_shaped,
+                recipes_type.type_shaped_chemistry,
+            ]:
                 self.write_string(recipe["recipe_id"])
                 self.write_signed_var_int(recipe["width"])
                 self.write_signed_var_int(recipe["height"])
-                for z in range(0, recipe["width"]):
-                    for x in range(0, recipe["height"]):
+                for z in range(recipe["width"]):
+                    for x in range(recipe["height"]):
                         self.write_recipe_ingredient(recipe["input"][z][x])
                 self.write_var_int(len(recipe["output"]))
                 for recipe_output in recipe["output"]:
@@ -845,17 +871,18 @@ class mcbe_binary_stream(binary_stream):
                 self.write_signed_var_int(recipe["priority"])
                 self.write_var_int(recipe["network_id"])
             if recipe["type"] == recipes_type.type_furnace:
-                self.write_signed_var_int(recipe["input_id"])
-                self.write_item_legacy(recipe["output"])
-                self.write_string(recipe["block"])
+                self._extracted_from_write_recipes_32(recipe, "input_id")
             if recipe["type"] == recipes_type.type_furnace_with_metadata:
                 self.write_signed_var_int(recipe["input_id"])
-                self.write_signed_var_int(recipe["input_meta"])
-                self.write_item_legacy(recipe["output"])
-                self.write_string(recipe["block"])
+                self._extracted_from_write_recipes_32(recipe, "input_meta")
             if recipe["type"] == recipes_type.type_multi:
                 self.write_uuid(recipe["uuid"])
                 self.write_var_int(recipe["network_id"])
+
+    def _extracted_from_write_recipes_32(self, recipe, arg1):
+        self.write_signed_var_int(recipe[arg1])
+        self.write_item_legacy(recipe["output"])
+        self.write_string(recipe["block"])
                 
     def read_skin_image(self) -> dict:
         skin_image: dict = {}
@@ -871,12 +898,13 @@ class mcbe_binary_stream(binary_stream):
 
     def read_skin(self) -> dict:
         skin: dict = {}
-        skin["skin_id"] = self.read_string()
-        skin["play_fab_id"] = self.read_string()
-        skin["skin_resource_pack"] = self.read_string()
+        self._extracted_from_read_skin_28(
+            skin, "skin_id", "play_fab_id", "skin_resource_pack"
+        )
+
         skin["skin_data"] = self.read_skin_image()
         skin["animations"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             animation: dict = {}
             animation["skin_image"] = self.read_skin_image()
             animation["animation_type"] = self.read_int_le()
@@ -889,33 +917,38 @@ class mcbe_binary_stream(binary_stream):
         skin["premium"] = self.read_bool()
         skin["persona"] = self.read_bool()
         skin["cape_on_classic"] = self.read_bool()
-        skin["cape_id"] = self.read_string()
-        skin["full_skin_id"] = self.read_string()
-        skin["arm_size"] = self.read_string()
+        self._extracted_from_read_skin_28(skin, "cape_id", "full_skin_id", "arm_size")
         skin["skin_color"] = self.read_string()
         skin["persona_pieces"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             persona_piece: dict = {}
-            persona_piece["piece_id"] = self.read_string()
-            persona_piece["piece_type"] = self.read_string()
-            persona_piece["pack_id"] = self.read_string()
+            self._extracted_from_read_skin_28(
+                persona_piece, "piece_id", "piece_type", "pack_id"
+            )
+
             persona_piece["is_default_piece"] = self.read_bool()
             persona_piece["product_id"] = self.read_string()
             skin["persona_pieces"].append(persona_piece)
         skin["piece_tint_colors"] = []
-        for i in range(0, self.read_int_le()):
+        for _ in range(self.read_int_le()):
             piece_tint_color: dict = {}
             piece_tint_color["piece_type"] = self.read_string()
             piece_tint_color["colors"] = []
-            for i in range(0, self.read_int_le()):
+            for _ in range(self.read_int_le()):
                 piece_tint_color["colors"].append(self.read_string())
             skin["piece_tint_colors"].append(piece_tint_color)
         return skin
+
+    def _extracted_from_read_skin_28(self, arg0, arg1, arg2, arg3):
+        arg0[arg1] = self.read_string()
+        arg0[arg2] = self.read_string()
+        arg0[arg3] = self.read_string()
         
     def write_skin(self, skin: dict) -> None:
-        self.write_string(skin["skin_id"])
-        self.write_string(skin["play_fab_id"])
-        self.write_string(skin["skin_resource_pack"])
+        self._extracted_from_write_skin_24(
+            skin, "skin_id", "play_fab_id", "skin_resource_pack"
+        )
+
         self.write_skin_image(skin["skin_data"])
         self.write_int_le(len(skin["animations"]))
         for animation in skin["animations"]:
@@ -929,15 +962,14 @@ class mcbe_binary_stream(binary_stream):
         self.write_bool(skin["premium"])
         self.write_bool(skin["persona"])
         self.write_bool(skin["cape_on_classic"])
-        self.write_string(skin["cape_id"])
-        self.write_string(skin["full_skin_id"])
-        self.write_string(skin["arm_size"])
+        self._extracted_from_write_skin_24(skin, "cape_id", "full_skin_id", "arm_size")
         self.write_string(skin["skin_color"])
         self.write_int_le(len(skin["persona_pieces"]))
         for persona_piece in skin["persona_pieces"]:
-            self.write_string(persona_piece["piece_id"])
-            self.write_string(persona_piece["piece_type"])
-            self.write_string(persona_piece["pack_id"])
+            self._extracted_from_write_skin_24(
+                persona_piece, "piece_id", "piece_type", "pack_id"
+            )
+
             self.write_bool(persona_piece["is_default_piece"])
             self.write_string(persona_piece["product_id"])
         self.write_int_le(len(skin["piece_tint_colors"]))
@@ -946,3 +978,8 @@ class mcbe_binary_stream(binary_stream):
             self.write_int_le(len(piece_tint_color["colors"]))
             for color in piece_tint_color["colors"]:
                 self.write_string(color)
+
+    def _extracted_from_write_skin_24(self, arg0, arg1, arg2, arg3):
+        self.write_string(arg0[arg1])
+        self.write_string(arg0[arg2])
+        self.write_string(arg0[arg3])

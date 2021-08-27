@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 from binary_utils.binary_stream import binary_stream
 from podrum.world.chunk.sub_chunk import sub_chunk
@@ -57,17 +56,17 @@ class chunk:
     
     def network_deserialize(self, data: bytes, sub_chunk_count: int = 16) -> None:
         stream: object = binary_stream(data)
-        for y in range(0, sub_chunk_count):
+        for y in range(sub_chunk_count):
             sc: object = sub_chunk()
             sc.network_deserialize(stream)
             self.sub_chunks[y] = sc
         self.biomes: list = []
-        for i in range(0, stream.read_var_int()):
+        for _ in range(stream.read_var_int()):
             self.biomes.append(stream.read_unsigned_byte())
 
     def network_serialize(self) -> object:
         stream: object = binary_stream()
-        for y in range(0, self.get_sub_chunk_send_count()):
+        for y in range(self.get_sub_chunk_send_count()):
             self.sub_chunks[y].network_serialize(stream)
         stream.write_var_int(len(self.biomes))
         for biome in self.biomes:

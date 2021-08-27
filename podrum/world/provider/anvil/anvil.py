@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 import gzip
 from nbt_utils.tag_ids import tag_ids
@@ -213,9 +212,9 @@ class anvil:
         self.set_player_option(uuid, "playerGameType", gamemode)
         
     def has_player_file(self, uuid: str) -> bool:
-        if os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat")):
-            return True
-        return False
+        return bool(
+            os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat"))
+        )
         
     def create_player_file(self, uuid: str) -> None:
         stream: object = nbt_be_binary_stream()

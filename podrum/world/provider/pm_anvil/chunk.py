@@ -1,17 +1,16 @@
-#########################################################
-#  ____           _                                     #
-# |  _ \ ___   __| |_ __ _   _ _ __ ___                 #
-# | |_) / _ \ / _` | '__| | | | '_ ` _ \                #
-# |  __/ (_) | (_| | |  | |_| | | | | | |               #
-# |_|   \___/ \__,_|_|   \__,_|_| |_| |_|               #
-#                                                       #
-# Copyright 2021 Podrum Team.                           #
-#                                                       #
-# This file is licensed under the GPL v2.0 license.     #
-# The license file is located in the root directory     #
-# of the source code. If not you may not use this file. #
-#                                                       #
-#########################################################
+r"""
+  ____           _
+ |  _ \ ___   __| |_ __ _   _ _ __ ___
+ | |_) / _ \ / _` | '__| | | | '_ ` _ \
+ |  __/ (_) | (_| | |  | |_| | | | | | |
+ |_|   \___/ \__,_|_|   \__,_|_| |_| |_|
+
+ Copyright 2021 Podrum Team.
+
+ This file is licensed under the GPL v2.0 license.
+ The license file is located in the root directory
+ of the source code. If not you may not use this file.
+"""
 
 from binary_utils.binary_stream import binary_stream
 from nbt_utils.tag_ids import tag_ids
@@ -32,15 +31,12 @@ class chunk:
         self.x: int = x
         self.z: int = z
         self.sections: dict = {}
-        for i in range(0, 16):
-            if i in sections:
-                self.sections[i] = sections[i]
-            else:
-                self.sections[i] = section()
+        for i in range(16):
+            self.sections[i] = sections.get(i, section())
         if len(height_map) == 256:
             self.height_map: list = height_map
         else:
-            self.height_map: list = [0] * 256      
+            self.height_map: list = [0] * 256
         if len(biomes) == 256:
             self.biomes: list = biomes
         else:
@@ -90,7 +86,7 @@ class chunk:
     
     def recalculate_height_map(self) -> None:
         for x in range(0, 16):
-            for z in range(0, 16):
+            for z in range(16):
                 y: int = self.get_highest_block_at(x, z) + 1
                 self.height_map[(x << 4) + z] = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
                     
