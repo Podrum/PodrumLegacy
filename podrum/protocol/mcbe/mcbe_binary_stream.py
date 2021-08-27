@@ -56,8 +56,9 @@ class mcbe_binary_stream(binary_stream):
         return self.read(self.read_int_le()).decode()
     
     def write_little_string(self, value: str) -> None:
-        self.write_int_le(len(value))
-        self.write(value.encode())
+        encoded_string: str = value.encode()
+        self.write_int_le(len(encoded_string))
+        self.write(encoded_string)
         
     def read_byte_array(self) -> bytes:
         return self.read(self.read_var_int())
