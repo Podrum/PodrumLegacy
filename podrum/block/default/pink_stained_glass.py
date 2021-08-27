@@ -15,9 +15,15 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class pink_stained_glass(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:stained_glass", 6, 0.3, 0.3, "minecraft:stained_glass")
+        super().__init__(
+            "minecraft:stained_glass",
+            6, 0.3, 0.3,
+            "minecraft:stained_glass"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

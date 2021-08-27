@@ -15,9 +15,16 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class stripped_jungle_log(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:stripped_jungle_log", 0, 2, 2, "minecraft:stripped_jungle_log")
+        super().__init__(
+            "minecraft:stripped_jungle_log",
+            0, 2, 2,
+            "minecraft:stripped_jungle_log"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.flammable: bool = True

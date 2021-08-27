@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class redstone_lamp(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:redstone_lamp", 0, 0.3, 0.3, "minecraft:redstone_lamp")
+        super().__init__(
+            "minecraft:redstone_lamp", 0, 0.3, 0.3, "minecraft:redstone_lamp"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.luminant: bool = True

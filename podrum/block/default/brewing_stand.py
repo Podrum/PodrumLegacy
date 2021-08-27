@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class brewing_stand(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:brewing_stand", 0, 0.5, 0.5, "minecraft:brewing_stand")
+        super().__init__(
+            "minecraft:brewing_stand", 0, 0.5, 0.5, "minecraft:brewing_stand"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
         self.luminant: int = 1

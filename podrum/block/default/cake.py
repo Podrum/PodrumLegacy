@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class cake(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:cake", 0, 0.5, 0.5, "minecraft:cake")
         self.stack_size: int = 64

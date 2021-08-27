@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class jungle_log(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:log", 3, 2, 2, "minecraft:log")
         self.stack_size: int = 64

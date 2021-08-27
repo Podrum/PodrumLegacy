@@ -15,6 +15,7 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class cyan_wool(block):
     def __init__(self) -> None:
         super().__init__("minecraft:wool", 9, 0.8, 0.8, "minecraft:wool")

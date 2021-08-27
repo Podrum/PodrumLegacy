@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class pumpkin(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:pumpkin", 0, 1, 1, "minecraft:pumpkin")
         self.stack_size: int = 64

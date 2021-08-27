@@ -14,9 +14,16 @@ r"""
 
 from podrum.block.block import block
 
+
 class flowing_water(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:flowing_water", 0, -1, 100, "minecraft:flowing_water")
+        super().__init__(
+            "minecraft:flowing_water",
+            0, -1, 100,
+            "minecraft:flowing_water"
+        )
+
         self.transparent: bool = True
         self.creates_sources: bool = True
         self.flow_speed: int = 8

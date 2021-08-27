@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class gold_ore(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:gold_ore", 0, 3, 3, "minecraft:gold_ore")
         self.stack_size: int = 64

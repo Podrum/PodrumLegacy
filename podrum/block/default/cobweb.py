@@ -15,6 +15,7 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class cobweb(block):
     def __init__(self) -> None:
         super().__init__("minecraft:web", 0, 4, 4, "minecraft:web")

@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class jungle_wood_planks(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:planks", 3, 3, 2, "minecraft:planks")
         self.stack_size: int = 64

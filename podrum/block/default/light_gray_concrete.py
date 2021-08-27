@@ -15,8 +15,12 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class light_gray_concrete(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:concrete", 8, 1.8, 1.8, "minecraft:concrete")
+        super().__init__(
+            "minecraft:concrete", 8, 1.8, 1.8, "minecraft:concrete"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

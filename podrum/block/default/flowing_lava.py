@@ -15,9 +15,16 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class flowing_lava(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:flowing_lava", 0, -1, 100, "minecraft:flowing_lava")
+        super().__init__(
+            "minecraft:flowing_lava",
+            0, -1, 100,
+            "minecraft:flowing_lava"
+        )
+
         self.tool: int = tool.none
         self.flow_speed: int = 30
         self.flow_distance: int = 4

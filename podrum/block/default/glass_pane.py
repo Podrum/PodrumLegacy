@@ -15,9 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class glass_pane(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:glass_pane", 0, 0.3, 0.3, "minecraft:glass_pane")
+        super().__init__(
+            "minecraft:glass_pane", 0, 0.3, 0.3, "minecraft:glass_pane"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True

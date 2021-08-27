@@ -15,8 +15,15 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class warped_wart_block(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:warped_wart_block", 0, 1, 1, "minecraft:warped_wart_block")
+        super().__init__(
+            "minecraft:warped_wart_block",
+            0, 1, 1,
+            "minecraft:warped_wart_block"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none

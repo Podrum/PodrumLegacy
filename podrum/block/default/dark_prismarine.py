@@ -15,8 +15,12 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class dark_prismarine(block):
     def __init__(self) -> None:
-        super().__init__("minecraft:prismarine", 1, 1.5, 6, "minecraft:prismarine")
+        super().__init__(
+            "minecraft:prismarine", 1, 1.5, 6, "minecraft:prismarine"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

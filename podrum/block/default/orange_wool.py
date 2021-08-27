@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class orange_wool(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:wool", 1, 0.8, 0.8, "minecraft:wool")
         self.stack_size: int = 64

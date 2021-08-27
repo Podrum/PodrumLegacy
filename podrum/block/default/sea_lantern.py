@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class sea_lantern(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:seaLantern", 0, 0.3, 0.3, "minecraft:sealantern")
+        super().__init__(
+            "minecraft:seaLantern", 0, 0.3, 0.3, "minecraft:sealantern"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.luminant: int = 15

@@ -15,6 +15,7 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class coal_ore(block):
     def __init__(self) -> None:
         super().__init__("minecraft:coal_ore", 0, 3, 3, "minecraft:coal_ore")

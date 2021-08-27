@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class bedrock(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:bedrock", 0, 18000000, 3600000, "minecraft:bedrock")
+        super().__init__(
+            "minecraft:bedrock", 0, 18000000, 3600000, "minecraft:bedrock"
+        )
+
         self.stack_size: int = 127
         self.tool: int = tool.none

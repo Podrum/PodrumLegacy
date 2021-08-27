@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class snow_block(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:snow", 0, 0.2, 0.2, "minecraft:snow")
         self.stack_size: int = 64

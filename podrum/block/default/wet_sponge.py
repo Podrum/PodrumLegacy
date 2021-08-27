@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class wet_sponge(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:sponge", 1, 0.6, 0.6, "minecraft:sponge")
+        super().__init__(
+            "minecraft:sponge", 1, 0.6, 0.6, "minecraft:sponge"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.none

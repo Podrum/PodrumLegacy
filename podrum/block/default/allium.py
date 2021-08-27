@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class allium(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:red_flower", 2, 0, 0, "minecraft:red_flower")
         self.stack_size: int = 6

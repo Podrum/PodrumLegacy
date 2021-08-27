@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class still_lava(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:lava", 0, -1, 100, "minecraft:lava")
         self.tool: int = tool.none

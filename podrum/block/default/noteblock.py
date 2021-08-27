@@ -15,9 +15,14 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class noteblock(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:noteblock", 0, 0.8, 0.8, "minecraft:noteblock")
+        super().__init__(
+            "minecraft:noteblock", 0, 0.8, 0.8, "minecraft:noteblock"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe
         self.catches_fire_from_lava: bool = True

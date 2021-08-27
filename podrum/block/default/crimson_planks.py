@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class crimson_planks(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:crimson_planks", 0, 3, 2, "minecraft:crimson_planks")
+        super().__init__(
+            "minecraft:crimson_planks", 0, 3, 2, "minecraft:crimson_planks"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.axe

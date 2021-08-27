@@ -15,7 +15,9 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class tnt(block):
+
     def __init__(self) -> None:
         super().__init__("minecraft:tnt", 0, 0, 0, "minecraft:tnt")
         self.stack_size: int = 64

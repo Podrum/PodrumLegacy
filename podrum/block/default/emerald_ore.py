@@ -15,8 +15,13 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class emerald_ore(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:emerald_ore", 0, 3, 3, "minecraft:emerald_ore")
+        super().__init__(
+            "minecraft:emerald_ore", 0, 3, 3, "minecraft:emerald_ore"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe

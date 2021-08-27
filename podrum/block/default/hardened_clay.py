@@ -15,8 +15,15 @@ r"""
 from podrum.block.block import block
 from podrum.block.tool import tool
 
+
 class hardened_clay(block):
+
     def __init__(self) -> None:
-        super().__init__("minecraft:hardened_clay", 0, 1.25, 4.2, "minecraft:hardened_clay")
+        super().__init__(
+            "minecraft:hardened_clay",
+            0, 1.25, 4.2,
+            "minecraft:hardened_clay"
+        )
+
         self.stack_size: int = 64
         self.tool: int = tool.pickaxe
