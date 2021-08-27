@@ -12,10 +12,13 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-import os
 import threading
 
-class debug_command:
+from podrum.command.command_abc import Command
+
+
+class debug_command(Command):
+
     def __init__(self, server: object) -> None:
         self.server: object = server
         self.name: str = "debug"

@@ -12,14 +12,21 @@ r"""
  of the source code. If not you may not use this file.
 """
 
+from podrum.command.command_abc import Command
 from podrum.version import version
 
-class version_command:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+
+class version_command(Command):
+    def __init__(self, server) -> None:
+        self.server = server
         self.name: str = "version"
         self.description: str = "Shows server version and software."
         self.aliases: list = ["ver", "about"]
-    
-    def execute(self, args: list, sender: object) -> None:
-        sender.send_message(f"This server is running Podrum version {version.podrum_version} {version.podrum_codename} on API {version.podrum_api_version}. This version is licensed under the {version.podrum_license} license.")
+
+    def execute(self, args: list, sender) -> None:
+        sender.send_message(
+            f"This server is running Podrum version {version.podrum_version} "
+            f"{version.podrum_codename} on API {version.podrum_api_version}. "
+            f"This version is licensed under the"
+            f" {version.podrum_license} license."
+        )

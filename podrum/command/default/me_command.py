@@ -11,18 +11,23 @@ r"""
  The license file is located in the root directory
  of the source code. If not you may not use this file.
 """
+from podrum.command.command_abc import Command
 
-class me_command:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+
+class me_command(Command):
+
+    def __init__(self, server) -> None:
+        self.server = server
         self.name: str = "me"
         self.description: str = "Displays a message about yourself."
     
-    def execute(self, args: list, sender: object) -> None:
-        if args:
-            if getattr(sender, 'username', None) is None:
-                sender.send_message("Cannot use this command as CONSOLE")
-                return
-            self.server.broadcast_message(f"* {sender.username} {' '.join(args)}")
-        else:
+    def execute(self, args: list, sender) -> None:
+        if not args:
             sender.send_message("/me <message: message>")
+            return
+
+        if getattr(sender, 'username', None) is None:
+            sender.send_message("Cannot use this command as CONSOLE")
+            return
+
+        self.server.broadcast_message(f"* {sender.username} {' '.join(args)}")

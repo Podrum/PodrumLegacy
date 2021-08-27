@@ -11,37 +11,55 @@ r"""
  The license file is located in the root directory
  of the source code. If not you may not use this file.
 """
-
+from podrum.command.command_abc import Command
 from podrum.protocol.mcbe.type.gamemode_type import gamemode_type
 
-class gamemode_command:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+
+class gamemode_command(Command):
+
+    def __init__(self, server) -> None:
+        self.server = server
         self.name: str = "gamemode"
         self.description: str = "Sets a player's game mode."
     
-    def execute(self, args: list, sender: object) -> None:
-        if args:
-            player = sender
-            if len(args) > 1:
-                player = self.server.find_player(args[1])
-                if not player:
-                    sender.send_message("This player is not online")
-                    return
-            try:
-                gamemode = int(args[0]) if int(args[0]) <= 2 else 4
-            except ValueError:
-                if hasattr(gamemode_type, args[0].lower()):
-                    gamemode = int(getattr(gamemode_type, args[0].lower()))
-                else:
-                    sender.send_message(f"'{args[0]}' is an invalid gamemode.")
-                    return
-            if getattr(player, "username", None) is None:
-                sender.send_message("Cannot change CONSOLE game mode.")
-                return
-            gamemode_name = list(gamemode_type.__dict__.keys())[gamemode + 2].capitalize()
-            player.set_gamemode(gamemode)
-            player.send_message(f"Your game mode has been updated to {gamemode_name}")
-            sender.send_message(f"Set {player.username if player != sender else 'own'} game mode to {gamemode_name}")
-        else:
+    def execute(self, args: list, sender) -> None:
+        if not args:
             sender.send_message("/gamemode <gameMode: int> [player: target]")
+            return
+
+        player = sender
+
+        if len(args) > 1:
+            player = self.server.find_player(args[1])
+
+            if not player:
+                sender.send_message("This player is not online")
+                return
+
+        try:
+            gamemode = int(args[0]) if int(args[0]) <= 2 else 4
+
+        except ValueError:
+            if hasattr(gamemode_type, args[0].lower()):
+                gamemode = int(getattr(gamemode_type, args[0].lower()))
+            else:
+                sender.send_message(f"'{args[0]}' is an invalid gamemode.")
+                return
+
+        if getattr(player, "username", None) is None:
+            sender.send_message("Cannot change CONSOLE game mode.")
+            return
+
+        gamemode_name = (
+            list(gamemode_type.__dict__.keys())[gamemode + 2].capitalize()
+        )
+
+        player.set_gamemode(gamemode)
+        player.send_message(
+            f"Your game mode has been updated to {gamemode_name}"
+        )
+
+        sender.send_message(
+            f"Set {player.username if player != sender else 'own'}"
+            f" game mode to {gamemode_name}"
+        )

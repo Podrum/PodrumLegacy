@@ -11,14 +11,17 @@ r"""
  The license file is located in the root directory
  of the source code. If not you may not use this file.
 """
+from podrum.command.command_abc import Command
 
-class reload_command:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+
+class reload_command(Command):
+
+    def __init__(self, server) -> None:
+        self.server = server
         self.name: str = "reload"
         self.description: str = "Reloads all plugin."
     
-    def execute(self, args: list, sender: object) -> None:
+    def execute(self, args: list, sender) -> None:
         sender.send_message("Reloading...")
         self.server.managers.plugin_manager.reload_all()
         sender.send_message("Successfully reloaded.")
