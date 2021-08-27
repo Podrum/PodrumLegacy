@@ -14,7 +14,9 @@ r"""
 
 from podrum.world.chunk.block_storage import block_storage
 
+
 class sub_chunk:
+
     def __init__(self, block_storages: list = []) -> None:
         if len(block_storages) < 2:
             self.block_storages: list = [block_storage(), block_storage()]
@@ -37,7 +39,9 @@ class sub_chunk:
         version: int = stream.read_unsigned_byte()
         if version != 8:
             raise Exception("Unsupported SubChunk version.")
+
         self.block_storages: dict = {}
+
         for i in range(stream.read_unsigned_byte()):
             storage: object = block_storage()
             storage.network_deserialize(stream)

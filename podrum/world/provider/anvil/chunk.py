@@ -12,38 +12,48 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from binary_utils.binary_stream import binary_stream
-from nbt_utils.tag_ids import tag_ids
-from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.byte_array_tag import byte_array_tag
+from nbt_utils.tag.byte_tag import byte_tag
 from nbt_utils.tag.compound_tag import compound_tag
-from nbt_utils.tag.int_tag import int_tag
 from nbt_utils.tag.int_array_tag import int_array_tag
+from nbt_utils.tag.int_tag import int_tag
 from nbt_utils.tag.list_tag import list_tag
 from nbt_utils.tag.long_tag import long_tag
-from nbt_utils.tag.string_tag import string_tag
+from nbt_utils.tag_ids import tag_ids
 from nbt_utils.utils.nbt_be_binary_stream import nbt_be_binary_stream
-from podrum.world.chunk_utils import chunk_utils
+
 from podrum.world.provider.anvil.section import section
 
+
 class chunk:
-    def __init__(self, x: int, z: int, sections: dict = {}, height_map: list = [], biomes: list = [], entities: list = [], tile_entities: list = []) -> None:
+
+    def __init__(
+            self,
+            x: int,
+            z: int,
+            sections: dict = {},
+            height_map: list = [],
+            biomes: list = [],
+            entities: list = [],
+            tile_entities: list = []
+    ) -> None:
         self.x: int = x
         self.z: int = z
         self.sections: dict = {}
-        for i in range(0, 16):
-            if i in sections:
-                self.sections[i] = sections[i]
-            else:
-                self.sections[i] = section()
+
+        for i in range(16):
+            self.sections[i] = sections.get(i, section())
+
         if len(height_map) == 256:
             self.height_map: list = height_map
         else:
-            self.height_map: list = [0] * 256      
+            self.height_map: list = [0] * 256
+
         if len(biomes) == 256:
             self.biomes: list = biomes
         else:
             self.biomes: list = [0] * 256
+
         self.entities: list = entities
         self.tile_entities: list = tile_entities
         self.light_populated: bool = False
@@ -83,8 +93,10 @@ class chunk:
         for i in range(len(self.sections) - 1, -1, -1):
             section_to_check: object = self.sections[i]
             index: int = section_to_check.get_highest_block_at(x & 0x0f, z & 0x0f)
+
             if index != -1:
                 return index + (i << 4)
+
         return -1
     
     def recalculate_height_map(self) -> None:
@@ -97,6 +109,7 @@ class chunk:
         stream: object = nbt_be_binary_stream()
         self.recalculate_height_map()
         sections: list = list_tag("Sections", [], tag_ids.compound_tag)
+
         for i, sect in self.sections.items():
             sections.value.append(compound_tag("", [
                 byte_array_tag("Blocks", sect.block_ids),
@@ -104,6 +117,7 @@ class chunk:
                 byte_array_tag("BlockLight", sect.block_light_entries),
                 byte_array_tag("SkyLight", sect.sky_light_entries)
             ]))
+
         root_tag: object = compound_tag("", [
             compound_tag("Level", [
                 int_tag("xPos", self.x),
@@ -121,25 +135,33 @@ class chunk:
             ]),
             int_tag("DataVersion", 1343)
         ])
+
         stream.write_root_tag(root_tag)
         return stream.data
     
     def nbt_deserialize(self, data: bytes) -> None:
         stream = nbt_be_binary_stream(data)
         root_tag: object = stream.read_root_tag()
+
         if not isinstance(root_tag, compound_tag):
             raise Exception("Invalid NBT data!")
+
         if not root_tag.has_tag("Level"):
             raise Exception("Level tag isnt present!")
+
         level_tag: object = root_tag.get_tag("Level")
         self.x: int = level_tag.get_tag("xPos").value
         self.z: int = level_tag.get_tag("zPos").value
         self.terrain_populated: bool = level_tag.get_tag("TerrainPopulated").value > 0
+
         if level_tag.has_tag("LightPopulated"):
             self.light_populated: bool = level_tag.get_tag("LightPopulated").value > 0
+
         else:
             self.light_populated: bool = False
+
         sections_tag: object = level_tag.get_tag("Sections")
+
         for section_tag in sections_tag.value:
             self.sections[section_tag.get_tag("Y").value] = section(
                 section_tag.get_tag("Blocks").value,
@@ -147,8 +169,10 @@ class chunk:
                 section_tag.get_tag("BlockLight").value,
                 section_tag.get_tag("SkyLight").value
             )
+
         if level_tag.has_tag("Biomes"):
             self.biomes: list = level_tag.get_tag("Biomes").value
+
         self.entities: list = level_tag.get_tag("Entities").value
         self.tile_entities: list = level_tag.get_tag("TileEntities").value
         self.height_map: list = level_tag.get_tag("HeightMap").value

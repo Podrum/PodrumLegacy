@@ -18,6 +18,7 @@ import hashlib
 import hmac
 import json
 
+
 class jwt:
 
     # [decode]

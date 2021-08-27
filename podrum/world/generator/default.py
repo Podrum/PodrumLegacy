@@ -18,6 +18,7 @@ from podrum.world.chunk.chunk import chunk
 from podrum.world.generator.noise.perlin import Perlin
 import random
 
+
 class default:
     generator_name: str = "default"
 
@@ -25,6 +26,7 @@ class default:
     def generate(chunk_x: int, chunk_z: int, world: object) -> object:
         result: object = chunk(chunk_x, chunk_z)
         spawn_position: object = world.get_spawn_position()
+
         # Default: 62, Reduced to 20 for faster load time
         sea_level: int = 62
         chunk_type: str = "normal"
@@ -49,24 +51,38 @@ class default:
                     else blocks.sand().runtime_id,
                 )
 
-
                 # decorate land
                 if chunk_type != "water" and random.uniform(0, 1) > 0.85:
-                    block_list = random.choices([blocks.yellow_flower().runtime_id, blocks.tallgrass().runtime_id, blocks.fern().runtime_id, blocks.poppy().runtime_id, None], weights=(1, 3, 1, 2, 3), k=10)
+                    block_list = random.choices(
+                        [blocks.yellow_flower().runtime_id,
+                         blocks.tallgrass().runtime_id,
+                         blocks.fern().runtime_id,
+                         blocks.poppy().runtime_id,
+                         None],
+                        weights=(1, 3, 1, 2, 3), k=10
+                    )
+
                     block = max(set(block_list), key=block_list.count)
+
                     if block is not None:
-                        result.set_block_runtime_id(x, sea_level + y + 1, z, block)
+                        result.set_block_runtime_id(
+                            x, sea_level + y + 1, z, block
+                        )
 
                 # fills in gaps underneath grass
                 for i in range(sea_level + y + 1):
                     if (sea_level + (y - i)) == 0:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.bedrock().runtime_id)
+
                     elif (sea_level + (y - i)) <= 2:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.bedrock().runtime_id, blocks.deepslate().runtime_id]))
+
                     elif (sea_level + (y - i)) <= 4:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.deepslate().runtime_id)
+
                     elif (sea_level + (y - i)) <= 6:
                         result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.stone().runtime_id, blocks.deepslate().runtime_id]))
+
                     elif i <= 2:
                         result.set_block_runtime_id(
                             x,

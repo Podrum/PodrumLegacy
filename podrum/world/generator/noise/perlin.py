@@ -15,6 +15,7 @@ r"""
 import random
 import math
 
+
 class Perlin:
     def __init__(self, seed):
         self.m = 60000  # 100-70000 are most stable values
@@ -24,7 +25,16 @@ class Perlin:
         p = self.perlins = tuple((1 / i, i) for i in (16, 20, 22, 31, 32, 64, 512) for j in range(2))
         self.avg = 8 * len(p) / sum(f + i for f, i in p)
 
-    def __call__(self, x, z, r=1, scale: float = 1, octaves: int = 1, persistence: float = 0.2, lacunarity: float = 2) -> int:
+    def __call__(
+            self,
+            x,
+            z,
+            r=1,
+            scale: float = 1,
+            octaves: int = 1,
+            persistence: float = 0.2,
+            lacunarity: float = 2
+    ) -> int:
         amp: float = 1
         freq: float = 1
         height: float = 0
