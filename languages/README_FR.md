@@ -21,12 +21,13 @@
  </div>
 <br>
 
-Podrum est un logicielle de serveur pour Minecraft Bedrock edition écrit en Python.
-Il est encore un développement actif mais a ses petits avantages:
+Podrum est un logiciel de serveur pour Minecraft Bedrock edition écrit en Python.
+Il est encore un développement actif, mais a ses petits avantages:
 
 **1.** Facile à utiliser.
 
-**2.** Écrit en Pythhon ce qui veut dire que les plugins sont faciles à écrire.
+**2.** Écrit en Python ce qui veut dire que les plugins sont faciles à écrire.
+
 ## Fonctionnalitées:
  - [x] Génération du monde
  - [x] Connexion
@@ -36,11 +37,11 @@ Il est encore un développement actif mais a ses petits avantages:
  - [x] API de Plugin
  - [ ] Mobs 
 
-## Executer:
+## Exécuter:
 Linux et MacOS (Systèmes Unix):
 ```sh
-pip3 install -r ./requirements.txt
-python3 __main__.py
+pip3 install -r requirements.txt
+python3 run.py
 ```
 
 Windows:
@@ -50,17 +51,17 @@ python __main__.py
 ```
 
 # FAQ:
- - Est-ce que je peux contribuer?
+ - Est-ce que je peux contribuer ?
  > Bien sûr.
- - Quel version de python dois-je utiliser?
- > N'importe quel version de python au dessus de Python 3.5 devrait marcher mais nous recommandons le dernière.
- - Est-ce que c'est gratuit?
+ - Quelle version de python dois-je utiliser ?
+ > N'importe quelle version de python au-dessus de Python 3.5 devrait marcher, mais nous recommandons la dernière.
+ - Est-ce que c'est gratuit ?
  > Oui.
- - Est-ce que c'est pour Java ou Bedrock?
+ - Est-ce que c'est pour Java ou Bedrock ?
  > C'est actuellement pour Bedrock mais il y aura peut-être un plugin pour Java plus tard.
- - Est-ce que je peux l'utiliser maintenant?
+ - Est-ce que je peux l'utiliser maintenant ?
  > Nous ne recommandons pas de l'utiliser actuellement pour des projets sérieux.
- - Est-ce que ça support les plugins?
+ - Est-ce que ça supporte les plugins ?
  > Oui, vous pouvez écrire des plugins en Python (et peut être d'autres langages en trichent un peu).
- - J'ai une question qui n'est pas répondu ici, où est-ce que je peux la poser?
+ - J'ai une question qui n'est pas répondu ici, où est-ce que je peux la poser ?
  > Sur notre [discord](https://discord.gg/ScSsnwQ4kW).
