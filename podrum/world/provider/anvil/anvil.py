@@ -213,9 +213,9 @@ class anvil:
         self.set_player_option(uuid, "playerGameType", gamemode)
         
     def has_player_file(self, uuid: str) -> bool:
-        if os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat")):
-            return True
-        return False
+        return bool(
+            os.path.isfile(os.path.join(self.world_dir, f"players/{uuid}.dat"))
+        )
         
     def create_player_file(self, uuid: str) -> None:
         stream: object = nbt_be_binary_stream()

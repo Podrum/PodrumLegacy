@@ -32,17 +32,14 @@ class sub_chunk:
         return self.block_storages[layer].get_highest_block_at(x, z)
     
     def is_empty(self) -> bool:
-        for storage in self.block_storages:
-            if not storage.is_empty():
-                return False
-        return True
+        return all(storage.is_empty() for storage in self.block_storages)
 
     def network_deserialize(self, stream: object) -> None:
         version: int = stream.read_unsigned_byte()
         if version != 8:
             raise Exception("Unsupported SubChunk version.")
         self.block_storages: dict = {}
-        for i in range(0, stream.read_unsigned_byte()):
+        for i in range(stream.read_unsigned_byte()):
             storage: object = block_storage()
             storage.network_deserialize(stream)
             self.block_storages[i] = storage

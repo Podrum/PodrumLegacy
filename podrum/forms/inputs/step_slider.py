@@ -12,7 +12,7 @@
 # of the source code. If not you may not use this file. #
 #                                                       #
 #########################################################
-
+from typing import List
 
 from podrum.forms.inputs.input_field import input_field
 
@@ -33,12 +33,10 @@ class step_slider(input_field):
             
     @default.setter
     def default(self, default: str) -> None:
-        index = 0
-        for option in self.options:
+        for index, option in enumerate(self.options):
             if option == default:
                 self.default_index = index
                 return
-            index += 1
         self.default_index = None
             
     def to_dict(self) -> dict:

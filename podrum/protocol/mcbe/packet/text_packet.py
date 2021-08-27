@@ -25,15 +25,29 @@ class text_packet(mcbe_packet):
     def decode_payload(self) -> None:
         self.type: int = self.read_unsigned_byte()
         self.needs_translation: bool = self.read_bool()
-        if self.type == text_type.chat or self.type == text_type.whisper or self.type == text_type.announcement:
+        if self.type in [
+            text_type.chat,
+            text_type.whisper,
+            text_type.announcement,
+        ]:
             self.source_name: str = self.read_string()
             self.message: str = self.read_string()
-        elif self.type == text_type.raw or self.type == text_type.tip or self.type == text_type.system or self.type == text_type.json or self.type == text_type.json_whisper:
+        elif self.type in [
+            text_type.raw,
+            text_type.tip,
+            text_type.system,
+            text_type.json,
+            text_type.json_whisper,
+        ]:
             self.message: str = self.read_string()
-        elif self.type == text_type.translation or self.type == text_type.popup or self.type == text_type.jukebox_popup:
+        elif self.type in [
+            text_type.translation,
+            text_type.popup,
+            text_type.jukebox_popup,
+        ]:
             self.message: str = self.read_string()
             self.parameters: list = []
-            for i in range(0, self.read_var_int()):
+            for _ in range(self.read_var_int()):
                 self.parameters.append(self.read_string())
         self.xuid: str = self.read_string()
         self.platform_chat_id: str = self.read_string()
@@ -41,12 +55,26 @@ class text_packet(mcbe_packet):
     def encode_payload(self) -> None:
         self.write_unsigned_byte(self.type)
         self.write_bool(self.needs_translation)
-        if self.type == text_type.chat or self.type == text_type.whisper or self.type == text_type.announcement:
+        if self.type in [
+            text_type.chat,
+            text_type.whisper,
+            text_type.announcement,
+        ]:
             self.write_string(self.source_name)
             self.write_string(self.message)
-        elif self.type == text_type.raw or self.type == text_type.tip or self.type == text_type.system or self.type == text_type.json or self.type == text_type.json_whisper:
+        elif self.type in [
+            text_type.raw,
+            text_type.tip,
+            text_type.system,
+            text_type.json,
+            text_type.json_whisper,
+        ]:
             self.write_string(self.message)
-        elif self.type == text_type.translation or self.type == text_type.popup or self.type == text_type.jukebox_popup:
+        elif self.type in [
+            text_type.translation,
+            text_type.popup,
+            text_type.jukebox_popup,
+        ]:
             self.write_string(self.message)
             self.write_var_int(len(self.parameters))
             for parameter in self.parameters:

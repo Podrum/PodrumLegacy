@@ -22,7 +22,7 @@ class player_form_response_event(event):
     def __init__(self, form_id: int, data: object, player: object) -> None:
         self.form_id = form_id
         self.player = player
-        self.cancelled = True if data is None else False
+        self.cancelled = data is None
         self.form_type = None
         self.response = data
         if isinstance(data, list):

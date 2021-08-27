@@ -34,12 +34,20 @@ class jwt:
     # [encode]
     # :return: = str
     # Encodes a the json web token
-    # header, json string and signiture 
+    # header, json string and signature
     # back to a encoded json web token
     @staticmethod
     def encode(header: dict, payload: dict, verifySigniture: str) -> str:
-        body: list = []
-        body.append(base64.b64encode(json.dumps(header).encode()).decode())
-        body.append(base64.b64encode(json.dumps(payload).encode()).decode())
-        body.append(base64.b64encode(hmac.new(verifySigniture.encode(), ".".join(body).encode(), hashlib.sha256).hexdigest().upper().encode()).decode())
+        body: list = [
+            base64.b64encode(json.dumps(header).encode()).decode(),
+            base64.b64encode(json.dumps(payload).encode()).decode(),
+            ]
+
+        base64.b64encode(
+            hmac.new(
+                verifySigniture.encode(),
+                ".".join(body).encode(),
+                hashlib.sha256
+            ).hexdigest().upper().encode()).decode()
+
         return ".".join(body)

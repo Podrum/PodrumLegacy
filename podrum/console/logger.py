@@ -20,7 +20,7 @@ import sys
 
 class logger:
     def __init__(self):
-        if sys.platform == "win32" or sys.platform == "win64":
+        if sys.platform in ["win32", "win64"]:
             from ctypes import windll
             kernel: object = windll.kernel32
             kernel.SetConsoleMode(kernel.GetStdHandle(-11), 7)

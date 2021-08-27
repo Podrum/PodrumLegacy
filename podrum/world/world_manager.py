@@ -17,6 +17,7 @@ import os
 from podrum.world.world import world
 from podrum.task.immediate_task import immediate_task
 
+
 class world_manager:
     def __init__(self, server: object) -> None:
         self.server: object = server
@@ -58,7 +59,9 @@ class world_manager:
     # [get_world_from_folder_name]
     # :return: = object
     # Gets a world by folder name
-    def get_world_from_folder_name(self, world_folder_name: str, worlds_path: str = "") -> object:
+    def get_world_from_folder_name(
+        self, world_folder_name: str, worlds_path: str = ""
+    ) -> object:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_folder_name)

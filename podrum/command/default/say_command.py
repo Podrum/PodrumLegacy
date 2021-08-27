@@ -20,7 +20,7 @@ class say_command:
         self.description: str = "Sends a message in the chat."
     
     def execute(self, args: list, sender: object) -> None:
-        if len(args) > 0:
+        if args:
             if not hasattr(sender, "username"):
                 sender.send_chat_message(' '.join(args))
             else:

@@ -80,13 +80,15 @@ class rak_net_interface(Thread):
     # Handles the game packets and passes
     # them decoded to the player's handler.
     def on_frame(self, packet: object, connection: object) -> None:
-        if connection.address.token in self.server.players:
-            if packet.body[0] == 0xfe:
-                new_packet: object = game_packet(packet.body)
-                new_packet.decode()
-                packets: list = new_packet.read_packets_data()
-                for batch in packets:
-                    self.server.players[connection.address.token].handle_packet(batch)
+        if (
+            connection.address.token in self.server.players
+            and packet.body[0] == 0xFE
+        ):
+            new_packet: object = game_packet(packet.body)
+            new_packet.decode()
+            packets: list = new_packet.read_packets_data()
+            for batch in packets:
+                self.server.players[connection.address.token].handle_packet(batch)
             
     # [on_new_incoming_connection]
     # :return: = None

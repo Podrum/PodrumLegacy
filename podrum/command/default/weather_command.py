@@ -21,7 +21,7 @@ class weather_command:
         self.description: str = "Sets the weather."
     
     def execute(self, args: list, sender: object) -> None:
-        if len(args) >= 1:
+        if args:
             weather = args[0]
             try:
                 dur = int(args[0])
