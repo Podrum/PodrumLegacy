@@ -23,6 +23,7 @@ from podrum.game_data.mcbe.creative_items import creative_items
 from podrum.game_data.mcbe.item_states import item_states
 from podrum.geometry.vector_2 import vector_2
 from podrum.geometry.vector_3 import vector_3
+from podrum.item.item import item
 from podrum.item.item_map import item_map
 from podrum.protocol.mcbe import packets
 from podrum.protocol.mcbe import types
