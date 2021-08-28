@@ -357,7 +357,7 @@ class mcbe_binary_stream(binary_stream):
             "network_id": self.read_signed_var_int()
         }
 
-        if result["network_id"] > 0:
+        if result["network_id"] != 0:
             result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
@@ -372,7 +372,7 @@ class mcbe_binary_stream(binary_stream):
                     
     def write_item_legacy(self, value: dict) -> None:
         self.write_signed_var_int(value["network_id"])
-        if value["network_id"] > 0:
+        if value["network_id"] != 0:
             self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
             self.write_signed_var_int(value["block_runtime_id"])
@@ -389,7 +389,7 @@ class mcbe_binary_stream(binary_stream):
         result: dict = {
             "network_id": self.read_signed_var_int()
         }
-        if result["network_id"] > 0:
+        if result["network_id"] != 0:
             result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["has_stack_id"] = self.read_bool()
@@ -408,7 +408,7 @@ class mcbe_binary_stream(binary_stream):
                     
     def write_item(self, value: dict) -> None:
         self.write_signed_var_int(value["network_id"])
-        if value["network_id"] > 0:
+        if value["network_id"] != 0:
             self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
 
