@@ -13,6 +13,7 @@ r"""
 """
 
 
+import asyncio
 import os
 import time
 from typing import Optional
@@ -41,13 +42,13 @@ class server:
         self.current_entity_id: int = 1
         self.is_ticking: bool = True
         self.world_manager = world_manager(self)
-        self.start()
 
-        self.config: Optional[config] = None
+        self.server_task: object = asyncio.get_event_loop().create_task(self.start())
+        asyncio.get_event_loop().run_forever()
 
     def get_plugin_main(self, name):
-        if name in self.plugin_manager.plugins:
-            return self.plugin_manager.plugins[name]
+        if name in self.managers.plugin_manager.plugins:
+            return self.managers.plugin_manager.plugins[name]
         
     @staticmethod
     def get_root_path():
@@ -79,7 +80,7 @@ class server:
 
         self.config.save()      
 
-    def start(self) -> None:
+    async def start(self) -> None:
         start_time: float = time.time()
         self.logger.info("Podrum is starting up...")
         plugins_path: str = os.path.join(os.getcwd(), "plugins")
@@ -111,7 +112,7 @@ class server:
                 # Add some sort of ticking?
                 for world in self.world_manager.worlds.values():
                     world.set_time(world.time + 1 if world.time <= 23999 else 0)
-                time.sleep(0.05)
+                await asyncio.sleep(0.05)
 
         except KeyboardInterrupt:
             self.stop()
