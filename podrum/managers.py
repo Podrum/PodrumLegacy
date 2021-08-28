@@ -30,15 +30,15 @@ from podrum.world.world_manager import world_manager
 
 class managers:
 
-    def __init__(self, server: object) -> None:
-        self.server: object = server
-        self.block_manager: object = block_manager(self)
-        self.command_manager: object = command_manager()
-        self.item_manager: object = item_manager(self.server)
-        self.plugin_manager: object = plugin_manager(server)
-        self.generator_manager: object = generator_manager()
-        self.provider_manager: object = provider_manager()
-        self.world_manager: object = world_manager(server)
+    def __init__(self, server) -> None:
+        self.server = server
+        self.block_manager = block_manager(self)
+        self.command_manager = command_manager()
+        self.item_manager = item_manager(self.server)
+        self.plugin_manager = plugin_manager(server)
+        self.generator_manager = generator_manager()
+        self.provider_manager = provider_manager()
+        self.world_manager = world_manager(server)
         self.register_defaults()
     
     # [register_default_blocks]

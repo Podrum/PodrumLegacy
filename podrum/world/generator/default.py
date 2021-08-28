@@ -23,16 +23,16 @@ class default:
     generator_name: str = "default"
 
     @staticmethod
-    def generate(chunk_x: int, chunk_z: int, world: object) -> object:
-        result: object = chunk(chunk_x, chunk_z)
-        spawn_position: object = world.get_spawn_position()
+    def generate(chunk_x: int, chunk_z: int, world) -> object:
+        result = chunk(chunk_x, chunk_z)
+        spawn_position = world.get_spawn_position()
 
         # Default: 62, Reduced to 20 for faster load time
         sea_level: int = 62
         chunk_type: str = "normal"
 
         # generates perlin noise
-        perlin: object = Perlin(seed=world.server.config.data["seed"])
+        perlin = Perlin(seed=world.server.config.data["seed"])
 
         # chunk generation
         for x in range(16):

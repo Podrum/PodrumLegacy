@@ -28,8 +28,8 @@ class pm_anvil(anvil):
     region_file_extension: str = "mcapm"
     
     @staticmethod
-    def to_server_chunk(chunk_in: object) -> object:
-        cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
+    def to_server_chunk(chunk_in) -> object:
+        cnv_chunk = server_chunk(chunk_in.x, chunk_in.z)
         for x in range(16):
             for z in range(16):
                 for y in range(chunk_in.get_highest_block_at(x, z) + 1):
@@ -44,8 +44,8 @@ class pm_anvil(anvil):
         return cnv_chunk
     
     @staticmethod
-    def to_anvil_chunk(chunk_in: object) -> object:
-        cnv_chunk: object = chunk(chunk_in.x, chunk_in.z)
+    def to_anvil_chunk(chunk_in) -> object:
+        cnv_chunk = chunk(chunk_in.x, chunk_in.z)
         for x in range(16):
             for z in range(16):
                 for y in range(chunk_in.get_highest_block_at(x, z) + 1):
@@ -60,16 +60,16 @@ class pm_anvil(anvil):
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
-        reg: object = region(region_path)
+        reg = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
         if len(chunk_data) > 0:
-            result: object = chunk(x, z)
+            result = chunk(x, z)
             result.nbt_deserialize(chunk_data)
             return pm_anvil.to_server_chunk(result)
                                         
-    def set_chunk(self, chunk_in: object) -> None:
+    def set_chunk(self, chunk_in) -> None:
         region_index: tuple = anvil.cr_index(chunk_in.x, chunk_in.z)
         chunk_index: tuple = anvil.rc_index(chunk_in.x, chunk_in.z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
-        reg: object = region(region_path)
+        reg = region(region_path)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], anvil.to_anvil_chunk(chunk_in).nbt_serialize())

@@ -21,10 +21,10 @@ class block_manager:
         self.managers = managers
         self.blocks: dict = {}
 
-    def register_block(self, block_obj: object) -> None:
+    def register_block(self, block_obj) -> None:
         self.blocks[f"{block_obj.name} {block_obj.meta}"] = block_obj
 
-        item_obj: object = item(
+        item_obj = item(
             block_obj.item_name, block_obj.network_id, block_obj.meta
         )
 

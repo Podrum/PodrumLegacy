@@ -25,16 +25,16 @@ from podrum.protocol.mcbe import types
 
 
 class world:
-    def __init__(self, provider: object, server: object):
-        self.provider: object = provider
-        self.server: object = server
+    def __init__(self, provider, server):
+        self.provider = provider
+        self.server = server
         self.chunks: dict = {}
-        self.mark_as_loading: object = deque()
-        self.mark_as_saving: object = deque()
-        self.mark_as_unloading: object = deque()
+        self.mark_as_loading = deque()
+        self.mark_as_saving = deque()
+        self.mark_as_unloading = deque()
         self.world_path: str = provider.world_dir
-        self.load_queue: object = Queue()
-        self.unload_queue: object = Queue()
+        self.load_queue = Queue()
+        self.unload_queue = Queue()
         self.time: int = 0
         self.raining: bool = False
         self.thundering: bool = False
@@ -49,10 +49,10 @@ class world:
             and f"{x} {z}" not in self.mark_as_loading
         ):
             self.mark_as_loading.append(f"{x} {z}")
-            chunk: object = self.provider.get_chunk(x, z)
+            chunk = self.provider.get_chunk(x, z)
             if chunk is None:
-                generator: object = self.server.managers.generator_manager.get_generator(self.get_generator_name())
-                chunk: object = generator.generate(x, z, self)
+                generator = self.server.managers.generator_manager.get_generator(self.get_generator_name())
+                chunk = generator.generate(x, z, self)
             self.chunks[f"{x} {z}"] = chunk
             self.mark_as_loading.remove(f"{x} {z}")
                 
@@ -98,7 +98,7 @@ class world:
         workers: list = []
         self.load_worker_count: int = count
         for _ in range(count):
-            worker: object = Thread(target = self.load_worker)
+            worker = Thread(target = self.load_worker)
             worker.start()
             workers.append(worker)
         return workers
@@ -130,7 +130,7 @@ class world:
         workers: list = []
         self.unload_worker_count: int = count
         for _ in range(count):
-            worker: object = Thread(target = self.unload_worker)
+            worker = Thread(target = self.unload_worker)
             worker.start()
             workers.append(worker)
         return workers
@@ -164,7 +164,7 @@ class world:
     # [set_block]
     # :return: = None
     # Sets a block.
-    def set_block(self, x: int, y: int, z: int, block: object) -> None:
+    def set_block(self, x: int, y: int, z: int, block) -> None:
         self.chunks[f"{x >> 4} {z >> 4}"].set_block_runtime_id(x & 0x0f, y & 0x0f, z & 0x0f, block.runtime_id)
         
     # [get_highest_block_at]
@@ -179,7 +179,7 @@ class world:
     def save(self) -> None:
         tasks: list = []
         for chunk in self.chunks.values():
-            chunk_task: object = Thread(target = self.save_chunk, args = [chunk.x, chunk.z])
+            chunk_task = Thread(target = self.save_chunk, args = [chunk.x, chunk.z])
             chunk_task.start()
             tasks.append(chunk_task)
         for task in tasks:
@@ -206,7 +206,7 @@ class world:
     # [set_spawn_position]
     # :return: = None
     # Sets a spawn position.
-    def set_spawn_position(self, world_name: object) -> None:
+    def set_spawn_position(self, world_name) -> None:
         self.provider.set_spawn_position(world_name)
 
     # [get_world_gamemode]
@@ -231,7 +231,7 @@ class world:
     # [set_player_position]
     # :return: = None
     # Sets a player's default position.
-    def set_player_position(self, uuid: str, position: object) -> None:
+    def set_player_position(self, uuid: str, position) -> None:
         self.provider.set_player_position(uuid, position)
 
     # [get_player_gamemode]
@@ -272,13 +272,13 @@ class world:
     
     def set_time(self, time: int) -> None:
         self.time = time
-        packet: object = packets.set_time_packet()
+        packet = packets.set_time_packet()
         packet.time = time
         packet.encode()
         self.server.broadcast_packet(self, packet)
 
     def set_raining(self, raining: bool = True, dur: int = random.randint(90000, 110000)) -> None:
-        packet: object = packets.level_event_packet()
+        packet = packets.level_event_packet()
         packet.event_id = types.level_event_type.start_rain if raining else types.level_event_type.stop_rain
         packet.packet_data = dur
         packet.position = vector_3(0, 0, 0)
@@ -287,7 +287,7 @@ class world:
         self.server.broadcast_packet(self, packet)
 
     def set_thundering(self, thundering: bool = True, dur: int = random.randint(90000, 110000)) -> None:
-        packet: object = packets.level_event_packet()
+        packet = packets.level_event_packet()
         packet.event_id = types.level_event_type.start_thunder if thundering else types.level_event_type.stop_thunder
         packet.packet_data = dur
         packet.position = vector_3(0, 0, 0)
@@ -296,7 +296,7 @@ class world:
         self.server.broadcast_packet(self, packet)
 
     def set_difficulty(self, difficulty: int) -> None:
-        packet: object = packets.set_difficulty_packet()
+        packet = packets.set_difficulty_packet()
         packet.difficulty = difficulty
         packet.encode()
         self.difficulty = difficulty

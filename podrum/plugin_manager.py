@@ -75,8 +75,8 @@ class plugin_manager:
         self.server.logger.info(f"Loading {plugin_info['name']}...")
         sys.path.append(path)
         main: str = plugin_info["main"].rsplit(".", 1)
-        module: object = importlib.import_module(main[0])
-        main_class: object = getattr(module, main[1])
+        module = importlib.import_module(main[0])
+        main_class = getattr(module, main[1])
 
         self.plugins[plugin_info["name"]] = main_class()
         self.plugins[plugin_info["name"]].server = self.server

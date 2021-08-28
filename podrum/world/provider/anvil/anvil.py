@@ -46,7 +46,7 @@ class anvil:
     
     def __init__(self, world_dir: str) -> None:
         self.world_dir: str = os.path.abspath(world_dir)
-        self.config: object = config(os.path.join(os.getcwd(), "server.json"))
+        self.config = config(os.path.join(os.getcwd(), "server.json"))
         if not os.path.isdir(self.world_dir):
             os.mkdir(self.world_dir)
         if not os.path.isfile(os.path.join(self.world_dir, "level.dat")):
@@ -67,8 +67,8 @@ class anvil:
         return x - ((x >> 5) << 5), z - ((z >> 5) << 5)
     
     @staticmethod
-    def to_server_chunk(chunk_in: object) -> object:
-        cnv_chunk: object = server_chunk(chunk_in.x, chunk_in.z)
+    def to_server_chunk(chunk_in) -> object:
+        cnv_chunk = server_chunk(chunk_in.x, chunk_in.z)
         for x in range(16):
             for z in range(16):
                 for y in range(chunk_in.get_highest_block_at(x, z) + 1):
@@ -85,8 +85,8 @@ class anvil:
         return cnv_chunk
     
     @staticmethod
-    def to_anvil_chunk(chunk_in: object) -> object:
-        cnv_chunk: object = chunk(chunk_in.x, chunk_in.z)
+    def to_anvil_chunk(chunk_in) -> object:
+        cnv_chunk = chunk(chunk_in.x, chunk_in.z)
         for x in range(16):
             for z in range(16):
                 for y in range(chunk_in.get_highest_block_at(x, z) + 1):
@@ -101,37 +101,37 @@ class anvil:
         region_index: tuple = anvil.cr_index(x, z)
         chunk_index: tuple = anvil.rc_index(x, z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
-        reg: object = region(region_path)
+        reg = region(region_path)
         chunk_data: bytes = reg.get_chunk_data(chunk_index[0], chunk_index[1])
 
         if len(chunk_data) > 0:
-            result: object = chunk(x, z)
+            result = chunk(x, z)
             result.nbt_deserialize(chunk_data)
             return anvil.to_server_chunk(result)
                                         
-    def set_chunk(self, chunk_in: object) -> None:
+    def set_chunk(self, chunk_in) -> None:
         region_index: tuple = anvil.cr_index(chunk_in.x, chunk_in.z)
         chunk_index: tuple = anvil.rc_index(chunk_in.x, chunk_in.z)
         region_path: str = os.path.join(os.path.join(self.world_dir, "region"), f"r.{region_index[0]}.{region_index[1]}.{self.region_file_extension}")
-        reg: object = region(region_path)
+        reg = region(region_path)
         reg.put_chunk_data(chunk_index[0], chunk_index[1], anvil.to_anvil_chunk(chunk_in).nbt_serialize())
                                         
     def get_option(self, name: str) -> object:
         with open(os.path.join(self.world_dir, "level.dat"), "rb") as file:
-            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            stream = nbt_be_binary_stream(gzip.decompress(file.read()))
             file.close()
-            tag: object = stream.read_root_tag()
+            tag = stream.read_root_tag()
             return tag.get_tag("Data").get_tag(name).value
                                         
-    def set_option(self, name: str, value: object) -> None:
+    def set_option(self, name: str, value) -> None:
         with open(os.path.join(self.world_dir, "level.dat"), "rb") as file:
-            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            stream = nbt_be_binary_stream(gzip.decompress(file.read()))
             file.close()
-            tag: object = stream.read_root_tag()
+            tag = stream.read_root_tag()
             data_tag: bytes = tag.get_tag("Data")
 
             if data_tag.has_tag(name):
-                option_tag: object = data_tag.get_tag(name)
+                option_tag = data_tag.get_tag(name)
                 option_tag.value = value
                 data_tag.set_tag(option_tag)
                 tag.set_tag(data_tag)
@@ -145,20 +145,20 @@ class anvil:
             
     def get_player_option(self, uuid: str, name: str) -> object:
         with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb") as file:
-            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            stream = nbt_be_binary_stream(gzip.decompress(file.read()))
             file.close()
-            tag: object = stream.read_root_tag()
+            tag = stream.read_root_tag()
 
             return tag.get_tag(name).value
     
-    def set_player_option(self, uuid: str, name: str, value: object) -> None:
+    def set_player_option(self, uuid: str, name: str, value) -> None:
         with open(os.path.join(self.world_dir, f"players/{uuid}.dat"), "rb") as file:
-            stream: object = nbt_be_binary_stream(gzip.decompress(file.read()))
+            stream = nbt_be_binary_stream(gzip.decompress(file.read()))
             file.close()
-            tag: object = stream.read_root_tag()
+            tag = stream.read_root_tag()
 
             if tag.has_tag(name):
-                option_tag: object = tag.get_tag(name)
+                option_tag = tag.get_tag(name)
                 option_tag.value = value
                 tag.set_tag(option_tag)
                 stream.buffer = b""
@@ -176,7 +176,7 @@ class anvil:
             self.get_option("SpawnZ")
         )
     
-    def set_spawn_position(self, position: object) -> None:
+    def set_spawn_position(self, position) -> None:
         self.set_option("SpawnX", position.x)
         self.set_option("SpawnY", position.y)
         self.set_option("SpawnZ", position.z)
@@ -206,10 +206,10 @@ class anvil:
         self.set_option("Time", world_time)
         
     def get_player_position(self, uuid: str) -> object:
-        position_tag: object = self.get_player_option(uuid, "Pos")
+        position_tag = self.get_player_option(uuid, "Pos")
         return vector_3(position_tag[0].value, position_tag[1].value, position_tag[2].value)
             
-    def set_player_position(self, uuid: str, position: object) -> None:
+    def set_player_position(self, uuid: str, position) -> None:
         self.set_player_option(uuid, "Pos", [
             double_tag("", position.x),
             double_tag("", position.y),
@@ -219,7 +219,7 @@ class anvil:
     def get_player_gamemode(self, uuid: str) -> int:
         return self.get_player_option(uuid, "playerGameType")
             
-    def set_player_gamemode(self, uuid: str, gamemode: object) -> None:
+    def set_player_gamemode(self, uuid: str, gamemode) -> None:
         self.set_player_option(uuid, "playerGameType", gamemode)
         
     def has_player_file(self, uuid: str) -> bool:
@@ -228,8 +228,8 @@ class anvil:
         )
         
     def create_player_file(self, uuid: str) -> None:
-        stream: object = nbt_be_binary_stream()
-        tag: object = compound_tag("", [
+        stream = nbt_be_binary_stream()
+        tag = compound_tag("", [
             byte_tag("OnGround", 1),
             byte_tag("Sleeping", 0),
             short_tag("Air", 300),
@@ -272,8 +272,8 @@ class anvil:
             file.close()
     
     def create_options_file(self) -> None:
-        stream: object = nbt_be_binary_stream()
-        tag: object = compound_tag("", [
+        stream = nbt_be_binary_stream()
+        tag = compound_tag("", [
             compound_tag("Data", [
                 byte_tag("hardcore", 0),
                 byte_tag("MapFeatures", 0),

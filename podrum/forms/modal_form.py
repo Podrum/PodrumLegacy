@@ -16,11 +16,11 @@ from podrum.forms.form import form
 from podrum.forms.inputs import inputs
 
 class modal_form(form):
-    def __init__(self, title: str, content: str = None, *, button_1: object, button_2: object = None) -> None:
+    def __init__(self, title: str, content: str = None, *, button_1, button_2 = None) -> None:
         super().__init__(title, 'modal')
         self.content: str = content
-        self.button_1: object = button_1
-        self.button_2: object = button_2
+        self.button_1 = button_1
+        self.button_2 = button_2
         
     def to_dict(self) -> dict:
         return {

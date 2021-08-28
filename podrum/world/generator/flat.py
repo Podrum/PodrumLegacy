@@ -20,9 +20,9 @@ class flat:
     generator_name: str = "flat"
     
     @staticmethod
-    def generate(chunk_x: int, chunk_z: int, world: object) -> object:
-        result: object = chunk(chunk_x, chunk_z)
-        spawn_position: object = world.get_spawn_position()
+    def generate(chunk_x: int, chunk_z: int, world) -> object:
+        result = chunk(chunk_x, chunk_z)
+        spawn_position = world.get_spawn_position()
 
         for x in range(16):
             for z in range(16):

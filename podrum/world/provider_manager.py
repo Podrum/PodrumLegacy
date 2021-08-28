@@ -20,7 +20,7 @@ class provider_manager:
     # [register_provider]
     # :return: = None
     # Registers a level provider
-    def register_provider(self, provider: object) -> None:
+    def register_provider(self, provider) -> None:
         self.providers[provider.provider_name] = provider
     
     # [get_provider]

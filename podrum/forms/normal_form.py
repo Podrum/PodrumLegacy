@@ -21,7 +21,7 @@ class normal_form(form):
         self.content: str = content
         self.buttons: list = []
         
-    def add_button(self, item: object) -> None:
+    def add_button(self, item) -> None:
         self.buttons.append(item)
         
     def remove_button(self, index: int) -> object:
