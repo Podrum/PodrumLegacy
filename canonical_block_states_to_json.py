@@ -17,6 +17,7 @@ import json
 
 with open("canonical_block_states.nbt", "rb") as f:
     stream = nbt_net_le_binary_stream(f.read())
+    f.close()
 
 block_states: list = []
 
@@ -45,3 +46,4 @@ while not stream.feos():
 
 with open("canonical_block_states.json", "w") as f:
     json.dump(block_states, f, indent=4)
+    f.close()
