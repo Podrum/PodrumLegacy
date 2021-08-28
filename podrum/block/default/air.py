@@ -12,10 +12,10 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 
 
-class air(block):
+class Air(Block):
 
     def __init__(self) -> None:
         super().__init__("minecraft:air", 0, 0, 0, "minecraft:air")

@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class blue_glazed_terracotta(block):
+class BlueGlazedTerracotta(Block):
     def __init__(self) -> None:
         super().__init__(
             "minecraft:blue_glazed_terracotta",

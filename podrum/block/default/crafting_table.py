@@ -13,11 +13,11 @@ r"""
 """
 
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class crafting_table(block):
+class CraftingTable(Block):
     def __init__(self) -> None:
         super().__init__(
             "minecraft:crafting_table", 0, 2.5, 2.5, "minecraft:crafting_table"

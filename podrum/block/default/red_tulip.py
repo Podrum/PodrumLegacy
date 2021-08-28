@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class red_tulip(block):
+class RedTulip(Block):
     def __init__(self) -> None:
         super().__init__(
             "minecraft:red_flower", 4, 0, 0, "minecraft:red_flower"

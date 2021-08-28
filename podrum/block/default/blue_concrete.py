@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class blue_concrete(block):
+class BlueConcrete(Block):
     def __init__(self) -> None:
         super().__init__(
             "minecraft:concrete", 11, 1.8, 1.8, "minecraft:concrete"

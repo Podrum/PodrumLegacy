@@ -34,7 +34,7 @@ class block_map:
 
             previous_state_name: str = state["name"]
             block_map.states_2[runtime_id] = (state["name"], meta)
-            block_map.states_1[f"""{state["name"]} {meta}"""] = runtime_id           
+            block_map.states_1[f"""{state["name"]} {meta}"""] = runtime_id
     
     @staticmethod
     def get_runtime_id(block_name: str, meta: int) -> int:

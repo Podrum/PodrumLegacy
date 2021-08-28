@@ -13,11 +13,11 @@ r"""
 """
 
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class cobblestone(block):
+class Cobblestone(Block):
     def __init__(self) -> None:
         super().__init__(
             "minecraft:cobblestone", 0, 2, 6, "minecraft:cobblestone"

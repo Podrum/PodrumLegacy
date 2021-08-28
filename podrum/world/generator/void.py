@@ -28,7 +28,7 @@ class void:
             for x in range(16):
                 for z in range(16):
                     result.set_block_runtime_id(
-                        x, 0, z, blocks.stone().runtime_id
+                        x, 0, z, blocks.Stone().runtime_id
                     )
 
             spawn_position.y = 1

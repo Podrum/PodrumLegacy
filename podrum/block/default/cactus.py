@@ -13,11 +13,11 @@ r"""
 """
 
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class cactus(block):
+class Cactus(Block):
 
     def __init__(self) -> None:
         super().__init__("minecraft:cactus", 0, 0.4, 0.4, "minecraft:cactus")

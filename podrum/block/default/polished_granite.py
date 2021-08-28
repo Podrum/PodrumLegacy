@@ -13,11 +13,11 @@ r"""
 """
 
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class polished_granite(block):
+class PolishedGranite(Block):
 
     def __init__(self) -> None:
         super().__init__("minecraft:stone", 2, 3, 3, "minecraft:stone")

@@ -19,7 +19,7 @@ except Exception as e:
     has_chunk_utils: bool = False
 
 import math
-from podrum.block.default.air import air
+from podrum.block.default.air import Air
 
 
 class block_storage:
@@ -28,7 +28,7 @@ class block_storage:
         if palette:
             self.palette: list = palette
         else:
-            self.palette: list = [air().runtime_id]
+            self.palette: list = [Air().runtime_id]
         if len(blocks) == 4096:
             self.blocks: list = blocks
         else:
@@ -66,7 +66,7 @@ class block_storage:
             palette_index: int = self.blocks[index]
             runtime_id: int = self.palette[palette_index]
 
-            if runtime_id != air().runtime_id:
+            if runtime_id != Air().runtime_id:
                 return y
 
         return -1

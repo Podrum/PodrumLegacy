@@ -26,10 +26,10 @@ class flat:
 
         for x in range(16):
             for z in range(16):
-                result.set_block_runtime_id(x, 0, z, blocks.bedrock().runtime_id)
-                result.set_block_runtime_id(x, 1, z, blocks.dirt().runtime_id)
-                result.set_block_runtime_id(x, 2, z, blocks.dirt().runtime_id)
-                result.set_block_runtime_id(x, 3, z, blocks.grass().runtime_id)
+                result.set_block_runtime_id(x, 0, z, blocks.Bedrock().runtime_id)
+                result.set_block_runtime_id(x, 1, z, blocks.Dirt().runtime_id)
+                result.set_block_runtime_id(x, 2, z, blocks.Dirt().runtime_id)
+                result.set_block_runtime_id(x, 3, z, blocks.Grass().runtime_id)
 
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 4
