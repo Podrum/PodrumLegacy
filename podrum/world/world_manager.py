@@ -18,8 +18,8 @@ from podrum.task.immediate_task import immediate_task
 
 
 class world_manager:
-    def __init__(self, server: object) -> None:
-        self.server: object = server
+    def __init__(self, server) -> None:
+        self.server = server
         self.worlds: dict = {}
         self.path_to_world_name = {}
     
@@ -36,7 +36,7 @@ class world_manager:
         if len(worlds_path) < 1:
             worlds_path: str = self.get_default_world_path()
         world_path: str = os.path.join(worlds_path, world_folder_name)
-        world_obj: object = world(
+        world_obj = world(
             self.server.managers.provider_manager.get_provider(
                 self.server.config.data["world_provider"]
             )
@@ -78,7 +78,7 @@ class world_manager:
     def unload_all(self) -> None:
         tasks: list = []
         for world_name in dict(self.worlds):
-            unload_task: object = immediate_task(self.unload_world, [world_name])
+            unload_task = immediate_task(self.unload_world, [world_name])
             unload_task.start()
             tasks.append(unload_task)
         for task in tasks:

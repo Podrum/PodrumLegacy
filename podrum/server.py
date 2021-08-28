@@ -94,9 +94,9 @@ class server:
             os.mkdir(worlds_path)
 
         self.world_manager.load_world(self.config.data["world_name"])
-        self.world: object = self.world_manager.get_world_from_folder_name(self.config.data["world_name"])
+        self.world = self.world_manager.get_world_from_folder_name(self.config.data["world_name"])
         self.rak_net_interface.start_interface()
-        self.console_input_task: object = repeating_task(self.console_input)
+        self.console_input_task = repeating_task(self.console_input)
         self.console_input_task.start()
 
         finish_time: float = time.time()
@@ -116,7 +116,7 @@ class server:
         except KeyboardInterrupt:
             self.stop()
             
-    def dispatch_command(self, user_input: str, sender: object) -> None:
+    def dispatch_command(self, user_input: str, sender) -> None:
         if len(user_input) <= 0:
             return
 

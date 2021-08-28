@@ -23,16 +23,16 @@ class default:
     generator_name: str = "default"
 
     @staticmethod
-    def generate(chunk_x: int, chunk_z: int, world: object) -> object:
-        result: object = chunk(chunk_x, chunk_z)
-        spawn_position: object = world.get_spawn_position()
+    def generate(chunk_x: int, chunk_z: int, world) -> object:
+        result = chunk(chunk_x, chunk_z)
+        spawn_position = world.get_spawn_position()
 
         # Default: 62, Reduced to 20 for faster load time
         sea_level: int = 62
         chunk_type: str = "normal"
 
         # generates perlin noise
-        perlin: object = Perlin(seed=world.server.config.data["seed"])
+        perlin = Perlin(seed=world.server.config.data["seed"])
 
         # chunk generation
         for x in range(16):
@@ -46,18 +46,18 @@ class default:
                     x,
                     sea_level + y,
                     z,
-                    blocks.grass().runtime_id
+                    blocks.Grass().runtime_id
                     if chunk_type != "water"
-                    else blocks.sand().runtime_id,
+                    else blocks.Sand().runtime_id,
                 )
 
                 # decorate land
                 if chunk_type != "water" and random.uniform(0, 1) > 0.85:
                     block_list = random.choices(
-                        [blocks.yellow_flower().runtime_id,
-                         blocks.tallgrass().runtime_id,
-                         blocks.fern().runtime_id,
-                         blocks.poppy().runtime_id,
+                        [blocks.YellowFlower().runtime_id,
+                         blocks.TallGrass().runtime_id,
+                         blocks.Fern().runtime_id,
+                         blocks.Poppy().runtime_id,
                          None],
                         weights=(1, 3, 1, 2, 3), k=10
                     )
@@ -72,34 +72,34 @@ class default:
                 # fills in gaps underneath grass
                 for i in range(sea_level + y + 1):
                     if (sea_level + (y - i)) == 0:
-                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.bedrock().runtime_id)
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.Bedrock().runtime_id)
 
                     elif (sea_level + (y - i)) <= 2:
-                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.bedrock().runtime_id, blocks.deepslate().runtime_id]))
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.Bedrock().runtime_id, blocks.Deepslate().runtime_id]))
 
                     elif (sea_level + (y - i)) <= 4:
-                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.deepslate().runtime_id)
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, blocks.Deepslate().runtime_id)
 
                     elif (sea_level + (y - i)) <= 6:
-                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.stone().runtime_id, blocks.deepslate().runtime_id]))
+                        result.set_block_runtime_id(x, (sea_level + (y - i)), z, random.choice([blocks.Stone().runtime_id, blocks.Deepslate().runtime_id]))
 
                     elif i <= 2:
                         result.set_block_runtime_id(
                             x,
                             (sea_level + (y - i)) - 1,
                             z,
-                            blocks.dirt().runtime_id
+                            blocks.Dirt().runtime_id
                             if chunk_type != "water"
-                            else blocks.sand().runtime_id,
+                            else blocks.Sand().runtime_id,
                         )
 
                     else:
-                        result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, blocks.stone().runtime_id)
+                        result.set_block_runtime_id(x, (sea_level + (y - i)) - 1, z, blocks.Stone().runtime_id)
 
                 # fills in water to sea level
                 if sea_level + y <= sea_level:
                     for i in range(sea_level - (sea_level + y)):
-                        result.set_block_runtime_id(x, sea_level + y + i + 1, z, blocks.still_water().runtime_id)
+                        result.set_block_runtime_id(x, sea_level + y + i + 1, z, blocks.StillWater().runtime_id)
 
         if chunk_x == spawn_position.x >> 4 and chunk_z == spawn_position.z:
             spawn_position.y = 256

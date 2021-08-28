@@ -30,7 +30,7 @@ from podrum.protocol.mcbe.type.transaction_type import transaction_type
 
 class mcbe_binary_stream(binary_stream):
     def read_uuid(self) -> str:
-        stream: object = binary_stream()
+        stream = binary_stream()
         for _ in range(4):
             stream.write_int_be(self.read_int_le())
         return b"-".join([
@@ -42,7 +42,7 @@ class mcbe_binary_stream(binary_stream):
         ]).decode()
     
     def write_uuid(self, uuid: str) -> None:
-        stream: object = binary_stream(binascii.unhexlify(uuid.replace("-", "")))
+        stream = binary_stream(binascii.unhexlify(uuid.replace("-", "")))
         for _ in range(4):
             self.write_int_le(stream.read_int_be())
     
@@ -248,24 +248,24 @@ class mcbe_binary_stream(binary_stream):
             self.write_bool(item_state["component_based"])
 
     def read_net_le_tag(self) -> object:
-        stream: object = nbt_net_le_binary_stream(self.data, self.pos)
-        tag: object = stream.read_root_tag()
+        stream = nbt_net_le_binary_stream(self.data, self.pos)
+        tag = stream.read_root_tag()
         self.pos = stream.pos
         return tag
     
-    def write_net_le_tag(self, value: object) -> None:
-        stream: object = nbt_net_le_binary_stream()
+    def write_net_le_tag(self, value) -> None:
+        stream = nbt_net_le_binary_stream()
         stream.write_root_tag(value)
         self.write(stream.data)
         
     def read_le_tag(self) -> object:
-        stream: object = nbt_le_binary_stream(self.data, self.pos)
-        tag: object = stream.read_root_tag()
+        stream = nbt_le_binary_stream(self.data, self.pos)
+        tag = stream.read_root_tag()
         self.pos = stream.pos
         return tag
     
-    def write_le_tag(self, value: object) -> None:
-        stream: object = nbt_le_binary_stream()
+    def write_le_tag(self, value) -> None:
+        stream = nbt_le_binary_stream()
         stream.write_root_tag(value)
         self.write(stream.data)
 
@@ -361,7 +361,7 @@ class mcbe_binary_stream(binary_stream):
             result["count"] = self.read_unsigned_short_le()
             result["metadata"] = self.read_var_int()
             result["block_runtime_id"] = self.read_signed_var_int()
-            stream: object = mcbe_binary_stream(self.read_byte_array())
+            stream = mcbe_binary_stream(self.read_byte_array())
 
             if item_map.runtime_id_to_name(result["network_id"]) == "minecraft:shield":
                 result["extra"] = stream.read_item_extra_data_with_blocking_tick()
@@ -376,7 +376,7 @@ class mcbe_binary_stream(binary_stream):
             self.write_unsigned_short_le(value["count"])
             self.write_var_int(value["metadata"])
             self.write_signed_var_int(value["block_runtime_id"])
-            stream: object = mcbe_binary_stream()
+            stream = mcbe_binary_stream()
 
             if item_map.runtime_id_to_name(value["network_id"]) == "minecraft:shield":
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
@@ -398,7 +398,7 @@ class mcbe_binary_stream(binary_stream):
                 result["stack_id"] = self.read_signed_var_int()
 
             result["block_runtime_id"] = self.read_signed_var_int()
-            stream: object = mcbe_binary_stream(self.read_byte_array())
+            stream = mcbe_binary_stream(self.read_byte_array())
 
             if item_map.runtime_id_to_name(result["network_id"]) == "minecraft:shield":
                 result["extra"] = stream.read_item_extra_data_with_blocking_tick()
@@ -416,7 +416,7 @@ class mcbe_binary_stream(binary_stream):
                 self.write_signed_var_int(value["stack_id"])
 
             self.write_signed_var_int(value["block_runtime_id"])
-            stream: object = mcbe_binary_stream()
+            stream = mcbe_binary_stream()
 
             if item_map.runtime_id_to_name(value["network_id"]) == "minecraft:shield":
                 stream.write_item_extra_data_with_blocking_tick(value["extra"])
@@ -432,7 +432,7 @@ class mcbe_binary_stream(binary_stream):
             self.read_signed_var_int()
         )
     
-    def write_vector_3_int(self, value: object) -> None:
+    def write_vector_3_int(self, value) -> None:
         self.write_signed_var_int(value.x)
         self.write_signed_var_int(value.y)
         self.write_signed_var_int(value.z)
@@ -444,7 +444,7 @@ class mcbe_binary_stream(binary_stream):
             self.read_var_int()
         )
     
-    def write_vector_3_unsigned_int(self, value: object) -> None:
+    def write_vector_3_unsigned_int(self, value) -> None:
         self.write_var_int(value.x)
         self.write_var_int(value.y)
         self.write_var_int(value.z)
@@ -456,7 +456,7 @@ class mcbe_binary_stream(binary_stream):
             self.read_float_le()
         )
     
-    def write_vector_3_float(self, value: object) -> None:
+    def write_vector_3_float(self, value) -> None:
         self.write_float_le(value.x)
         self.write_float_le(value.y)
         self.write_float_le(value.z)
@@ -467,7 +467,7 @@ class mcbe_binary_stream(binary_stream):
             self.read_float_le()
         )
     
-    def write_vector_2_float(self, value: object) -> None:
+    def write_vector_2_float(self, value) -> None:
         self.write_float_le(value.x)
         self.write_float_le(value.z)
         
@@ -591,7 +591,7 @@ class mcbe_binary_stream(binary_stream):
             float(self.read_signed_var_int())
         )
     
-    def write_block_coordinates(self, value: object) -> None:
+    def write_block_coordinates(self, value) -> None:
         self.write_signed_var_int(int(value.x))
         self.write_var_int(int(value.y))
         self.write_signed_var_int(int(value.z))

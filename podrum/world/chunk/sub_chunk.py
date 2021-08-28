@@ -35,7 +35,7 @@ class sub_chunk:
     def is_empty(self) -> bool:
         return all(storage.is_empty() for storage in self.block_storages)
 
-    def network_deserialize(self, stream: object) -> None:
+    def network_deserialize(self, stream) -> None:
         version: int = stream.read_unsigned_byte()
         if version != 8:
             raise Exception("Unsupported SubChunk version.")
@@ -43,11 +43,11 @@ class sub_chunk:
         self.block_storages: dict = {}
 
         for i in range(stream.read_unsigned_byte()):
-            storage: object = block_storage()
+            storage = block_storage()
             storage.network_deserialize(stream)
             self.block_storages[i] = storage
     
-    def network_serialize(self, stream: object) -> None:
+    def network_serialize(self, stream) -> None:
         stream.write_unsigned_byte(8)
         stream.write_unsigned_byte(len(self.block_storages))
         for storage in self.block_storages:

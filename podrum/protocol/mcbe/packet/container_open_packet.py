@@ -24,7 +24,7 @@ class container_open_packet(mcbe_packet):
     def decode_payload(self) -> None:
         self.window_id: int = self.read_byte()
         self.window_type: int = self.read_byte()
-        self.coordinates: object = self.read_block_coordinates()
+        self.coordinates = self.read_block_coordinates()
         self.runtime_entity_id: int = self.read_signed_var_long()
         
     def encode_payload(self) -> None:

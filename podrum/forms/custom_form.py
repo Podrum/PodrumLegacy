@@ -20,7 +20,7 @@ class custom_form(form):
         super().__init__(title, 'custom_form')
         self.content: list = []
         
-    def add_entry(self, item: object) -> None:
+    def add_entry(self, item) -> None:
         self.content.append(item)
         
     def remove_entry(self, index) -> object:

@@ -13,11 +13,11 @@ r"""
 """
 
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class prismarine(block):
+class Prismarine(Block):
 
     def __init__(self) -> None:
         super().__init__(

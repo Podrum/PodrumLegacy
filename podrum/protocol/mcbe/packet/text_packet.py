@@ -49,7 +49,7 @@ class text_packet(mcbe_packet):
             self.parameters: list = []
             for _ in range(self.read_var_int()):
                 self.parameters.append(self.read_string())
-        self.xuid: str = self.read_string()
+        self.x_uid: str = self.read_string()
         self.platform_chat_id: str = self.read_string()
  
     def encode_payload(self) -> None:
@@ -80,5 +80,5 @@ class text_packet(mcbe_packet):
             for parameter in self.parameters:
                 self.write_string(parameter)
 
-        self.write_string(self.xuid)
+        self.write_string(self.x_uid)
         self.write_string(self.platform_chat_id)

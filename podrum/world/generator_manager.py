@@ -21,7 +21,7 @@ class generator_manager:
     # [register_generator]
     # :return: = None
     # registers a generator
-    def register_generator(self, generator: object) -> None:
+    def register_generator(self, generator) -> None:
         self.generators[generator.generator_name] = generator
     
     # [get_generator]

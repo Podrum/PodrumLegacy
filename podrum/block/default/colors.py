@@ -13,7 +13,7 @@ r"""
 """
 
 
-class colors:
+class Colors:
 
     def __init__(self, color="white"):
         color = (str(color).lower()).replace(" ", "_")

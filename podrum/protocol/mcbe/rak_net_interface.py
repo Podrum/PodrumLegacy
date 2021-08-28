@@ -22,10 +22,10 @@ from threading import Thread
 
 
 class rak_net_interface(Thread):
-    def __init__(self, server: object) -> None:
+    def __init__(self, server) -> None:
         super().__init__()
-        self.server: object = server
-        self.rak_net_server: object = rak_net_server(server.config.data["ip_address"]["hostname"], server.config.data["ip_address"]["port"])
+        self.server = server
+        self.rak_net_server = rak_net_server(server.config.data["ip_address"]["hostname"], server.config.data["ip_address"]["port"])
         self.rak_net_server.interface = self
         self.set_status(server.config.data["motd"], 0, server.config.data["max_players"])
 
@@ -79,10 +79,10 @@ class rak_net_interface(Thread):
     # :return: = None
     # Handles the game packets and passes
     # them decoded to the player's handler.
-    def on_frame(self, packet: object, connection: object) -> None:
+    def on_frame(self, packet, connection) -> None:
         if connection.address.token in self.server.players:
             if packet.body[0] == 0xfe:
-                new_packet: object = game_packet(packet.body)
+                new_packet = game_packet(packet.body)
                 new_packet.decode()
                 packets: list = new_packet.read_packets_data()
                 for batch in packets:
@@ -92,7 +92,7 @@ class rak_net_interface(Thread):
     # :return: = None
     # Adds the player when he logs in
     # and sets the default values to him.
-    def on_new_incoming_connection(self, connection: object) -> None:
+    def on_new_incoming_connection(self, connection) -> None:
         self.server.players[connection.address.token] = mcbe_player(connection, self.server, self.server.current_entity_id)
         max_float: float = 3.4028234663852886e+38
         self.server.players[connection.address.token].attributes = [
@@ -129,8 +129,8 @@ class rak_net_interface(Thread):
     # [on_disconnect]
     # :return: = None
     # Handles when a player disconnects.   
-    def on_disconnect(self, connection: object) -> None:
-        quit_event: object = player_quit_event(self.server.players[connection.address.token])
+    def on_disconnect(self, connection) -> None:
+        quit_event = player_quit_event(self.server.players[connection.address.token])
         quit_event.call()
         del self.server.players[connection.address.token]
         self.set_count(len(self.server.players))

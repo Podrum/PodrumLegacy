@@ -50,7 +50,7 @@ class region:
         return 4 * ((x & 31) + (z & 31) * 32)
 
     def get_chunk_data(self, x: int, z: int) -> bytes:
-        file: object = open(self.path, "rb")
+        file = open(self.path, "rb")
         index_location: int = region.get_location(x, z)
         file.seek(index_location)
         offset: int = binary_converter.read_unsigned_triad_be(file.read(3))

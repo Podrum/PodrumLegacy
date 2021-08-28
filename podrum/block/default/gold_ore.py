@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class gold_ore(block):
+class GoldOre(Block):
 
     def __init__(self) -> None:
         super().__init__("minecraft:gold_ore", 0, 3, 3, "minecraft:gold_ore")

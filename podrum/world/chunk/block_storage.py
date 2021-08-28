@@ -19,7 +19,7 @@ except Exception as e:
     has_chunk_utils: bool = False
 
 import math
-from podrum.block.default.air import air
+from podrum.block.default.air import Air
 
 
 class block_storage:
@@ -28,7 +28,7 @@ class block_storage:
         if palette:
             self.palette: list = palette
         else:
-            self.palette: list = [air().runtime_id]
+            self.palette: list = [Air().runtime_id]
         if len(blocks) == 4096:
             self.blocks: list = blocks
         else:
@@ -66,12 +66,12 @@ class block_storage:
             palette_index: int = self.blocks[index]
             runtime_id: int = self.palette[palette_index]
 
-            if runtime_id != air().runtime_id:
+            if runtime_id != Air().runtime_id:
                 return y
 
         return -1
     
-    def network_deserialize(self, stream: object) -> None:
+    def network_deserialize(self, stream) -> None:
         bits_per_block: int = self.read_unsigned_byte() >> 1
         blocks_per_word: int = math.floor(32 / bits_per_block)
         words_per_chunk: int = math.ceil(4096 / blocks_per_word)
@@ -91,7 +91,7 @@ class block_storage:
         for _ in range(self.read_signed_var_int()):
             self.palette.append(self.read_signed_var_int())
 
-    def network_serialize(self, stream: object) -> None:
+    def network_serialize(self, stream) -> None:
         if not has_chunk_utils:
             bits_per_block: int = math.ceil(math.log2(len(self.palette)))
 

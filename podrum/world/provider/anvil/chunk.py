@@ -91,7 +91,7 @@ class chunk:
         
     def get_highest_block_at(self, x: int, z: int) -> int:
         for i in range(len(self.sections) - 1, -1, -1):
-            section_to_check: object = self.sections[i]
+            section_to_check = self.sections[i]
             index: int = section_to_check.get_highest_block_at(x & 0x0f, z & 0x0f)
 
             if index != -1:
@@ -106,7 +106,7 @@ class chunk:
                 self.height_map[(x << 4) + z] = (((y >> 7) * 128) ^ y) - ((y >> 7) * 128)
                     
     def nbt_serialize(self) -> bytes:
-        stream: object = nbt_be_binary_stream()
+        stream = nbt_be_binary_stream()
         self.recalculate_height_map()
         sections: list = list_tag("Sections", [], tag_ids.compound_tag)
 
@@ -118,7 +118,7 @@ class chunk:
                 byte_array_tag("SkyLight", sect.sky_light_entries)
             ]))
 
-        root_tag: object = compound_tag("", [
+        root_tag = compound_tag("", [
             compound_tag("Level", [
                 int_tag("xPos", self.x),
                 int_tag("zPos", self.z),
@@ -141,7 +141,7 @@ class chunk:
     
     def nbt_deserialize(self, data: bytes) -> None:
         stream = nbt_be_binary_stream(data)
-        root_tag: object = stream.read_root_tag()
+        root_tag = stream.read_root_tag()
 
         if not isinstance(root_tag, compound_tag):
             raise Exception("Invalid NBT data!")
@@ -149,7 +149,7 @@ class chunk:
         if not root_tag.has_tag("Level"):
             raise Exception("Level tag isnt present!")
 
-        level_tag: object = root_tag.get_tag("Level")
+        level_tag = root_tag.get_tag("Level")
         self.x: int = level_tag.get_tag("xPos").value
         self.z: int = level_tag.get_tag("zPos").value
         self.terrain_populated: bool = level_tag.get_tag("TerrainPopulated").value > 0
@@ -160,7 +160,7 @@ class chunk:
         else:
             self.light_populated: bool = False
 
-        sections_tag: object = level_tag.get_tag("Sections")
+        sections_tag = level_tag.get_tag("Sections")
 
         for section_tag in sections_tag.value:
             self.sections[section_tag.get_tag("Y").value] = section(

@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class coal_ore(block):
+class CoalOre(Block):
     def __init__(self) -> None:
         super().__init__("minecraft:coal_ore", 0, 3, 3, "minecraft:coal_ore")
         self.stack_size: int = 64

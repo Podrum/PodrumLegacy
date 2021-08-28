@@ -35,13 +35,13 @@ from podrum.protocol.mcbe.packet.game_packet import game_packet
 class mcbe_player:
 
     def __init__(
-            self, connection: object, server: object, entity_id: int
+            self, connection, server, entity_id: int
     ) -> None:
-        self.connection: object = connection
-        self.server: object = server
+        self.connection = connection
+        self.server = server
         self.entity_id: int = entity_id
-        self.world: object = server.world
-        self.metadata_storage: object = metadata_storage()
+        self.world = server.world
+        self.metadata_storage = metadata_storage()
         self.attributes: list = []
         self.message_format: str = "<%username> %message"
         
@@ -49,10 +49,10 @@ class mcbe_player:
         if not self.world.has_player(self.identity):
             self.world.create_player(self.identity)
 
-        self.position: object = self.world.get_player_position(self.identity)
+        self.position = self.world.get_player_position(self.identity)
         self.position.y += 1
         self.gamemode: int = 1
-        packet: object = packets.start_game_packet()
+        packet = packets.start_game_packet()
         packet.entity_id = self.entity_id
         packet.entity_runtime_id = self.entity_id
         packet.player_gamemode = 1
@@ -66,7 +66,7 @@ class mcbe_player:
         packet.world_gamemode = self.world.get_world_gamemode()
         packet.difficulty = self.server.config.data["difficulty"]
         packet.world_spawn = vector_3(0, 4.0, 0)
-        packet.disable_achivements = False
+        packet.disable_achievements = False
         packet.time = 0
         packet.edu_offer = 0
         packet.edu_features = False
@@ -98,7 +98,7 @@ class mcbe_player:
         packet.limited_world_width = 0
         packet.limited_world_height = 0
         packet.new_nether = False
-        packet.experimental_gamplay = False
+        packet.experimental_gameplay = False
         packet.level_id = ""
         packet.world_name = self.world.get_world_name()
         packet.premium_world_template_id = ""
@@ -116,12 +116,12 @@ class mcbe_player:
         self.send_packet(packet.data)
         
     def send_item_component_packet(self) -> None:
-        packet: object = packets.item_component_packet()
+        packet = packets.item_component_packet()
         packet.encode()
         self.send_packet(packet.data)
         
     def send_creative_content_packet(self) -> None:
-        packet: object = packets.creative_content_packet()
+        packet = packets.creative_content_packet()
         packet.entries = []
         entry_id: int = 1
         for creative_item in creative_items:
@@ -129,48 +129,54 @@ class mcbe_player:
             name: str = item_map.runtime_id_to_name(creative_item['id'])
 
             if f"{name} {damage}" in self.server.managers.item_manager.items:
-                item_obj: object = self.server.managers.item_manager.items[f"{name} {damage}"]
+                item_obj = self.server.managers.item_manager.items[f"{name} {damage}"]
             else:
-                item_obj: object = item(name, creative_item["id"], damage)
+                item_obj = item(name, creative_item["id"], damage)
 
             packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
             entry_id += 1
+
         packet.encode()
         self.send_packet(packet.data)
              
     def send_biome_definition_list_packet(self) -> None:
-        packet: object = packets.biome_definition_list_packet()
+        packet = packets.biome_definition_list_packet()
         packet.encode()
         self.send_packet(packet.data)
         
     def send_available_entity_identifiers_packet(self) -> None:
-        packet: object = packets.available_entity_identifiers_packet()
+        packet = packets.available_entity_identifiers_packet()
         packet.encode()
         self.send_packet(packet.data)
 
     def handle_login_packet(self, data: bytes) -> None:
-        packet: object = packets.login_packet(data)
+        packet = packets.login_packet(data)
         packet.decode()
 
         for chain in packet.chain_data:
             if "identityPublicKey" in chain:
                 self.identity_public_key: str = chain["identityPublicKey"]
+
             if "extraData" in chain:
-                self.xuid: str = chain["extraData"]["XUID"]
+                self.x_uid: str = chain["extraData"]["XUID"]
                 self.username: str = chain["extraData"]["displayName"]
                 self.identity: str = chain["extraData"]["identity"]
 
         self.send_play_status(types.login_status_type.success)
-        packet: object = packets.resource_packs_info_packet()
+        packet = packets.resource_packs_info_packet()
         packet.forced_to_accept = False
         packet.scripting_enabled = False
         packet.behavior_pack_infos = []
         packet.texture_pack_infos = []
         packet.force_server_resource_packs = False
         packet.encode()
+
         self.send_packet(packet.data)
         self.spawned: bool = False
-        self.server.logger.info(f"{self.username} logged in with uuid {self.identity}.")
+
+        self.server.logger.info(
+            f"{self.username} logged in with uuid {self.identity}."
+        )
 
     def disconnect(
             self,
@@ -178,21 +184,21 @@ class mcbe_player:
             *,
             hide_disconnect_screen: bool = False
     ) -> None:
-        packet: object = packets.disconnect_packet()
+        packet = packets.disconnect_packet()
         packet.message = message
         packet.hide_disconnect_screen = hide_disconnect_screen
         packet.encode()
         self.send_packet(packet.data)
         
     def transfer(self, address: str, port: int = 19132) -> None:
-        packet: object = packets.transfer_packet()
+        packet = packets.transfer_packet()
         packet.address = address
         packet.port = port
         packet.encode()
         self.send_packet(packet.data)
 
-    def send_form(self, form_id: int, form: object) -> None:
-        packet: object = packets.modal_form_request_packet()
+    def send_form(self, form_id: int, form) -> None:
+        packet = packets.modal_form_request_packet()
         packet.form_id = form_id
         data = form.to_dict()
         packet.form_data = json.dumps(data)
@@ -200,17 +206,17 @@ class mcbe_player:
         self.send_packet(packet.data) 
 
     def handle_modal_form_response_packet(self, data: bytes):
-        packet: object = packets.modal_form_response_packet(data)
+        packet = packets.modal_form_response_packet(data)
         packet.decode()
         data = json.loads(packet.form_data)
-        form_event: object = events.player_form_response_event(packet.form_id, data, self)
+        form_event = events.player_form_response_event(packet.form_id, data, self)
         form_event.call()
 
     def handle_resource_pack_client_response_packet(self, data: bytes) -> None:
-        packet: object = packets.resource_pack_client_response_packet(data)
+        packet = packets.resource_pack_client_response_packet(data)
         packet.decode()
         if packet.status == types.resource_pack_client_response_type.none:
-            packet: object = packets.resource_pack_stack_packet()
+            packet = packets.resource_pack_stack_packet()
             packet.forced_to_accept = False
             packet.behavior_pack_id_versions = []
             packet.texture_pack_id_versions = []
@@ -220,7 +226,7 @@ class mcbe_player:
             packet.encode()
             self.send_packet(packet.data)
         elif packet.status == types.resource_pack_client_response_type.has_all_packs:
-            packet: object = packets.resource_pack_stack_packet()
+            packet = packets.resource_pack_stack_packet()
             packet.forced_to_accept = False
             packet.behavior_pack_id_versions = []
             packet.texture_pack_id_versions = []
@@ -241,7 +247,7 @@ class mcbe_player:
             self.send_available_entity_identifiers_packet()
             
     def handle_packet_violation_warning_packet(self, data: bytes) -> None:
-        packet: object = packets.packet_violation_warning_packet(data)
+        packet = packets.packet_violation_warning_packet(data)
         packet.decode()
         if packet.type == 0:
             error_message: str = ""
@@ -259,11 +265,14 @@ class mcbe_player:
                 self.server.logger.error(packet.message)
                 
     def handle_request_chunk_radius_packet(self, data: bytes) -> None:
-        packet: object = packets.request_chunk_radius_packet(data)
+        packet = packets.request_chunk_radius_packet(data)
         packet.decode()
 
-        self.view_distance: int = min(self.server.config.data["max_view_distance"], packet.chunk_radius)
-        new_packet: object = packets.chunk_radius_updated_packet()
+        self.view_distance: int = min(
+            self.server.config.data["max_view_distance"], packet.chunk_radius
+        )
+
+        new_packet = packets.chunk_radius_updated_packet()
         new_packet.chunk_radius = self.view_distance
         new_packet.encode()
         self.send_packet(new_packet.data)
@@ -272,44 +281,49 @@ class mcbe_player:
             Thread(target=self.send_chunks, args=[True]).start()
                 
     def handle_move_player_packet(self, data: bytes):
-        packet: object = packets.move_player_packet(data)
+        packet = packets.move_player_packet(data)
         packet.decode()
 
-        if math.floor(self.position.x) >> 4 != math.floor(packet.position.x) >> 4 or math.floor(self.position.z) >> 4 != math.floor(packet.position.z) >> 4:
+        if (
+            math.floor(self.position.x) >> 4 != math.floor(packet.position.x) >> 4
+            or math.floor(self.position.z) >> 4 != math.floor(packet.position.z) >> 4
+        ):
             Thread(target=self.send_chunks).start()
 
-        move_event: object = events.player_move_event(self, self.position)
+        move_event = events.player_move_event(self, self.position)
         move_event.call()
 
         if not move_event.canceled:
-            self.position: object = packet.position
+            self.position = packet.position
 
-    def handle_player_action_packet(self, data: bytes): # probably not cancelable
-        packet: object = packets.player_action_packet(data)
+    def handle_player_action_packet(self, data: bytes):
+        # probably not cancelable
+        packet = packets.player_action_packet(data)
         packet.decode()
+
         if packet.action == types.action_type.start_sneak:
-            sneak_event: object = events.player_sneak_event(
+            sneak_event = events.player_sneak_event(
                 self, packet.action != types.action_type.stop_sneak
             )
 
             sneak_event.call()
         elif packet.action == types.action_type.stop_sneak:
-            sneak_event: object = events.player_sneak_event(
+            sneak_event = events.player_sneak_event(
                 self, packet.action != types.action_type.stop_sneak
             )
 
             sneak_event.call()
         elif packet.action in [types.action_type.start_sprint, types.action_type.stop_sprint]:
-            sprint_event: object = events.player_sprint_event(
+            sprint_event = events.player_sprint_event(
                 self, packet.action != types.action_type.stop_sprint
             )
 
             sprint_event.call()
         elif packet.action == types.action_type.jump:
-            jump_event: object = events.player_jump_event(self)
+            jump_event = events.player_jump_event(self)
             jump_event.call()
         elif packet.action == types.action_type.start_sleeping:
-            start_sleeping_event: object = events.player_start_sleeping_event(self)
+            start_sleeping_event = events.player_start_sleeping_event(self)
             start_sleeping_event.call()
         elif packet.action == types.action_type.start_break:
             self._extracted_from_handle_player_action_packet_17(packet)
@@ -317,7 +331,7 @@ class mcbe_player:
             self._extracted_from_handle_player_action_packet_25(packet)
 
     def _extracted_from_handle_player_action_packet_25(self, packet):
-        new_packet: object = packets.level_event_packet()
+        new_packet = packets.level_event_packet()
         new_packet.event_id = types.level_event_type.block_stop_break
         new_packet.position = packet.position
         new_packet.packet_data = 0
@@ -325,46 +339,56 @@ class mcbe_player:
         self.server.broadcast_packet(self.world, new_packet)
 
     def _extracted_from_handle_player_action_packet_17(self, packet):
-        break_time = math.ceil(self.world.get_block(packet.position.x, packet.position.y, packet.position.z).hardness * 1.5 * 20)
-        new_packet: object = packets.level_event_packet()
+        break_time = math.ceil(
+            self.world.get_block(
+                packet.position.x, packet.position.y, packet.position.z
+            ).hardness * 1.5 * 20
+        )
+
+        new_packet = packets.level_event_packet()
         new_packet.event_id = types.level_event_type.block_start_break
         new_packet.position = packet.position
         new_packet.packet_data = int(65535/break_time)
         new_packet.encode()
         self.server.broadcast_packet(self.world, new_packet)
 
-    def send_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
-        new_packet: object = packets.text_packet()
+    def send_message(
+            self,
+            message: str,
+            x_uid: str = "",
+            needs_translation: bool = False
+    ) -> None:
+        new_packet = packets.text_packet()
         new_packet.type = types.text_type.raw
         new_packet.needs_translation = needs_translation
         new_packet.message = message
-        new_packet.xuid = xuid
+        new_packet.x_uid = x_uid
         new_packet.platform_chat_id = ""
         new_packet.encode()
         self.send_packet(new_packet.data)
         
-    def broadcast_message(self, message: str, xuid: str = "", needs_translation: bool = False) -> None:
+    def broadcast_message(self, message: str, x_uid: str = "", needs_translation: bool = False) -> None:
         self.server.send_message(message)
         for p in self.server.players.values():
-            p.send_message(message, xuid, needs_translation)
+            p.send_message(message, x_uid, needs_translation)
 
     def send_chat_message(self, message: str) -> None:
-        self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", message), self.xuid)
+        self.broadcast_message(self.message_format.replace("%username", self.username).replace("%message", message), self.x_uid)
             
     def handle_text_packet(self, data: bytes) -> None:
-        packet: object = packets.text_packet(data)
+        packet = packets.text_packet(data)
         packet.decode()
         if packet.type == types.text_type.chat:
-            chat_event: object = events.player_chat_event(self, packet.message)
+            chat_event = events.player_chat_event(self, packet.message)
             chat_event.call()
             if not chat_event.canceled:
                  self.send_chat_message(packet.message)
                     
     def handle_interact_packet(self, data: bytes) -> None:
-        packet: object = packets.interact_packet(data)
+        packet = packets.interact_packet(data)
         packet.decode()
         if packet.action_id == types.interact_type.open_inventory:
-            new_packet: object = packets.container_open_packet()
+            new_packet = packets.container_open_packet()
             if self.gamemode == types.gamemode_type.survival:
                 new_packet.window_id = types.window_id_type.inventory
             elif self.gamemode == types.gamemode_type.creative:
@@ -385,11 +409,11 @@ class mcbe_player:
             new_packet.runtime_entity_id = self.entity_id
             new_packet.encode()
             self.send_packet(new_packet.data)
-            open_inventory_event: object = events.player_open_inventory_event(self)
+            open_inventory_event = events.player_open_inventory_event(self)
             open_inventory_event.call()
 
     def handle_close_container_packet(self, data: bytes) -> None:
-        new_packet: object = packets.container_close_packet()
+        new_packet = packets.container_close_packet()
         if self.gamemode == types.gamemode_type.survival:
             new_packet.window_id = types.window_id_type.inventory
         elif self.gamemode == types.gamemode_type.creative:
@@ -407,11 +431,11 @@ class mcbe_player:
         new_packet.server = False
         new_packet.encode()
         self.send_packet(new_packet.data)
-        close_inventory_event: object = events.player_close_inventory_event(self)
+        close_inventory_event = events.player_close_inventory_event(self)
         close_inventory_event.call()
 
     def handle_command_request_packet(self, data: bytes) -> None:
-        packet: object = packets.command_request_packet(data)
+        packet = packets.command_request_packet(data)
         packet.decode()
         if packet.origin == types.command_origin_type.player:
             self.server.dispatch_command(packet.command[1:], self)
@@ -442,7 +466,7 @@ class mcbe_player:
 
     def set_gamemode(self, gamemode: int):
         self.gamemode: int = gamemode
-        new_packet: object = packets.set_player_game_type_packet()
+        new_packet = packets.set_player_game_type_packet()
         new_packet.gamemode = gamemode
         new_packet.encode()
         self.send_packet(new_packet.data)
@@ -468,19 +492,19 @@ class mcbe_player:
 
         # Finally send the chunks
         for item in chunk_send_queue:
-            c: object = self.world.get_chunk(item[0], item[1])
+            c = self.world.get_chunk(item[0], item[1])
             self.send_chunk(c)
         self.send_network_chunk_publisher_update()
 
         if spawn:
             self.send_play_status(types.login_status_type.spawn)
             self.spawned: bool = True  
-            join_event: object = events.player_join_event(self)
+            join_event = events.player_join_event(self)
             join_event.call()
             self.server.broadcast_message(events.player_join_event(self).join_message)        
         
     def send_available_commands(self) -> None:
-        new_packet: object = packets.available_commands_packet()
+        new_packet = packets.available_commands_packet()
         new_packet.values_len = 1
         new_packet.enum_values = []
         new_packet.suffixes = []
@@ -503,7 +527,7 @@ class mcbe_player:
         self.send_packet(new_packet.data)
             
     def send_network_chunk_publisher_update(self) -> None:
-        new_packet: object = packets.network_chunk_publisher_update_packet()
+        new_packet = packets.network_chunk_publisher_update_packet()
         new_packet.x = math.floor(self.position.x)
         new_packet.y = math.floor(self.position.y)
         new_packet.z = math.floor(self.position.z)
@@ -511,8 +535,8 @@ class mcbe_player:
         new_packet.encode()
         self.send_packet(new_packet.data)
     
-    def send_chunk(self, send_chunk: object) -> None:
-        packet: object = packets.level_chunk_packet()
+    def send_chunk(self, send_chunk) -> None:
+        packet = packets.level_chunk_packet()
         packet.chunk_x = send_chunk.x
         packet.chunk_z = send_chunk.z
         packet.sub_chunk_count = send_chunk.get_sub_chunk_send_count()
@@ -522,13 +546,13 @@ class mcbe_player:
         self.send_packet(packet.data)
 
     def send_play_status(self, status: int) -> None:
-        packet: object = packets.play_status_packet()
+        packet = packets.play_status_packet()
         packet.status = status
         packet.encode()
         self.send_packet(packet.data)
         
     def send_metadata(self) -> None:
-        packet: object = packets.set_entity_data_packet()
+        packet = packets.set_entity_data_packet()
         packet.runtime_entity_id = self.entity_id
         packet.metadata = self.metadata_storage.metadata
         packet.tick = 0
@@ -536,7 +560,7 @@ class mcbe_player:
         self.send_packet(packet.data)
             
     def send_attributes(self) -> None:
-        packet: object = packets.update_attributes_packet()
+        packet = packets.update_attributes_packet()
         packet.runtime_entity_id = self.entity_id
         packet.attributes = self.attributes
         packet.tick = 0
@@ -544,10 +568,10 @@ class mcbe_player:
         self.send_packet(packet.data)
     
     def send_packet(self, data: bytes) -> None:
-        new_packet: object = game_packet()
+        new_packet = game_packet()
         new_packet.write_packet_data(data)
         new_packet.encode()
-        send_packet: object = frame()
+        send_packet = frame()
         send_packet.reliability = 0
         send_packet.body = new_packet.data
         self.connection.add_to_queue(send_packet)

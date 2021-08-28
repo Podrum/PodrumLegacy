@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class acacia_wood_planks(block):
+class AcaciaWoodPlanks(Block):
 
     def __init__(self) -> None:
         super().__init__("minecraft:planks", 4, 3, 2, "minecraft:planks")

@@ -23,7 +23,7 @@ class metadata_storage:
         if key in self.metadata:
             return self.metadata[key]
           
-    def set_entry(self, key: int, value: object, entry_type: int) -> None:
+    def set_entry(self, key: int, value, entry_type: int) -> None:
         self.metadata[key] = {"value": value, "type": entry_type}
           
     def get_byte(self, key: int) -> int:
@@ -89,7 +89,7 @@ class metadata_storage:
         ):
             return entry["value"]
 
-    def set_compound(self, key: int, value: object) -> None:
+    def set_compound(self, key: int, value) -> None:
         self.set_entry(key, value, metadata_dictionary_type.type_compound)
         
     def get_vector_3_int(self, key: int) -> object:
@@ -100,7 +100,7 @@ class metadata_storage:
         ):
             return entry["value"]
              
-    def set_vector_3_int(self, key: int, value: object) -> None:
+    def set_vector_3_int(self, key: int, value) -> None:
         self.set_entry(key, value, metadata_dictionary_type.type_vector_3_int)
         
     def get_long(self, key: int) -> int:
@@ -122,7 +122,7 @@ class metadata_storage:
         ):
             return entry["value"]
              
-    def set_vector_3_float(self, key: int, value: object) -> None:
+    def set_vector_3_float(self, key: int, value) -> None:
         self.set_entry(key, value, metadata_dictionary_type.type_vector_3_float)
         
     def get_flag(self, flag: int, extended: bool = False) -> bool:

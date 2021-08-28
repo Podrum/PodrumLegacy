@@ -75,20 +75,23 @@ class plugin_manager:
         self.server.logger.info(f"Loading {plugin_info['name']}...")
         sys.path.append(path)
         main: str = plugin_info["main"].rsplit(".", 1)
-        module: object = importlib.import_module(main[0])
-        main_class: object = getattr(module, main[1])
+        module = importlib.import_module(main[0])
+        main_class = getattr(module, main[1])
 
-        self.plugins[plugin_info["name"]] = main_class()
-        self.plugins[plugin_info["name"]].server = self.server
-        self.plugins[plugin_info["name"]].path = path
+        plugin_name = plugin_info["name"]
 
-        self.plugins[plugin_info["name"]].version = (plugin_info["version"] if "version" in plugin_info else "")
-        self.plugins[plugin_info["name"]].description = plugin_info["description"] if "description" in plugin_info else ""
-        self.plugins[plugin_info["name"]].author = plugin_info["author"] if "author" in plugin_info else ""
-        self.plugins[plugin_info["name"]].required_plugins = plugin_info["required_plugins"] if "required_plugins" in plugin_info else []
+        self.plugins[plugin_name] = main_class()
+        self.plugins[plugin_name].server = self.server
+        self.plugins[plugin_name].path = path
+
+        self.plugins[plugin_name].version = plugin_info.get("version", "")
+        self.plugins[plugin_name].description = plugin_info.get("description", "")
+        self.plugins[plugin_name].author = plugin_info.get("author", "")
+        self.plugins[plugin_name].required_plugins = plugin_info.get("required_plugins", [])
 
         if hasattr(main_class, "on_load"):
             self.plugins[plugin_info["name"]].on_load()
+
         self.server.logger.success(
             f"Successfully loaded {plugin_info['name']}."
         )

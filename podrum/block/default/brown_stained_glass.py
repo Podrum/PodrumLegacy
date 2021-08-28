@@ -12,11 +12,11 @@ r"""
  of the source code. If not you may not use this file.
 """
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class brown_stained_glass(block):
+class BrownStainedGlass(Block):
     def __init__(self) -> None:
         super().__init__(
             "minecraft:stained_glass", 12, 0.3, 0.3, "minecraft:stained_glass"

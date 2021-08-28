@@ -57,10 +57,10 @@ class chunk:
         return -1
     
     def network_deserialize(self, data: bytes, sub_chunk_count: int = 16) -> None:
-        stream: object = binary_stream(data)
+        stream = binary_stream(data)
 
         for y in range(sub_chunk_count):
-            sc: object = sub_chunk()
+            sc = sub_chunk()
             sc.network_deserialize(stream)
             self.sub_chunks[y] = sc
 
@@ -70,7 +70,7 @@ class chunk:
             self.biomes.append(stream.read_unsigned_byte())
 
     def network_serialize(self) -> object:
-        stream: object = binary_stream()
+        stream = binary_stream()
 
         for y in range(self.get_sub_chunk_send_count()):
             self.sub_chunks[y].network_serialize(stream)

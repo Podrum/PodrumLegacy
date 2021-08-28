@@ -13,11 +13,11 @@ r"""
 """
 
 
-from podrum.block.block import block
+from podrum.block.block import Block
 from podrum.block.tool import tool
 
 
-class stripped_birch_log(block):
+class StrippedBirchLog(Block):
 
     def __init__(self) -> None:
         super().__init__(
