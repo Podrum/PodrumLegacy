@@ -19,6 +19,54 @@ from podrum.protocol.mcbe.packet.mcbe_packet import mcbe_packet
 class start_game_packet(mcbe_packet):
     def __init__(self, data: bytes = b"", pos: int = 0) -> None:
         super().__init__(data, pos)
+
+        self.multiplayer_game = None
+        self.lan_broadcasting = None
+        self.xbox_live_broadcast_mode = None
+        self.platform_broadcast_mode = None
+        self.enable_commands = None
+        self.require_texture_pack = None
+        self.game_rules = None
+        self.experiments = None
+        self.has_used_experiments = None
+        self.bonus_chest = None
+        self.start_map = None
+        self.permission_level = None
+        self.chunk_tick_range = None
+        self.locked_behavior_pack = None
+        self.locked_texture_pack = None
+        self.from_locked_template = None
+        self.only_msa_gamer_tags = None
+        self.from_world_template = None
+        self.world_template_option_locked = None
+        self.only_old_villagers = None
+        self.game_version = None
+        self.limited_world_width = None
+        self.limited_world_height = None
+        self.new_nether = None
+        self.experimental_gameplay = None
+        self.level_id = None
+        self.world_name = None
+        self.premium_world_template_id = None
+        self.trial = None
+        self.movement_type = None
+        self.movement_rewind_size = None
+        self.server_authoritative_block_breaking = None
+        self.current_tick = None
+        self.enchantment_seed = None
+        self.item_states = None
+        self.multiplayer_correlation_id = None
+        self.server_authoritative_inventories = None
+        self.server_engine = None
+
+        self.entity_id = None
+        self.entity_runtime_id = None
+        self.player_gamemode = None
+        self.spawn = None
+        self.rotation = None
+        self.seed = None
+        self.spawn_biome_type = None
+
         self.packet_id: int = mcbe_protocol_info.start_game_packet
 
     def decode_payload(self):
@@ -38,7 +86,7 @@ class start_game_packet(mcbe_packet):
         self.write_signed_var_int(self.world_gamemode)
         self.write_signed_var_int(self.difficulty)
         self.write_block_coordinates(self.world_spawn)
-        self.write_byte(self.disable_achivements)
+        self.write_byte(self.disable_achievements)
         self.write_signed_var_int(self.time)
         self.write_signed_var_int(self.edu_offer)
         self.write_byte(self.edu_features)
@@ -70,7 +118,7 @@ class start_game_packet(mcbe_packet):
         self.write_int_le(self.limited_world_width)
         self.write_int_le(self.limited_world_height)
         self.write_bool(self.new_nether)
-        self.write_bool(self.experimental_gamplay)
+        self.write_bool(self.experimental_gameplay)
         self.write_string(self.level_id)
         self.write_string(self.world_name)
         self.write_string(self.premium_world_template_id)
@@ -80,7 +128,7 @@ class start_game_packet(mcbe_packet):
         self.write_bool(self.server_authoritative_block_breaking)
         self.write_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
-        self.write_var_int(0) # block states length
+        self.write_var_int(0)  # block states length
         self.write_item_states(self.item_states)
         self.write_string(self.multiplayer_correlation_id)
         self.write_bool(self.server_authoritative_inventories)

@@ -2,17 +2,17 @@ anvil variants
 activator rails
 rails
 bed variants
-brown mushroom block variants
+brown mushroom Block variants
 furnace variants
 button variants
 carpet variants
 crop variants (wheat, potato, carrot, beetroot)
 double chests
-cobble stairs, slabs, and variants (cobblestone registered)
+cobble stairs, slabs, and variants (Cobblestone registered)
 cocoa plant
 detector rail
 door
-double tall grass
+double tall Grass
 end rod
 fence variants
 fence gate variants
@@ -23,25 +23,25 @@ iron trap door
 trap door variants
 item frame
 ladder
-melon stem
+Melon stem
 nether bricks variant (added nether bricks)
 nether reactor core variants
 nether wart crop
 powered rails
-carved pumpkin
-pumpkin stem
-prismarine stairs, slabs (added prismarine blocks)
-purpur stairs, slabs, and block variants (added purpur)
-quartz stairs, slabs, and block variants (added quartz block)
-red mushroom block variants
-red sandstone, stairs, slabs, and block variants (added red sandstone)
+carved Pumpkin
+Pumpkin stem
+Prismarine stairs, slabs (added Prismarine blocks)
+Purpur stairs, slabs, and Block variants (added Purpur)
+quartz stairs, slabs, and Block variants (added quartz Block)
+red mushroom Block variants
+red Sandstone, stairs, slabs, and Block variants (added red Sandstone)
 redstone torch
-sand stone stairs, slabs, and block variants (added sandstone)
+Sand Stone stairs, slabs, and Block variants (added Sandstone)
 sign variants
 skulls
 snow layers
 banners
-stone brick stairs, slabs, block variants
+Stone brick stairs, slabs, Block variants
 pressure plates
 buttons
 torch
