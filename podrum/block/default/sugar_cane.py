@@ -19,7 +19,7 @@ from podrum.block.tool import tool
 class SugarCane(Block):
 
     def __init__(self) -> None:
-        super().__init__("minecraft:reeds", 0, 0, 0, "minecraft:reeds")
+        super().__init__("minecraft:reeds", 0, 0, 0, "minecraft:item.reeds")
         self.stack_size: int = 64
         self.tool: int = tool.none
         self.transparent: bool = True
