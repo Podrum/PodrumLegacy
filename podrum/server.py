@@ -169,7 +169,7 @@ class server:
 
         self.dispatch_command(command, self)
 
-    def find_player(self, username: str):
+    def find_player(self, username: str) -> object:
         usernames = [p.username.lower() for p in self.players.values()]
         players = list(dict(self.players).values())
 
