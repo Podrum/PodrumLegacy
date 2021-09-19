@@ -16,7 +16,9 @@
   <a href="./README.md">English🇺🇸</a>
   <a href="languages/README_FR.md">Français🇫🇷</a>
   <a href="languages/README_DE.md">Deutsch🇩🇪</a>
+  <a href="languages/README_ES.md">Español🇪🇸</a>
   <a href="languages/README_VI.md">Vietnamese🇻🇳</a>
+  <a href="languages/README_IT.md">Italian🇮🇹</a>
 </div>
 <br>
 
