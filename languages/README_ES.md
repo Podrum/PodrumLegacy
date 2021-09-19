@@ -17,7 +17,8 @@
   <a href="./README_FR.md">Français🇫🇷</a>
   <a href="./README_DE.md">Deutsch🇩🇪</a>
   <a href="./README_ES.md">Español🇪🇸</a>
-  <a href="./README_ES.md">Vietnamese</a>
+  <a href="./README_VI.md">Vietnamese🇻🇳</a>
+  <a href="./README_IT.md">Italian🇮🇹</a>
 </div>
 <br>
 
@@ -52,16 +53,16 @@ python run.py
 
 # FAQ:
  - ¿Puedo contribuir?
- > Si.
+ > Sí.
  - ¿Que versión de Python debo utilizar?
  > Cualquier versión posterior a Python 3.5 debería de funcionar, pero recomendamos la más nueva.
  - ¿Esto es gratis?
- > Si lo es.
+ > Sí, lo es.
  - ¿Es Podrum para Java o Bedrock?
  > De momento es sólo para bedrock pero podría haber un plugin para soportar Java Edition.
  - ¿Puedo utilizar Podrum ya?
  > No recomendamos utilizar Podrum en ningún proyecto serio de momento.
  - ¿Soporta plugins?
- > Si los soporta, puedes programarlos en Python (y posiblemente otros lenguajes con algunos trucos).
+ > Sí los soporta, puedes programarlos en Python (y posiblemente otros lenguajes con algunos trucos).
  - Tengo una pregunta que no está respuesta aquí, ¿dónde puedo preguntarla?
  > En nuestro [discord](https://discord.gg/ScSsnwQ4kW).
