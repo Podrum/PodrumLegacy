@@ -19,6 +19,7 @@
   <a href="languages/README_ES.md">Español🇪🇸</a>
   <a href="languages/README_VI.md">Vietnamese🇻🇳</a>
   <a href="languages/README_IT.md">Italian🇮🇹</a>
+  <a href="languages/README_RU.md">Русскийru</a>
 </div>
 <br>
 

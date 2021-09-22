@@ -19,6 +19,7 @@
   <a href="./README_ES.md">Español🇪🇸</a>
   <a href="./README_VI.md">Vietnamese🇻🇳</a>
   <a href="./README_IT.md">Italian🇮🇹</a>
+  <a href="languages/README_RU.md">Русскийru</a>
 </div>
 <br>
 È un software server di Minecraft Bedrock Edition scritto in Python.
