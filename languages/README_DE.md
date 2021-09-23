@@ -19,7 +19,8 @@
   <a href="./README_ES.md">Español🇪🇸</a>
   <a href="./README_VI.md">Vietnamese🇻🇳</a>
   <a href="./README_IT.md">Italian🇮🇹</a>
-  <a href="languages/README_RU.md">Русскийru</a>
+  <a href="./README_RU.md">Русскийru</a>
+  <a href="./README_CH.md">China🇨🇳</a>
  </div>
 <br>
 
