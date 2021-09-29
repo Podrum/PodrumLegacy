@@ -98,6 +98,8 @@ class mcbe_player:
         packet.limited_world_width = 0
         packet.limited_world_height = 0
         packet.new_nether = False
+        packet.edu_shared_uri_resource_bottom_name = ""
+        packet.edu_shared_uri_resource_uri_link = ""
         packet.experimental_gameplay = False
         packet.level_id = ""
         packet.world_name = self.world.get_world_name()
