@@ -941,9 +941,6 @@ class mcbe_binary_stream(binary_stream):
         skin["cape_data"] = self.read_skin_image()
         skin["geometry_data"] = self.read_string()
         skin["animation_data"] = self.read_string()
-        skin["premium"] = self.read_bool()
-        skin["persona"] = self.read_bool()
-        skin["cape_on_classic"] = self.read_bool()
         self._extracted_from_read_skin_28(skin, "cape_id", "full_skin_id", "arm_size")
         skin["skin_color"] = self.read_string()
         skin["persona_pieces"] = []
@@ -964,6 +961,9 @@ class mcbe_binary_stream(binary_stream):
             for _ in range(self.read_int_le()):
                 piece_tint_color["colors"].append(self.read_string())
             skin["piece_tint_colors"].append(piece_tint_color)
+        skin["premium"] = self.read_bool()
+        skin["persona"] = self.read_bool()
+        skin["cape_on_classic"] = self.read_bool()
         return skin
 
     def _extracted_from_read_skin_28(self, arg0, arg1, arg2, arg3):
@@ -975,7 +975,6 @@ class mcbe_binary_stream(binary_stream):
         self._extracted_from_write_skin_24(
             skin, "skin_id", "play_fab_id", "skin_resource_pack"
         )
-
         self.write_skin_image(skin["skin_data"])
         self.write_int_le(len(skin["animations"]))
         for animation in skin["animations"]:
@@ -986,9 +985,7 @@ class mcbe_binary_stream(binary_stream):
         self.write_skin_image(skin["cape_data"])
         self.write_string(skin["geometry_data"])
         self.write_string(skin["animation_data"])
-        self.write_bool(skin["premium"])
-        self.write_bool(skin["persona"])
-        self.write_bool(skin["cape_on_classic"])
+
         self._extracted_from_write_skin_24(skin, "cape_id", "full_skin_id", "arm_size")
         self.write_string(skin["skin_color"])
         self.write_int_le(len(skin["persona_pieces"]))
@@ -1005,6 +1002,9 @@ class mcbe_binary_stream(binary_stream):
             self.write_int_le(len(piece_tint_color["colors"]))
             for color in piece_tint_color["colors"]:
                 self.write_string(color)
+        self.write_bool(skin["premium"])
+        self.write_bool(skin["persona"])
+        self.write_bool(skin["cape_on_classic"])
 
     def _extracted_from_write_skin_24(self, arg0, arg1, arg2, arg3):
         self.write_string(arg0[arg1])
