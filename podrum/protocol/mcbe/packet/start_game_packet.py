@@ -44,6 +44,8 @@ class start_game_packet(mcbe_packet):
         self.limited_world_width = None
         self.limited_world_height = None
         self.new_nether = None
+        self.edu_shared_uri_resource_bottom_name = None
+        self.edu_shared_uri_resource_uri_link = None
         self.experimental_gameplay = None
         self.level_id = None
         self.world_name = None
@@ -118,6 +120,8 @@ class start_game_packet(mcbe_packet):
         self.write_int_le(self.limited_world_width)
         self.write_int_le(self.limited_world_height)
         self.write_bool(self.new_nether)
+        self.write_string(self.edu_shared_uri_resource_bottom_name)
+        self.write_string(self.edu_shared_uri_resource_uri_link)
         self.write_bool(self.experimental_gameplay)
         self.write_string(self.level_id)
         self.write_string(self.world_name)
