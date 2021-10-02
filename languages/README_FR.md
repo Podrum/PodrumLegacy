@@ -19,11 +19,11 @@
   <a href="./README_ES.md">Español🇪🇸</a>
   <a href="./README_VI.md">Tiếng Việt🇻🇳</a>
   <a href="./README_IT.md">Italiana🇮🇹</a>
-  <a href="languages/README_RU.md">Русскийru</a>
+  <a href="./README_RU.md">Русский🇷🇺</a>
   <a href="./README_CH.md">中国人🇨🇳</a>
+  <a href="./README_TR.md">Türkçe🇹🇷</a>
  </div>
 <br>
-
 Podrum est un logiciel de serveur pour Minecraft Bedrock edition écrit en Python.
 Il est encore un développement actif, mais a ses petits avantages:
 

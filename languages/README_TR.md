@@ -11,7 +11,7 @@
 
 # Podrum
 
-<p align="center">README è disponibile anche in:</p>
+<p align="center">README şu dillerde de mevcuttur:</p>
 <div align="center">
   <a href="../README.md">English🇺🇸</a>
   <a href="./README_FR.md">Français🇫🇷</a>
@@ -25,24 +25,24 @@
  </div>
 <br>
 
-È un software server di Minecraft Bedrock Edition scritto in Python.
-È ancora in fase di sviluppo attivo, ma ha alcuni vantaggi:
+Python ile yazılmış bir Minecraft: Bedrock Edition sunucu yazılımı.
+Hâlâ aktif olarak geliştirilme aşamasında, ama birkaç avantajı var:
 
-**1.** Facile da usare,
+**1.** Kullanımı kolay,
 
-**2.** Scritto in Python, il che rende i plugin più facili da scrivere
+**2.** Python'la yazıldığı için eklenti yazmak kolay
 
-## Caratteristiche:
- - [x] Generazione di mondi
- - [x] Networking
- - [x] Comandi
+## Özellikler:
+ - [x] Dünya Jenerasyonu
+ - [x] Ağ
+ - [x] Komutlar
  - [x] MOTD
- - [x] Giocabile
- - [x] Plugin API
- - [ ] Mobs 
+ - [x] Bağlanılabilir
+ - [x] Eklenti API'ı
+ - [ ] Moblar
 
-## Esecuzione:
-Linux e MacOS (sistemi Unix):
+## Çalıştırma:
+Linux ve MacOS (Unix sistemler):
 ```sh
 pip3 install -r requirements.txt
 python3 run.py
@@ -54,18 +54,18 @@ pip install -r requirements.txt
 python run.py
 ```
 
-# DOMANDE FREQUENTI:
- - Posso contribuire?
- > Sicuro.
- - Quale versione di Python dovrei usare?
- > Qualsiasi versione di Python superiore a Python 3.5 dovrebbe funzionare, ma si consiglia di utilizzare l'ultima.
- - È gratuito?
- > Sì, lo è.
- - È per Minecraft Java o Bedrock?
- > Attualmente è per bedrock, ma potrebbe esserci un plugin per l'edizione java.
- - Posso usarlo subito?
- > Non raccomandiamo ancora di usarlo per un progetto serio.
- - Supporta i plugins?
- > Sì, è possibile scriverli in Python (e forse in altri linguaggi con alcuni trucchi).
- - Ho una domanda che non trova risposta qui, dove posso farla?
- > Puoi fare le tue domande sul nostro server [discord](https://discord.gg/ScSsnwQ4kW).
+# SSS:
+ - Katkıda bulunabilir miyim?
+ > Tabii ki.
+ - Python'un hangi versiyonunu kullanmalıyım?
+ > 3.5'in üstü her versiyoun çalışır, ama en son versiyonu kullanmanızı tercih ediyoruz.
+ - Ücretsiz mi?
+ > Evet.
+ - Minecraft Java için mi yoksa Bedrock mı?
+ > Şimdilik bedrock için, ama java için de bir eklenti yapılabilir.
+ - Bunu henüz kullanabilir miyim?
+ > Bunu ciddi bir proje için kullanmanızı henüz önermiyoruz.
+ - Eklentileri destekliyor mu?
+ > Evet destekliyor, eklentileri Python ile (veya belki bazı hilelerle başka dillerde de) yazabilirsiniz.
+ - Burada cevaplanmamış bir sorum var, nerede sorabilirim?
+ > [Discord sunucumuz](https://discord.gg/ScSsnwQ4kW)da.

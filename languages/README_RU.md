@@ -13,15 +13,16 @@
 
 <p align="center">README также еще доступен на языках:</p>
 <div align="center">
-  <a href="./README.md">English🇺🇸</a>
-  <a href="languages/README_FR.md">Français🇫🇷</a>
-  <a href="languages/README_DE.md">Deutsch🇩🇪</a>
-  <a href="languages/README_ES.md">Español🇪🇸</a>
-  <a href="languages/README_VI.md">Tiếng Việt🇻🇳</a>
-  <a href="languages/README_IT.md">Italiana🇮🇹</a>
-  <a href="languages/README_RU.md">Русскийru</a>
-  <a href="languages/README_CH.md">中国人🇨🇳</a>
-</div>
+  <a href="../README.md">English🇺🇸</a>
+  <a href="./README_FR.md">Français🇫🇷</a>
+  <a href="./README_DE.md">Deutsch🇩🇪</a>
+  <a href="./README_ES.md">Español🇪🇸</a>
+  <a href="./README_VI.md">Tiếng Việt🇻🇳</a>
+  <a href="./README_IT.md">Italiana🇮🇹</a>
+  <a href="./README_RU.md">Русский🇷🇺</a>
+  <a href="./README_CH.md">中国人🇨🇳</a>
+  <a href="./README_TR.md">Türkçe🇹🇷</a>
+ </div>
 <br>
 
 Это серверное ПО для Minecraft Bedrock Edition, которое написано на языке Python.
