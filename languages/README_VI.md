@@ -13,14 +13,14 @@
 
 <p align="center">README cũng có sẵn trong:</p>
 <div align="center">
-  <a href="../README.md">English🇺🇸</a>
-  <a href="./README_FR.md">Français🇫🇷</a>
-  <a href="./README_DE.md">Deutsch🇩🇪</a>
-  <a href="./README_ES.md">Español🇪🇸</a>
-  <a href="./README_VI.md">Tiếng Việt🇻🇳</a>
-  <a href="./README_IT.md">Italiana🇮🇹</a>
-  <a href="languages/README_RU.md">Русскийru</a>
-  <a href="./README_CH.md">中国人🇨🇳</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/README.md">English🇺🇸</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_FR.md">Français🇫🇷</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_DE.md">Deutsch🇩🇪</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_ES.md">Español🇪🇸</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_VI.md">Tiếng Việt🇻🇳</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_RU.md">Русскийru</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中国人🇨🇳</a>
  </div>
 <br>
 
