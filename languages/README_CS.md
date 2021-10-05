@@ -11,7 +11,7 @@
 
 # Podrum
 
-<p align="center">README 也可在:</p>
+<p align="center">README je také dostupné v:</p>
 <div align="center">
   <a href="https://github.com/Podrum/Podrum/blob/main/README.md">English🇺🇸</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_FR.md">Français🇫🇷</a>
@@ -25,22 +25,24 @@
  </div>
 <br>
 
-它是一个用 Python 编写的 Minecraft Bedrock Edition 服务器软件。它仍在积极开发中，但它有一些优点：
+je serverový software pro Minecraft Bedrock Edition napsaný Pythonu.
+Je stále pod aktivním vývojem, avšak již má několik výhod:
 
-**1.** 便于使用，
+**1.** Snadno se používá.
 
-**2.** 用 Python 编写，使插件更容易编写
-## 精选:
- - [x] World Generation 
- - [x] Networking
- - [x] Commands
+**2.** Je napsaný v Pythonu, takže se pluginy lépe píšou.
+
+## Funkce:
+ - [x] Generování světů
+ - [x] Síťování
+ - [x] Příkazy
  - [x] MOTD
- - [x] Unible
+ - [x] Možnost mít na serveru
  - [x] Plugin API
- - [ ] Mobs  
+ - [ ] Moby
 
-## 执行者:
-Linux 或者 MacOS (System Unix):
+## Jak spustit:
+Linux a MacOS (systémy typu Unix):
 ```sh
 pip3 install -r requirements.txt
 python3 run.py
@@ -52,18 +54,18 @@ pip install -r requirements.txt
 python run.py
 ```
 
-# FAQ:
- - 我可以贡献吗？
- > 当然。
- - 我应该使用什么版本的 Python？
- > Python 3.5 以上的任何 Python 版本都可以使用，但我们建议您使用最新版本。
- - 这是免费的吗？
- > 是的。
- - 这是用于 Minecraft Java 还是 Bedrock？
- > 它目前用于基岩，但可能有一个 Java 版本的插件。
- - 我还能用吗？
- > 我们不建议在严肃的项目中使用它。
- - 是否支持插件？
- > 是的，确实如此，您可以用 Python 编写它们（也许还有其他一些带有技巧的语言）。
- - 我有一个在这里没有答案的问题，我可以在哪里提问？
- > 在我们的 [Discord](https://discord.gg/ScSsnwQ4kW).
+# Často kladené otázky:
+ - Můžu se na projektu podílet?
+ > Jasně.
+ - Kterou verzi Pythonu mám používat?
+ > Každá verze nad 3.5 by měla fungovat, ale doporučujeme používat tu nejnovější.
+ - Je tohle zdarma?
+ > Ano, je.
+ - Je tohle pro Minecraft Java, nebo Bedrock?
+ > Momentálně je určený pro verzi Bedrock, ale možná tady už najdete plugin pro Java edici.
+ - Už to můžu používat?
+ > Prozatím to nedoporučujeme používat pro vážné projekty.
+ - Podporuje to pluginy?
+ > Ano, podporuje. Můžete je napsat v Pythonu (a možná v některých dalších jazycích pomocí nějakých vychytávek).
+ - Mám dotaz, který tu není. Kde se můžu zeptat?
+ > Na našem [Discordu](https://discord.gg/ScSsnwQ4kW).
