@@ -65,7 +65,7 @@ class logger:
         print(
             text_format.minecraft_to_console_colors(
                 f"{color}[{log_type.upper()}: "
-                f"{date_time:%H:%M}]{text_format.white}"
+                f"{date_time:%H:%M:%S}]{text_format.white}"
                 f" {content}{text_format.reset}"
             )
         )
