@@ -20,7 +20,7 @@
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_VI.md">Tiếng Việt🇻🇳</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_RU.md">Русскийru</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中国人🇨🇳</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中文🇨🇳</a>
 </div>
 <br>
 È un software server di Minecraft Bedrock Edition scritto in Python.
