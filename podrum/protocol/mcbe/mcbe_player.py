@@ -125,18 +125,21 @@ class mcbe_player:
     def send_creative_content_packet(self) -> None:
         packet = packets.creative_content_packet()
         packet.entries = []
-        # entry_id: int = 1
-        # for creative_item in creative_items:
-        #     damage: int = 0 if "damage" not in creative_item else creative_item["damage"]
-        #     name: str = item_map.runtime_id_to_name(creative_item['id'])
+        entry_id: int = 1
+        for creative_item in creative_items:
+            damage: int = 0 if "damage" not in creative_item else creative_item["damage"]
+            try:
+                name: str = item_map.runtime_id_to_name(creative_item['id'])
+            except KeyError:
+                continue
 
-        #     if f"{name} {damage}" in self.server.managers.item_manager.items:
-        #         item_obj = self.server.managers.item_manager.items[f"{name} {damage}"]
-        #     else:
-        #         item_obj = item(name, creative_item["id"], damage)
+            if f"{name} {damage}" in self.server.managers.item_manager.items:
+                item_obj = self.server.managers.item_manager.items[f"{name} {damage}"]
+            else:
+                item_obj = item(name, creative_item["id"], damage)
 
-        #     packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
-        #     entry_id += 1
+            packet.entries.append({"entry_id": entry_id, "item": item_obj.prepare_for_network()})
+            entry_id += 1
 
         packet.encode()
         self.send_packet(packet.data)
