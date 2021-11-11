@@ -55,13 +55,13 @@ class text_format:
         (light_purple, '§d'),
         (yellow, '§e'),
         (white, '§f'),
+        (minecoin_gold, '§g'),
         (obfuscated, '§k'),
         (bold, '§l'),
         (strike_through, '§m'),
         (underline, '§n'),
         (italic, '§o'),
-        (reset, '§r'),
-        (minecoin_gold, '§g')
+        (reset, '§r')
     ]
 
     @staticmethod
