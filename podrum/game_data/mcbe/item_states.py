@@ -95,7 +95,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:amethyst_shard",
-        "runtime_id": 624,
+        "runtime_id": 623,
         "component_based": False
     },
     {
@@ -160,7 +160,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:balloon",
-        "runtime_id": 598,
+        "runtime_id": 597,
         "component_based": False
     },
     {
@@ -180,7 +180,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:banner_pattern",
-        "runtime_id": 628,
+        "runtime_id": 627,
         "component_based": False
     },
     {
@@ -380,7 +380,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:bleach",
-        "runtime_id": 596,
+        "runtime_id": 595,
         "component_based": False
     },
     {
@@ -410,7 +410,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:boat",
-        "runtime_id": 626,
+        "runtime_id": 625,
         "component_based": False
     },
     {
@@ -550,7 +550,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:camera",
-        "runtime_id": 593,
+        "runtime_id": 592,
         "component_based": False
     },
     {
@@ -630,7 +630,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:chain",
-        "runtime_id": 618,
+        "runtime_id": 617,
         "component_based": False
     },
     {
@@ -731,6 +731,11 @@ item_states: list = [
     {
         "name": "minecraft:clay_ball",
         "runtime_id": 384,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:client_request_placeholder_block",
+        "runtime_id": -465,
         "component_based": False
     },
     {
@@ -850,7 +855,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:compound",
-        "runtime_id": 594,
+        "runtime_id": 593,
         "component_based": False
     },
     {
@@ -1005,7 +1010,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:crimson_door",
-        "runtime_id": 615,
+        "runtime_id": 614,
         "component_based": False
     },
     {
@@ -1055,7 +1060,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:crimson_sign",
-        "runtime_id": 613,
+        "runtime_id": 612,
         "component_based": False
     },
     {
@@ -1475,7 +1480,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:dye",
-        "runtime_id": 627,
+        "runtime_id": 626,
         "component_based": False
     },
     {
@@ -2135,7 +2140,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:end_crystal",
-        "runtime_id": 630,
+        "runtime_id": 629,
         "component_based": False
     },
     {
@@ -2380,12 +2385,12 @@ item_states: list = [
     },
     {
         "name": "minecraft:glow_berries",
-        "runtime_id": 631,
+        "runtime_id": 630,
         "component_based": False
     },
     {
         "name": "minecraft:glow_frame",
-        "runtime_id": 622,
+        "runtime_id": 621,
         "component_based": False
     },
     {
@@ -2425,7 +2430,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:goat_horn",
-        "runtime_id": 623,
+        "runtime_id": 622,
         "component_based": False
     },
     {
@@ -2650,12 +2655,12 @@ item_states: list = [
     },
     {
         "name": "minecraft:honey_bottle",
-        "runtime_id": 592,
+        "runtime_id": 591,
         "component_based": False
     },
     {
         "name": "minecraft:honeycomb",
-        "runtime_id": 591,
+        "runtime_id": 590,
         "component_based": False
     },
     {
@@ -2690,7 +2695,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:ice_bomb",
-        "runtime_id": 595,
+        "runtime_id": 594,
         "component_based": False
     },
     {
@@ -3225,7 +3230,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:lodestone_compass",
-        "runtime_id": 601,
+        "runtime_id": 600,
         "component_based": False
     },
     {
@@ -3280,7 +3285,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:medicine",
-        "runtime_id": 599,
+        "runtime_id": 598,
         "component_based": False
     },
     {
@@ -3420,7 +3425,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:music_disc_pigstep",
-        "runtime_id": 619,
+        "runtime_id": 618,
         "component_based": False
     },
     {
@@ -3451,6 +3456,16 @@ item_states: list = [
     {
         "name": "minecraft:mycelium",
         "runtime_id": 110,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:mysterious_frame",
+        "runtime_id": -466,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:mysterious_frame_slot",
+        "runtime_id": -467,
         "component_based": False
     },
     {
@@ -3485,7 +3500,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:nether_sprouts",
-        "runtime_id": 620,
+        "runtime_id": 619,
         "component_based": False
     },
     {
@@ -3510,7 +3525,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:netherite_axe",
-        "runtime_id": 606,
+        "runtime_id": 605,
         "component_based": False
     },
     {
@@ -3520,52 +3535,52 @@ item_states: list = [
     },
     {
         "name": "minecraft:netherite_boots",
-        "runtime_id": 611,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_chestplate",
-        "runtime_id": 609,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_helmet",
-        "runtime_id": 608,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_hoe",
-        "runtime_id": 607,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_ingot",
-        "runtime_id": 602,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_leggings",
         "runtime_id": 610,
         "component_based": False
     },
     {
+        "name": "minecraft:netherite_chestplate",
+        "runtime_id": 608,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:netherite_helmet",
+        "runtime_id": 607,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:netherite_hoe",
+        "runtime_id": 606,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:netherite_ingot",
+        "runtime_id": 601,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:netherite_leggings",
+        "runtime_id": 609,
+        "component_based": False
+    },
+    {
         "name": "minecraft:netherite_pickaxe",
-        "runtime_id": 605,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_scrap",
-        "runtime_id": 612,
-        "component_based": False
-    },
-    {
-        "name": "minecraft:netherite_shovel",
         "runtime_id": 604,
         "component_based": False
     },
     {
-        "name": "minecraft:netherite_sword",
+        "name": "minecraft:netherite_scrap",
+        "runtime_id": 611,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:netherite_shovel",
         "runtime_id": 603,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:netherite_sword",
+        "runtime_id": 602,
         "component_based": False
     },
     {
@@ -4085,7 +4100,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:rapid_fertilizer",
-        "runtime_id": 597,
+        "runtime_id": 596,
         "component_based": False
     },
     {
@@ -4299,8 +4314,28 @@ item_states: list = [
         "component_based": False
     },
     {
+        "name": "minecraft:sculk",
+        "runtime_id": -458,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:sculk_catalyst",
+        "runtime_id": -460,
+        "component_based": False
+    },
+    {
         "name": "minecraft:sculk_sensor",
         "runtime_id": -307,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:sculk_shrieker",
+        "runtime_id": -461,
+        "component_based": False
+    },
+    {
+        "name": "minecraft:sculk_vein",
+        "runtime_id": -459,
         "component_based": False
     },
     {
@@ -4465,7 +4500,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:soul_campfire",
-        "runtime_id": 621,
+        "runtime_id": 620,
         "component_based": False
     },
     {
@@ -4495,12 +4530,12 @@ item_states: list = [
     },
     {
         "name": "minecraft:sparkler",
-        "runtime_id": 600,
+        "runtime_id": 599,
         "component_based": False
     },
     {
         "name": "minecraft:spawn_egg",
-        "runtime_id": 629,
+        "runtime_id": 628,
         "component_based": False
     },
     {
@@ -4580,7 +4615,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:spyglass",
-        "runtime_id": 625,
+        "runtime_id": 624,
         "component_based": False
     },
     {
@@ -4965,7 +5000,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:warped_door",
-        "runtime_id": 616,
+        "runtime_id": 615,
         "component_based": False
     },
     {
@@ -4990,7 +5025,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:warped_fungus_on_a_stick",
-        "runtime_id": 617,
+        "runtime_id": 616,
         "component_based": False
     },
     {
@@ -5020,7 +5055,7 @@ item_states: list = [
     },
     {
         "name": "minecraft:warped_sign",
-        "runtime_id": 614,
+        "runtime_id": 613,
         "component_based": False
     },
     {

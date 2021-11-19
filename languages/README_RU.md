@@ -20,7 +20,7 @@
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_VI.md">Tiếng Việt🇻🇳</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_RU.md">Русский🇷🇺</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中国人🇨🇳</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中文🇨🇳</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_TR.md">Türkçe🇹🇷</a>
 </div>
 <br>
@@ -62,10 +62,10 @@ python run.py
  - Это бесплатно?
  > Да.
  - Это ПО для Minecraft Java или Bedrock Edition?
- > В данный момент bedrock, но может быть использован плагин для java edition.
+ > В данный момент Bedrock, но может быть использован плагин для Java Edition.
  - Я могу уже использовать данное ПО?
  > Мы бы не рекомендовали использовать это ПО для серьезных целей пока-что.
  - Есть поддержка плагинов?
  > Да, они могут быть написаны на языке Python (и может быть с другими языками, но с некоторыми изощрениями).
  - У меня есть вопрос, но я не нашел его здесь. Где я могу его задать?
- > На нашем [discord сервере](https://discord.gg/ScSsnwQ4kW).
+ > На нашем [Discord](https://discord.gg/ScSsnwQ4kW) сервере.
