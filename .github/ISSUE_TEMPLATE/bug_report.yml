@@ -1,6 +1,6 @@
 name: Bug Report
 description: Something not working properly? Tell us about it!
-labels: [bug]
+labels: [unconfirmed bug]
 body:
   - type: markdown
     attributes:
@@ -41,7 +41,7 @@ body:
     attributes:
       label: System Information
       description: >
-        Start your server and run the `/version` command, then paste the output below.
+        Start your server and run the `/version` command, then paste the output below. If this command fails, provide some basic information, such as your OS and Python version.
     validations:
       required: true
   - type: checkboxes
