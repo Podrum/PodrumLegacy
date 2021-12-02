@@ -53,6 +53,9 @@ pip install -r requirements.txt
 python run.py
 ```
 
+Please note for linux you may need to install the following packages before running the above commands:
+- `python-dev` (e.g. `python3.6-dev` for Python 3.6)
+
 # FAQ:
  - Can I contribute?
  > Sure.
