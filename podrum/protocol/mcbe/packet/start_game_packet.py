@@ -133,6 +133,7 @@ class start_game_packet(mcbe_packet):
         self.write_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0)  # block states length
+        self.write_long_le(0)
         self.write_item_states(self.item_states)
         self.write_string(self.multiplayer_correlation_id)
         self.write_bool(self.server_authoritative_inventories)
