@@ -116,7 +116,7 @@ class start_game_packet(mcbe_packet):
         self.write_bool(self.from_world_template)
         self.write_bool(self.world_template_option_locked)
         self.write_bool(self.only_old_villagers)
-        self.write_string(self.game_version)
+        self.write_string("1.17.40") # self.game_version)
         self.write_int_le(self.limited_world_width)
         self.write_int_le(self.limited_world_height)
         self.write_bool(self.new_nether)
@@ -133,8 +133,8 @@ class start_game_packet(mcbe_packet):
         self.write_long_le(self.current_tick)
         self.write_signed_var_int(self.enchantment_seed)
         self.write_var_int(0)  # block states length
-        self.write_long_le(0)
         self.write_item_states(self.item_states)
         self.write_string(self.multiplayer_correlation_id)
         self.write_bool(self.server_authoritative_inventories)
         self.write_string(self.server_engine)
+        self.write_long_le(0)
