@@ -21,7 +21,8 @@
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_RU.md">Русский🇷🇺</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中国人🇨🇳</a>
- </div>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_TR.md">Türkçe</a> 
+</div>
 <br>
 
 Podrum là phần mềm máy chủ cho phiên bản Minecraft Bedrock được viết bằng Python.
