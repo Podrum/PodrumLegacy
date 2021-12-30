@@ -21,6 +21,7 @@
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_RU.md">Русский🇷🇺</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中文🇨🇳</a>
+  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_TR.md">Türkçe</a>
 </div>
 <br>
 
