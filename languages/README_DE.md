@@ -24,25 +24,23 @@
  </div>
 <br>
 
-
-Podrum ist eine Minecraft Server Software geschrieben in Python.
-Es ist unter aktiver Entwicklung und hat bis jetzt paar Vorteile:
+Podrum ist eine Minecraft-Server-Software, welche in Python geschrieben ist. Podrum ist in aktiver Entwicklung und hat aktuell folgende Vorteile:
 
 **1.** Einfach zu verwenden,
 
-**2.** Geschrieben in Python, was es einfacher macht Plugins zu programmieren.
+**2.** Geschrieben in Python, was die Plugin-Programmierung einfacher macht.
 
 ## Features:
- - [x] Welten Generation
+ - [x] Welten-Generation
  - [x] Networking
  - [x] Befehle
  - [x] MOTD
- - [x] Betretbar/joinbar
+ - [x] Betretbar
  - [x] Plugin API
  - [ ] Mobs 
 
-## Ausführen:
-Linux und MacOS (Unix/Unixiode Systeme):
+## Installation:
+Linux und MacOS (Unix/Unixiode basierte Systeme):
 ```sh
 pip3 install -r requirements.txt
 python3 run.py
@@ -56,16 +54,16 @@ python run.py
 
 # FAQ:
  - Kann ich mit helfen?
- > Klar.
- - Welche Python Version sollte ich verwenden?
- > Jede Version über 3.5 funktioniert aber wir empfehlen dir die neuste.
- - Ist es kostenlos?
- > Yep.
- - Ist sie für Minecraft Java oder Bedrock?
- > Es ist im Moment nur für Bedrock aber vielleicht wird es ja ein Plugin mal für die Java geben.
+ > Klar. Wir freuen uns über jede Hilfe!
+ - Welche Python-Version sollte ich verwenden?
+ > Jede Version über 3.5 funktioniert, jedoch empfehlen wir die neueste.
+ - Ist Podrum kostenlos?
+ > Ja.
+ - Ist Podrum für Minecraft Java oder Bedrock?
+ > Im Moment ist Podrum nur für die Bedrock-Edition verfügbar, jedoch gibt es bald evtl auch ein Plugin für die Java-Edition.
  - Kann ich es jetzt schon verwenden?
  > Wir empfehlen es dir noch nicht für ernste Projekte.
  - Unterstützt es Plugins?
- > Ja tut es, du kannst sie in Python (oder mit tricks in anderen Sprachen schreiben).
- - Ich habe eine Frage die hier nicht beantwortet wurde wo kann ich sie Fragen?
+ > Ja tut es, du kannst sie in Python (oder mit Tricks auch in anderen Sprachen) schreiben.
+ - Ich habe eine Frage, die hier nicht beantwortet wurde. Wo kann ich diese Fragen?
  > Auf unserem [Discord](https://discord.gg/ScSsnwQ4kW).
