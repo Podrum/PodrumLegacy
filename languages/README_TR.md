@@ -11,7 +11,7 @@
 
 # Podrum
 
-<p align="center">README aussi disponible en:</p>
+<p align="center">README için farklı diller:</p>
 <div align="center">
   <a href="https://github.com/Podrum/Podrum/blob/main/README.md">English🇺🇸</a>
   <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_FR.md">Français🇫🇷</a>
@@ -25,24 +25,24 @@
  </div>
 <br>
 
-Podrum est un logiciel de serveur pour Minecraft Bedrock edition écrit en Python.
-Il est encore un développement actif, mais a ses petits avantages:
+Python ile yazılmış, Minecraft Bedrock Edition sunucu yazılımıdır.
+Aktif olarak geliştirilme aşamasındadır fakat birkaç avantajı vardır:
 
-**1.** Facile à utiliser.
+**1.** Kolay Kullanım,
 
-**2.** Écrit en Python ce qui veut dire que les plugins sont faciles à écrire.
+**2.** Python sayesinde eklentilerin yazımı kolaydır.
 
-## Fonctionnalitées:
- - [x] Génération du monde
- - [x] Connexion
- - [x] Commandes
+## Özellikler:
+ - [x] Dünya Oluşturma
+ - [x] Ağ
+ - [x] Komutlar
  - [x] MOTD
- - [x] Joignable
- - [x] API de Plugin
- - [ ] Mobs 
+ - [x] Sunucuya Bağlanma
+ - [x] Eklenti API
+ - [ ] Varlıklar 
 
-## Exécuter:
-Linux et MacOS (Systèmes Unix):
+## Çalıştırma:
+Linux ve MacOS (Unix sistemler):
 ```sh
 pip3 install -r requirements.txt
 python3 run.py
@@ -54,18 +54,21 @@ pip install -r requirements.txt
 python run.py
 ```
 
+Linux için komutları çalıştırmadan önce aşağıdaki paketleri kurmanız gerekebilir:
+- `python-dev` (e.g. `python3.6-dev` for Python 3.6)
+
 # FAQ:
- - Est-ce que je peux contribuer ?
- > Bien sûr.
- - Quelle version de python dois-je utiliser ?
- > N'importe quelle version de python au-dessus de Python 3.5 devrait marcher, mais nous recommandons la dernière.
- - Est-ce que c'est gratuit ?
- > Oui.
- - Est-ce que c'est pour Java ou Bedrock ?
- > C'est actuellement pour Bedrock mais il y aura peut-être un plugin pour Java plus tard.
- - Est-ce que je peux l'utiliser maintenant ?
- > Nous ne recommandons pas de l'utiliser actuellement pour des projets sérieux.
- - Est-ce que ça supporte les plugins ?
- > Oui, vous pouvez écrire des plugins en Python (et peut être d'autres langages en trichent un peu).
- - J'ai une question qui n'est pas répondu ici, où est-ce que je peux la poser ?
- > Sur notre [discord](https://discord.gg/ScSsnwQ4kW).
+ - Katkıda bulunabilir miyim?
+ > Elbette.
+ - Hangi Python sürümünü kullanmalıyım ?
+ > Python 3.5 üzeri tüm sürümlerde çalışmaktadır. Fakat en yeni sürümü kullanmanızı öneririz.
+ - Ücretsiz mi?
+ > Evet.
+ - Yazılım Minecraft Java yada Bedrock için mi?
+ > Şuan Bedrock için, fakat Java için bir eklenti olabilir.
+ - Henüz kullanabilir miyim ?
+ > Henüz ciddi bir proje için bunu kullanmanızı tavsiye etmiyoruz.
+ - Eklenti desteği var mı ?
+ > Evet, python ile geliştirebilirsiniz. (Belki bazı hileler ile farklı diller ile.)
+ - Burada cevabı olmayan bir soruyu nereye sorabilirim?
+ > [discord] Sunucumuzda (https://discord.gg/ScSsnwQ4kW).
