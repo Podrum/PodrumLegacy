@@ -22,3 +22,12 @@ class player_chat_event(event):
     def __init__(self, player, message: str) -> None:
         self.player = player
         self.message: str = message
+
+    def get_message(self):
+        return self.message
+
+    def set_message(self, message: str) -> None:
+        self.message: str = message
+
+    def set_player(self, player) -> None:
+        self.player = player
