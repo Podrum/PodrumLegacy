@@ -14,7 +14,7 @@ r"""
 
 class mcbe_protocol_info:
     mcbe_version: str = "1.18.10"
-    mcbe_protocol_version: int = 486
+    mcbe_protocol_version: int = 471
     mcbe_rak_net_protocol_version: int = 10
     mojang_public_key: str = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V"
     login_packet: int = 0x01

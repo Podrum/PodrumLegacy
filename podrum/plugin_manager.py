@@ -68,7 +68,7 @@ class plugin_manager:
                 f"A plugin with the name {plugin_info['name']} "
                 f"could not be loaded due to incompatible api version "
                 f"({plugin_info['api_version']}). "
-                f"Current Podrum API version is {version.podrum_api_version}"
+                f"Neweset Podrum API version is {version.podrum_api_version}"
             )
             return
 

@@ -74,11 +74,9 @@ class chunk:
 
         for y in range(self.get_sub_chunk_send_count()):
             self.sub_chunks[y].network_serialize(stream)
-
-
-        for i in range(25):
+        for biome in range(25):
             stream.write_unsigned_byte(0)
-            stream.write_var_int(2)
+            stream.write_var_int(1 << 1)
 
         stream.write_unsigned_byte(0)
         return stream.data

@@ -60,7 +60,7 @@ class region:
             return b""
 
         file.seek(offset << 12)
-        length: int = binary_converter.read_unsigned_int_be(file.read(4)) - 1
+        length: int = binary_converter.read_unsigned_int_be(file.read(4))
         compression_type: int = binary_converter.read_unsigned_byte(file.read(1))
         chunk_data: bytes = file.read(length)
         file.close()
@@ -87,7 +87,7 @@ class region:
             else:
                 return
 
-            ccc: bytes = binary_converter.write_unsigned_int_be(len(cc) + 1)
+            ccc: bytes = binary_converter.write_unsigned_int_be(len(cc))
             ccc += binary_converter.write_unsigned_byte(compression_type)
             ccc += cc
             size: int = math.ceil(len(ccc) / 4096)

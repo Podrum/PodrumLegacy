@@ -36,7 +36,6 @@ class text_format:
     light_purple: str = "\x1b[38;5;207m"
     yellow: str = "\x1b[38;5;227m"
     white: str = "\x1b[38;5;231m"
-    minecoin_gold: str = "\x1b[38;5;185m"
 
     __translation: List[Tuple[str, str]] = [
         (black, '§0'),
@@ -55,7 +54,6 @@ class text_format:
         (light_purple, '§d'),
         (yellow, '§e'),
         (white, '§f'),
-        (minecoin_gold, '§g'),
         (obfuscated, '§k'),
         (bold, '§l'),
         (strike_through, '§m'),
