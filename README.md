@@ -11,7 +11,7 @@
 
 # Podrum
 
-Moved to https://github.com/Podrum/PodrumR3
+Moved to https://github.com/Podrum/Podrum
 
 <p align="center">README also available in:</p>
 <div align="center">
