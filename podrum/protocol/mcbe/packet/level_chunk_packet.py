@@ -33,6 +33,5 @@ class level_chunk_packet(mcbe_packet):
         self.write_signed_var_int(self.chunk_x)
         self.write_signed_var_int(self.chunk_z)
         self.write_var_int(self.sub_chunk_count)
-        #self.write_unsigned_short_le(self.sub_chunk_count)
         self.write_bool(self.use_caching)
         self.write_byte_array(self.chunk_data)
