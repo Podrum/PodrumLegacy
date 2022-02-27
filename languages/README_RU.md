@@ -11,6 +11,8 @@
 
 # Podrum
 
+Переехал на https://github.com/Podrum/Podrum
+
 <p align="center">README также еще доступен на языках:</p>
 <div align="center">
   <a href="https://github.com/Podrum/Podrum/blob/main/README.md">English🇺🇸</a>
@@ -54,7 +56,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-Учитите, что для работы на Linux вы должны установить следующие пакеты:
+Учтите, что для работы на Linux вы должны установить следующие пакеты:
 - `python-dev` (к примеру `python3.6-dev` для Python 3.6)
 
 # FAQ:
