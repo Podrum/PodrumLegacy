@@ -13,15 +13,15 @@
 
 <p align="center">README aussi disponible en:</p>
 <div align="center">
-  <a href="https://github.com/Podrum/Podrum/blob/main/README.md">English🇺🇸</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_FR.md">Français🇫🇷</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_DE.md">Deutsch🇩🇪</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_ES.md">Español🇪🇸</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_VI.md">Tiếng Việt🇻🇳</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_RU.md">Русский🇷🇺</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_CH.md">中文🇨🇳</a>
-  <a href="https://github.com/Podrum/Podrum/blob/main/languages/README_TR.md">Türkçe</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/README.md">English🇺🇸</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_FR.md">Français🇫🇷</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_DE.md">Deutsch🇩🇪</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_ES.md">Español🇪🇸</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_VI.md">Tiếng Việt🇻🇳</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_IT.md">Italiana🇮🇹</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_RU.md">Русский🇷🇺</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_CH.md">中文🇨🇳</a>
+  <a href="https://github.com/Podrum/PodrumLegacy/blob/main/languages/README_TR.md">Türkçe</a>
  </div>
 <br>
 
